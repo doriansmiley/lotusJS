@@ -1,4 +1,4 @@
 sapphireJS
 =============
 
-Inversion of Control framework for developing HTML5 applications
+Inversion of control framework for developing HTML5 applications
