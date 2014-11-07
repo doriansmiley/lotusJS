@@ -1,4 +1,4 @@
-Box-oAuth-POC
+sapphireJS
 =============
 
-Simple POC implementing Box oAuth authentication using StageWebView
+Inversion of Control framework for developing HTML5 applications
