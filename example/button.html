@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../test/lib/xtag/x-tag-components.css" />
+    <link rel="stylesheet" type="text/css" href="button.css" />
+    <script type="text/javascript" src="../test/lib/xtag/x-tag-components.js"></script>
+    <script type="text/javascript" src="../test/lib/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../test/lib/lavender/lavender.min.js"></script>
+    <script language="JavaScript">
+        //IMPortant: must occur before button is loaded
+        var model = Lavender.ModelLocator.getInstance();
+        model.eventDispatcherCode = 'abstract';
+        Lavender.init(model);
+    </script>
+    <script type="text/javascript" src="../global/LotusGlobals.js"></script>
+    <script type="text/javascript" src="../view/LotusSkinPart.js"></script>
+    <script type="text/javascript" src="../view/LotusSkinPartList.js"></script>
+    <script type="text/javascript" src="../context/LotusComponentList.js"></script>
+    <script type="text/javascript" src="../context/LotusComponentMap.js"></script>
+    <script type="text/javascript" src="../view/LotusAbstractComponent.js"></script>
+    <script type="text/javascript" src="../view/LotusButton.js"></script>
+    <script language="JavaScript">
+        var componentMap = new Lotus.ComponentMap();
+        componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
+    </script>
+</head>
+<body>
+<x-lotus-button type="navButton">
+    <button id="myButton" skin-part="button"><label>testButton</label></button>
+</x-lotus-button>
+<x-lotus-button type="navButton">
+    <button id="myButton2" skin-part="button"><label>testButton</label></button>
+</x-lotus-button>
+</body>
+</html>
