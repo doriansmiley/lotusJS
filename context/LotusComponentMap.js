@@ -7,7 +7,6 @@ Lotus.ComponentMap = function(){
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
-    var componentInstances = this.componentInstances;
     xtag.register(tagName, {
         // extend existing elements
         extends: extendsTag,
@@ -17,6 +16,7 @@ Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, funct
                 // is initially created or parsed
                 if( this.lotusComponentInstance === null || this.lotusComponentInstance === undefined ){
                     this.lotusComponentInstance  = new functionConstructor();
+                    this.componentInstances.addItem(this.lotusComponentInstance);
                 }
                 this.lotusComponentInstance.created(this);
                 var componentInstance = this.lotusComponentInstance;
