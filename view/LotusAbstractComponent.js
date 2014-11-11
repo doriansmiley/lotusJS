@@ -94,16 +94,6 @@ Lotus.AbstractComponent.prototype.removeEventListeners = function(){
 
 }
 
-//stub for override
-Lotus.AbstractComponent.prototype.setUpBindings = function(){
-
-}
-
-//stub for override
-Lotus.AbstractComponent.prototype.setDataProvider = function(){
-
-}
-
 Lotus.AbstractComponent.prototype.destroy = function(){
     this.removeEventListeners();
     this.binder.unbindAll();
