@@ -22,11 +22,11 @@ Lotus.HttpServiceFactory.prototype.getHttpService = function( config ){
     var httpService;
     switch( config.httpServiceCode ){
         case "angular":
-            httpService = new Lotus.AngularHttpService();
+            httpService = new Lavender.AngularHttpService();
             break;
         case "jquery":
         default:
-            httpService = new Lotus.JqueryHttpService();
+            httpService = new Lavender.JqueryHttpService();
             break;
     }
     return httpService;

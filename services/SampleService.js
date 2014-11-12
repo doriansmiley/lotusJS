@@ -17,7 +17,7 @@ Lotus.SampleService = function( config ){
 
 Lotus.SampleService.prototype.getURLWithParams = function(key, args)
 {
-    return Lavender.StringUtil.substitute(this.getURL(key), args);
+    return (args !== null && args !== undefined ) ? Lavender.StringUtil.substitute(this.getURL(key), args) : this.getURL(key);
 }
 
 Lotus.SampleService.prototype.getURL = function(key)
@@ -25,18 +25,21 @@ Lotus.SampleService.prototype.getURL = function(key)
     return this.config.baseUrl + this.serviceMap[key];
 }
 
-Lotus.SampleService.prototype.createSDSession = function(context, userID, password, url, responder, format, contentType, localRequest, cache) {
+//this is a sample service method to be used as an example only. You service methods will be dependent on your service API and model objects
+//note the use of the key param. This is a very importnat feature and I highly recommend that whatever service you created implements a similar method
+//don't hard code or otherwise tightly couple the URL creation inside this method. The use of a builder pattern ensures the end point can be changed based on environment
+Lotus.SampleService.prototype.createSDSession = function(context, userID, password, key, responder, format, contentType, localRequest, cache) {
     var params =
     {
         'context'	: this.config.context,
         'user'		: this.config.user,
         'password'	: this.config.password
     };
-
+    var url = this.getURLWithParams(key);
     return this.sendXMLRequest(true, responder, url, params, null, format, contentType, localRequest, cache);
 }
 
-// Typical request should be sent via this method, sendRequest() is only used for custom requests
+//This is a sample send reques method, you should customize to fit your services request format. This sample uses XML and wraps all params in the request element which is required by the service API
 Lotus.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder, url, paramObj, urlParams, format, contentType, localRequest, cache, externalApiUrl)
 {
     var paramsXML = null;
@@ -59,7 +62,7 @@ Lotus.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder
     return this.sendRequest(isPostRequest, responder, url, paramsXML, format, contentType, cache);
 }
 
-
+//this is a generic method that you should not override
 Lotus.SampleService.prototype.sendRequest = function( isPostRequest, responder, url, params, dataType, contentType, cache )
 {
     if( cache === null || cache === undefined ){

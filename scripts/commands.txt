@@ -1,0 +1,11 @@
+export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
+
+cd $SPI_SDK_HOME
+sh ./scripts/test.sh
+
+export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
+
+uglifyjs $SPI_SDK_HOME/util/BindingUtils.js \
+$SPI_SDK_HOME/util/ObjectUtils.js \
+-o $SPI_SDK_HOME/minify/lotus.min.js \
+--source-map $SPI_SDK_HOME/minify/lotus.min.js.map
