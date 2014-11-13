@@ -3,7 +3,7 @@
  */
 Lotus.ComponentMap = function(){
     //add validation that xtag has been loaded
-    this.componentInstances = new Lotus.LotusComponentList();
+    this.componentInstances = new Lotus.ComponentList();
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){

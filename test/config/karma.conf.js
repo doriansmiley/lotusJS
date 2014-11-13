@@ -4,6 +4,7 @@ module.exports = function (config) {
 
         files: [
             'lib/jquery/jquery-1.10.2.js',
+            'lib/xtag/x-tag-components.js',
             'lib/angular/angular.js',
             'lib/angular/angular-*.js',
             'lib/angular/angular-mocks.js',
@@ -13,6 +14,7 @@ module.exports = function (config) {
             '../context/*.js',
             '../factory/*.js',
             '../services/*.js',
+            '../view/*.js',
             'unit/*.js',
             'unit/**/*.js'
         ],
