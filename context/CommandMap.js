@@ -1,10 +1,10 @@
 /**
  * Created by dsmiley on 3/3/14.
  */
-Lotus.CommandMap = function( eventDispatcher ){
+Lotus.CommandMap = function( context ){
     this.eventFunctionMap = {};
     this.instanceMap = {};
-    this.eventDispatcher = eventDispatcher;
+    this.context = context;
 }
 
 Lotus.CommandMap.prototype.addCommand = function( eventType, handler, functionName, useSingleton ){
@@ -29,11 +29,11 @@ Lotus.CommandMap.prototype.addCommand = function( eventType, handler, functionNa
             this.instanceMap[eventType] = {};
         }
         if( this.instanceMap[eventType][handler] === null ||  this.instanceMap[eventType][handler] === undefined ){
-            this.instanceMap[eventType][handler] = new handler();
+            this.instanceMap[eventType][handler] = new handler(this.context);
         }
     }
-    if( !this.eventDispatcher.canListen(eventType, this, 'routeEventToCommand') ){
-        this.eventDispatcher.addEventListener(eventType, this, 'routeEventToCommand');
+    if( !this.context.eventDispatcher.canListen(eventType, this, 'routeEventToCommand') ){
+        this.context.eventDispatcher.addEventListener(eventType, this, 'routeEventToCommand');
     }
 }
 
@@ -75,7 +75,7 @@ Lotus.CommandMap.prototype.removeCommand = function( eventType, handler ){
             }
         }
         if( this.eventFunctionMap[eventType].length <= 0 ){
-            this.eventDispatcher.removeEventListener(eventType, this, 'routeEventToCommand');
+            this.context.eventDispatcher.removeEventListener(eventType, this, 'routeEventToCommand');
             delete this.eventFunctionMap[eventType];
         }
     }
@@ -84,7 +84,7 @@ Lotus.CommandMap.prototype.removeCommand = function( eventType, handler ){
 Lotus.CommandMap.prototype.removeAllCommands = function(){
     this.eventFunctionMap = {};
     this.instanceMap = {};
-    this.eventDispatcher.removeAllEventListeners(this);
+    this.context.eventDispatcher.removeAllEventListeners(this);
 }
 
 Lotus.CommandMap.prototype.routeEventToCommand = function( event ){
@@ -99,7 +99,8 @@ Lotus.CommandMap.prototype.routeEventToCommand = function( event ){
                 if( typeof item.handler === 'object' ){
                     instance = item.handler;
                 }else{
-                    instance = new item.handler(event);
+                    //IMPORTANT: only constructor function will get the context! This is by design as it's assumed preconstructed objects have all required dependencies
+                    instance = new item.handler(this.context);
                 }
                 instance[item.functionName](event);
             }

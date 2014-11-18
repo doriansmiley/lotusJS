@@ -15,6 +15,9 @@ module.exports = function (config) {
             '../factory/*.js',
             '../services/*.js',
             '../view/*.js',
+            '../actions/*.js',
+            '../commands/*.js',
+            '../context/*.js',
             'unit/*.js',
             'unit/**/*.js'
         ],

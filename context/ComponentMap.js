@@ -1,8 +1,9 @@
 /**
  * Created by dsmiley on 11/10/14.
  */
-Lotus.ComponentMap = function(){
+Lotus.ComponentMap = function(context){
     //add validation that xtag has been loaded
+    this.context = context;
     this.componentInstances = new Lotus.ComponentList();
 }
 
@@ -13,7 +14,7 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
         tagInstance.lotusComponentInstance  = new functionConstructor();
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
     }
-    tagInstance.lotusComponentInstance.created(tagInstance);
+    tagInstance.lotusComponentInstance.created(tagInstance, this.context);
     var componentInstance = tagInstance.lotusComponentInstance;
     //assign skin parts
     //select all elements with a skin part attribute
