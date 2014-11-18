@@ -23,14 +23,14 @@ Lotus.EventDispatcherFactory.prototype.getEventDispatcher = function( config, pa
     //config.daoCode defaults to jquery
     switch( config.eventDispatcherCode ){
         case "jquery":
-            dispatcher = new JqueryEventDispatcher();
+            dispatcher = new Lavender.JqueryEventDispatcher();
             break;
         case "angular":
-            dispatcher = new AngularEventDispatcher(params);
+            dispatcher = new Lavender.AngularEventDispatcher(params);
             break;
         case "abstract":
         default:
-            dispatcher = new Lotus.AbstractEventDispatcher();
+            dispatcher = new Lavender.AbstractEventDispatcher();
     }
     return dispatcher;
 }

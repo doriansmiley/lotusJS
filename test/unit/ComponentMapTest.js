@@ -15,6 +15,8 @@ describe('ComponentMapTest', function () {
         var componentMap = new Lotus.ComponentMap();
         componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
         expect(componentMap.componentInstances.length()).toBe(0);
+        //IMPORTANT: need to find a way to get xTag to parse the newly added component
+        //create is not being called here hence the component map is not adding the instance
         document.body.appendChild(buttonDOMElement);
         expect(componentMap.componentInstances.length()).toBe(1);
     });
