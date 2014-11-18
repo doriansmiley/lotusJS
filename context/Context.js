@@ -2,9 +2,10 @@
  * Created by dsmiley on 11/18/14.
  */
 Lotus.Context = function(config, params){
-    this.componentMap = new Lotus.ComponentMap(this);//create factory if we require sub classes one day
-    this.commandMap = new Lotus.CommandMap(this);//create factory if we require sub classes one day
+    //IMPORTANT: must occur first so application event bus is configured
     this.eventDispatcher = Lotus.EventDispatcherFactory.getInstance.getEventDispatcher(config, params);
+    this.componentMap = new Lotus.ComponentMap();//create factory if we require sub classes one day
+    this.commandMap = new Lotus.CommandMap(this.eventDispatcher);//create factory if we require sub classes one day
     this.startUp();
 }
 
