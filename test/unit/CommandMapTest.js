@@ -5,7 +5,8 @@
 describe('CommandMapTest', function () {
 
     it('check SpiRef.CommandMapper function', function () {
-        var commandMap = Lotus.CommandMap.getInstance();
+        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+        var commandMap = new Lotus.CommandMap(context);
         var success = false;
         var responder = {
             execute:function(event){

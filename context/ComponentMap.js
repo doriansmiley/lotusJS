@@ -1,8 +1,9 @@
 /**
  * Created by dsmiley on 11/10/14.
  */
-Lotus.ComponentMap = function(){
+Lotus.ComponentMap = function( context ){
     //add validation that xtag has been loaded
+    this.context = context;
     this.componentInstances = new Lotus.ComponentList();
 }
 

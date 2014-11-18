@@ -1,19 +1,11 @@
 /**
  * Created by dsmiley on 3/3/14.
  */
-Lotus.CommandMap = function(){
+Lotus.CommandMap = function( context ){
     this.eventFunctionMap = {};
     this.instanceMap = {};
+    this.context = context;
     Lavender.ObjectUtils.mixin(Lavender.AbstractEventDispatcher, Lotus.CommandMap, this);
-}
-
-Lotus.CommandMap.instance;
-
-Lotus.CommandMap.getInstance = function () {
-    if (Lotus.CommandMap.instance == null) {
-        Lotus.CommandMap.instance = new Lotus.CommandMap();
-    }
-    return Lotus.CommandMap.instance;
 }
 
 Lotus.CommandMap.prototype.addCommand = function( eventType, handler, functionName, useSingleton ){
@@ -41,8 +33,8 @@ Lotus.CommandMap.prototype.addCommand = function( eventType, handler, functionNa
             this.instanceMap[eventType][handler] = new handler();
         }
     }
-    if( !this.canListen(eventType, this, 'routeEventToCommand') ){
-        this.addEventListener(eventType, this, 'routeEventToCommand');
+    if( !this.context.eventDispatcher.canListen(eventType, this, 'routeEventToCommand') ){
+        this.context.eventDispatcher.addEventListener(eventType, this, 'routeEventToCommand');
     }
 }
 
@@ -84,7 +76,7 @@ Lotus.CommandMap.prototype.removeCommand = function( eventType, handler ){
             }
         }
         if( this.eventFunctionMap[eventType].length <= 0 ){
-            this.removeEventListener(eventType, this, 'routeEventToCommand');
+            this.context.eventDispatcher.removeEventListener(eventType, this, 'routeEventToCommand');
             delete this.eventFunctionMap[eventType];
         }
     }
@@ -93,7 +85,7 @@ Lotus.CommandMap.prototype.removeCommand = function( eventType, handler ){
 Lotus.CommandMap.prototype.removeAllCommands = function(){
     this.eventFunctionMap = {};
     this.instanceMap = {};
-    this.removeAllEventListeners(this);
+    this.context.eventDispatcher.removeAllEventListeners(this);
 }
 
 Lotus.CommandMap.prototype.routeEventToCommand = function( event ){
