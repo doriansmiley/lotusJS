@@ -11,5 +11,6 @@ describe('ContextTest', function () {
         expect(context.commandMap instanceof Lotus.CommandMap).toBe(true);
         expect(context.componentMap instanceof Lotus.ComponentMap).toBe(true);
         expect(context.eventDispatcher instanceof Lavender.AbstractEventDispatcher).toBe(true);
+        expect(context.injector instanceof Lotus.Injector).toBe(true);
     });
 });

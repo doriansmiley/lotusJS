@@ -2,6 +2,7 @@
  * Created by dsmiley on 3/3/14.
  */
 Lotus.CommandMap = function( context ){
+    //Note: this could be improved by creating read only accessor methods for instanceMap and eventFunctionMap
     this.eventFunctionMap = {};
     this.instanceMap = {};
     this.context = context;
