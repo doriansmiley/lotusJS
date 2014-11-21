@@ -15,15 +15,15 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
     }
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
-    var componentInstance = tagInstance.lotusComponentInstance;
     //assign skin parts
     //select all elements with a skin part attribute
     //IMPORTANT: Use DOM Native here, will make the map more portable
-    xtag.query(tagInstance, '[skin-part]').forEach(function(elem){
+    var skinPartsNodeList = tagInstance.querySelectorAll('[skin-part]');
+    for( var i=0; i < skinPartsNodeList.length; i++){
         // iterate over matches
         //call addSkinPart on the component passing skin part attribute value and the element
-        componentInstance.addSkinPart(elem.getAttribute('skin-part'), elem);
-    });
+        tagInstance.lotusComponentInstance.addSkinPart(skinPartsNodeList[i].getAttribute('skin-part'), skinPartsNodeList[i]);
+    }
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
