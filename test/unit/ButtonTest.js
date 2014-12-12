@@ -13,7 +13,7 @@ describe('AbstractComponentTest', function () {
         var button = new Lotus.Button();
         button.created(element, context);
         button.addSkinPart('button', skinBart);
-        //expect(component.testProperty.element === element).toBe(true);
+        expect(button.buttonSkinPart === skinBart).toBe(true);
 
     });
 });

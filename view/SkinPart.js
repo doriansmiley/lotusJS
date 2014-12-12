@@ -17,7 +17,7 @@ Lotus.SkinPart = function( label, instance, attribute ){
             },
             element: {
                 get: function() {
-                    return _attribute;
+                    return _instance[_attribute];
                 },
                 set: function(val) {
                     _instance[_attribute] = val;
