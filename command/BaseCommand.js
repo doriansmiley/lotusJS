@@ -14,6 +14,7 @@ Lotus.BaseCommand.prototype.execute = function (event) {
     this.action = this.getAction(event);
     this.action.addEventListener(Lavender.ActionSuccessEvent.SUCCESS, this.onSuccess);
     this.action.addEventListener(Lavender.ActionErrorEvent.ERROR, this, 'onError');//event, instance, handler
+    this.action.execute();
 }
 
 //stub for override
