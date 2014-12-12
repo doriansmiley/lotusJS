@@ -15,6 +15,7 @@ Lotus.SkinPart = function( label, instance, attribute ){
                     return _label;
                 }
             },
+            //IMPORTANT: the element attribute will be undefined if the addSkinPart method of the instance has not registered it
             element: {
                 get: function() {
                     return _instance[_attribute];
