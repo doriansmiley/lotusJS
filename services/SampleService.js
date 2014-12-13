@@ -11,7 +11,8 @@ Lotus.SampleService = function( config ){
     {
         //loading local XML for now. If a service becomes available use the service API
         'createSDSession'			: 'sdsession/action/create',
-        'getInstance'				: 'instance/{0}'// {0} = instanceId
+        'getInstance'				: 'instance/{0}',// {0} = instanceId
+        'echoJSON'				    : 'key/value/{0}/{1}'// {0} = instanceId
     };
 }
 
@@ -28,12 +29,20 @@ Lotus.SampleService.prototype.getURL = function(key)
 //this is a sample service method to be used as an example only. You service methods will be dependent on your service API and model objects
 //note the use of the key param. This is a very importnat feature and I highly recommend that whatever service you created implements a similar method
 //don't hard code or otherwise tightly couple the URL creation inside this method. The use of a builder pattern ensures the end point can be changed based on environment
+Lotus.SampleService.prototype.echoJSON = function(jsonKey, jsonValue, key, responder, format, contentType, localRequest, cache) {
+    var url = this.getURLWithParams(key, [jsonKey, jsonValue]);
+    return this.sendXMLRequest(true, responder, url, null, null, format, contentType, localRequest, cache);
+}
+
+//this is a sample service method to be used as an example only. You service methods will be dependent on your service API and model objects
+//note the use of the key param. This is a very importnat feature and I highly recommend that whatever service you created implements a similar method
+//don't hard code or otherwise tightly couple the URL creation inside this method. The use of a builder pattern ensures the end point can be changed based on environment
 Lotus.SampleService.prototype.createSDSession = function(context, userID, password, key, responder, format, contentType, localRequest, cache) {
     var params =
     {
-        'context'	: this.config.context,
-        'user'		: this.config.user,
-        'password'	: this.config.password
+        'context'	: context,
+        'user'		: userID,
+        'password'	: password
     };
     var url = this.getURLWithParams(key);
     return this.sendXMLRequest(true, responder, url, params, null, format, contentType, localRequest, cache);

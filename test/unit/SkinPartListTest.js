@@ -4,9 +4,9 @@
 'use strict';
 
 /* jasmine specs for controllers go here */
-describe('AbstractComponentTest', function () {
+describe('SkinPartListTest', function () {
 
-    it('check AbstractComponent function and values', function () {
+    it('check SkinPartList function and values', function () {
         var skinPartList = new Lotus.SkinPartList();
         var component1 = new Lotus.AbstractComponent();
         var component2 = new Lotus.AbstractComponent();

@@ -10,7 +10,20 @@ sh ./scripts/testSauce.sh
 
 export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
 
-uglifyjs $SPI_SDK_HOME/util/BindingUtils.js \
-$SPI_SDK_HOME/util/ObjectUtils.js \
+uglifyjs $SPI_SDK_HOME/global/Globals.js \
+$SPI_SDK_HOME/context/Context.js \
+$SPI_SDK_HOME/context/CommandMap.js \
+$SPI_SDK_HOME/context/ComponentList.js \
+$SPI_SDK_HOME/context/ComponentMap.js \
+$SPI_SDK_HOME/context/Injector.js \
+$SPI_SDK_HOME/command/BaseCommand.js \
+$SPI_SDK_HOME/factory/EventDispatcherFactory.js \
+$SPI_SDK_HOME/factory/HttpServiceFactory.js \
+$SPI_SDK_HOME/factory/SerializeFactory.js \
+$SPI_SDK_HOME/factory/ServiceFactory.js \
+$SPI_SDK_HOME/view/SkinPart.js \
+$SPI_SDK_HOME/view/SkinPartList.js \
+$SPI_SDK_HOME/view/AbstractComponent.js \
+$SPI_SDK_HOME/view/Button.js \
 -o $SPI_SDK_HOME/minify/lotus.min.js \
 --source-map $SPI_SDK_HOME/minify/lotus.min.js.map
