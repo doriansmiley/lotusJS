@@ -25,8 +25,10 @@ Lotus.HttpServiceFactory.prototype.getHttpService = function( config ){
             httpService = new Lavender.AngularHttpService();
             break;
         case "jquery":
-        default:
             httpService = new Lavender.JqueryHttpService();
+            break;
+        default:
+            httpService = new Lavender.XhrHttpService();
             break;
     }
     return httpService;

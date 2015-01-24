@@ -13,6 +13,10 @@ describe('HttpServiceFactoryTest', function () {
             var config = new Lavender.Config();
             config.httpServiceCode = 'angular';
             expect(service.getHttpService( config ) instanceof Lavender.AngularHttpService).toBe(true);
+            config.httpServiceCode = 'jquery';
+            expect(service.getHttpService( config ) instanceof Lavender.JqueryHttpService).toBe(true);
+            config.httpServiceCode = undefined;
+            expect(service.getHttpService( config ) instanceof Lavender.XhrHttpService).toBe(true);
         });
 
     });

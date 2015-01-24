@@ -5,6 +5,25 @@ Lotus.ComponentMap = function(context){
     //add validation that xtag has been loaded
     this.context = context;
     this.componentInstances = new Lotus.ComponentList();
+    this.tagInstanceToRequestId = {};
+}
+
+Lotus.ComponentMap.prototype.success = function(result){
+    var tagInstance = this.tagInstanceToRequestId[result.requestId];
+    var div = document.createElement('div');
+    div.innerHTML = result.resultObj;
+    var template = div.querySelector(tagInstance.getAttribute('template-root'));
+    var clone = document.importNode(template.content, true);
+    var component = clone.querySelector(tagInstance.getAttribute('component-root'));
+    component.lotusComponentInstance = tagInstance.lotusComponentInstance;
+    var host = tagInstance.createShadowRoot();
+    host.appendChild(clone);
+    this.createComponent(component);
+}
+
+Lotus.ComponentMap.prototype.fault = function(fault){
+    console.log(fault);
+    throw new Error('Could not load template. Please check you defined the correct path.');
 }
 
 Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConstructor ){
@@ -14,10 +33,32 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
         tagInstance.lotusComponentInstance  = new functionConstructor();
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
     }
+    //if the tag instance defines a scr attribute load the template and set up the shadow DOM
+    var src = tagInstance.getAttribute('template-url');
+    if( src !== null && src !== undefined ){
+        var httpService = new Lavender.XhrHttpService();
+        httpService.addResponder(this);
+        httpService.send(
+            'GET',
+            src,
+            null,
+            'text/html',
+            'html',
+            true);
+        this.tagInstanceToRequestId[httpService.requestId] = tagInstance;
+        return;
+    }
+    this.createComponent(tagInstance);
+}
+
+Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
     //assign skin parts
     //select all elements with a skin part attribute
     //IMPORTANT: Use DOM Native here, will make the map more portable
+    if( tagInstance.getAttribute('skin-part') !== null && tagInstance.getAttribute('skin-part') !== undefined ){
+        tagInstance.lotusComponentInstance.addSkinPart(tagInstance.getAttribute('skin-part'), tagInstance);
+    }
     var skinPartsNodeList = tagInstance.querySelectorAll('[skin-part]');
     for( var i=0; i < skinPartsNodeList.length; i++){
         // iterate over matches
