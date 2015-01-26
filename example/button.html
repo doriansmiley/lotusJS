@@ -34,6 +34,8 @@ This is an example of inline tags. Not a lot of value here unless you just want 
 </x-lotus-button>
 <!--
 This is an example of loading the component from an external template file. The contents will appended to the DOM by creating a shadow root host. This is the preferred method if you want to take advantage of shadowRoot
+The template-root attribute is any valid selector that points to the root template node
+The component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
 -->
 <x-lotus-button2 type="navButton" template-url="templates/button.html" template-root="#lotusButton" component-root='[skin-part="button"]'/>
 </body>
