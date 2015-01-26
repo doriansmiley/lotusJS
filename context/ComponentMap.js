@@ -12,12 +12,17 @@ Lotus.ComponentMap.prototype.success = function(result){
     var tagInstance = this.tagInstanceToRequestId[result.requestId];
     var div = document.createElement('div');
     div.innerHTML = result.resultObj;
+    //get the root template node
     var template = div.querySelector(tagInstance.getAttribute('template-root'));
+    //clone the contents
     var clone = document.importNode(template.content, true);
+    //select the root component node
     var component = clone.querySelector(tagInstance.getAttribute('component-root'));
     component.lotusComponentInstance = tagInstance.lotusComponentInstance;
+    //create a shadow host from the tag instance and append the clone to it
     var host = tagInstance.createShadowRoot();
     host.appendChild(clone);
+    //pass along the root component node to the view component
     this.createComponent(component);
 }
 
