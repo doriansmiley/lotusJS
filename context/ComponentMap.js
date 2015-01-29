@@ -75,13 +75,13 @@ Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
 }
 
 Lotus.ComponentMap.prototype.addAttributes = function ( tagInstance ) {
-    //tags can define attributes used by the component at runtime. Use the data-attribute- prefix to define attributes
+    //tags can define attributes used by the component at runtime. Use the attribute- prefix to define attributes
     //IMPORTANT: the prefix is removed and dashes will be replace with camel case to evaluate the attribute value
-    //so data-attribute-my-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
+    //so attribute-my-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
     for( var i=0; i < tagInstance.attributes.length; i++ ){
         var attribute = tagInstance.attributes[i];
-        if( attribute.name.indexOf('data-attribute-') >= 0 ){
-            var index = attribute.name.indexOf('data-attribute-') + 15;
+        if( attribute.name.indexOf('attribute-') >= 0 ){
+            var index = attribute.name.indexOf('attribute-') + 10;
             var newProp = attribute.name.substring(index);//remove prefix
             //convert dashes to camel case
             var camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });

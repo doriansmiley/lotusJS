@@ -10,7 +10,7 @@ describe('ComponentMapTest', function () {
         var buttonDOMElement = document.createElement('x-lotus-button2');
         buttonDOMElement.setAttribute('id', 'myButton');
         buttonDOMElement.setAttribute('skin-part', 'button');
-        buttonDOMElement.setAttribute('data-attribute-type', 'test');
+        buttonDOMElement.setAttribute('attribute-type', 'test');
         buttonDOMElement.setAttribute('data-attribute-not-an-attribute', 'test');
         buttonDOMElement.innerHTML = '<button id="myButton" skin-part="button"><label>testButton</label></button>';
 

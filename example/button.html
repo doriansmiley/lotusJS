@@ -18,10 +18,11 @@
     <script type="text/javascript" src="../view/AbstractComponent.js"></script>
     <script type="text/javascript" src="../view/Button.js"></script>
     <script language="JavaScript">
-        (function( xtag ){
+        var context = (function( xtag ){
             var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
             context.componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
             context.componentMap.mapComponent('x-lotus-button2', null, Lotus.Button);
+            return context;
         }( xtag ));
     </script>
 </head>
@@ -36,7 +37,10 @@ This is an example of inline tags. Not a lot of value here unless you just want 
 This is an example of loading the component from an external template file. The contents will appended to the DOM by creating a shadow root host. This is the preferred method if you want to take advantage of shadowRoot
 The template-root attribute is any valid selector that points to the root template node
 The component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
+tags can define attributes used by the component at runtime. Use the attribute- prefix to define attributes
+IMPORTANT: the prefix is removed and dashes will be replace with camel case to evaluate the attribute value
+so attribute-my-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
 -->
-<x-lotus-button2 type="navButton" template-url="templates/button.html" template-root="#lotusButton" component-root='[skin-part="button"]'/>
+<x-lotus-button2 type="navButton" template-url="templates/button.html" template-root="#lotusButton" component-root='[skin-part="button"]' attribute-type="testButton"/>
 </body>
 </html>
