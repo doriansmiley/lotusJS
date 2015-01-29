@@ -4,18 +4,17 @@
 Lotus.Button = function(){
     //Define private vars
     var _buttonSkinPart;
+    var _type;
     //Define instance properties
     this.clickProxy = this.onClick.bind(this);
     // Define our getters and setters
     this.addProperties({
-            //this is a special accessor method as it is used to route attributes on the element
             type: {
                 get: function() {
-                    return this.element.getAttribute('type');
+                    return _type;
                 },
                 set: function(val) {
-                    this.element.setAttribute('type', val);
-                    console.log('Lotus.Button.prototype.constructor set type: ' + this.element.getAttribute('type'));
+                    _type = val;
                     this.Notify( val, 'type' );
                 }
             },
@@ -43,8 +42,6 @@ Lotus.Button.prototype.defineSkinParts = function(){
 Lotus.Button.prototype.created = function(element, context){
     console.log('Lotus.Button.prototype.created');
     Lotus.AbstractComponent.prototype.created.call(this,element, context);
-    console.log('Lotus.Button.prototype.created: element.type: ' + this.type);
-    this.type = 'testButton';
 }
 
 //stub for override
