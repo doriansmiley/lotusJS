@@ -9,16 +9,17 @@ describe('AbstractComponentTest', function () {
     it('check AbstractComponent function and values', function () {
         var component = new Lotus.AbstractComponent();
         component.testProperty = null;
-        var skinPart = new Lotus.SkinPart('testSkinPart', component, 'testProperty');
+        var skinPart = new Lotus.SkinPart('testProperty', component, 'testProperty');
         component.skinParts.addItem(skinPart);
-        var element = {};
+        var element = document.createElement('div');
+        element.setAttribute('attribute-id', '1234');
+        element.innerHTML = '<div skin-part="testProperty">' +
+            '</div>';
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         component.created(element, context);
         expect(component.element === element).toBe(true);
         expect(component.context === context).toBe(true);
-        component.addSkinPart('testSkinPart', element);
-        expect(component.testProperty === element).toBe(true);
-        expect(component.skinParts.skinPartsByLabel['testSkinPart'].element === element ).toBe(true);
-
+        expect(component.id === '1234').toBe(true);
+        expect(component.skinParts.skinPartsByLabel['testProperty'].element === element.firstChild ).toBe(true);
     });
 });

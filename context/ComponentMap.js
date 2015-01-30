@@ -37,8 +37,6 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
     if( tagInstance.lotusComponentInstance === null || tagInstance.lotusComponentInstance === undefined ){
         tagInstance.lotusComponentInstance  = new functionConstructor();
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
-        //capture any attributes passed in on the tag
-        this.addAttributes(tagInstance);
     }
     //if the tag instance defines a scr attribute load the template and set up the shadow DOM
     var src = tagInstance.getAttribute('template-url');
@@ -60,36 +58,6 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
 
 Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
-    //assign skin parts
-    //select all elements with a skin part attribute
-    //IMPORTANT: Use DOM Native here, will make the map more portable
-    if( tagInstance.getAttribute('skin-part') !== null && tagInstance.getAttribute('skin-part') !== undefined ){
-        tagInstance.lotusComponentInstance.addSkinPart(tagInstance.getAttribute('skin-part'), tagInstance);
-    }
-    var skinPartsNodeList = tagInstance.querySelectorAll('[skin-part]');
-    for( var i=0; i < skinPartsNodeList.length; i++){
-        // iterate over matches
-        //call addSkinPart on the component passing skin part attribute value and the element
-        tagInstance.lotusComponentInstance.addSkinPart(skinPartsNodeList[i].getAttribute('skin-part'), skinPartsNodeList[i]);
-    }
-}
-
-Lotus.ComponentMap.prototype.addAttributes = function ( tagInstance ) {
-    //tags can define attributes used by the component at runtime. Use the attribute- prefix to define attributes
-    //IMPORTANT: the prefix is removed and dashes will be replace with camel case to evaluate the attribute value
-    //so attribute-my-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
-    for( var i=0; i < tagInstance.attributes.length; i++ ){
-        var attribute = tagInstance.attributes[i];
-        if( attribute.name.indexOf('attribute-') >= 0 ){
-            var index = attribute.name.indexOf('attribute-') + 10;
-            var newProp = attribute.name.substring(index);//remove prefix
-            //convert dashes to camel case
-            var camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-            if( tagInstance.lotusComponentInstance.hasOwnProperty(camelCased) ){
-                tagInstance.lotusComponentInstance[camelCased] = attribute.value;
-            }
-        }
-    }
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){

@@ -12,7 +12,7 @@ describe('SkinPartTest', function () {
         var skinPart = new Lotus.SkinPart('testSkinPart', component, 'testProperty');
         expect(skinPart.label).toBe('testSkinPart');
         component.skinParts.addItem(skinPart);
-        var element = {};
+        var element = document.createElement('div');;
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         component.created(element, context);
         //call add skin part on the component to set the element property of the skin part
