@@ -1,11 +1,23 @@
-<template id='lotusButton'>
+<template>
     <style>
-        button{
-            width:150px;
+        div{
+            background-color: #000000;
+            width:250px;
             height:50px;
-            background-color: chartreuse;
-            border: solid 1px red;
+            border: 1px blue dashed;
+            margin: 10px 10px 10px 10px;
+        }
+        button{
+            width:100px;
+            height:40px;
+        }
+        label{
+            color: #ffffff;
         }
     </style>
-    <button skin-part="button"><label>testButton external</label></button>
+    <div>
+        <label>Hello world!</label>
+        <button skin-part="button"><label>testButton external</label></button>
+    </div>
+
 </template>

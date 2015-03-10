@@ -12,10 +12,8 @@ Lotus.ComponentMap.prototype.success = function(result){
     var tagInstance = this.tagInstanceToRequestId[result.requestId];
     var div = document.createElement('div');
     div.innerHTML = result.resultObj;
-    //get the root template node
-    var template = div.querySelector(tagInstance.getAttribute('template-root'));
     //clone the contents
-    var clone = document.importNode(template.content, true);
+    var clone = document.importNode(div.childNodes[0].content, true);
     //select the root component node
     var component = clone.querySelector(tagInstance.getAttribute('component-root'));
     component.lotusComponentInstance = tagInstance.lotusComponentInstance;
