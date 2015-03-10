@@ -24,6 +24,10 @@ Lotus.ComponentMap.prototype.success = function(result){
     host.appendChild(clone);
     //pass along the root component node to the view component
     this.createComponent(component);
+    //Scope styles to the tag. This appends the tag's nodeName to all styles to simulate DOM encapsulation, however it will not shield the shadowDOM from selectors in the lightDOM. This is not possible with pollyfills at this time.
+    if(window.WebComponents.ShadowCSS ){
+        window.WebComponents.ShadowCSS.shimStyling(host,tagInstance.nodeName);
+    }
 }
 
 Lotus.ComponentMap.prototype.fault = function(fault){
@@ -61,14 +65,14 @@ Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
-    var instance = this;
+    var componentMap = this;
     xtag.register(tagName, {
         // extend existing elements
         extends: extendsTag,
         lifecycle:{
             created: function(){
                 //IMPORTANT:, use builder patter here and create an add component function
-                instance.addComponent(this, functionConstructor);
+                componentMap.addComponent(this, functionConstructor);
             },
             inserted: function(){
                 // fired each time a component
