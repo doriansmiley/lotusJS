@@ -13,6 +13,6 @@ SampleApp.ServiceResultParser.prototype.parserColorThemes = function( result, co
     {
         throw new Error('Can not parse image assets ' + result);
     }
-    //IMPORTANT: ServiceResultParser should never pass the context through to delegates!!! The reason is we don't want low level objects having framework
+    //IMPORTANT: ServiceResultParser should never pass the context through to delegates!!! The reason is we don't want low level objects having framework dependencies as this is bad encapsulation and hurts portability
     return parser.parse(result);
 }
