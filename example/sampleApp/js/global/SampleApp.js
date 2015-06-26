@@ -5,3 +5,4 @@
 SampleApp = function(){
 
 }
+SampleApp.IMAGE_ASSETS_PARSER_KEY = 'imageAssetsParser';

@@ -1,16 +1,16 @@
 /**
  * Created by dsmiley on 5/11/15.
  */
-Hmk.ImageAssetsParser = function () {
+SampleApp.ImageAssetsParser = function () {
 
 }
 
-Hmk.ImageAssetsParser.prototype.canParse = function (json) {
+SampleApp.ImageAssetsParser.prototype.canParse = function (json) {
     //only URL is required at this time
     return ( ( json.hasOwnProperty('photos') && json.photos !== undefined && json.photos !== null ) );
 }
 
-Hmk.ImageAssetsParser.prototype.parse = function (json) {
+SampleApp.ImageAssetsParser.prototype.parse = function (json) {
     var assets = [];
     for( var i=0; i < json.photos.length; i++ ){
         //IMPORTANT the object name must be parsed from the URL using var objectName = url.substr(url.lastIndexOf('/')+1);
@@ -26,7 +26,7 @@ Hmk.ImageAssetsParser.prototype.parse = function (json) {
     return assets;
 }
 
-Hmk.ImageAssetsParser.prototype.getImageAssetParser = function(){
-    return new Hmk.ImageAssetParser();
+SampleApp.ImageAssetsParser.prototype.getImageAssetParser = function(){
+    return new SampleApp.ImageAssetParser();
 }
 

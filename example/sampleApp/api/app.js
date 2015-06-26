@@ -61,6 +61,7 @@ server.route({
     path: '/{system_id}/{user_id}/{asset_type}/{visibility}',
     handler: function (request, reply) {
         var response = reply('{' +
+            '"version":"0.99",' +
             '"count":4,' +
             '"photos": [' +
             '{"id":"5464022a4e696302aa000000","url":"http://upload.wikimedia.org/wikipedia/commons/5/58/Sunset_2007-1.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13"},' +
