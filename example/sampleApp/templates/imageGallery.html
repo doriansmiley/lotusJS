@@ -1,0 +1,38 @@
+<div id="imageGalleryPanel" >
+
+
+		<div class="panel-header" >Select Layout</div>
+
+    <!-- record set navigation -->
+    <div skin-part="navButtonContainer" enabled-class="enabled" disabled-class="disabled" id="layoutPageNavigationButton">
+	        <button skin-part="firstBtn" id="firstBtn" class="spi-button spi-button-icon-only button" style="width:28px;height:24px;">
+            <label>First</label>
+        </button>
+	
+      
+        <button skin-part="pervBtn" id="pervBtn" class="spi-button spi-button-icon-only button" style="width:28px;height:24px;">
+            <label>Previous</label>
+        </button>
+		
+		  <button skin-part="nextBtn" id="nextBtn" class="spi-button spi-button-icon-only button" style="width:28px;height:24px;">
+            <label>Next</label>
+        </button>
+
+        <button skin-part="lastBtn" id="lastBtn" class="spi-button spi-button-icon-only button" style="width:28px;height:24px;">
+            <label>Last</label>
+        </button>
+    </div>
+	
+		<div skin-part="collectionContainer" id="collectionContainer" >
+		
+				<!-- Itemrenderer skin -->
+				<div skin-part="itemTemplate" class="itemRenderer">
+					<div class="thumbnailContainer" skin-part="imageContainer" selected-class="selectedThumbContainer">
+						<img skin-part="image" class="fileUploadThumb" selected-class="thumbSelected"/>
+					</div>
+				</div>
+
+		</div>
+
+	
+</div>

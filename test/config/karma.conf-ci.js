@@ -52,6 +52,7 @@ module.exports = function(config) {
         'lib/angular/angular-mocks.js',
         'lib/lavender/*.js',
         '../global/*.js',//set up the sdk namespace
+        '../example/sampleApp/global/*.js',//set up the sample app namespace
         '../context/*.js',
         '../events/*.js',
         '../factory/*.js',
@@ -63,6 +64,7 @@ module.exports = function(config) {
         '../actions/*.js',
         '../commands/*.js',
         '../context/*.js',
+        '../example/sampleApp/view/**/*.js',
         'unit/*.js',
         'unit/**/*.js'
     ],

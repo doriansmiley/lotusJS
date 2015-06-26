@@ -87,16 +87,16 @@ Lotus.AbstractRecordSetCollectionView.prototype.addSkinPart = function (part, el
             break;
     }
     //IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
-    if( element.getAttribute('data-enabled-class') !== null && element.getAttribute('data-selected-class') !== undefined ){
-        this.navBtnEnabledClass = element.getAttribute('data-enabled-class');
+    if( element.getAttribute('enabled-class') !== null && element.getAttribute('enabled-class') !== undefined ){
+        this.navBtnEnabledClass = element.getAttribute('enabled-class');
     }
-    if( element.getAttribute('data-disabled-class') !== null && element.getAttribute('data-disabled-class') !== undefined ){
-        this.navBtnDisabledClass = element.getAttribute('data-disabled-class');
+    if( element.getAttribute('disabled-class') !== null && element.getAttribute('disabled-class') !== undefined ){
+        this.navBtnDisabledClass = element.getAttribute('disabled-class');
     }
 }
 
 Lotus.AbstractRecordSetCollectionView.prototype.onClickHandler = function( event ){
-    switch( event.target.getAttribute('data-skin-part') ){
+    switch( event.target.getAttribute('skin-part') ){
         case 'nextBtn':
             if( this.collection.selectedPage + 1 > this.collection.totalPages ){
                 return;
@@ -120,7 +120,7 @@ Lotus.AbstractRecordSetCollectionView.prototype.onClickHandler = function( event
 
 Lotus.AbstractRecordSetCollectionView.prototype.render = function () {
     if( this.itemView === null || this.itemView == undefined ){
-        throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
+        throw Error('attribute-item-view must be defined on the tag instance and point to a valid constructor');
     }
     //clear the current view
     this.removeAllChildViews();
