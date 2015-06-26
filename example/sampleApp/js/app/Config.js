@@ -10,3 +10,5 @@ model.config.baseUrl = 'http://localhost:3000';//IMPORTANT:no trailing slash
 model.config.defaultSystemId = 'printimages';//IMPORTANT:no trailing slash
 model.config.defaultAssetType = 'photos';//IMPORTANT:no trailing slash
 model.config.defaultAssetVisibility = 'private';//IMPORTANT:no trailing slash
+//set up our custom model object where we will store image assets accessed by the view
+model.imageAssetModel = new SampleApp.ImageGalleryModel();

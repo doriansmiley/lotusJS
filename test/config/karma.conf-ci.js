@@ -64,7 +64,12 @@ module.exports = function(config) {
         '../actions/*.js',
         '../commands/*.js',
         '../context/*.js',
-        '../example/sampleApp/view/**/*.js',
+        '../example/sampleApp/js/actions/**/*.js',
+        '../example/sampleApp/js/commands/**/*.js',
+        '../example/sampleApp/js/model/**/*.js',
+        '../example/sampleApp/js/serialization/**/*.js',
+        '../example/sampleApp/js/services/**/*.js',
+        '../example/sampleApp/js/view/**/*.js',
         'unit/*.js',
         'unit/**/*.js'
     ],
