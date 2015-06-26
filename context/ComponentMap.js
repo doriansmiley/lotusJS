@@ -23,7 +23,7 @@ Lotus.ComponentMap.prototype.success = function(result){
     //pass along the root component node to the view component
     this.createComponent(component);
     //Scope styles to the tag. This appends the tag's nodeName to all styles to simulate DOM encapsulation, however it will not shield the shadowDOM from selectors in the lightDOM. This is not possible with pollyfills at this time.
-    if(window.WebComponents.ShadowCSS ){
+    if( window.WebComponents && window.WebComponents.ShadowCSS ){
         window.WebComponents.ShadowCSS.shimStyling(host,tagInstance.nodeName);
     }
 }

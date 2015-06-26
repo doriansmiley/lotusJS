@@ -53,6 +53,7 @@ module.exports = function(config) {
         'lib/lavender/*.js',
         '../global/*.js',//set up the sdk namespace
         '../context/*.js',
+        '../events/*.js',
         '../factory/*.js',
         '../services/*.js',
         '../view/AbstractComponent.js',

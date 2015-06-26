@@ -16,10 +16,9 @@ Lotus.AbstractCollectionView = function () {
                     return _collection;
                 },
                 set: function (val) {
+                    this.removeCollectionEventListeners();//must occur first
                     _collection = val;
-                    if( _collection !== null && _collection !== undefined ){
-                        _collection.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
-                    }
+                    this.addCollectionEventListeners();//must occur after line above
                     this.Notify(val, 'collection');
                 }
             },
@@ -52,36 +51,45 @@ Lavender.ObjectUtils.extend(Lotus.AbstractComponent, Lotus.AbstractCollectionVie
 
 Lotus.AbstractCollectionView.prototype.init = function () {
     Lotus.AbstractComponent.prototype.init.call(this);
-    this.collection = this.getCollection();
+    //assign a default collection if it has not already been set
+    if( this.collection === null || this.collection === undefined ){
+        this.collection = this.getCollection();
+    }
     this.render();
+}
+
+Lotus.AbstractCollectionView.prototype.addCollectionEventListeners = function () {
+    if( this.collection !== null && this.collection !== undefined ){
+        this.collection.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
+    }
+}
+
+Lotus.AbstractCollectionView.prototype.removeCollectionEventListeners = function () {
+    if( this.collection !== null && this.collection !== undefined ){
+        this.collection.removeEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
+    }
 }
 
 //IMPORTANT: render is called only once during the components lifecycle, during init. Never call this method directly
 Lotus.AbstractCollectionView.prototype.render = function () {
     if( this.itemView === null || this.itemView == undefined ){
-        throw Error('attribute-item-view must be defined on the tag instance and point to a valid constructor');
+        throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
     }
     for( var i=0; i < this.collection.length; i++ ){
         this.addChildView( this.collection.getItemAt(i) );
     }
 }
 
-Lotus.AbstractCollectionView.prototype.defineSkinParts = function(){
-    //set up skin parts
-    this.skinParts.addItem(new Lotus.SkinPart('collectionContainer', this, 'collectionContainer'));
-    this.skinParts.addItem(new Lotus.SkinPart('itemTemplate', this, 'itemTemplate'));
-}
-
-Lotus.AbstractCollectionView.prototype.onSkinPartAdded = function (part, skinPart) {
+Lotus.AbstractCollectionView.prototype.addSkinPart = function (part, element) {
     switch(part){
         //optional container for displaying collection elements
         case 'collectionContainer':
-            //add any event listener code etc
+            this.collectionContainer = element;
             break;
         //required, defines the layout for child views
         case 'itemTemplate':
-            this.itemTemplate = skinPart.element;
-            this.itemTemplate.parentNode.removeChild(this.itemTemplate);//remove from the view
+            this.itemTemplate = element;
+            element.parentNode.removeChild(element);//remove from the view
             break;
 
     }
@@ -125,6 +133,15 @@ Lotus.AbstractCollectionView.prototype.addChildView = function( model ){
     }else{
         this.element.appendChild(view.element);
     }
+    this.addViewEventListeners( view );
+}
+
+Lotus.AbstractCollectionView.prototype.addViewEventListeners = function( view ){
+    //stub for override
+}
+
+Lotus.AbstractCollectionView.prototype.removeViewEventListeners = function( view ){
+    //stub for override
 }
 
 //IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
@@ -141,6 +158,7 @@ Lotus.AbstractCollectionView.prototype.removeAllChildViews = function(){
 }
 
 Lotus.AbstractCollectionView.prototype.removeChildView = function( view ){
+    this.removeViewEventListeners( view );
     this.removeElement( view.element );
     view.destroy();
     this.childViews.removeItemAt( this.childViews.indexOf(view) );
