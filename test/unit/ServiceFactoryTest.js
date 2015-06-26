@@ -6,10 +6,10 @@ describe('AbstractServiceFactoryTest', function () {
     describe('Test access to singletom', function () {
 
         it('check model and default values', function () {
-            var service = Lavender.ServiceFactory.getInstance();
+            var service = Lotus.ServiceFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getService).toBeDefined();
-            expect(service.getService( new Lavender.Config() ) instanceof Lavender.SampleService).toBe(true);
+            expect(service.getService( new Lavender.Config() ) instanceof Lotus.SampleService).toBe(true);
         });
 
     });
