@@ -59,7 +59,7 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
 }
 
 Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
-    tagInstance.lotusComponentInstance.created(tagInstance, this.context);
+    tagInstance.lotusComponentInstance.created(tagInstance);
 }
 
 Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
