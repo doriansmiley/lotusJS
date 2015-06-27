@@ -3,6 +3,7 @@
  */
 Lotus.AbstractComponent = function(){
     var _element;
+    var _context;
     var _id = Math.random();
     var _skinParts = new Lotus.SkinPartList();//ArrayList of Lotus.SkinPart instances
     Lavender.Subject.prototype.constructor.call(this);
@@ -15,6 +16,15 @@ Lotus.AbstractComponent = function(){
                 set: function(val) {
                     _element = val;
                     this.Notify( val, 'element' );
+                }
+            },
+            context: {
+                get: function() {
+                    return _context;
+                },
+                set: function(val) {
+                    _context = val;
+                    this.Notify( val, 'context' );
                 }
             },
             id: {
@@ -76,9 +86,10 @@ Lotus.AbstractComponent.prototype.addSkinParts = function () {
     }
 }
 
-Lotus.AbstractComponent.prototype.created = function(element){
+Lotus.AbstractComponent.prototype.created = function(element, context){
     console.log('Lotus.AbstractComponent.prototype.created');
     this.element = element;
+    this.context = context;
     this.init();
 }
 
@@ -131,5 +142,6 @@ Lotus.AbstractComponent.prototype.destroy = function(){
     this.removeEventListeners();
     this.binder.unbindAll();
     this.element = null;
+    this.context = null;
     this.id = null;
 }

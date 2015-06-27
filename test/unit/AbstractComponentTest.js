@@ -15,8 +15,10 @@ describe('AbstractComponentTest', function () {
         element.setAttribute('attribute-id', '1234');
         element.innerHTML = '<div skin-part="testProperty">' +
             '</div>';
-        component.created(element);
+        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+        component.created(element, context);
         expect(component.element === element).toBe(true);
+        expect(component.context === context).toBe(true);
         expect(component.id === '1234').toBe(true);
         expect(component.skinParts.skinPartsByLabel['testProperty'].element === element.firstChild ).toBe(true);
     });

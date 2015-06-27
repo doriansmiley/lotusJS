@@ -9,8 +9,9 @@ describe('AbstractComponentTest', function () {
     it('check AbstractComponent function and values', function () {
         var element = document.createElement('div');
         var skinBart = document.createElement('button');
+        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         var button = new Lotus.Button();
-        button.created(element);
+        button.created(element, context);
         button.addSkinPart('button', skinBart);
         expect(button.buttonSkinPart === skinBart).toBe(true);
 
