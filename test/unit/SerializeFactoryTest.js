@@ -10,6 +10,10 @@ describe('SerializeFactoryTest', function () {
             expect(service).toBeDefined();
             expect(service.getServiceResultParser).toBeDefined();
             expect(service.getServiceExporter).toBeDefined();
+
+            //test the sample app factory
+            service = SampleApp.SerializeFactory.getInstance();
+            expect(service.getServiceResultParser('0.99') instanceof SampleApp.ServiceResultParser ).toBe( true );
         });
 
     });

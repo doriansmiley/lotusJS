@@ -13,7 +13,7 @@ SampleApp.SerializeFactory = function(){
 }
 
 /*
- * Stub for override, this method is just an example of how this factory can be used
+ * get the service parser used to deserialize service responses
  * */
 SampleApp.SerializeFactory.prototype.getServiceResultParser = function(config)
 {
@@ -28,7 +28,7 @@ SampleApp.SerializeFactory.prototype.getServiceResultParser = function(config)
 }
 
 /*
- * Stub for override, this method is just an example of how this factory can be used
+ * get the service exporter used for serializing service payloads
  * */
 SampleApp.SerializeFactory.prototype.getServiceExporter = function(config)
 {

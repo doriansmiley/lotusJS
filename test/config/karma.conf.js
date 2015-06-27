@@ -28,6 +28,7 @@ module.exports = function (config) {
             '../example/sampleApp/js/model/**/*.js',
             '../example/sampleApp/js/serialization/**/*.js',
             '../example/sampleApp/js/services/**/*.js',
+            '../example/sampleApp/js/factory/**/*.js',
             '../example/sampleApp/js/view/**/*.js',
             'unit/*.js',
             'unit/**/*.js'
