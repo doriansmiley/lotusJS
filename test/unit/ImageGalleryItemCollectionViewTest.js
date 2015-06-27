@@ -19,9 +19,9 @@ describe('ImageGalleryItemCollectionViewTest', function() {
             '</div>';
         var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
         var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
-        component.element = element;
         component.id = '1234';
-        component.init();
+        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+        component.created(element, context);
         expect( component.element === element ).toBe( true );
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );

@@ -13,14 +13,14 @@ describe('ImageGalleryItemViewTest', function() {
             var element = document.createElement('div');
             document.body.appendChild(element);
             element.innerHTML = '<img skin-part="image"/>';
-            component.element = element;
             component.id = '1234';
             var model = {};
             model.layoutId = '7862938';
             model.position = 1;
             model.uriPath = 'http://www.someuri.com';
             component.model = model;
-            component.init();
+            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+            component.created(element, context);
             expect( component.element === element ).toBe( true );
             expect( component.model === model ).toBe( true );
             expect( component.id ).toBe( '1234' );
