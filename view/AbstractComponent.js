@@ -115,7 +115,7 @@ Lotus.AbstractComponent.prototype.addSkinPart = function(part, element){
     //assign the skin part
     this.skinParts.skinPartsByLabel[part].element = element;
     //notify
-    this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part]);
+    this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part].element);
 }
 
 //stub for override

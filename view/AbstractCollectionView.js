@@ -5,6 +5,8 @@
  * Created by dsmiley on 1/28/15.
  */
 Lotus.AbstractCollectionView = function () {
+    var _collectionContainer;
+    var _itemTemplate;
     var _selectedItem;
     var _collection;
     var _itemView;//IMPORTANT: this value must be defined on the tag
@@ -12,6 +14,24 @@ Lotus.AbstractCollectionView = function () {
     Lotus.AbstractComponent.prototype.constructor.call(this);
     // Define our getters and setters
     this.addProperties({
+            collectionContainer: {
+                get: function () {
+                    return _collectionContainer;
+                },
+                set: function (val) {
+                    _collectionContainer = val;
+                    this.Notify(val, 'collectionContainer');
+                }
+            },
+            itemTemplate: {
+                get: function () {
+                    return _itemTemplate;
+                },
+                set: function (val) {
+                    _itemTemplate = val;
+                    this.Notify(val, 'itemTemplate');
+                }
+            },
             selectedItem: {
                 get: function () {
                     return _selectedItem;
@@ -90,15 +110,18 @@ Lotus.AbstractCollectionView.prototype.render = function () {
     }
 }
 
-Lotus.AbstractCollectionView.prototype.addSkinPart = function (part, element) {
+Lotus.AbstractCollectionView.prototype.defineSkinParts = function(){
+    Lotus.AbstractComponent.prototype.defineSkinParts.call(this);
+    //set up skin parts
+    this.skinParts.addItem(new Lotus.SkinPart('collectionContainer', this, 'collectionContainer'));
+    this.skinParts.addItem(new Lotus.SkinPart('itemTemplate', this, 'itemTemplate'));
+}
+
+Lotus.AbstractCollectionView.prototype.onSkinPartAdded = function (part, element) {
+    Lotus.AbstractComponent.prototype.onSkinPartAdded.call(this, part, element );
     switch(part){
-        //optional container for displaying collection elements
-        case 'collectionContainer':
-            this.collectionContainer = element;
-            break;
         //required, defines the layout for child views
         case 'itemTemplate':
-            this.itemTemplate = element;
             element.parentNode.removeChild(element);//remove from the view
             break;
 

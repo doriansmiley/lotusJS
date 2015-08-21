@@ -4,8 +4,48 @@
 Lotus.AbstractRecordSetCollectionView = function () {
     var _navBtnEnabledClass;
     var _navBtnDisabledClass;
+    var _nextBtn;
+    var _pervBtn;
+    var _firstBtn;
+    var _lastBtn;
     Lotus.AbstractCollectionView.prototype.constructor.call(this);
     this.addProperties({
+            nextBtn: {
+                get: function () {
+                    return _nextBtn;
+                },
+                set: function (val) {
+                    _nextBtn = val;
+                    this.Notify(val, 'nextBtn');
+                }
+            },
+            pervBtn: {
+                get: function () {
+                    return _pervBtn;
+                },
+                set: function (val) {
+                    _pervBtn = val;
+                    this.Notify(val, 'pervBtn');
+                }
+            },
+            firstBtn: {
+                get: function () {
+                    return _firstBtn;
+                },
+                set: function (val) {
+                    _firstBtn = val;
+                    this.Notify(val, 'firstBtn');
+                }
+            },
+            lastBtn: {
+                get: function () {
+                    return _lastBtn;
+                },
+                set: function (val) {
+                    _lastBtn = val;
+                    this.Notify(val, 'lastBtn');
+                }
+            },
             navBtnEnabledClass: {
                 get: function () {
                     return _navBtnEnabledClass;
@@ -55,24 +95,29 @@ Lotus.AbstractRecordSetCollectionView.prototype.removeCollectionEventListeners =
     }
 }
 
-Lotus.AbstractRecordSetCollectionView.prototype.addSkinPart = function (part, element) {
-    Lotus.AbstractCollectionView.prototype.addSkinPart.call(this, part, element )
+Lotus.AbstractRecordSetCollectionView.prototype.defineSkinParts = function(){
+    Lotus.AbstractCollectionView.prototype.defineSkinParts.call(this);
+    //set up skin parts
+    this.skinParts.addItem(new Lotus.SkinPart('nextBtn', this, 'nextBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('pervBtn', this, 'pervBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('firstBtn', this, 'firstBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('lastBtn', this, 'lastBtn'));
+}
+
+Lotus.AbstractRecordSetCollectionView.prototype.onSkinPartAdded = function (part, element) {
+    Lotus.AbstractCollectionView.prototype.onSkinPartAdded.call(this, part, element );
     switch(part){
         //optional container for displaying collection elements
         case 'nextBtn':
-            this.nextBtn = element;
             this.nextBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'pervBtn':
-            this.pervBtn = element;
             this.pervBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'firstBtn':
-            this.firstBtn = element;
             this.firstBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'lastBtn':
-            this.lastBtn = element;
             this.lastBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
     }
