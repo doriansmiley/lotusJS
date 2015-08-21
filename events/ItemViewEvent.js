@@ -21,3 +21,4 @@ Lotus.ItemViewEvent.prototype.clone = function(){
 
 Lotus.ItemViewEvent.ITEM_SELECTED = 'itemViewItemSelected';
 Lotus.ItemViewEvent.ITEM_DESELECTED = 'itemViewItemDeselected';
+Lotus.ItemViewEvent.REMOVE_ITEM = 'itemViewRemoveItem';

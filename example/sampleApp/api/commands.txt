@@ -6,5 +6,5 @@ http://localhost:3000/printondemand/1234/photos/54232fc2-7345-4921-8079/0
 get single asset data
 http://localhost:3000/printondemand/1234/photos/54232fc2-7345-4921-8079
 
-cd /Users/dsmiley/workspace/HallmarkHtml5/test/mockApi/
+cd /Users/dsmiley/workspace/lotusJS/example/sampleApp/api/
 node app.js

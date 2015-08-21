@@ -15,7 +15,7 @@ Lavender.ObjectUtils.extend(Lotus.BaseCommand, Lotus.SampleCommand);
 
 Lotus.SampleCommand.prototype.getAction = function (event) {
     //config, service, opModel, parser, errorModel
-    return new Lotus.SampleAction('key', 'sampleValue', this.service, this.model.asyncOperationModel, this.parser, this.model.errorModel);
+    return new Lotus.SampleAction(this.service, this.model.asyncOperationModel, this.parser, this.model.errorModel);
 }
 
 Lotus.SampleCommand.prototype.onSuccess = function(event){

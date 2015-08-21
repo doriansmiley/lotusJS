@@ -11,7 +11,7 @@ describe('ServiceV1Test ', function () {
         config.context = 'hjyearbook';
         config.user = 'hjyearbook';
         config.password = 'hjyearbook!';
-        config.baseUrl = '/local/demo/refapp/php/Proxy.php?url=http://devsql1.silpub.com/';
+        config.baseUrl = 'http://devsql1.silpub.com/';
         //config.globalFontMapPath = '/local/demo/refapp/php/Proxy.php?url=http://devsql1.silpub.com/designers/hjyearbook/assets/fonts/GlobalFontMap_hjy.xml';
         config.globalFontMapPath = '/local/demo/refapp/php/GlobalFontMap_hjy.xml';
         var request = new Lotus.SampleService(config);

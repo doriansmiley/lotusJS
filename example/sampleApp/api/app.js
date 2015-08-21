@@ -20,6 +20,30 @@ server.route({
 
 server.route({
     method: 'POST',
+    path: '/',
+    handler: function (request, reply) {
+        var response = reply('{"message": "Hello, world! I am the mock API for developer testing."}');
+        response.type('application/json');
+        response.code(200);
+    },
+    config: {
+        cors: true
+    }
+});
+
+server.route({
+    method: 'OPTIONS',
+    path: '/',
+    handler: function (request, reply) {
+        reply('cors enabled');
+    },
+    config: {
+        cors: true
+    }
+});
+
+server.route({
+    method: 'POST',
     path: '/{system_id}/{user_id}/{asset_type}/{visibility}',
     handler: function (request, reply) {
         //console.log(request.orig.payload.file);

@@ -12,7 +12,8 @@ Lotus.SampleService = function( config ){
         //loading local XML for now. If a service becomes available use the service API
         'createSDSession'			: 'sdsession/action/create',
         'getInstance'				: 'instance/{0}',// {0} = instanceId
-        'echoJSON'				    : 'key/value/{0}/{1}'// {0} = instanceId
+        'echoJSON'				    : 'key/value/{0}/{1}',// {0} = instanceId
+        'localRequest'				: ''
     };
 }
 
@@ -31,6 +32,11 @@ Lotus.SampleService.prototype.getURL = function(key)
 //don't hard code or otherwise tightly couple the URL creation inside this method. The use of a builder pattern ensures the end point can be changed based on environment
 Lotus.SampleService.prototype.echoJSON = function(jsonKey, jsonValue, key, responder, format, contentType, localRequest, cache) {
     var url = this.getURLWithParams(key, [jsonKey, jsonValue]);
+    return this.sendXMLRequest(true, responder, url, null, null, format, contentType, localRequest, cache);
+}
+
+Lotus.SampleService.prototype.localRequest = function(key, responder, format, contentType, localRequest, cache) {
+    var url = this.getURLWithParams(key);
     return this.sendXMLRequest(true, responder, url, null, null, format, contentType, localRequest, cache);
 }
 
