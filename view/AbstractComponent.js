@@ -54,9 +54,9 @@ Lotus.AbstractComponent = function(){
 Lavender.ObjectUtils.extend(Lavender.Subject, Lotus.AbstractComponent);
 
 Lotus.AbstractComponent.prototype.init = function(){
+    this.addAttributes();
     this.defineSkinParts();
     this.addSkinParts();
-    this.addAttributes();
 }
 
 Lotus.AbstractComponent.prototype.addAttributes = function () {
@@ -141,6 +141,8 @@ Lotus.AbstractComponent.prototype.removeEventListeners = function(){
 Lotus.AbstractComponent.prototype.destroy = function(){
     this.removeEventListeners();
     this.binder.unbindAll();
+    this.binder = null;
+    this.observer = null;
     this.element = null;
     this.context = null;
     this.id = null;

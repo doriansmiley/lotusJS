@@ -2,20 +2,10 @@
  * Created by dsmiley on 5/20/15.
  */
 Lotus.AbstractRecordSetCollectionView = function () {
-    var _selectedItem;
     var _navBtnEnabledClass;
     var _navBtnDisabledClass;
     Lotus.AbstractCollectionView.prototype.constructor.call(this);
     this.addProperties({
-            selectedItem: {
-                get: function () {
-                    return _selectedItem;
-                },
-                set: function (val) {
-                    _selectedItem = val;
-                    this.Notify(val, 'selectedItem');
-                }
-            },
             navBtnEnabledClass: {
                 get: function () {
                     return _navBtnEnabledClass;
@@ -163,21 +153,6 @@ Lotus.AbstractRecordSetCollectionView.prototype.refreshNavButtonDisplay = functi
     button.classList.add(classToAdd);
 }
 
-Lotus.AbstractRecordSetCollectionView.prototype.addViewEventListeners = function( view ){
-    //add event listener for the layout selected event
-    view.addEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
-    view.addEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.removeViewEventListeners = function( view ){
-    view.removeEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
-    view.removeEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.onItemSelectedDeselect = function( event ){
-    this.selectedItem = ( event.type == Lotus.ItemViewEvent.ITEM_SELECTED ) ? event.payload.item : null;
-}
-
 Lotus.AbstractRecordSetCollectionView.prototype.onResultsChange = function (event) {
     this.render();
 }
@@ -188,10 +163,4 @@ Lotus.AbstractRecordSetCollectionView.prototype.onPageListChange = function (val
 
 Lotus.AbstractRecordSetCollectionView.prototype.getCollection = function (event) {
     return new Lavender.RecordSet();
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.destroy = function () {
-    Lotus.AbstractCollectionView.prototype.destroy.call(this);
-    this.selectedItem = null;
-
 }

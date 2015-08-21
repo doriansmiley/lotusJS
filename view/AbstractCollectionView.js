@@ -5,12 +5,22 @@
  * Created by dsmiley on 1/28/15.
  */
 Lotus.AbstractCollectionView = function () {
+    var _selectedItem;
     var _collection;
     var _itemView;//IMPORTANT: this value must be defined on the tag
     var _childViews = new Lavender.ArrayList();
     Lotus.AbstractComponent.prototype.constructor.call(this);
     // Define our getters and setters
     this.addProperties({
+            selectedItem: {
+                get: function () {
+                    return _selectedItem;
+                },
+                set: function (val) {
+                    _selectedItem = val;
+                    this.Notify(val, 'selectedItem');
+                }
+            },
             collection: {
                 get: function () {
                     return _collection;
@@ -137,11 +147,26 @@ Lotus.AbstractCollectionView.prototype.addChildView = function( model ){
 }
 
 Lotus.AbstractCollectionView.prototype.addViewEventListeners = function( view ){
-    //stub for override
+    view.addEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
+    view.addEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
+    view.addEventListener(Lotus.ItemViewEvent.REMOVE_ITEM, this, 'onItemRemove');
 }
 
 Lotus.AbstractCollectionView.prototype.removeViewEventListeners = function( view ){
-    //stub for override
+    view.removeEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
+    view.removeEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
+    view.removeEventListener(Lotus.ItemViewEvent.REMOVE_ITEM, this, 'onItemRemove');
+}
+
+Lotus.AbstractCollectionView.prototype.onItemSelectedDeselect = function( event ){
+    this.selectedItem = ( event.type == Lotus.ItemViewEvent.ITEM_SELECTED ) ? event.payload.item : null;
+}
+
+Lotus.AbstractCollectionView.prototype.onItemRemove = function( event ){
+    var index = this.collection.indexOf( event.payload.item.model );
+    if( index >= 0 ){
+        this.collection.removeItemAt(index);
+    }
 }
 
 //IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
@@ -200,4 +225,5 @@ Lotus.AbstractCollectionView.prototype.destroy = function () {
     this.itemView = null;
     this.collectionContainer = null;
     this.itemTemplate = null;
+    this.selectedItem = null;
 }
