@@ -6,14 +6,14 @@
 /* jasmine specs for controllers go here */
 describe('ServiceV1Test ', function () {
 
-    it('check SampleService function and values', function () {
+    it('check SampleService function and values', function (done) {
         var config = new Lavender.Config();
         config.context = 'hjyearbook';
         config.user = 'hjyearbook';
         config.password = 'hjyearbook!';
         config.baseUrl = 'http://devsql1.silpub.com/';
         //config.globalFontMapPath = '/local/demo/refapp/php/Proxy.php?url=http://devsql1.silpub.com/designers/hjyearbook/assets/fonts/GlobalFontMap_hjy.xml';
-        config.globalFontMapPath = '/local/demo/refapp/php/GlobalFontMap_hjy.xml';
+        config.globalFontMapPath = '/base/unit/assets/GlobalFontMap_hjy.xml';
         var request = new Lotus.SampleService(config);
         var success = false;
         var successObject;
@@ -22,9 +22,11 @@ describe('ServiceV1Test ', function () {
                 console.log('ServiceV1Test responder1 sucess called');
                 success = true;
                 successObject = sucessObj;
+                done();
                 },
             fault:function(faultObj){
                 console.log('ServiceV1Test responder1 fault called');
+                done().error(new Error(faultObj.message))
             }
         };
         //isPostRequest, responder, urlKey, paramObj, urlParams, format, contentType, token, localRequest
@@ -40,17 +42,6 @@ describe('ServiceV1Test ', function () {
         //expect( story.id ).toBe('1234');
         expect( requestId ).toBeDefined();
 
-        //Tell jasmine to hold execution until the condition success == true is met or the timeout of 5000 milliseconds occurs
-        waitsFor(function(){
-            return success == true;
-        }, 'ServiceV1Test service request failed', 5000);
-        //runs will execute after success == true
-        runs(function(){
-            expect( requestId ).toBe(successObject.requestId);
-            expect( $(successObject.resultObj).find('sDSession').attr('sDSessionID') ).toBeDefined();
-            config.sessionId = $(successObject.resultObj).find('sDSession').attr('sDSessionID');
-            success = false;
-        });
 
     });
 });

@@ -131,7 +131,8 @@ Lotus.AbstractRecordSetCollectionView.prototype.onSkinPartAdded = function (part
 }
 
 Lotus.AbstractRecordSetCollectionView.prototype.onClickHandler = function( event ){
-    switch( event.target.getAttribute('skin-part') ){
+    //event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
+    switch( event.currentTarget.getAttribute('skin-part') ){
         case 'nextBtn':
             if( this.collection.selectedPage + 1 > this.collection.totalPages ){
                 return;

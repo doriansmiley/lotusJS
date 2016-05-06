@@ -3,12 +3,7 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
-            'lib/jquery/jquery-1.10.2.js',
             'lib/xtag/*.js',
-            'lib/angular/angular.js',
-            'lib/angular/angular-*.js',
-            'lib/angular/angular-mocks.js',
-            'lib/angular/angular-mocks.js',
             'lib/lavender/*.js',
             '../global/*.js',//set up the sdk namespace
             '../example/sampleApp/js/global/*.js',//set up the sample app namespace
@@ -30,6 +25,7 @@ module.exports = function (config) {
             '../example/sampleApp/js/services/**/*.js',
             '../example/sampleApp/js/factory/**/*.js',
             '../example/sampleApp/js/view/**/*.js',
+            {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             'unit/*.js',
             'unit/**/*.js'
         ],

@@ -15,6 +15,9 @@ Lotus.AbstractComponent = function(){
                 },
                 set: function(val) {
                     _element = val;
+                    if( _element !== null && _element !== undefined ){
+                        _element.getComponentInstance = this.getComponentInstance.bind(this);
+                    }
                     this.Notify( val, 'element' );
                 }
             },
@@ -57,6 +60,11 @@ Lotus.AbstractComponent.prototype.init = function(){
     this.addAttributes();
     this.defineSkinParts();
     this.addSkinParts();
+}
+
+//utility method to allow DOM observers access to component methods, using method to avoid circular references
+Lotus.AbstractComponent.prototype.getComponentInstance = function () {
+    return this;
 }
 
 Lotus.AbstractComponent.prototype.addAttributes = function () {

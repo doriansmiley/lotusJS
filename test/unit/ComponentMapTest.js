@@ -17,7 +17,7 @@ describe('ComponentMapTest', function () {
         var buttonDOMElement2 = document.createElement('x-lotus-button');
         buttonDOMElement2.setAttribute('id', 'myButton');
         buttonDOMElement2.setAttribute('skin-part', 'button');
-        buttonDOMElement2.setAttribute('template-url', '/local/templates/button.html');
+        buttonDOMElement2.setAttribute('template-url', '/base/unit/assets/button.html');//'/base/unitNode/services/assets/template.zip',
         buttonDOMElement2.setAttribute('template-root', '#lotusButton');
         buttonDOMElement2.setAttribute('component-root', '[skin-part="button"]');
         //document.appendChild(buttonHTML)

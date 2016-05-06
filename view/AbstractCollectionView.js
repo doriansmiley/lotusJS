@@ -182,6 +182,9 @@ Lotus.AbstractCollectionView.prototype.removeViewEventListeners = function( view
 }
 
 Lotus.AbstractCollectionView.prototype.onItemSelectedDeselect = function( event ){
+    if( this.selectedItem !== null && this.selectedItem !== undefined && this.selectedItem != event.payload.item ){
+        this.selectedItem.resetState();
+    }
     this.selectedItem = ( event.type == Lotus.ItemViewEvent.ITEM_SELECTED ) ? event.payload.item : null;
 }
 

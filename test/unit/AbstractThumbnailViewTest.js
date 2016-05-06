@@ -44,8 +44,8 @@ describe('AbstractThumbnailView', function() {
             asset.printFileVisibleLayerList = 'test layers';//String
             asset.thumbnailFilename = 'test thumb file name';//String
             asset.source = 'test source';//String
-            asset.thumbnailUriPath = 'http://dev.silpub.com/sdsession/4120da7b-3d43-4241-9d4a-a6913f1ee937/imageasset/e84a12b5-43f5-4bc5-9344-7bdd329c9daf/output/thumbnail';//String
-            asset.webUriPath = 'http://dev.silpub.com/sdsession/4120da7b-3d43-4241-9d4a-a6913f1ee937/imageasset/e84a12b5-43f5-4bc5-9344-7bdd329c9daf/output/weblink';//String
+            asset.thumbnailUriPath = '/base/unit/assets/test.png';//String
+            asset.webUriPath = '/base/unit/assets.test.png';//String
             asset.uriPath = asset.webUriPath;
             asset.thumbUrl = asset.thumbnailUriPath;
             model.asset = asset;
@@ -56,7 +56,7 @@ describe('AbstractThumbnailView', function() {
             expect( component.id ).toBe( '1234' );
             expect( component.thumbnailContainer === element.querySelector('[skin-part=thumbnailContainer]') ).toBe( true );
             expect( component.thumbnail === element.querySelector('[skin-part=thumbnail]') ).toBe( true );
-            expect( component.thumbnail.getAttribute('src') ).toBe( 'http://dev.silpub.com/sdsession/4120da7b-3d43-4241-9d4a-a6913f1ee937/imageasset/e84a12b5-43f5-4bc5-9344-7bdd329c9daf/output/thumbnail' );
+            expect( component.thumbnail.getAttribute('src') ).toBe( '/base/unit/assets/test.png' );
             expect( component.thumbnail.getAttribute('width') ).toBe( '57.6px' );
             expect( component.thumbnail.getAttribute('height') ).toBe( '96px' );
             component.destroy();

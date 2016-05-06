@@ -7,7 +7,7 @@
 Lotus.SampleService = function( config ){
     var _config;//IContextConfigModel
     this.config = config;
-    this.serviceMap =
+    this.serviceMap = (config.serviceMap) ? config.serviceMap :
     {
         //loading local XML for now. If a service becomes available use the service API
         'createSDSession'			: 'sdsession/action/create',
@@ -54,27 +54,17 @@ Lotus.SampleService.prototype.createSDSession = function(context, userID, passwo
     return this.sendXMLRequest(true, responder, url, params, null, format, contentType, localRequest, cache);
 }
 
-//This is a sample send reques method, you should customize to fit your services request format. This sample uses XML and wraps all params in the request element which is required by the service API
+//This is a sample send reques method, you should customize to fit your services request format. This sample uses JSON
+//I know the name sucks, but it's the name we chose at the time for preparing request params
 Lotus.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder, url, paramObj, urlParams, format, contentType, localRequest, cache, externalApiUrl)
 {
-    var paramsXML = null;
+    var params = JSON.stringify(paramObj);
 
-    if (paramObj && isPostRequest)
-    {
-        paramsXML = '<request>';
-        for (var key in paramObj)
-        {
-            if(paramObj[key] === null || paramObj[key] === undefined ){
-                continue;
-            }
-            paramsXML += '<'+key+'>';
-            paramsXML += paramObj[key];
-            paramsXML += '</'+key+'>';
-        }
-        paramsXML += '</request>';
-    }
+    //allow null to pass through
+    contentType = (contentType === undefined) ? 'application/json' : contentType;
+    format = (format === undefined) ? 'json' : format;
 
-    return this.sendRequest(isPostRequest, responder, url, paramsXML, format, contentType, cache);
+    return this.sendRequest(isPostRequest, responder, url, params, format, contentType, cache);
 }
 
 //this is a generic method that you should not override
@@ -83,12 +73,7 @@ Lotus.SampleService.prototype.sendRequest = function( isPostRequest, responder, 
     if( cache === null || cache === undefined ){
         cache = false;
     }
-    if( contentType === null || contentType === undefined ){
-        contentType = 'text/xml'
-    }
-    if( dataType === null || dataType === undefined ){
-        dataType = 'xml'
-    }
+
     var httpRequestInstance = Lotus.HttpServiceFactory.getInstance().getHttpService(this.config);
     httpRequestInstance.addResponder(responder);
     var requestType = (isPostRequest) ? 'POST' : 'GET';

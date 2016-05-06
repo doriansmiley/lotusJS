@@ -6,6 +6,7 @@ Lotus.AbstractThumbnailView = function () {
     var _thumbHeight;
     var _thumbnail;
     var _thumbnailContainer;
+    var _allowDrag = true;
     Lotus.AbstractItemView.prototype.constructor.call(this);
     // Define our getters and setters
     this.addProperties({
@@ -44,10 +45,20 @@ Lotus.AbstractThumbnailView = function () {
                     _thumbHeight = val;
                     this.Notify(val, 'thumbHeight');
                 }
+            },
+            allowDrag: {
+                get: function () {
+                    return _allowDrag;
+                },
+                set: function (val) {
+                    _allowDrag = val;
+                    this.Notify(val, 'allowDrag');
+                }
             }
         }
     );
     this.thumbClickProxy = this.onThumbClick.bind(this);
+    this.onDragStartProxy = this.onDragStart.bind(this);
     this.setUpBindings();
 }
 /************* Inherit from Subject for data binding *************/
@@ -59,15 +70,69 @@ Lotus.AbstractThumbnailView.prototype.setUpBindings = function(){
 
 Lotus.AbstractThumbnailView.prototype.onModelChange = function( value ){
     if( value !== null && value !== undefined && this.thumbnail !== null && this.thumbnail !== undefined ){
-        this.thumbnail.src = this.model.asset.thumbUrl;
-        if( this.thumbWidth !== null && this.thumbWidth !== undefined && this.thumbHeight !== null && this.thumbHeight !== undefined){
-            var scale = Lavender.ResizeUtils.getScaleToFit({width: this.model.defaultWidth, height: this.model.defaultHeight}, {width: this.thumbWidth, height: this.thumbHeight});
-            var width = ( !isNaN(scale) ) ? this.model.defaultWidth * scale : 50;
-            var height = ( !isNaN(scale) ) ? this.model.defaultHeight * scale : 50;
-            this.thumbnail.setAttribute('width', width + 'px');
-            this.thumbnail.setAttribute('height', height + 'px');
-        }
+        this.thumbnail.src = this.getImageURL();
+        this.sizeImage();
     }
+}
+
+Lotus.AbstractThumbnailView.prototype.sizeImage = function(){
+    if( this.thumbnail === null ||  this.thumbnail === undefined ){
+        return;
+    }
+    var defaultSize = this.getDefaultSize();
+    var containerSize = this.getContainerSize();
+    var scale = Lavender.ResizeUtils.getScaleToFit(defaultSize, containerSize);
+    var width = defaultSize.width * scale;
+    var height = defaultSize.height * scale;
+    //console.log("width/height "+width+"/"+height)
+    this.thumbnail.setAttribute('width', width + 'px');
+    this.thumbnail.setAttribute('height', height + 'px');
+    this.thumbnail.style.maxWidth = containerSize.width + 'px';
+    this.thumbnail.style.maxHeight = containerSize.height + 'px';
+}
+
+Lotus.AbstractThumbnailView.prototype.addEventListeners = function(){
+    if( this.thumbnail === null ||  this.thumbnail === undefined ){
+        return;
+    }
+    this.thumbnail.setAttribute('draggable', this.allowDrag);
+    this.thumbnail.addEventListener('click', this.thumbClickProxy);
+    this.thumbnail.addEventListener('dragstart', this.onDragStartProxy);
+}
+
+Lotus.AbstractThumbnailView.prototype.removeEventListeners = function(){
+    if( this.thumbnail === null ||  this.thumbnail === undefined ){
+        return;
+    }
+    this.thumbnail.removeEventListener('click', this.thumbClickProxy);
+    this.thumbnail.removeEventListener('dragstart', this.onDragStartProxy);
+}
+
+Lotus.AbstractThumbnailView.prototype.onThumbClick = function (event) {
+    this.resetState();
+}
+
+Lotus.AbstractThumbnailView.prototype.onDragStart = function ( event ) {
+    //to be overrided
+}
+
+Lotus.AbstractThumbnailView.prototype.getImageURL = function(){
+    return this.model.asset.thumbUrl;
+}
+
+Lotus.AbstractThumbnailView.prototype.getDefaultSize = function(){
+    var width = ( this.model && this.model.hasOwnProperty('defaultWidth') && !isNaN( parseInt(this.model.defaultWidth) ) ) ? parseInt(this.model.defaultWidth) : this.thumbnail.getAttribute('attribute-default-width');
+    var height = ( this.model && this.model.hasOwnProperty('defaultHeight') && !isNaN( parseInt(this.model.defaultHeight) ) ) ? parseInt(this.model.defaultHeight) : this.thumbnail.getAttribute('attribute-default-height');
+    return {width:width, height:height};
+}
+
+Lotus.AbstractThumbnailView.prototype.getContainerSize = function(){
+    var returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined ) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
+    //if the container has a defined width and height set in the tempalte use that instead of our defaults
+    if( !isNaN( parseInt(this.thumbWidth) ) && !isNaN( parseInt(this.thumbWidth) ) ){
+        returnObj = {width:this.thumbWidth, height:this.thumbHeight};
+    }
+    return returnObj;
 }
 
 Lotus.AbstractThumbnailView.prototype.defineSkinParts = function(){
@@ -81,7 +146,8 @@ Lotus.AbstractThumbnailView.prototype.onSkinPartAdded = function (part, element)
     Lotus.AbstractItemView.prototype.onSkinPartAdded.call(this, part, element);
     switch( part ){
         case 'thumbnail':
-            this.thumbnail.addEventListener('click', this.thumbClickProxy);
+            this.addEventListeners();
+            this.sizeImage();
             break;
         case 'thumbnailContainer':
             this.thumbnailSelectedClass = this.thumbnailContainer.getAttribute('selected-class');
@@ -102,13 +168,10 @@ Lotus.AbstractThumbnailView.prototype.resetState = function () {
 
 Lotus.AbstractThumbnailView.prototype.destroy = function(){
     Lotus.AbstractItemView.prototype.destroy.call(this);
-    if( this.thumbnail !== null && this.thumbnail !== undefined ){
-        this.thumbnail.removeEventListener('click', this.thumbClickProxy);
-        this.thumbnail = null;
-    }
-    if( this.thumbnailContainer !== null && this.thumbnailContainer !== undefined ){
-        this.thumbnailContainer = null;
-        this.thumbnailSelectedClass = null;
-    }
+    this.removeEventListeners()
+    this.thumbnail = null;
+    this.thumbnailContainer = null;
+    this.thumbnailSelectedClass = null;
     this.thumbClickProxy = null;
+    this.onDragStartProxy = null;
 }
