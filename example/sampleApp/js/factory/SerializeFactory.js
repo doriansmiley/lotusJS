@@ -21,7 +21,7 @@ SampleApp.SerializeFactory.prototype.getServiceResultParser = function(config)
     switch( config.parserCode ){
         case '0.99':
         default:
-            parser = new SampleApp.ServiceResultParser();
+            parser = SampleApp.resources.injector.inject(SampleApp.SERVICE_RESULT_PARSER_KEY);
             break;
     }
     return parser;
