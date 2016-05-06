@@ -3,10 +3,10 @@
  */
 var model = Lavender.ModelLocator.getInstance();
 //add dynamic config properties
-model.config.httpServiceCode = 'xhr';//IMPORTANT:no trailing slash
+model.config.httpServiceCode = 'xhr';
+model.config.eventDispatcherCode = "abstract";
 //base URL for the node services
 model.config.baseUrl = 'http://localhost:3000';//IMPORTANT:no trailing slash
-model.config.httpServiceCode = "node";
 //api params
 model.config.defaultSystemId = 'printimages';//IMPORTANT:no trailing slash
 model.config.defaultAssetType = 'photos';//IMPORTANT:no trailing slash
