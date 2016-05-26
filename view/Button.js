@@ -72,4 +72,5 @@ Lotus.Button.prototype.removeEventListeners = function(){
 Lotus.Button.prototype.onClick = function( event ){
     console.log('Lotus.Button.prototype.onClick: event is ' + event);
     console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
+    this.dispatch(new Lavender.AbstractEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
 }
