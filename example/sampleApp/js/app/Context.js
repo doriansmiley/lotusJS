@@ -9,7 +9,7 @@ Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
 
 SampleApp.Context.prototype.mapComponents = function(){
     //sample
-    //this.componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
+    //this.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
 }
 
 SampleApp.Context.prototype.mapCommands = function(){
