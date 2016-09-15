@@ -110,6 +110,8 @@ Notice the `data-skin-part="collectionContainer"` attribute. This is a special a
 
 **Create custom components built on Lotus and offer them through the component exchange**
 
+TODO
+
 **Inversion of Control Container**
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
