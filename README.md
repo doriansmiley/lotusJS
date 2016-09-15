@@ -108,6 +108,8 @@ Creating collection components is made easy with Lotus. You can extend the base 
 ````
 Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. For a complete example see our sample application under the examples directory.
 
+**Create custom components built on Lotus and offer them through the component exchange**
+
 **Inversion of Control Container**
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
