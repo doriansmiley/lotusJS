@@ -13,15 +13,31 @@ SampleApp.SerializeFactory = function(){
 }
 
 /*
+ * get the image asset parser based on JSON schema key
+ * This is just a sample, a real world method would be tied to known schema key values and default to an error
+ * */
+SampleApp.SerializeFactory.prototype.getImageAssetParser = function(schemaKey)
+{
+    var parser;
+    switch( schemaKey ){
+        case '0.99':
+        default:
+            parser = new SampleApp.ImageAssetsParser();
+            break;
+    }
+    return parser;
+}
+
+/*
  * get the service parser used to deserialize service responses
  * */
 SampleApp.SerializeFactory.prototype.getServiceResultParser = function(config)
 {
     var parser;
     switch( config.parserCode ){
-        case '0.99':
+        case 'testApp':
         default:
-            parser = SampleApp.resources.injector.inject(SampleApp.SERVICE_RESULT_PARSER_KEY);
+            parser = new SampleApp.ServiceResultParser();
             break;
     }
     return parser;
@@ -35,7 +51,7 @@ SampleApp.SerializeFactory.prototype.getServiceExporter = function(config)
     var exporter;
     //code out once sample app exports data to services
     switch( config.exporterCode ){
-        case '0.99':
+        case 'testApp':
         default:
             exporter = {};
             break;
