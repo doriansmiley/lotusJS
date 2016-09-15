@@ -15,7 +15,7 @@ Lotus.SampleAction.prototype.parseResponse = function (result) {
 
 //execute the service call
 Lotus.SampleAction.prototype.executeServiceMethod = function () {
-    return this.service.localRequest('localRequest', this, 'json', null, true, true);
+    return this.service.testRequestUsingIncludedAPI('localRequest', this, 'json', null, true, true);
 }
 
 //get string to append to fault message

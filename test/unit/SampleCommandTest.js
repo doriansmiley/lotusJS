@@ -8,7 +8,7 @@ describe('SampleCommandTest', function () {
 
     it('check SampleCommand function and values', function () {
         var model = Lavender.ModelLocator.getInstance();
-        model.config.baseUrl = 'http://localhost:3000/';
+        model.config.baseUrl = 'http://localhost';
         var context = new Lotus.Context(model.config);
         var service = new Lotus.SampleService( model.config );
         var parser = {};

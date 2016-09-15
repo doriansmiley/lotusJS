@@ -10,10 +10,10 @@ Lotus.SampleService = function( config ){
     this.serviceMap = (config.serviceMap) ? config.serviceMap :
     {
         //loading local XML for now. If a service becomes available use the service API
-        'createSDSession'			: 'sdsession/action/create',
-        'getInstance'				: 'instance/{0}',// {0} = instanceId
-        'echoJSON'				    : 'key/value/{0}/{1}',// {0} = instanceId
-        'localRequest'				: ''
+        'createSDSession'			: '/sdsession/action/create',
+        'getInstance'				: '/instance/{0}',// {0} = instanceId
+        'echoJSON'				    : '/key/value/{0}/{1}',// {0} = instanceId
+        'localRequest'				: ':3000/printondemand/1234/photos/{0}'
     };
 }
 
@@ -35,9 +35,9 @@ Lotus.SampleService.prototype.echoJSON = function(jsonKey, jsonValue, key, respo
     return this.sendXMLRequest(true, responder, url, null, null, format, contentType, localRequest, cache);
 }
 
-Lotus.SampleService.prototype.localRequest = function(key, responder, format, contentType, localRequest, cache) {
-    var url = this.getURLWithParams(key);
-    return this.sendXMLRequest(true, responder, url, null, null, format, contentType, localRequest, cache);
+Lotus.SampleService.prototype.testRequestUsingIncludedAPI = function(key, responder, format, contentType, localRequest, cache) {
+    var url = this.getURLWithParams(key, ['54232fc2-7345-4921-8079']);//hard coded args
+    return this.sendXMLRequest(false, responder, url, null, null, format, contentType, localRequest, cache);
 }
 
 //this is a sample service method to be used as an example only. You service methods will be dependent on your service API and model objects

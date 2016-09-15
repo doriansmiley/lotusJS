@@ -33,3 +33,20 @@ SampleApp.HttpServiceFactory.prototype.getHttpService = function( config ){
     }
     return httpService;
 }
+
+//returns constructor used for injection
+SampleApp.HttpServiceFactory.prototype.getHttpServiceForInjection = function( config ){
+    var httpService;
+    switch( config.httpServiceCode ){
+        case "angular":
+            httpService = Lavender.AngularHttpService;
+            break;
+        case "jquery":
+            httpService = Lavender.JqueryHttpService;
+            break;
+        default:
+            httpService = Lavender.XhrHttpService;
+            break;
+    }
+    return httpService;
+}

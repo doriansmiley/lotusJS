@@ -22,7 +22,7 @@ SampleApp.Context.prototype.mapCommands = function(){
 }
 
 SampleApp.Context.prototype.mapObjects = function(){
-    this.injector.mapObject(SampleApp.HTTP_SERVICE_KEY, SampleApp.HttpServiceFactory.getInstance().getHttpService(this.config));
+    this.injector.mapObject(SampleApp.HTTP_SERVICE_KEY, SampleApp.HttpServiceFactory.getInstance().getHttpServiceForInjection(this.config));
     this.injector.mapObject(SampleApp.IMAGE_ASSETS_PARSER_KEY, SampleApp.ImageAssetsParser);
     //Map singletons
     this.injector.mapSingletonInstance(SampleApp.SERVICE_RESULT_PARSER_KEY, new SampleApp.ServiceResultParser());

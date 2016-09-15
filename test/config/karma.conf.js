@@ -25,6 +25,7 @@ module.exports = function (config) {
             '../example/sampleApp/js/services/**/*.js',
             '../example/sampleApp/js/factory/**/*.js',
             '../example/sampleApp/js/view/**/*.js',
+            '../example/sampleApp/js/app/**/*.js',
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             'unit/*.js',
             'unit/**/*.js'
