@@ -3,7 +3,7 @@
  */
 SampleApp.HttpServiceFactory = function(){
     if (SampleApp.HttpServiceFactory.instance != null) {
-        throw( 'SampleApp.EventDispatcherFactory.instance: Singleton class has already been instantiated' );
+        throw( 'SampleApp.HttpServiceFactory.instance: Singleton class has already been instantiated' );
     } else {
         //perform any required object set up
     }

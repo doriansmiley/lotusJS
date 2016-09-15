@@ -4,7 +4,7 @@
 
 Lotus.ServiceFactory = function(){
     if (Lotus.ServiceFactory.instance != null) {
-        throw( 'Lotus.EventDispatcherFactory.instance: Singleton class has already been instantiated' );
+        throw( 'Lotus.ServiceFactory.instance: Singleton class has already been instantiated' );
     } else {
         //perform any required object set up
     }

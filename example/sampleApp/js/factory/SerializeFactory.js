@@ -6,7 +6,7 @@
  */
 SampleApp.SerializeFactory = function(){
     if (SampleApp.SerializeFactory.instance != null) {
-        throw( 'SampleApp.EventDispatcherFactory.instance: Singleton class has already been instantiated' );
+        throw( 'SampleApp.SerializeFactory.instance: Singleton class has already been instantiated' );
     } else {
         //perform any required object set up
     }

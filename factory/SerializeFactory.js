@@ -3,7 +3,7 @@
  */
 Lotus.SerializeFactory = function(){
     if (Lotus.SerializeFactory.instance != null) {
-        throw( 'Lotus.EventDispatcherFactory.instance: Singleton class has already been instantiated' );
+        throw( 'Lotus.SerializeFactory.instance: Singleton class has already been instantiated' );
     } else {
         //perform any required object set up
     }
