@@ -13,7 +13,9 @@ var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
 ````
 Component creation in the HTML DOM:
-`<x-lotus-button type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>`
+````
+<x-lotus-button type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>
+````
 
 Notice the the `template-url` attribute. This is a special attribute defined by the framework which triggers the loading and parsing of the file contents. This can be a relative or absolute path (includes http links) to the html file containing the components `<template>` definition. In this example the contents of that file are as follows:
 
@@ -56,7 +58,7 @@ Lotus.Button.prototype.onClick = function( event ){
     this.dispatch(new Lavender.AbstractEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
 }
 ````
-All components using the Lotus framework implement their own `onSkinPartAdded` function and attach behaviors accordingly. This avoids using selectors and allows the component skin to be totally decoupled from the web component's code. It also allows skins to be developed by designers using a common "data contract" that are the skin parts of the component. Skins can be developed and offered separately from base components as well. This is a key point of seperation from Lotun and other web component frameworks.
+All components using the Lotus framework implement their own `onSkinPartAdded` function and attach behaviors accordingly. This avoids using selectors and allows the component skin to be totally decoupled from the web component's code. It also allows skins to be developed by designers using a common "data contract" that are the skin parts of the component. Skins can be developed and offered separately from base components as well. This is a key point of separation between Lotus and other web component frameworks.
 
 **Out of box collection and item views**
 
