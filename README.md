@@ -187,3 +187,7 @@ SampleApp.init = function(){
 - Sand Boxed Context
 - Service Locator
 - Serialization
+
+**Light Weight**
+
+Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small pacakge.
