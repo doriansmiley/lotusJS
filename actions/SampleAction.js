@@ -10,7 +10,7 @@ Lavender.ObjectUtils.extend(Lavender.AbstractServiceAction, Lotus.SampleAction);
 
 //abstract method for override
 Lotus.SampleAction.prototype.parseResponse = function (result) {
-    return result;//use this.parser.parse to deserialize results. You'll of course need to implement the parser
+    return this.parser.parse(result);//use this.parser.parse to deserialize results. You'll of course need to implement the parser, our tests just use a generic function that returns the result
 }
 
 //execute the service call
