@@ -1,8 +1,9 @@
 /**
  * Created by dsmiley on 5/6/16.
  */
-SampleApp.Context = function (config, params) {
-    Lotus.Context.prototype.constructor.call(this, config, params);
+SampleApp.Context = function (model, params) {
+    this.model = model;
+    Lotus.Context.prototype.constructor.call(this, this,model.config, params);
 }
 /************* Inherit from Subject for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
@@ -29,7 +30,7 @@ SampleApp.Context.prototype.mapObjects = function(){
     this.injector.mapSingletonInstance(SampleApp.SERIALIZE_FACTORY_KEY, SampleApp.SerializeFactory.getInstance());
     this.injector.mapSingletonInstance(SampleApp.APP_SERVICES, new SampleApp.SampleService(this.config));
     this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));
-    this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, new SampleApp.Model());
+    this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, this.model);
 }
 
 SampleApp.Context.prototype.mapMediators = function(){
