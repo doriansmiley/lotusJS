@@ -157,7 +157,7 @@ SampleApp.EVENT_DISPATCHER_KEY = 'eventDispatcher';
 SampleApp.MODEL_KEY = 'images';
 ````
 
-Note you can map objects that will be created by the IOC container or mapped to a singleton. You can still use factories to obtain singletons.
+Note you can map objects that will be created by the IOC container using `mapObject` or map to a singleton using `mapSingletonInstance`. You can still use factories to obtain singletons.
 
 To inject objects you use the context's injector as follows:
 
