@@ -22,8 +22,8 @@ describe('ComponentMapTest', function () {
         buttonDOMElement2.setAttribute('component-root', '[skin-part="button"]');
         //document.appendChild(buttonHTML)
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        context.componentMap.mapComponent('x-lotus-button2', null, Lotus.Button);
-        context.componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
+        context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);
+        context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
         expect(context.componentMap.componentInstances.length()).toBe(2);
         expect(context.componentMap.componentInstances.getItemAt(0).type).toBe('test');
         expect(context.componentMap.componentInstances.getItemAt(0).notAnAttribute).toBe(undefined);

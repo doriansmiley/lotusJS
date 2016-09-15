@@ -62,11 +62,11 @@ Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
 }
 
-Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
+Lotus.ComponentMap.prototype.mapComponent = function( tagName, prototype, functionConstructor ){
     var componentMap = this;
     xtag.register(tagName, {
         // extend existing elements
-        extends: extendsTag,
+        prototype: prototype,
         lifecycle:{
             created: function(){
                 //IMPORTANT:, use builder patter here and create an add component function

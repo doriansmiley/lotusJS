@@ -30,7 +30,6 @@ Lotus.Button = function(){
         }
     );
     Lotus.AbstractComponent.prototype.constructor.call(this);
-    //Lavender.ObjectUtils.mixin(Lotus.AbstractComponent, Lotus.AbstractComponent, this);
 }
 /************* Inherit from Lotus.AbstractComponent for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.AbstractComponent, Lotus.Button);

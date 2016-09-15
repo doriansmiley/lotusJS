@@ -10,9 +10,9 @@
     <script language="JavaScript">
         var context = (function( xtag ){
             var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-            context.componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
-            context.componentMap.mapComponent('x-lotus-button2', null, Lotus.Button);
-            context.componentMap.mapComponent('x-lotus-button3', null, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button);
             return context;
         }( xtag ));
     </script>
