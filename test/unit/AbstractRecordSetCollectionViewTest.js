@@ -50,12 +50,14 @@ describe('AbstractRecordSetCollectionViewTest', function() {
         expect( component.collection.pageList.length() ).toBe( 2 );
         expect( component.collectionContainer.childNodes.length ).toBe( 2 );
         expect( component.childViews.length() ).toBe( 2 );
-        component.collection.results.clear();
+        component.collection.clear();
         expect( component.collection.results.length() ).toBe( 0 );
         expect( component.collection.pageList ).toBe( undefined );
         expect( component.collectionContainer.childNodes.length ).toBe( 0 );
         expect( component.childViews.length() ).toBe( 0 );
+        component.collection.totalRecords = 3;
         component.collection.results.addAll([new Lavender.Config(),new Lavender.Config(),new Lavender.Config()]);
+        component.collection.selectedPage = 1;
         expect( component.collection.results.length() ).toBe( 3 );
         expect( component.collection.pageList.length() ).toBe( 2 );
         expect( component.collectionContainer.childNodes.length ).toBe( 2 );
