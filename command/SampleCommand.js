@@ -2,7 +2,7 @@
  * Created by dsmiley on 3/4/14.
  */
 Lotus.SampleCommand = function(context){
-    Lotus.BaseCommand.prototype.constructor.call(this, context);
+    Lotus.AbstractCommand.prototype.constructor.call(this, context);
     //get injected params.
     //IMPORTANT: this is just an example of how to obtain object instances, in a production application you could use global variables, instance attributes, or static attributes
     //Anything but a hard coded string
@@ -11,7 +11,7 @@ Lotus.SampleCommand = function(context){
     this.parser = context.injector.inject('parser');
 }
 /************* Inherit from Subject for data binding *************/
-Lavender.ObjectUtils.extend(Lotus.BaseCommand, Lotus.SampleCommand);
+Lavender.ObjectUtils.extend(Lotus.AbstractCommand, Lotus.SampleCommand);
 
 Lotus.SampleCommand.prototype.getAction = function (event) {
     //config, service, opModel, parser, errorModel
@@ -25,7 +25,7 @@ Lotus.SampleCommand.prototype.onSuccess = function(event){
 }
 
 Lotus.SampleCommand.prototype.destroy = function () {
-    Lotus.BaseCommand.prototype.destroy.call(this);
+    Lotus.AbstractCommand.prototype.destroy.call(this);
     this.service = null;
     this.model = null;
     this.parser = null;

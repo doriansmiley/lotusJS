@@ -17,7 +17,7 @@ $SPI_SDK_HOME/context/ComponentList.js \
 $SPI_SDK_HOME/context/ComponentMap.js \
 $SPI_SDK_HOME/context/Injector.js \
 $SPI_SDK_HOME/events/ItemViewEvent.js \
-$SPI_SDK_HOME/command/BaseCommand.js \
+$SPI_SDK_HOME/command/AbstractCommand.js \
 $SPI_SDK_HOME/factory/EventDispatcherFactory.js \
 $SPI_SDK_HOME/factory/HttpServiceFactory.js \
 $SPI_SDK_HOME/factory/SerializeFactory.js \
