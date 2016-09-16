@@ -11,8 +11,6 @@ describe('HttpServiceFactoryTest', function () {
             expect(service.getHttpService).toBeDefined();
             expect(service.getHttpService( new Lavender.Config() ) instanceof Lavender.XhrHttpService).toBe(true);
             var config = new Lavender.Config();
-            config.httpServiceCode = 'angular';
-            expect(service.getHttpService( config ) instanceof Lavender.AngularHttpService).toBe(true);
             config.httpServiceCode = 'jquery';
             expect(service.getHttpService( config ) instanceof Lavender.JqueryHttpService).toBe(true);
             config.httpServiceCode = undefined;

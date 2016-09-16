@@ -10,7 +10,7 @@ SampleApp.SampleService = function( config ){
     this.serviceMap = (config.serviceMap) ? config.serviceMap :
     {
         //loading local XML for now. If a service becomes available use the service API
-        'readImageAssets'			: ':3000/readImageAssets/{0}/{1}/{2}/{3}'
+        'readImageAssets'			: ':3000/{0}/{1}/{2}/{3}'
     };
 }
 
@@ -34,7 +34,7 @@ SampleApp.SampleService.prototype.readImageAssets = function(params, key, respon
 
 //This is a sample send reques method, you should customize to fit your services request format. This sample uses JSON
 //I know the name sucks, but it's the name we chose at the time for preparing request params
-Lotus.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder, url, paramObj, urlParams, format, contentType, localRequest, cache, externalApiUrl)
+SampleApp.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder, url, paramObj, urlParams, format, contentType, localRequest, cache, externalApiUrl)
 {
     var params = JSON.stringify(paramObj);
 
@@ -46,7 +46,7 @@ Lotus.SampleService.prototype.sendXMLRequest = function(isPostRequest, responder
 }
 
 //this is a generic method that you should not override
-Lotus.SampleService.prototype.sendRequest = function( isPostRequest, responder, url, params, dataType, contentType, cache )
+SampleApp.SampleService.prototype.sendRequest = function( isPostRequest, responder, url, params, dataType, contentType, cache )
 {
     if( cache === null || cache === undefined ){
         cache = false;

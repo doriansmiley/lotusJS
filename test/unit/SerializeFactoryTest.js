@@ -11,9 +11,13 @@ describe('SerializeFactoryTest', function () {
             expect(service.getServiceResultParser).toBeDefined();
             expect(service.getServiceExporter).toBeDefined();
 
+            //init sample app
+            SampleApp.init()
             //test the sample app factory
             service = SampleApp.SerializeFactory.getInstance();
-            expect(service.getServiceResultParser('0.99') instanceof SampleApp.ServiceResultParser ).toBe( true );
+            expect(service.getServiceResultParser('testApp') instanceof SampleApp.ServiceResultParser ).toBe( true );
+            expect(service.getImageAssetParser('0.99') instanceof SampleApp.ImageAssetsParser ).toBe( true );
+
         });
 
     });

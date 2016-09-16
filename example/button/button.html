@@ -10,9 +10,9 @@
     <script language="JavaScript">
         var context = (function( xtag ){
             var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-            context.componentMap.mapComponent('x-lotus-button', null, Lotus.Button);
-            context.componentMap.mapComponent('x-lotus-button2', null, Lotus.Button);
-            context.componentMap.mapComponent('x-lotus-button3', null, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button);
             return context;
         }( xtag ));
     </script>
@@ -34,9 +34,19 @@
 </p>
 <x-lotus-button2 type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
 <p>
-    Here's a duplicate instance of the button
+    Here's a duplicate instance of the button with event mediation. All web components are assigned a <pre style="display: inline">lotusComponentInstance</pre> property. This is the instance of the function created when <pre style="display: inline">context.componentMap.mapComponent</pre> is called.
+    You do not have to mediate events in this fashion. Our sample application shows how to extend core components to provide application level event mediation in a subclass of the component.
+    If you do not want to use the <pre style="display: inline">lotusComponentInstance</pre> property you can build your components to dispatch events using the components element property (which in this case is the x-lotus-button2 tag).
 </p>
-<x-lotus-button2 type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
+<x-lotus-button2 id="eventSampleBtn" type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
+<script language="JavaScript">
+    var listener = {
+        onClick:function(event){
+            console.log('I mediated and event dispatched by a lotus component instance. My component could pass whatever data it wants here.');
+        }
+    };
+    document.getElementById('eventSampleBtn').lotusComponentInstance.addEventListener('click', listener, 'onClick');
+</script>
 <p>
     This example shows how easily you can change your layout while using the same controller and component definitions. This is the true power of skin parts.
     If your browser does not support shadowDOM natively the CSS styles in the first loaded instance of x-lotus-button2 (the one above) will override the next (the one below)

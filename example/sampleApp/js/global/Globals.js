@@ -7,5 +7,5 @@ SampleApp = function(){
 }
 
 SampleApp.init = function(){
-    SampleApp.resources = new SampleApp.Context(Lavender.ModelLocator.getInstance().config);
+    SampleApp.resources = new SampleApp.Context(SampleApp.Model());
 }

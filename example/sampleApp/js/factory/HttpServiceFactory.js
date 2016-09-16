@@ -3,7 +3,7 @@
  */
 SampleApp.HttpServiceFactory = function(){
     if (SampleApp.HttpServiceFactory.instance != null) {
-        throw( 'SampleApp.EventDispatcherFactory.instance: Singleton class has already been instantiated' );
+        throw( 'SampleApp.HttpServiceFactory.instance: Singleton class has already been instantiated' );
     } else {
         //perform any required object set up
     }
@@ -29,6 +29,23 @@ SampleApp.HttpServiceFactory.prototype.getHttpService = function( config ){
             break;
         default:
             httpService = new Lavender.XhrHttpService();
+            break;
+    }
+    return httpService;
+}
+
+//returns constructor used for injection
+SampleApp.HttpServiceFactory.prototype.getHttpServiceForInjection = function( config ){
+    var httpService;
+    switch( config.httpServiceCode ){
+        case "angular":
+            httpService = Lavender.AngularHttpService;
+            break;
+        case "jquery":
+            httpService = Lavender.JqueryHttpService;
+            break;
+        default:
+            httpService = Lavender.XhrHttpService;
             break;
     }
     return httpService;

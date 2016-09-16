@@ -8,7 +8,7 @@ SampleApp.ServiceResultParser = function () {
 SampleApp.ServiceResultParser.prototype.parserImageAssets = function( result )
 {
     var parsedJSON = JSON.parse(result);
-    var parser = SampleApp.resources.injector.inject(SampleApp.IMAGE_ASSETS_PARSER_KEY);
+    var parser = SampleApp.resources.injector.inject(SampleApp.SERIALIZE_FACTORY_KEY).getImageAssetParser(parsedJSON.schemaKey);
     //walk the theme list
     if( !parser.canParse(parsedJSON))
     {
