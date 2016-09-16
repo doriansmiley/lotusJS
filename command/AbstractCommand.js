@@ -6,8 +6,11 @@ Lotus.AbstractCommand = function(context){
     //All these params will be injected
     this.action = null;
     this.context = context;
-    Lavender.ObjectUtils.mixin(Lavender.AbstractEventDispatcher, Lotus.AbstractCommand, this);
+
+    Lavender.AbstractEventDispatcher.prototype.constructor.call(this);
 }
+/************* Inherit from AbstractEventDispatcher for event dispatching *************/
+Lavender.ObjectUtils.extend(Lavender.AbstractEventDispatcher, Lotus.AbstractCommand);
 
 Lotus.AbstractCommand.prototype.execute = function (event) {
     //config, service, opModel, parser, errorModel
