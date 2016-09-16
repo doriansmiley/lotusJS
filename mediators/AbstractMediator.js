@@ -1,9 +1,10 @@
 /**
  * Created by dsmiley on 9/15/16.
  */
-Lotus.AbstractMediator = function (componentInstance) {
+Lotus.AbstractMediator = function (componentInstance, context) {
     var _id = Lavender.UuidUtils.generateUUID();
     var _componentInstance = componentInstance;
+    var _context = context;
     // Define our getters and setters
     this.addProperties({
             id: {
@@ -13,6 +14,15 @@ Lotus.AbstractMediator = function (componentInstance) {
                 set: function (val) {
                     _id = val;
                     this.Notify(val, 'id');
+                }
+            },
+            context: {
+                get: function () {
+                    return _context;
+                },
+                set: function (val) {
+                    _context = val;
+                    this.Notify(val, 'context');
                 }
             },
             componentInstance: {

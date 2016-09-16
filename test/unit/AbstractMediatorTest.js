@@ -8,8 +8,10 @@ describe('AbstractMediatorTest', function () {
 
     it('check functions', function () {
         var view = new Lotus.Button();
-        var mediator = new Lotus.AbstractMediator(view);
+        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+        var mediator = new Lotus.AbstractMediator(view, context);
         expect(mediator.componentInstance).toBe(view);
+        expect(mediator.context).toBe(context);
         expect(mediator.id.length > 0).toBe(true);
         expect(mediator.toString()).toBe(mediator.id);
         mediator.destroy();
