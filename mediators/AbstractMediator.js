@@ -63,4 +63,6 @@ Lotus.AbstractMediator.prototype.toString = function () {
 Lotus.AbstractMediator.prototype.destroy = function () {
     this.removeEventListeners();
     this.removeBindings();
+    this.id = null;
+    this.componentInstance = null;
 }

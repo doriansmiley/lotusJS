@@ -10,6 +10,8 @@ module.exports = function (config) {
             '../context/*.js',
             '../events/*.js',
             '../factory/*.js',
+            '../mediators/AbstractMediator.js',
+            '../mediators/*.js',
             '../services/*.js',
             '../view/AbstractComponent.js',
             '../view/AbstractItemView.js',

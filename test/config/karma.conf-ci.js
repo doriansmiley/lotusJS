@@ -50,6 +50,8 @@ module.exports = function(config) {
         '../example/sampleApp/global/*.js',//set up the sample app namespace
         '../context/*.js',
         '../events/*.js',
+        '../mediators/AbstractMediator.js',
+        '../mediators/*.js',
         '../factory/*.js',
         '../services/*.js',
         '../view/AbstractComponent.js',
