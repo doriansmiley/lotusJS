@@ -51,6 +51,9 @@ describe('MediatorMap', function () {
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-data-grid'].id].length).toBe(2);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-list'].id].length).toBe(2);
+        //test passing invalid tag
+        mapId = mediatorMap.remove('x-lotus-invalid',Lotus.AbstractMediator);
+        expect(mapId).toBe(undefined);
         mapId = mediatorMap.remove('x-lotus-data-grid',Lotus.AbstractMediator);
         expect(mediatorMap.mediatorInstanceMap[mapId]).toBe(undefined);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
