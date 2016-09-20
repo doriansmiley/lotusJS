@@ -8,6 +8,7 @@ Lotus.Context = function(config, params){
     this.componentMap = new Lotus.ComponentMap(this);//create factory if we require sub classes one day
     this.commandMap = new Lotus.CommandMap(this);//create factory if we require sub classes one day
     this.injector = new Lotus.Injector(this);//create factory if we require sub classes one day
+    this.mediatorMap = new Lotus.MediatorMap(this);
     this.startUp();
 }
 

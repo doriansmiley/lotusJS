@@ -9,7 +9,7 @@ describe('MediatorMap', function () {
     it('check functions', function () {
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         //Lotus.AbstractMediator
-        var mediatorMap = new Lotus.MediatorMap(context)
+        var mediatorMap = new Lotus.MediatorMap(context);
         expect(mediatorMap.context).toBe(context);
         expect(mediatorMap.mediatorInstanceMap.length).toBe(0);
         expect(typeof mediatorMap.tagConstructorMap == 'object').toBe(true);
