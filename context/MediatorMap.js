@@ -17,7 +17,7 @@ Lotus.MediatorMap.prototype.add = function( tagName, mediatorConstructor, useSin
         return;//don't add the mediatorConstructor/function twice
     }
 
-    this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor, id:Lavender.UuidUtils.generateUUID()};
+    this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor, id:Lavender.UuidUtils.generateUUID(), name:mediatorConstructor.toString()};
 }
 
 Lotus.MediatorMap.prototype.remove = function( tagName, mediatorConstructor ){
@@ -34,35 +34,23 @@ Lotus.MediatorMap.prototype.remove = function( tagName, mediatorConstructor ){
         return;//mo mediators were applied to this mapping
     }
     //iterate in reverse over all instance and destroy
-    for( var i=this.mediatorInstanceMap[mapId].length-1; i >=0 ; i--){
+    for( var i=0; i < this.mediatorInstanceMap[mapId].length ; i++){
         this.mediatorInstanceMap[mapId][i].destroy();
-        //remove the item from the array
-        var m_count = this.mediatorInstanceMap[mapId].length;
-        if (m_count > 0 && i > -1 && i < this.mediatorInstanceMap[mapId].length) {
-            switch (i) {
-                case 0:
-                    this.mediatorInstanceMap[mapId].shift();
-                    break;
-                case m_count - 1:
-                    this.mediatorInstanceMap[mapId].pop();
-                    break;
-                default:
-                    var head = this.mediatorInstanceMap[mapId].slice(0, i);
-                    var tail = this.mediatorInstanceMap[mapId].slice(i + 1);
-                    this.mediatorInstanceMap[mapId] = head.concat(tail);
-                    break;
-            }
-        }
     }
+    //make the array eligible for garbage collection
+    this.mediatorInstanceMap[mapId] = null;
+    delete this.mediatorInstanceMap[mapId];
+
+    return mapId;//return mapId to help enable better tests
 }
 
 Lotus.MediatorMap.prototype.apply = function( tagName, componentInstance ){
     var map = this.tagConstructorMap[tagName];
-    
+
     if(!map){
         return;//no mediator found for this tag
     }
-    
+
     if(this.mediatorInstanceMap[map.id] === null ||  this.mediatorInstanceMap[map.id] === undefined){
         this.mediatorInstanceMap[map.id] = [];
     }
@@ -77,5 +65,5 @@ Lotus.MediatorMap.prototype.apply = function( tagName, componentInstance ){
 }
 
 Lotus.MediatorMap.prototype.hasMediatorMap = function( tagName, mediatorConstructor ){
-    return (this.tagConstructorMap[tagName] == mediatorConstructor)
+    return (this.tagConstructorMap.hasOwnProperty(tagName) && this.tagConstructorMap[tagName].name == mediatorConstructor.toString())
 }

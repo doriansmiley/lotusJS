@@ -6,3 +6,7 @@ Lotus.ButtonMediator = function (componentInstance, context) {
 }
 /************* Inherit from AbstractEventDispatcher for event dispatching *************/
 Lavender.ObjectUtils.extend(Lotus.AbstractMediator, Lotus.ButtonMediator);
+
+Lotus.ButtonMediator.toString = function(){
+    return 'Lotus.ButtonMediator';
+}

@@ -6,3 +6,7 @@ Lotus.ListMediator = function (componentInstance, context) {
 }
 /************* Inherit from AbstractEventDispatcher for event dispatching *************/
 Lavender.ObjectUtils.extend(Lotus.AbstractMediator, Lotus.ListMediator);
+
+Lotus.ListMediator.toString = function(){
+    return 'Lotus.ListMediator';
+}

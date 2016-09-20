@@ -42,6 +42,10 @@ Lotus.AbstractMediator = function (componentInstance, context) {
 /************* Inherit from AbstractEventDispatcher for event dispatching *************/
 Lavender.ObjectUtils.extend(Lavender.Subject, Lotus.AbstractMediator);
 
+Lotus.AbstractMediator.toString = function(){
+    return 'Lotus.AbstractMediator';
+}
+
 Lotus.AbstractMediator.prototype.init = function () {
     this.addEventListeners();
     this.setUpBindings();
