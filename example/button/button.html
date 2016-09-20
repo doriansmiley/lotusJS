@@ -13,6 +13,8 @@
             context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
             context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);
             context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button);
+            context.componentMap.mapComponent('x-lotus-button4', HTMLButtonElement.prototype, Lotus.Button);
+            context.mediatorMap.add('x-lotus-button4',Lotus.ButtonMediator);
             return context;
         }( xtag ));
     </script>
@@ -57,5 +59,10 @@
     This is an example of the recommended work around for the shadowDOM pollyfill issue described above. It requires you create a new custom element and map it, but the controller and template are identical.
 </p>
 <x-lotus-button3 type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button3>
+<p>
+    This example shows how to attach a mediator to a buttun. Mediators are used for event mediation and the triggering of application behavior using the central event bus.
+</p>
+<x-lotus-button4 type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button4>
+
 </body>
 </html>
