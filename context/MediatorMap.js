@@ -17,7 +17,7 @@ Lotus.MediatorMap.prototype.add = function( tagName, mediatorConstructor, useSin
         return;//don't add the mediatorConstructor/function twice
     }
 
-    this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor};
+    this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor, id:Lavender.UuidUtils.generateUUID()};
 }
 
 Lotus.MediatorMap.prototype.remove = function( tagName, mediatorConstructor ){
@@ -25,29 +25,31 @@ Lotus.MediatorMap.prototype.remove = function( tagName, mediatorConstructor ){
         return;//don't add the mediatorConstructor/function twice
     }
 
+    var mapId = this.tagConstructorMap[tagName].id;
+
     this.tagConstructorMap[tagName] = null;
     delete this.tagConstructorMap[tagName];
 
-    if(this.mediatorInstanceMap[mediatorConstructor] === null ||  this.mediatorInstanceMap[mediatorConstructor] === undefined){
+    if(this.mediatorInstanceMap[mapId] === null ||  this.mediatorInstanceMap[mapId] === undefined){
         return;//mo mediators were applied to this mapping
     }
     //iterate in reverse over all instance and destroy
-    for( var i=this.mediatorInstanceMap[mediatorConstructor].length-1; i >=0 ; i--){
-        this.mediatorInstanceMap[mediatorConstructor][i].destroy();
+    for( var i=this.mediatorInstanceMap[mapId].length-1; i >=0 ; i--){
+        this.mediatorInstanceMap[mapId][i].destroy();
         //remove the item from the array
-        var m_count = this.mediatorInstanceMap[mediatorConstructor].length;
-        if (m_count > 0 && i > -1 && i < this.mediatorInstanceMap[mediatorConstructor].length) {
+        var m_count = this.mediatorInstanceMap[mapId].length;
+        if (m_count > 0 && i > -1 && i < this.mediatorInstanceMap[mapId].length) {
             switch (i) {
                 case 0:
-                    this.mediatorInstanceMap[mediatorConstructor].shift();
+                    this.mediatorInstanceMap[mapId].shift();
                     break;
                 case m_count - 1:
-                    this.mediatorInstanceMap[mediatorConstructor].pop();
+                    this.mediatorInstanceMap[mapId].pop();
                     break;
                 default:
-                    var head = this.mediatorInstanceMap[mediatorConstructor].slice(0, i);
-                    var tail = this.mediatorInstanceMap[mediatorConstructor].slice(i + 1);
-                    this.mediatorInstanceMap[mediatorConstructor] = head.concat(tail);
+                    var head = this.mediatorInstanceMap[mapId].slice(0, i);
+                    var tail = this.mediatorInstanceMap[mapId].slice(i + 1);
+                    this.mediatorInstanceMap[mapId] = head.concat(tail);
                     break;
             }
         }
@@ -61,16 +63,16 @@ Lotus.MediatorMap.prototype.apply = function( tagName, componentInstance ){
         return;//no mediator found for this tag
     }
     
-    if(this.mediatorInstanceMap[map.constructor] === null ||  this.mediatorInstanceMap[map.constructor] === undefined){
-        this.mediatorInstanceMap[map.constructor] = [];
+    if(this.mediatorInstanceMap[map.id] === null ||  this.mediatorInstanceMap[map.id] === undefined){
+        this.mediatorInstanceMap[map.id] = [];
     }
 
     if( map.useSingleton ){
-        if( this.mediatorInstanceMap[map.constructor].length == 0 ){
-            this.mediatorInstanceMap[map.constructor].push( new map.constructor(componentInstance, this.context) );
+        if( this.mediatorInstanceMap[map.id].length == 0 ){
+            this.mediatorInstanceMap[map.id].push( new map.constructor(componentInstance, this.context) );
         }
     }else{
-        this.mediatorInstanceMap[map.constructor].push( new map.constructor(componentInstance, this.context) );
+        this.mediatorInstanceMap[map.id].push( new map.constructor(componentInstance, this.context) );
     }
 }
 

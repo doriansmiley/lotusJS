@@ -30,5 +30,21 @@ describe('MediatorMap', function () {
         expect(mediatorMap.tagConstructorMap['x-lotus-list'].useSingleton).toBe(false);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].useSingleton).toBe(true);
+        var buttonInstance = new Lotus.Button();
+        var abstractInstance = new Lotus.AbstractComponent();
+        mediatorMap.apply('x-lotus-button', buttonInstance);
+        mediatorMap.apply('x-lotus-button', buttonInstance);
+        mediatorMap.apply('x-lotus-button', buttonInstance);
+        mediatorMap.apply('x-lotus-service-status', abstractInstance);
+        mediatorMap.apply('x-lotus-service-status', abstractInstance);
+        mediatorMap.apply('x-lotus-service-status', abstractInstance);
+        mediatorMap.apply('x-lotus-data-grid', abstractInstance);
+        mediatorMap.apply('x-lotus-data-grid', abstractInstance);
+        mediatorMap.apply('x-lotus-list', abstractInstance);
+        mediatorMap.apply('x-lotus-list', abstractInstance);
+        expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-button'].id].length).toBe(3)
+        expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-data-grid'].id].length).toBe(2)
+        expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1)
+        expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-list'].id].length).toBe(2)
     });
 });
