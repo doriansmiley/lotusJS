@@ -41,7 +41,7 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
     }
     //trigger mediator assignment if any
-    this.context.mediatorMap.apply(tagInstance.tagName, tagInstance.lotusComponentInstance);
+    this.context.mediatorMap.apply(tagInstance.tagName.toLowerCase(), tagInstance.lotusComponentInstance);
     //if the tag instance defines a scr attribute load the template and set up the shadow DOM
     var src = tagInstance.getAttribute('template-url');
     if( src !== null && src !== undefined ){
