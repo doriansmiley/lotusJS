@@ -14,8 +14,8 @@ SampleApp.Context.prototype.mapComponents = function(){
 }
 
 SampleApp.Context.prototype.mapCommands = function(){
-    //sample
-    //this.commandMap.addCommand( 'testEvent1', Lotus.SampleCommand );
+    //triggers loading of images
+    this.commandMap.addCommand( SampleApp.ItemViewEvent.LOAD_IMAGES, SampleApp.LoadImageAssetsCommand );
     // you can optionally pass functionName and useSingleton
     //functionName defaults to 'execute'
     //if useSingleton is true only a single instance of the command will be executed when the events is dispatched, use this options with extreme caution
