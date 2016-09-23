@@ -2,18 +2,48 @@
  * Created by dsmiley on 5/20/15.
  */
 Lotus.AbstractRecordSetCollectionView = function () {
-    var _selectedItem;
     var _navBtnEnabledClass;
     var _navBtnDisabledClass;
+    var _nextBtn;
+    var _pervBtn;
+    var _firstBtn;
+    var _lastBtn;
     Lotus.AbstractCollectionView.prototype.constructor.call(this);
     this.addProperties({
-            selectedItem: {
+            nextBtn: {
                 get: function () {
-                    return _selectedItem;
+                    return _nextBtn;
                 },
                 set: function (val) {
-                    _selectedItem = val;
-                    this.Notify(val, 'selectedItem');
+                    _nextBtn = val;
+                    this.Notify(val, 'nextBtn');
+                }
+            },
+            pervBtn: {
+                get: function () {
+                    return _pervBtn;
+                },
+                set: function (val) {
+                    _pervBtn = val;
+                    this.Notify(val, 'pervBtn');
+                }
+            },
+            firstBtn: {
+                get: function () {
+                    return _firstBtn;
+                },
+                set: function (val) {
+                    _firstBtn = val;
+                    this.Notify(val, 'firstBtn');
+                }
+            },
+            lastBtn: {
+                get: function () {
+                    return _lastBtn;
+                },
+                set: function (val) {
+                    _lastBtn = val;
+                    this.Notify(val, 'lastBtn');
                 }
             },
             navBtnEnabledClass: {
@@ -65,38 +95,44 @@ Lotus.AbstractRecordSetCollectionView.prototype.removeCollectionEventListeners =
     }
 }
 
-Lotus.AbstractRecordSetCollectionView.prototype.addSkinPart = function (part, element) {
-    Lotus.AbstractCollectionView.prototype.addSkinPart.call(this, part, element )
+Lotus.AbstractRecordSetCollectionView.prototype.defineSkinParts = function(){
+    Lotus.AbstractCollectionView.prototype.defineSkinParts.call(this);
+    //set up skin parts
+    this.skinParts.addItem(new Lotus.SkinPart('nextBtn', this, 'nextBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('pervBtn', this, 'pervBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('firstBtn', this, 'firstBtn'));
+    this.skinParts.addItem(new Lotus.SkinPart('lastBtn', this, 'lastBtn'));
+}
+
+Lotus.AbstractRecordSetCollectionView.prototype.onSkinPartAdded = function (part, element) {
+    Lotus.AbstractCollectionView.prototype.onSkinPartAdded.call(this, part, element );
     switch(part){
         //optional container for displaying collection elements
         case 'nextBtn':
-            this.nextBtn = element;
             this.nextBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'pervBtn':
-            this.pervBtn = element;
             this.pervBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'firstBtn':
-            this.firstBtn = element;
             this.firstBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
         case 'lastBtn':
-            this.lastBtn = element;
             this.lastBtn.addEventListener('click', this.onNavBtnClickProxy);
             break;
     }
     //IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
-    if( element.getAttribute('data-enabled-class') !== null && element.getAttribute('data-selected-class') !== undefined ){
-        this.navBtnEnabledClass = element.getAttribute('data-enabled-class');
+    if( element.getAttribute('enabled-class') !== null && element.getAttribute('enabled-class') !== undefined ){
+        this.navBtnEnabledClass = element.getAttribute('enabled-class');
     }
-    if( element.getAttribute('data-disabled-class') !== null && element.getAttribute('data-disabled-class') !== undefined ){
-        this.navBtnDisabledClass = element.getAttribute('data-disabled-class');
+    if( element.getAttribute('disabled-class') !== null && element.getAttribute('disabled-class') !== undefined ){
+        this.navBtnDisabledClass = element.getAttribute('disabled-class');
     }
 }
 
 Lotus.AbstractRecordSetCollectionView.prototype.onClickHandler = function( event ){
-    switch( event.target.getAttribute('data-skin-part') ){
+    //event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
+    switch( event.currentTarget.getAttribute('skin-part') ){
         case 'nextBtn':
             if( this.collection.selectedPage + 1 > this.collection.totalPages ){
                 return;
@@ -120,7 +156,7 @@ Lotus.AbstractRecordSetCollectionView.prototype.onClickHandler = function( event
 
 Lotus.AbstractRecordSetCollectionView.prototype.render = function () {
     if( this.itemView === null || this.itemView == undefined ){
-        throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
+        throw Error('attribute-item-view must be defined on the tag instance and point to a valid constructor');
     }
     //clear the current view
     this.removeAllChildViews();
@@ -163,21 +199,6 @@ Lotus.AbstractRecordSetCollectionView.prototype.refreshNavButtonDisplay = functi
     button.classList.add(classToAdd);
 }
 
-Lotus.AbstractRecordSetCollectionView.prototype.addViewEventListeners = function( view ){
-    //add event listener for the layout selected event
-    view.addEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
-    view.addEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.removeViewEventListeners = function( view ){
-    view.removeEventListener(Lotus.ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
-    view.removeEventListener(Lotus.ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.onItemSelectedDeselect = function( event ){
-    this.selectedItem = ( event.type == Lotus.ItemViewEvent.ITEM_SELECTED ) ? event.payload.item : null;
-}
-
 Lotus.AbstractRecordSetCollectionView.prototype.onResultsChange = function (event) {
     this.render();
 }
@@ -188,10 +209,4 @@ Lotus.AbstractRecordSetCollectionView.prototype.onPageListChange = function (val
 
 Lotus.AbstractRecordSetCollectionView.prototype.getCollection = function (event) {
     return new Lavender.RecordSet();
-}
-
-Lotus.AbstractRecordSetCollectionView.prototype.destroy = function () {
-    Lotus.AbstractCollectionView.prototype.destroy.call(this);
-    this.selectedItem = null;
-
 }

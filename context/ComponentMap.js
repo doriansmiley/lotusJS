@@ -40,6 +40,8 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
         tagInstance.lotusComponentInstance  = new functionConstructor();
         this.componentInstances.addItem(tagInstance.lotusComponentInstance);
     }
+    //trigger mediator assignment if any
+    this.context.mediatorMap.apply(tagInstance.tagName.toLowerCase(), tagInstance.lotusComponentInstance);
     //if the tag instance defines a scr attribute load the template and set up the shadow DOM
     var src = tagInstance.getAttribute('template-url');
     if( src !== null && src !== undefined ){
@@ -62,11 +64,14 @@ Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
 }
 
-Lotus.ComponentMap.prototype.mapComponent = function( tagName, extendsTag, functionConstructor ){
+Lotus.ComponentMap.prototype.mapComponent = function( tagName, prototype, functionConstructor, framework ){
+    if(framework === null || framework === undefined){
+        framework = xtag;//default to xtag namespace
+    }
     var componentMap = this;
-    xtag.register(tagName, {
+    framework.register(tagName, {
         // extend existing elements
-        extends: extendsTag,
+        prototype: prototype,
         lifecycle:{
             created: function(){
                 //IMPORTANT:, use builder patter here and create an add component function

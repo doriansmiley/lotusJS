@@ -26,3 +26,9 @@ Lotus.AbstractItemView.prototype.destroy = function () {
     this.model = null;
 
 }
+
+Lotus.AbstractItemView.prototype.setElementDisplay = function (element, display) {
+    if( element !== null && element !== undefined ){
+        element.style.display = display;
+    }
+}

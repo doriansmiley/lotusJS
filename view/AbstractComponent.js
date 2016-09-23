@@ -15,6 +15,9 @@ Lotus.AbstractComponent = function(){
                 },
                 set: function(val) {
                     _element = val;
+                    if( _element !== null && _element !== undefined ){
+                        _element.getComponentInstance = this.getComponentInstance.bind(this);
+                    }
                     this.Notify( val, 'element' );
                 }
             },
@@ -54,9 +57,14 @@ Lotus.AbstractComponent = function(){
 Lavender.ObjectUtils.extend(Lavender.Subject, Lotus.AbstractComponent);
 
 Lotus.AbstractComponent.prototype.init = function(){
+    this.addAttributes();
     this.defineSkinParts();
     this.addSkinParts();
-    this.addAttributes();
+}
+
+//utility method to allow DOM observers access to component methods, using method to avoid circular references
+Lotus.AbstractComponent.prototype.getComponentInstance = function () {
+    return this;
 }
 
 Lotus.AbstractComponent.prototype.addAttributes = function () {
@@ -115,7 +123,7 @@ Lotus.AbstractComponent.prototype.addSkinPart = function(part, element){
     //assign the skin part
     this.skinParts.skinPartsByLabel[part].element = element;
     //notify
-    this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part]);
+    this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part].element);
 }
 
 //stub for override
@@ -141,6 +149,8 @@ Lotus.AbstractComponent.prototype.removeEventListeners = function(){
 Lotus.AbstractComponent.prototype.destroy = function(){
     this.removeEventListeners();
     this.binder.unbindAll();
+    this.binder = null;
+    this.observer = null;
     this.element = null;
     this.context = null;
     this.id = null;

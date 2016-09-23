@@ -1,0 +1,855 @@
+/* ***************************************************************************************************** */
+/* GENERAL CSS */
+/* ***************************************************************************************************** */
+/*Set HTML and Body size to 100% of the browser window */
+html {
+    width: 100%;
+    height: 100%; }
+
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px; }
+
+.position-absolute {
+    position: absolute; }
+
+.position-fixed {
+    position: fixed; }
+
+.position-relative {
+    position: relative; }
+
+/* ***************************************************************************************************** */
+/* Remove the blue outline on focused objects */
+/* ***************************************************************************************************** */
+*:focus {
+    outline: 0; }
+
+/* ***************************************************************************************************** */
+/* Flex box layout CSS style
+	use the following CSS to setup layout containers
+	Horizontal Box Ex: class="layout column align-left"
+	Horizontal Box Ex: class="layout row valign-top"
+
+	Alternatively  you could create meaningfull classes for layout containers using @include flex-box($flexDirection, $justifyContent, $alignItems, $position, $maxHeight, $overflow, $flexWrap, $alignContent);
+	default values are applied for any variable passed as null. This could make the CSS a little less obfuscated and reduce the amount of redundant code
+	for example define:
+	.flex-box-column-align-left{ @include flex-box(column, null, null, null, null, null, null, null) }
+	or
+	.flex-box-row-align-center{ f@include flex-box(row, center, center, null, null, null, null, null) }
+	Discuss with Ryan
+*/
+/* ***************************************************************************************************** */
+.layout {
+    display: -webkit-flex;
+    display: flex; }
+
+/* Layout Orientation Classes */
+.layout.column {
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    flex-direction: row; }
+
+.layout.row {
+    -webkit-flex-flow: column;
+    flex-flow: column;
+    flex-direction: column; }
+
+/* Quick CSS for  general container size classes */
+.layout.width-100p {
+    width: 100%; }
+
+.layout.width-75p {
+    width: 75%; }
+
+.layout.width-50p {
+    width: 50%; }
+
+.layout.width-25p {
+    width: 25%; }
+
+.layout.height-100p {
+    height: 100%; }
+
+.layout.height-75p {
+    height: 75%; }
+
+.layout.height-50p {
+    height: 50%; }
+
+.layout.height-25p {
+    height: 25%; }
+
+.layout.no-scroll {
+    overflow: hidden; }
+
+.layout.auto-scroll {
+    overflow: auto; }
+
+/* Horizontal alignment classes */
+.layout.align-space-between {
+    -webkit-justify-content: space-between;
+    justify-content: space-between; }
+
+.layout.align-space-around {
+    -webkit-justify-content: space-around;
+    justify-content: space-around; }
+
+.layout.align-center {
+    -webkit-justify-content: center;
+    justify-content: center; }
+
+.layout.align-left {
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start; }
+
+.layout.align-right {
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end; }
+
+/* Vertical alignment classes */
+.layout.valign-middle {
+    -webkit-align-items: center;
+    align-items: center; }
+
+.layout.valign-stretch {
+    -webkit-align-items: stretch;
+    align-items: stretch; }
+
+.layout.valign-top {
+    -webkit-align-items: flex-start;
+    align-items: flex-start; }
+
+.layout.valign-bottom {
+    -webkit-align-items: flex-end;
+    align-items: flex-end; }
+
+.layout.valign-baseline {
+    -webkit-align-items: baseline;
+    align-items: baseline; }
+
+/* ***************************************************************************************************** */
+/* default CSS for setting 6px space between immediate child objects of layout containers*/
+/* ***************************************************************************************************** */
+.layout.column > *:not(:first-child) {
+    margin-left: 6px; }
+
+.layout.row > *:not(:first-child) {
+    margin-top: 6px; }
+
+.layout.column.nogap > *:not(:first-child) {
+    margin-left: 0px; }
+
+.layout.row.nogap > *:not(:first-child) {
+    margin-top: 0px; }
+
+.wrap {
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap; }
+
+.spi-panel * {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important; }
+
+.sp-palette-container * {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important; }
+
+/* ***************************************************************************************************** */
+/* Padding and margin CSS Styles
+   Use these style for quick padding and margin settings
+*/
+/* ***************************************************************************************************** */
+.pad-0 {
+    padding: 0px !important; }
+
+.pad-2 {
+    padding: 2px; }
+
+.pad-4 {
+    padding: 4px; }
+
+.pad-6 {
+    padding: 6px; }
+
+.pad-8 {
+    padding: 8px; }
+
+.pad-10 {
+    padding: 10px; }
+
+.pad-12 {
+    padding: 12px; }
+
+.pad-14 {
+    padding: 14px; }
+
+.pad-16 {
+    padding: 16px; }
+
+.pad-18 {
+    padding: 18px; }
+
+.pad-20 {
+    padding: 20px; }
+
+.pad-22 {
+    padding: 22px; }
+
+.pad-24 {
+    padding: 24px; }
+
+.pad-26 {
+    padding: 26px; }
+
+.pad-28 {
+    padding: 28px; }
+
+.pad-30 {
+    padding: 30px; }
+
+.padTop-0 {
+    padding-top: 0px !important; }
+
+.padTop-2 {
+    padding-top: 2px; }
+
+.padTop-4 {
+    padding-top: 4px; }
+
+.padTop-6 {
+    padding-top: 6px; }
+
+.padTop-8 {
+    padding-top: 8px; }
+
+.padTop-10 {
+    padding-top: 10px; }
+
+.padTop-12 {
+    padding-top: 12px; }
+
+.padTop-14 {
+    padding-top: 14px; }
+
+.padTop-16 {
+    padding-top: 16px; }
+
+.padTop-18 {
+    padding-top: 18px; }
+
+.padTop-20 {
+    padding-top: 20px; }
+
+.padTop-22 {
+    padding-top: 22px; }
+
+.padTop-24 {
+    padding-top: 24px; }
+
+.padTop-26 {
+    padding-top: 26px; }
+
+.padTop-28 {
+    padding-top: 28px; }
+
+.padTop-30 {
+    padding-top: 30px; }
+
+.padBottom-0 {
+    padding-bottom: 0px !important; }
+
+.padBottom-2 {
+    padding-bottom: 2px; }
+
+.padBottom-4 {
+    padding-bottom: 4px; }
+
+.padBottom-6 {
+    padding-bottom: 6px; }
+
+.padBottom-8 {
+    padding-bottom: 8px; }
+
+.padBottom-10 {
+    padding-bottom: 10px; }
+
+.padBottom-12 {
+    padding-bottom: 12px; }
+
+.padBottom-14 {
+    padding-bottom: 14px; }
+
+.padBottom-16 {
+    padding-bottom: 16px; }
+
+.padBottom-18 {
+    padding-bottom: 18px; }
+
+.padBottom-20 {
+    padding-bottom: 20px; }
+
+.padBottom-22 {
+    padding-bottom: 22px; }
+
+.padBottom-24 {
+    padding-bottom: 24px; }
+
+.padBottom-26 {
+    padding-bottom: 26px; }
+
+.padBottom-28 {
+    padding-bottom: 28px; }
+
+.padBottom-30 {
+    padding-bottom: 30px; }
+
+.padLeft-0 {
+    padding-left: 0px !important; }
+
+.padLeft-2 {
+    padding-left: 2px; }
+
+.padLeft-4 {
+    padding-left: 4px; }
+
+.padLeft-6 {
+    padding-left: 6px; }
+
+.padLeft-8 {
+    padding-left: 8px; }
+
+.padLeft-10 {
+    padding-left: 10px; }
+
+.padLeft-12 {
+    padding-left: 12px; }
+
+.padLeft-14 {
+    padding-left: 14px; }
+
+.padLeft-16 {
+    padding-left: 16px; }
+
+.padLeft-18 {
+    padding-left: 18px; }
+
+.padLeft-20 {
+    padding-left: 20px; }
+
+.padLeft-22 {
+    padding-left: 22px; }
+
+.padLeft-24 {
+    padding-left: 24px; }
+
+.padLeft-26 {
+    padding-left: 26px; }
+
+.padLeft-28 {
+    padding-left: 28px; }
+
+.padLeft-30 {
+    padding-left: 30px; }
+
+.padRight-0 {
+    padding-right: 0px !important; }
+
+.padRight-2 {
+    padding-right: 2px; }
+
+.padRight-4 {
+    padding-right: 4px; }
+
+.padRight-6 {
+    padding-right: 6px; }
+
+.padRight-8 {
+    padding-right: 8px; }
+
+.padRight-10 {
+    padding-right: 10px; }
+
+.padRight-12 {
+    padding-right: 12px; }
+
+.padRight-14 {
+    padding-right: 14px; }
+
+.padRight-16 {
+    padding-right: 16px; }
+
+.padRight-18 {
+    padding-right: 18px; }
+
+.padRight-20 {
+    padding-right: 20px; }
+
+.padRight-22 {
+    padding-right: 22px; }
+
+.padRight-24 {
+    padding-right: 24px; }
+
+.padRight-26 {
+    padding-right: 26px; }
+
+.padRight-28 {
+    padding-right: 28px; }
+
+.padRight-30 {
+    padding-right: 30px; }
+
+.mgn-0 {
+    margin: 0px !important; }
+
+.mgn-2 {
+    margin: 2px; }
+
+.mgn-4 {
+    margin: 4px; }
+
+.mgn-6 {
+    margin: 6px; }
+
+.mgn-8 {
+    margin: 8px; }
+
+.mgn-10 {
+    margin: 10px; }
+
+.mgn-12 {
+    margin: 12px; }
+
+.mgn-14 {
+    margin: 14px; }
+
+.mgn-16 {
+    margin: 16px; }
+
+.mgn-18 {
+    margin: 18px; }
+
+.mgn-20 {
+    margin: 20px; }
+
+.mgn-22 {
+    margin: 22px; }
+
+.mgn-24 {
+    margin: 24px; }
+
+.mgn-26 {
+    margin: 26px; }
+
+.mgn-28 {
+    margin: 28px; }
+
+.mgn-30 {
+    margin: 30px; }
+
+.mgnLeft-0 {
+    margin-left: 0px !important; }
+
+.mgnLeft-2 {
+    margin-left: 2px; }
+
+.mgnLeft-4 {
+    margin-left: 4px; }
+
+.mgnLeft-6 {
+    margin-left: 6px; }
+
+.mgnLeft-8 {
+    margin-left: 8px; }
+
+.mgnLeft-10 {
+    margin-left: 10px; }
+
+.mgnLeft-12 {
+    margin-left: 12px; }
+
+.mgnLeft-14 {
+    margin-left: 14px; }
+
+.mgnLeft-16 {
+    margin-left: 16px; }
+
+.mgnLeft-18 {
+    margin-left: 18px; }
+
+.mgnLeft-20 {
+    margin-left: 20px; }
+
+.mgnLeft-22 {
+    margin-left: 22px; }
+
+.mgnLeft-24 {
+    margin-left: 24px; }
+
+.mgnLeft-26 {
+    margin-left: 26px; }
+
+.mgnLeft-28 {
+    margin-left: 28px; }
+
+.mgnLeft-30 {
+    margin-left: 30px; }
+
+.mgnRight-0 {
+    margin-right: 0px !important; }
+
+.mgnRight-2 {
+    margin-right: 2px; }
+
+.mgnRight-4 {
+    margin-right: 4px; }
+
+.mgnRight-6 {
+    margin-right: 6px; }
+
+.mgnRight-8 {
+    margin-right: 8px; }
+
+.mgnRight-10 {
+    margin-right: 10px; }
+
+.mgnRight-12 {
+    margin-right: 12px; }
+
+.mgnRight-14 {
+    margin-right: 14px; }
+
+.mgnRight-16 {
+    margin-right: 16px; }
+
+.mgnRight-18 {
+    margin-right: 18px; }
+
+.mgnRight-20 {
+    margin-right: 20px; }
+
+.mgnRight-22 {
+    margin-right: 22px; }
+
+.mgnRight-24 {
+    margin-right: 24px; }
+
+.mgnRight-26 {
+    margin-right: 26px; }
+
+.mgnRight-28 {
+    margin-right: 28px; }
+
+.mgnRight-30 {
+    margin-right: 30px; }
+
+.mgnTop-0 {
+    margin-top: 0px !important; }
+
+.mgnTop-2 {
+    margin-top: 2px; }
+
+.mgnTop-4 {
+    margin-top: 4px; }
+
+.mgnTop-6 {
+    margin-top: 6px; }
+
+.mgnTop-8 {
+    margin-top: 8px; }
+
+.mgnTop-10 {
+    margin-top: 10px; }
+
+.mgnTop-12 {
+    margin-top: 12px; }
+
+.mgnTop-14 {
+    margin-top: 14px; }
+
+.mgnTop-16 {
+    margin-top: 16px; }
+
+.mgnTop-18 {
+    margin-top: 18px; }
+
+.mgnTop-20 {
+    margin-top: 20px; }
+
+.mgnTop-22 {
+    margin-top: 22px; }
+
+.mgnTop-24 {
+    margin-top: 24px; }
+
+.mgnTop-26 {
+    margin-top: 26px; }
+
+.mgnTop-28 {
+    margin-top: 28px; }
+
+.mgnTop-30 {
+    margin-top: 30px; }
+
+.mgnBottom-0 {
+    margin-bottom: 0px !important; }
+
+.mgnBottom-2 {
+    margin-bottom: 2px; }
+
+.mgnBottom-4 {
+    margin-bottom: 4px; }
+
+.mgnBottom-6 {
+    margin-bottom: 6px; }
+
+.mgnBottom-8 {
+    margin-bottom: 8px; }
+
+.mgnBottom-10 {
+    margin-bottom: 10px; }
+
+.mgnBottom-12 {
+    margin-bottom: 12px; }
+
+.mgnBottom-14 {
+    margin-bottom: 14px; }
+
+.mgnBottom-16 {
+    margin-bottom: 16px; }
+
+.mgnBottom-18 {
+    margin-bottom: 18px; }
+
+.mgnBottom-20 {
+    margin-bottom: 20px; }
+
+.mgnBottom-22 {
+    margin-bottom: 22px; }
+
+.mgnBottom-24 {
+    margin-bottom: 24px; }
+
+.mgnBottom-26 {
+    margin-bottom: 26px; }
+
+.mgnBottom-28 {
+    margin-bottom: 28px; }
+
+.mgnBottom-30 {
+    margin-bottom: 30px; }
+
+/* ***************************************************************************************************** */
+/* Border CSS Styles
+   Use these style for quick border settings
+*/
+/* ***************************************************************************************************** */
+.noLeftBorder {
+    border-left: none !important; }
+
+.noRightBorder {
+    border-right: none !important; }
+
+.noLeftRoundedCorners {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important; }
+
+.noRightRoundedCorners {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important; }
+
+.noTopRoundedCorners {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important; }
+
+.noBottomRoundedCorners {
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important; }
+
+.noRoundedCorners {
+    border-radius: 0px; }
+
+.roundCorner-2 {
+    border-radius: 2px; }
+
+.roundCorner-4 {
+    border-radius: 4px; }
+
+.roundCorner-6 {
+    border-radius: 6px; }
+
+.roundCorner-8 {
+    border-radius: 8px; }
+
+.roundCorner-10 {
+    border-radius: 10px; }
+
+.roundCorner-12 {
+    border-radius: 12px; }
+
+.roundCorner-14 {
+    border-radius: 14px; }
+
+.roundCorner-16 {
+    border-radius: 16px; }
+
+.roundCorner-18 {
+    border-radius: 18px; }
+
+.roundCorner-20 {
+    border-radius: 20px; }
+
+.roundCorner-22 {
+    border-radius: 22px; }
+
+.roundCorner-24 {
+    border-radius: 24px; }
+
+.roundCorner-26 {
+    border-radius: 26px; }
+
+.roundCorner-28 {
+    border-radius: 28px; }
+
+/* ***************************************************************************************************** */
+/* Overflow CSS Styles
+   Use these style to restrict scrolling or clipping the content of a container
+*/
+/* ***************************************************************************************************** */
+.noScrolling {
+    overflow: hidden; }
+
+.verticalScrollOnly {
+    overflow-y: auto;
+    overflow-x: hidden; }
+
+.horizontalScrollOnly {
+    overflow-x: auto;
+    overflow-y: hidden; }
+
+/* ***************************************************************************************************** */
+/* Windows only hack */
+/* ***************************************************************************************************** */
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: auto;
+    height: auto; }
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
+
+.mobileDocView::-webkit-scrollbar {
+    display: none; }
+
+/* ***************************************************************************************************** */
+/* Default Button CSS
+
+*/
+/* ***************************************************************************************************** */
+.button {
+    border-radius: 4px;
+    min-height: 28px;
+    cursor: pointer; }
+
+/* this ensures that all objects inside the button has the pointer mouse cursor on hover */
+.button * {
+    cursor: pointer; }
+
+/* ***************************************************************************************************** */
+/* Default Text CSS
+
+*/
+/* ***************************************************************************************************** */
+.testFonts {
+    font-family: Adastra W00 Regular;
+    font-weight: normal;
+    font-size: 12px;
+    font-style: normal;
+    color: #000000; }
+
+.testBold {
+    font-family: Adastra W00 Regular;
+    font-weight: normal;
+    font-size: 23px;
+    font-style: normal;
+    color: #000000; }
+
+.defaultText {
+    font-family: crownromanhmk;
+    font-weight: normal;
+    font-size: 12px;
+    font-style: normal;
+    color: #d3d3d3; }
+
+.text {
+    word-wrap: break-word; }
+
+.defaultTextBorder {
+    border: 1px dashed darkgrey !important; }
+
+/* ***************************************************************************************************** */
+/* Default interaction css */
+/* ***************************************************************************************************** */
+.enabled {
+    opacity: 1;
+    pointer-events: auto; }
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none; }
+
+/* ***************************************************************************************************** */
+/* File Upload UI Default CSS
+   Default progress bar skin
+   Default Thumbnail size
+*/
+/* ***************************************************************************************************** */
+.progressBar {
+    width: 100%;
+    /* Do not declare any height, Let .progressBarProgress determine the height */
+    background: #f2f2f2;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #f2f2f2 0%, #b5b5b5 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f2f2), color-stop(100%, #b5b5b5));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f2f2f2 0%, #b5b5b5 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f2f2f2 0%, #b5b5b5 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f2f2f2 0%, #b5b5b5 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, #f2f2f2 0%, #b5b5b5 100%);
+    /* W3C */ }
+
+.progressBarProgress {
+    min-width: 10px;
+    width: 10px;
+    height: 10px;
+    background: #49fc20;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #49fc20 0%, #327739 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #49fc20), color-stop(100%, #327739));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #49fc20 0%, #327739 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #49fc20 0%, #327739 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #49fc20 0%, #327739 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, #49fc20 0%, #327739 100%);
+    /* W3C */ }
