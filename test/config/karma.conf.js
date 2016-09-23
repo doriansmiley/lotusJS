@@ -22,6 +22,7 @@ module.exports = function (config) {
             '../context/*.js',
             '../example/sampleApp/js/actions/**/*.js',
             '../example/sampleApp/js/commands/**/*.js',
+            '../example/sampleApp/js/events/**/*.js',
             '../example/sampleApp/js/model/**/*.js',
             '../example/sampleApp/js/serialization/**/*.js',
             '../example/sampleApp/js/services/**/*.js',
