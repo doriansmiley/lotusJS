@@ -15,3 +15,4 @@ SampleApp.ItemViewEvent.prototype.clone = function(){
 }
 
 SampleApp.ItemViewEvent.LOAD_IMAGES = 'smpLoadImages';
+SampleApp.ItemViewEvent.IMAGES_LOADED = 'smpImagesLoaded';
