@@ -64,9 +64,12 @@ Lotus.ComponentMap.prototype.createComponent = function( tagInstance ){
     tagInstance.lotusComponentInstance.created(tagInstance, this.context);
 }
 
-Lotus.ComponentMap.prototype.mapComponent = function( tagName, prototype, functionConstructor ){
+Lotus.ComponentMap.prototype.mapComponent = function( tagName, prototype, functionConstructor, framework ){
+    if(framework === null || framework === undefined){
+        framework = xtag;//default to xtag namespace
+    }
     var componentMap = this;
-    xtag.register(tagName, {
+    framework.register(tagName, {
         // extend existing elements
         prototype: prototype,
         lifecycle:{

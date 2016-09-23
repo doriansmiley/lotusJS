@@ -2,8 +2,22 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" type="text/css" href="button.css" />
+    <script type="text/javascript" src="../../test/lib/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script type="text/javascript" src="../../test/lib/xtag/core.js"></script>
+    <script type="text/javascript" src="../../test/lib/lavender/lavender.min.js"></script>
+    <script type="text/javascript" src="../../minify/lotus.min.js"></script>
+    <script language="JavaScript">
+        var context = (function( xtag ){
+            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+            context.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, SampleApp.ImageGalleryCollectionView, xtag);
+            context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
+            return context;
+        }( xtag ));
+    </script>
 </head>
 <body>
+<x-lotus-image-gallery type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-image-gallery>
 
 </body>
 </html>
