@@ -12,13 +12,11 @@ SampleApp.ImageGalleryMediator.toString = function(){
 }
 
 SampleApp.ImageGalleryMediator.prototype.addEventListeners = function () {
-    this.componentInstance.addEventListener('click', this, 'onClick');
-}
-
-SampleApp.ImageGalleryMediator.prototype.onClick = function (event) {
-    console.log('Im the button mediator, I can handle the component click and dispatch an application event')
+    //TODO:add event listener to load data when paging recordset
+    //this.componentInstance.addEventListener('click', this, 'onClick');
 }
 
 SampleApp.ImageGalleryMediator.prototype.removeEventListeners = function () {
-    this.componentInstance.removeEventListener('click', this, 'onClick');
+    //TODO:remove event listener to load data when paging recordset
+    //this.componentInstance.removeEventListener('click', this, 'onClick');
 }

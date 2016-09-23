@@ -19,7 +19,7 @@ SampleApp.Model = function() {
         'getInstance': '/instance/{0}',// {0} = instanceId
         'echoJSON': '/key/value/{0}/{1}',// {0} = instanceId
         'localRequest': ':3000/printondemand/1234/photos/{0}',
-        'readImageAssets': ':3000/readImageAssets/{0}/{1}/{2}/{3}'
+        'readImageAssets': ':3000/readImageAssets/{0}/{1}/{2}'
     };
 //set up our custom model object where we will store image assets accessed by the view
      model.imageAssetModel = new SampleApp.ImageGalleryModel();

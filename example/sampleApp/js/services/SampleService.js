@@ -10,7 +10,7 @@ SampleApp.SampleService = function( config ){
     this.serviceMap = (config.serviceMap) ? config.serviceMap :
     {
         //loading local XML for now. If a service becomes available use the service API
-        'readImageAssets'			: ':3000/{0}/{1}/{2}/{3}'
+        'readImageAssets'			: ':3000/readImageAssets/{0}/{1}/{2}'
     };
 }
 

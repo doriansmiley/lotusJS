@@ -19,8 +19,8 @@ SampleApp.LoadImageAssetsAction.prototype.parseResponse = function (result) {
 
 //execute the service call
 SampleApp.LoadImageAssetsAction.prototype.executeServiceMethod = function () {
-    //'system1234' and 'someUserId' are just hard coded to show passing params to the service. In reality these values would be in the model somewhere
-    return this.service.readImageAssets('system1234', 'someUserId', this, 'json', null, true, true);
+    //params, key, responder, format, contentType, localRequest, cache
+    return this.service.readImageAssets(['userID','all','public'], 'readImageAssets', this, 'json', null, true, true);
 }
 
 //get string to append to fault message
