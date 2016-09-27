@@ -37,7 +37,11 @@ Lotus.AbstractMediator = function (componentInstance, context) {
         }
     );
     Lavender.Subject.prototype.constructor.call(this);
-    this.init();
+    if(!this.componentInstance.ready){
+        this.componentInstance.addEventListener(Lotus.ComponentEvent.READY, this, 'init');
+    }else{
+        this.init();
+    }
 }
 /************* Inherit from AbstractEventDispatcher for event dispatching *************/
 Lavender.ObjectUtils.extend(Lavender.Subject, Lotus.AbstractMediator);
@@ -46,14 +50,14 @@ Lotus.AbstractMediator.toString = function(){
     return 'Lotus.AbstractMediator';
 }
 
-Lotus.AbstractMediator.prototype.init = function () {
+Lotus.AbstractMediator.prototype.init = function (event) {
     this.addEventListeners();
     this.setUpBindings();
 }
 
 //stub for override
 Lotus.AbstractMediator.prototype.addEventListeners = function () {
-
+    
 }
 //stub for override
 Lotus.AbstractMediator.prototype.setUpBindings = function () {
@@ -61,7 +65,9 @@ Lotus.AbstractMediator.prototype.setUpBindings = function () {
 }
 //stub for override
 Lotus.AbstractMediator.prototype.removeEventListeners = function () {
-
+    if(this.componentInstance.canListen(Lotus.ComponentEvent.READY, this, 'init')){
+        this.componentInstance.removeEventListener(Lotus.ComponentEvent.READY, this, 'init');
+    }
 }
 
 Lotus.AbstractMediator.prototype.removeBindings = function () {
