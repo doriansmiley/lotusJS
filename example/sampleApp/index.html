@@ -10,14 +10,12 @@
     <script language="JavaScript">
         var context = (function( xtag ){
             var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-            context.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, SampleApp.ImageGalleryCollectionView, xtag);
-            context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
             return context;
         }( xtag ));
     </script>
 </head>
 <body>
-<x-lotus-image-gallery attribute-item-view="SampleApp.ImageGalleryView" template-url="templates/imageGallery.html"></x-lotus-image-gallery>
+<x-lotus-image-gallery attribute-item-view="SampleApp.ImageGalleryView" template-url="templates/imageGallery.html" component-root='[id="imageGalleryPanel"]'></x-lotus-image-gallery>
 
 </body>
 </html>
