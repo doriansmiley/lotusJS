@@ -9,13 +9,12 @@ SampleApp.Context = function (model, params) {
 Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
 
 SampleApp.Context.prototype.mapComponents = function(){
-    //sample
-    //this.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
+    this.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, SampleApp.ImageGalleryCollectionView, xtag);
 }
 
 SampleApp.Context.prototype.mapCommands = function(){
     //triggers loading of images
-    this.commandMap.addCommand( SampleApp.ItemViewEvent.LOAD_IMAGES, SampleApp.LoadImageAssetsCommand );
+    this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand );
     // you can optionally pass functionName and useSingleton
     //functionName defaults to 'execute'
     //if useSingleton is true only a single instance of the command will be executed when the events is dispatched, use this options with extreme caution
@@ -34,7 +33,9 @@ SampleApp.Context.prototype.mapObjects = function(){
 }
 
 SampleApp.Context.prototype.mapMediators = function(){
-
+    context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
+    //you can optionally add a singleton instance using the following form
+    //context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
 }
 
 SampleApp.IMAGE_ASSETS_PARSER_KEY = 'imageAssetsParser';
