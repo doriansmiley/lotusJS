@@ -18,6 +18,7 @@ describe('AbstractComponentTest', function () {
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         component.created(element, context);
         expect(component.element === element).toBe(true);
+        expect(component.ready).toBe(true);
         expect(component.context === context).toBe(true);
         expect(component.id === '1234').toBe(true);
         expect(component.skinParts.skinPartsByLabel['testProperty'].element === element.firstChild ).toBe(true);

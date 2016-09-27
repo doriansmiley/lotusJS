@@ -4,6 +4,7 @@
 Lotus.AbstractComponent = function(){
     var _element;
     var _context;
+    var _ready = false;
     var _id = Math.random();
     var _skinParts = new Lotus.SkinPartList();//ArrayList of Lotus.SkinPart instances
     Lavender.Subject.prototype.constructor.call(this);
@@ -46,6 +47,15 @@ Lotus.AbstractComponent = function(){
                 set: function(val) {
                     _skinParts = val;
                     this.Notify( val, 'skinParts' );
+                }
+            },
+            ready: {
+                get: function() {
+                    return _ready;
+                },
+                set: function(val) {
+                    _ready = val;
+                    this.Notify( val, 'ready' );
                 }
             }
         }
@@ -94,11 +104,17 @@ Lotus.AbstractComponent.prototype.addSkinParts = function () {
     }
 }
 
+Lotus.AbstractComponent.prototype.onReady = function(){
+    this.ready = true;
+    this.dispatch(Lotus.ComponentEvent.READY);
+}
+
 Lotus.AbstractComponent.prototype.created = function(element, context){
     console.log('Lotus.AbstractComponent.prototype.created');
     this.element = element;
     this.context = context;
     this.init();
+    this.onReady();
 }
 
 Lotus.AbstractComponent.prototype.inserted = function(element){
