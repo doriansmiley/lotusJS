@@ -21,7 +21,7 @@ SampleApp.LoadImageAssetsCommand.prototype.getAction = function (event) {
 SampleApp.LoadImageAssetsCommand.prototype.onSuccess = function(event){
     //update model, in an actual command you would call something like this.parser.parse( event.payload.result )
     this.model.result = event.payload.result;
-    SampleApp.resources.eventDispatcher.dispatch(new SampleApp.ItemViewEvent(SampleApp.ItemViewEvent.IMAGES_LOADED, {result:event.payload.result}));
+    SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:event.payload.result}));
     this.destroy();
 }
 
