@@ -106,7 +106,7 @@ Lotus.AbstractComponent.prototype.addSkinParts = function () {
 
 Lotus.AbstractComponent.prototype.onReady = function(){
     this.ready = true;
-    this.dispatch(Lotus.ComponentEvent.READY);
+    this.dispatch(new Lotus.ComponentEvent(Lotus.ComponentEvent.READY));
 }
 
 Lotus.AbstractComponent.prototype.created = function(element, context){

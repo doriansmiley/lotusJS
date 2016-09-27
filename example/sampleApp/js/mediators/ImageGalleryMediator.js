@@ -23,17 +23,15 @@ SampleApp.ImageGalleryMediator.prototype.init = function () {
     var model = this.context.injector.inject(SampleApp.MODEL_KEY);
     if( model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === null || model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === undefined ){
         //create the record set for the source if it's not already defined
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] = new Lavender.RecordSet(null, new Lavender.ArrayList);
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] = new Lavender.RecordSet(null, Lavender.ArrayList);
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].createdOn = new Date();
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].id = this.attrs.source;
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].id = Lavender.UuidUtils.generateUUID();
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].recordsPerPage = model.config.galleryItemsPerPage;
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].results.allowDuplicates = true;
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].source = recordSetLabel;
     }
 
-    if( model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] !== null && model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] !== undefined ){
-        this.componentInstance.collection = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel];
-    }
+    this.componentInstance.collection = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel];
     this.componentInstance.collection.selectedPage = 1;//will trigger data load
 }
 

@@ -3,7 +3,7 @@
  */
 SampleApp.Context = function (model, params) {
     this.model = model;
-    Lotus.Context.prototype.constructor.call(this, this,model.config, params);
+    Lotus.Context.prototype.constructor.call(this, model.config, params);
 }
 /************* Inherit from Subject for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
@@ -33,7 +33,7 @@ SampleApp.Context.prototype.mapObjects = function(){
 }
 
 SampleApp.Context.prototype.mapMediators = function(){
-    context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
+    this.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
     //you can optionally add a singleton instance using the following form
     //context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
 }

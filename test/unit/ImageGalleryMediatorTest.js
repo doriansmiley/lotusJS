@@ -8,7 +8,8 @@ describe('ImageGalleryMediatorTest', function () {
 
     it('check functions', function () {
         var view = new SampleApp.ImageGalleryCollectionView();
-        var context = new SampleApp.Context(Lavender.ModelLocator.getInstance());
+        SampleApp.init();
+        var context = SampleApp.resources;
         var mediator = new SampleApp.ImageGalleryMediator(view, context);
         var model = context.injector.inject(SampleApp.MODEL_KEY)
         expect(mediator.componentInstance).toBe(view);
@@ -30,7 +31,6 @@ describe('ImageGalleryMediatorTest', function () {
         '</div>';
         var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
         var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
-        component.id = '1234';
         
         view.created(element,context);
 

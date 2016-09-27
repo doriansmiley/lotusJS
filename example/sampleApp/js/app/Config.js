@@ -23,4 +23,5 @@ SampleApp.Model = function() {
     };
 //set up record set model where our image gallery records will be loaded
      model.recordsetModel = new Lavender.RecordSetModel();
+    return model;
 }
