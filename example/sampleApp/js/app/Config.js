@@ -21,15 +21,6 @@ SampleApp.Model = function() {
         'localRequest': ':3000/printondemand/1234/photos/{0}',
         'readImageAssets': ':3000/readImageAssets/{0}/{1}/{2}'
     };
-//set up our custom model object where we will store image assets accessed by the view
-     model.imageAssetModel = new SampleApp.ImageGalleryModel();
-    var recordSet = new Lavender.RecordSet();
-    recordSet.id = '1234';
-    recordSet.selectedPage = 1;
-    recordSet.createdOn = new Date();//Date;;
-    recordSet.timeToLive = 500000;
-    recordSet.source = model.config.baseUrl + model.config.serviceMap['readImageAssets'];
-    recordSet.recordsPerPage = 2;
-    model.imageAssetModel.imageAssets = recordSet;
-    return model;
+//set up record set model where our image gallery records will be loaded
+     model.recordsetModel = new Lavender.RecordSetModel();
 }
