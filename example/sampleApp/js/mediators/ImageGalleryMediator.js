@@ -13,6 +13,7 @@ SampleApp.ImageGalleryMediator.toString = function(){
 }
 
 SampleApp.ImageGalleryMediator.prototype.onLoadPageData = function (event) {
+    //trigger application level behavior by mediating the event. Good encapsulation dictates that reusable view components not have knowledge of nor trigger applicaiton level behaviors
     this.context.eventDispatcher.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.LOAD_PAGE_DATA, {recordSet:this.componentInstance.collection}));
 }
 

@@ -25,7 +25,7 @@ SampleApp.LoadImageAssetsAction.prototype.executeServiceMethod = function () {
 
 //get string to append to fault message
 SampleApp.LoadImageAssetsAction.prototype.getFaultString = function () {
-    return 'SampleApp.LoadImageAssetsAction.prototype.getFaultString: ';
+    return 'Failed to load image assets. Please be sure the image api is running and reachable. Config.js contains the api settings.';
 }
 
 //get string to append to error message

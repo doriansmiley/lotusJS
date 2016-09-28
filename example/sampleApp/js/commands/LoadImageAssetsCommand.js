@@ -25,6 +25,11 @@ SampleApp.LoadImageAssetsCommand.prototype.onSuccess = function(event){
     this.destroy();
 }
 
+SampleApp.LoadImageAssetsCommand.prototype.onError = function (event) {
+    alert('Error: ' + event.payload.message);
+    Lotus.AbstractCommand.prototype.onError.call(this,event);
+}
+
 SampleApp.LoadImageAssetsCommand.prototype.updateResults = function (items) {
     this.recordSet.totalRecords = items.totalRecords;
     //figure out what position to add the records
