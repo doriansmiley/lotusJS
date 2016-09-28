@@ -15,14 +15,30 @@ Lavender.ObjectUtils.extend(Lotus.AbstractCommand, SampleApp.LoadImageAssetsComm
 
 SampleApp.LoadImageAssetsCommand.prototype.getAction = function (event) {
     //config, service, opModel, parser, errorModel
+    this.recordSet = event.payload.recordSet;
     return new SampleApp.LoadImageAssetsAction(this.service, this.model.asyncOperationModel, this.parser, this.model.errorModel);
 }
 
 SampleApp.LoadImageAssetsCommand.prototype.onSuccess = function(event){
-    //update model, in an actual command you would call something like this.parser.parse( event.payload.result )
-    this.model.result = event.payload.result;
+    this.updateResults(event.payload.result);
     SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:event.payload.result}));
     this.destroy();
+}
+
+SampleApp.LoadImageAssetsCommand.prototype.updateResults = function (items) {
+    this.recordSet.totalRecords = items.totalRecords;
+    //figure out what position to add the records
+    var first = (this.recordSet.selectedPage - 1) * this.recordSet.recordsPerPage;
+    var recordsToAdd = [];
+    for (var i = 0; i < items.length; ++i) {
+        var item = items[i];
+        var index = first + i;
+        recordsToAdd.push( {addItemAt:index, item:item} )
+    }
+    //IMPORTANT: always use add all so we don't trigger unneeded update events
+    //Also addAll can tolerate non sequential additions to the collection. If for example the array contains 5 items and the results start at index 10
+    //ArrayList will populate null values up to the star index
+    this.recordSet.results.addAll(recordsToAdd, true);
 }
 
 SampleApp.LoadImageAssetsCommand.prototype.destroy = function () {

@@ -2,20 +2,36 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="button.css" />
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
     <script type="text/javascript" src="../../test/lib/bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <script type="text/javascript" src="../../test/lib/xtag/core.js"></script>
     <script type="text/javascript" src="../../test/lib/lavender/lavender.min.js"></script>
     <script type="text/javascript" src="../../minify/lotus.min.js"></script>
+    <script type="text/javascript" src="js/global/Globals.js"></script>
+    <script type="text/javascript" src="js/actions/LoadImageAssetsAction.js"></script>
+    <script type="text/javascript" src="js/app/Config.js"></script>
+    <script type="text/javascript" src="js/app/Context.js"></script>
+    <script type="text/javascript" src="js/commands/LoadImageAssetsCommand.js"></script>
+    <script type="text/javascript" src="js/events/AppEvent.js"></script>
+    <script type="text/javascript" src="js/factory/HttpServiceFactory.js"></script>
+    <script type="text/javascript" src="js/factory/SerializeFactory.js"></script>
+    <script type="text/javascript" src="js/mediators/ImageGalleryMediator.js"></script>
+    <script type="text/javascript" src="js/model/ImageAsset.js"></script>
+    <script type="text/javascript" src="js/serialization/deserialize/delegates/ImageAssetParser.js"></script>
+    <script type="text/javascript" src="js/serialization/deserialize/delegates/ImageAssetsParser.js"></script>
+    <script type="text/javascript" src="js/serialization/deserialize/ServiceResultParser.js"></script>
+    <script type="text/javascript" src="js/services/SampleService.js"></script>
+    <script type="text/javascript" src="js/view/imageGallery/ImageGalleryView.js"></script>
+    <script type="text/javascript" src="js/view/imageGallery/ImageGalleryCollectionView.js"></script>
     <script language="JavaScript">
         var context = (function( xtag ){
-            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-            return context;
+            SampleApp.init();
+            return SampleApp.resources;
         }( xtag ));
     </script>
 </head>
 <body>
-<x-lotus-image-gallery attribute-item-view="SampleApp.ImageGalleryView" template-url="templates/imageGallery.html" component-root='[id="imageGalleryPanel"]'></x-lotus-image-gallery>
+<x-lotus-image-gallery template-url="templates/imageGallery.html" component-root='[id="imageGalleryPanel"]'></x-lotus-image-gallery>
 
 </body>
 </html>

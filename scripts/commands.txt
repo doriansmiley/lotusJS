@@ -33,6 +33,7 @@ $SPI_SDK_HOME/view/AbstractComponent.js \
 $SPI_SDK_HOME/view/AbstractCollectionView.js \
 $SPI_SDK_HOME/view/AbstractRecordSetCollectionView.js \
 $SPI_SDK_HOME/view/AbstractItemView.js \
+$SPI_SDK_HOME/view/AbstractThumbnailView.js \
 $SPI_SDK_HOME/view/Button.js \
 -o $SPI_SDK_HOME/minify/lotus.min.js \
 --source-map $SPI_SDK_HOME/minify/lotus.min.js.map

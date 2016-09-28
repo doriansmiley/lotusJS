@@ -12,9 +12,8 @@ SampleApp.ImageGalleryMediator.toString = function(){
     return 'SampleApp.ImageGalleryMediator';
 }
 
-SampleApp.ImageGalleryMediator.prototype.addEventListeners = function () {
-    //TODO:add event listener to load data when paging recordset
-    //this.componentInstance.addEventListener('click', this, 'onClick');
+SampleApp.ImageGalleryMediator.prototype.onLoadPageData = function (event) {
+    this.context.eventDispatcher.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.LOAD_PAGE_DATA, {recordSet:this.componentInstance.collection}));
 }
 
 SampleApp.ImageGalleryMediator.prototype.init = function () {
@@ -32,10 +31,10 @@ SampleApp.ImageGalleryMediator.prototype.init = function () {
     }
 
     this.componentInstance.collection = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel];
+    this.componentInstance.collection.addEventListener(Lavender.RecordSetEvent.LOAD_PAGE_DATA, this, 'onLoadPageData');
     this.componentInstance.collection.selectedPage = 1;//will trigger data load
 }
 
 SampleApp.ImageGalleryMediator.prototype.removeEventListeners = function () {
-    //TODO:remove event listener to load data when paging recordset
-    //this.componentInstance.removeEventListener('click', this, 'onClick');
+    this.componentInstance.collection.removeEventListener(Lavender.RecordSetEvent.LOAD_PAGE_DATA, this, 'onLoadPageData');
 }

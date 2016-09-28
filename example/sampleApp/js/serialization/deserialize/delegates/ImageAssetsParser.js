@@ -23,6 +23,7 @@ SampleApp.ImageAssetsParser.prototype.parse = function (json) {
         }
         assets.push(asset);
     }
+    assets.totalRecords = json.count;
     return assets;
 }
 

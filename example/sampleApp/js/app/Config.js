@@ -12,6 +12,7 @@ SampleApp.Model = function() {
     model.config.defaultSystemId = 'printimages';//IMPORTANT:no trailing slash
     model.config.defaultAssetType = 'photos';//IMPORTANT:no trailing slash
     model.config.defaultAssetVisibility = 'private';//IMPORTANT:no trailing slash
+    model.config.galleryItemsPerPage = 1;
 //define the service end points
     model.config.serviceMap = {
         //IMPORTANT: these end points are used by unit tests!!!
