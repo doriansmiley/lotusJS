@@ -44,4 +44,4 @@ SampleApp.APP_SERVICES = 'appServices';
 SampleApp.SERVICE_RESULT_PARSER_KEY = 'serviceResultParser';
 SampleApp.SERIALIZE_FACTORY_KEY = 'serializeFactoryKey';
 SampleApp.EVENT_DISPATCHER_KEY = 'eventDispatcher';
-SampleApp.MODEL_KEY = 'images';
+SampleApp.MODEL_KEY = 'model';
