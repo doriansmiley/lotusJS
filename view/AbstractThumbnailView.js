@@ -136,9 +136,16 @@ Lotus.AbstractThumbnailView.prototype.onSkinPartAdded = function (part, element)
     Lotus.AbstractItemView.prototype.onSkinPartAdded.call(this, part, element);
     switch( part ){
         case 'thumbnail':
-            this.thumbnail.onLoad = function(event){
+            this.thumbnailDisplay = this.thumbnail.style.display;
+            this.thumbnail.onload = function(event){
+                if(!this.thumbnail){
+                    return;
+                }
+                this.thumbnail.onload = null;
+                this.thumbnail.style.display = this.thumbnailDisplay;
                 this.sizeImage();
             }.bind(this);
+            this.thumbnail.style.display = 'none';
             this.thumbnail.src = this.getImageURL();
             this.addEventListeners();
             break;

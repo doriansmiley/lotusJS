@@ -1,32 +1,46 @@
 <template>
     <style>
         div{
-            background-color: chartreuse;
-            border: solid 1px red;
+            border: solid 1px black;
+        }
+
+        button {
+            border-radius: 4px;
+            min-height: 28px;
+            cursor: pointer;
+        }
+
+        /* ***************************************************************************************************** */
+        /* Default interaction css */
+        /* ***************************************************************************************************** */
+        .enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
     </style>
 <div id="imageGalleryPanel" source="sampleAPI" attribute-item-view="SampleApp.ImageGalleryView">
 
     <!-- record set navigation -->
     <div skin-part="navButtonContainer" enabled-class="enabled" disabled-class="disabled">
-        <button skin-part="firstBtn" id="firstBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
+        <button skin-part="firstBtn" enabled-class="enabled" disabled-class="disabled" id="firstBtn">
             <label style="pointer-events:none;"><img src="css/assets/i_first.png" border="0"/></label>
         </button>
 
 
-        <button skin-part="pervBtn" id="pervBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
+        <button skin-part="pervBtn" enabled-class="enabled" disabled-class="disabled" id="pervBtn">
             <label style="pointer-events:none;"><img src="css/assets/i_previous.png" border="0"/></label>
         </button>
 
-        <button skin-part="nextBtn" id="nextBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
+        <button skin-part="nextBtn" enabled-class="enabled" disabled-class="disabled" id="nextBtn">
             <label style="pointer-events:none;"><img src="css/assets/i_next.png" border="0"/></label>
         </button>
 
-        <button skin-part="lastBtn" id="lastBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
+        <button skin-part="lastBtn" enabled-class="enabled" disabled-class="disabled" id="lastBtn">
             <label style="pointer-events:none;"><img src="css/assets/i_last.png" border="0"/></label>
         </button>
     </div>

@@ -88,10 +88,10 @@ server.route({
             '"version":"0.99",' +
             '"count":4,' +
             '"photos": [' +
-            '{"id":"5464022a4e696302aa000000","url":"http://upload.wikimedia.org/wikipedia/commons/5/58/Sunset_2007-1.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13"},' +
-            '{"id":"5464096b4e696303b2000000","url":"http://www.rantplaces.com/wp-content/uploads/2014/10/Sunset-socialphy.com_.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13"},' +
-            '{"id":"5464096b4e696303b2000000","url":"https://qwrad.files.wordpress.com/2009/04/sunset-birds1.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13"},' +
-            '{"id":"5464096b4e696303b2000000","url":"https://www.broomehovercraft.com.au/graphics/bht/popups/gallery-sunset-6.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13"}' +
+            '{"id":"5464022a4e696302aa000000","url":"http://upload.wikimedia.org/wikipedia/commons/5/58/Sunset_2007-1.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13", "source":"sampleAPI"},' +
+            '{"id":"5464096b4e696303b2000000","url":"http://www.rantplaces.com/wp-content/uploads/2014/10/Sunset-socialphy.com_.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13", "source":"sampleAPI"},' +
+            '{"id":"5464096b4e696303b2000000","url":"https://qwrad.files.wordpress.com/2009/04/sunset-birds1.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13", "source":"sampleAPI"},' +
+            '{"id":"5464096b4e696303b2000000","url":"https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg","created_date":"2014-11-13","last_access_date":"2014-11-13", "source":"sampleAPI"}' +
             ']' +
             '}'
         );
