@@ -21,16 +21,6 @@ describe('AbstractThumbnailView', function() {
                 '</div>';
             component.element = element;
             component.id = '1234';
-            component.created(element, context);
-            var model = {};
-            model.defaultThumbWidth = 30;
-            model.defaultThumbHeight = 50;
-            model.defaultWidth = 300;
-            model.defaultHeight = 500;
-            model.type = 'image';//String
-            model.uid = '1234';//String
-            model.fileName = 'test file name';//String
-            model.name = 'test name';//String
             var asset = {};
             asset.type = 'image';//String
             asset.uid = '1234';//String
@@ -48,17 +38,17 @@ describe('AbstractThumbnailView', function() {
             asset.webUriPath = '/base/unit/assets.test.png';//String
             asset.uriPath = asset.webUriPath;
             asset.thumbUrl = asset.thumbnailUriPath;
-            model.asset = asset;
-            component.model = model;
+            //IMPORTANT: the model is always set before  created is called
+            component.model = asset;
+            component.created(element, context);
+
 
             expect( component.element === element ).toBe( true );
-            expect( component.model === model ).toBe( true );
+            expect( component.model === asset ).toBe( true );
             expect( component.id ).toBe( '1234' );
             expect( component.thumbnailContainer === element.querySelector('[skin-part=thumbnailContainer]') ).toBe( true );
             expect( component.thumbnail === element.querySelector('[skin-part=thumbnail]') ).toBe( true );
             expect( component.thumbnail.getAttribute('src') ).toBe( '/base/unit/assets/test.png' );
-            expect( component.thumbnail.getAttribute('width') ).toBe( '57.6px' );
-            expect( component.thumbnail.getAttribute('height') ).toBe( '96px' );
             component.destroy();
             expect( component.element === null ).toBe( true );
             expect( component.model === null ).toBe( true );

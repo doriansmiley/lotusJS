@@ -17,13 +17,14 @@ describe('ImageGalleryItemViewTest', function() {
                 '</div>';
             component.id = '1234';
             var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-            component.created(element, context);
             var model = {};
             model.layoutId = '7862938';
             model.position = 1;
-            model.asset = {};
-            model.asset.thumbUrl = 'http://www.someuri.com';
+            model.thumbUrl = 'http://www.someuri.com';
+            //IMPORTANT: the model is always set before  created is called
             component.model = model;
+            component.created(element, context);
+
             expect( component.element === element ).toBe( true );
             expect( component.model === model ).toBe( true );
             expect( component.id ).toBe( '1234' );

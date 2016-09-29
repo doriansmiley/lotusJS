@@ -16,6 +16,7 @@ SampleApp.ImageAssetParser.prototype.parse = function (json) {
     var asset = new SampleApp.ImageAsset();
     asset.id = json.id;
     asset.url = json.url;
+    asset.thumbUrl = json.url;//the api does not expose thumbnails to we just use the full size
     asset.createdDate = json.created_date;
     asset.lastAccessDate = json.last_access_date;
     asset.objectName = asset.url.substr(asset.url.lastIndexOf('/')+1);

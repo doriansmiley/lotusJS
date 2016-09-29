@@ -5,6 +5,7 @@ SampleApp.ImageAsset = function(){
     Lavender.Subject.prototype.constructor.call(this);
     var _id;
     var _url;
+    var _thumbUrl;
     var _createdDate;
     var _lastAccessDate;
     var _objectName;
@@ -18,6 +19,15 @@ SampleApp.ImageAsset = function(){
             set: function (val) {
                 _id = val;
                 this.Notify(val, "id");
+            }
+        },
+        thumbUrl: {
+            get: function () {
+                return _thumbUrl;
+            },
+            set: function (val) {
+                _thumbUrl = val;
+                this.Notify(val, "thumbUrl");
             }
         },
         url: {

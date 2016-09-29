@@ -59,20 +59,12 @@ Lotus.AbstractThumbnailView = function () {
     );
     this.thumbClickProxy = this.onThumbClick.bind(this);
     this.onDragStartProxy = this.onDragStart.bind(this);
-    this.setUpBindings();
 }
 /************* Inherit from Subject for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.AbstractItemView, Lotus.AbstractThumbnailView);
 
 Lotus.AbstractThumbnailView.prototype.setUpBindings = function(){
     this.binder.bind(this, 'model', this, 'onModelChange');
-}
-
-Lotus.AbstractThumbnailView.prototype.onModelChange = function( value ){
-    if( value !== null && value !== undefined && this.thumbnail !== null && this.thumbnail !== undefined ){
-        this.thumbnail.src = this.getImageURL();
-        this.sizeImage();
-    }
 }
 
 Lotus.AbstractThumbnailView.prototype.sizeImage = function(){
@@ -117,13 +109,11 @@ Lotus.AbstractThumbnailView.prototype.onDragStart = function ( event ) {
 }
 
 Lotus.AbstractThumbnailView.prototype.getImageURL = function(){
-    return this.model.asset.thumbUrl;
+    return this.model.thumbUrl;
 }
 
 Lotus.AbstractThumbnailView.prototype.getDefaultSize = function(){
-    var width = ( this.model && this.model.hasOwnProperty('defaultWidth') && !isNaN( parseInt(this.model.defaultWidth) ) ) ? parseInt(this.model.defaultWidth) : this.thumbnail.getAttribute('attribute-default-width');
-    var height = ( this.model && this.model.hasOwnProperty('defaultHeight') && !isNaN( parseInt(this.model.defaultHeight) ) ) ? parseInt(this.model.defaultHeight) : this.thumbnail.getAttribute('attribute-default-height');
-    return {width:width, height:height};
+    return {width:this.thumbnail.width, height:this.thumbnail.height};
 }
 
 Lotus.AbstractThumbnailView.prototype.getContainerSize = function(){
@@ -146,8 +136,11 @@ Lotus.AbstractThumbnailView.prototype.onSkinPartAdded = function (part, element)
     Lotus.AbstractItemView.prototype.onSkinPartAdded.call(this, part, element);
     switch( part ){
         case 'thumbnail':
+            this.thumbnail.onLoad = function(event){
+                this.sizeImage();
+            }.bind(this);
+            this.thumbnail.src = this.getImageURL();
             this.addEventListeners();
-            this.sizeImage();
             break;
         case 'thumbnailContainer':
             this.thumbnailSelectedClass = this.thumbnailContainer.getAttribute('selected-class');
