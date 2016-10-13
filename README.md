@@ -5,7 +5,7 @@ Inversion of control framework basaed on x-tag and lavenderJS for developing HTM
 
 ###Model View Presenter Framework that supports Web Components!
 
-- [Web Component View](#wc)
+- [Web Component View](#user-content-wc)
 - [Dependency Injection](#pookie)
 - [Central Event Bus](#pookie)
 - [Command Map](#pookie)
