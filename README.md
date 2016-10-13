@@ -14,9 +14,9 @@ Inversion of control framework basaed on x-tag and lavenderJS for developing HTM
 - [Serialization](#pookie)
 - [Sand Boxed Context](#pookie)
 
-###<a name="wc">Seperates presentation from code with web component skins</a>
+###Seperates presentation from code with web component skins
 
-Web component skins are html `<template>` elements which define skin parts for a component. For example to create a custon button element using Lotus's built in button component you would do the following:
+<a name="wc"></a>Web component skins are html `<template>` elements which define skin parts for a component. For example to create a custon button element using Lotus's built in button component you would do the following:
 
 Map the component:
 ````
