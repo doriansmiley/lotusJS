@@ -3,7 +3,7 @@ lotusJS
 
 Inversion of control framework basaed on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC container, but implements the Lotus web component objects as the presenter (MVWC).
 
-**Model View Presenter Framework that supports Web Components!**
+###Model View Presenter Framework that supports Web Components!
 
 - [Web Component View](#wc)
 - [Dependency Injection](#pookie)
@@ -14,7 +14,7 @@ Inversion of control framework basaed on x-tag and lavenderJS for developing HTM
 - [Serialization](#pookie)
 - [Sand Boxed Context](#pookie)
 
-**<a name="wc">Seperates presentation from code with web component skins</a>**
+###<a name="wc">Seperates presentation from code with web component skins</a>
 
 Web component skins are html `<template>` elements which define skin parts for a component. For example to create a custon button element using Lotus's built in button component you would do the following:
 
@@ -71,7 +71,7 @@ Lotus.Button.prototype.onClick = function( event ){
 ````
 All components using the Lotus framework implement their own `onSkinPartAdded` function and attach behaviors accordingly. This avoids using selectors and allows the component skin to be totally decoupled from the web component's code. It also allows skins to be developed by designers using a common "data contract" that are the skin parts of the component. Skins can be developed and offered separately from base components as well. This is a key point of separation between Lotus and other web component frameworks.
 
-**Out of box collection and item views**
+###Out of box collection and item views
 
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
 
@@ -119,11 +119,11 @@ Creating collection components is made easy with Lotus. You can extend the base 
 ````
 Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. For a complete example see our sample application under the examples directory.
 
-**Create custom components built on Lotus and offer them through the component exchange**
+###Create custom components built on Lotus and offer them through the component exchange
 
 TODO
 
-**Inversion of Control Container**
+###Inversion of Control Container
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
 
@@ -194,6 +194,6 @@ SampleApp.init = function(){
 }
 ````
 
-**Light Weight**
+###Light Weight
 
 Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small pacakge.
