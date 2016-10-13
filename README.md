@@ -3,7 +3,18 @@ lotusJS
 
 Inversion of control framework basaed on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC container, but implements the Lotus web component objects as the presenter (MVWC).
 
-**Seperates presentation from code with web component skins**
+**Model View Presenter Framework that supports Web Components!**
+
+- [Web Component View](#wc)
+- [Dependency Injection](#pookie)
+- [Central Event Bus](#pookie)
+- [Command Map](#pookie)
+- [Model](#pookie)
+- [Service Locator](#pookie)
+- [Serialization](#pookie)
+- [Sand Boxed Context](#pookie)
+
+**<a name="wc">Seperates presentation from code with web component skins</a>**
 
 Web component skins are html `<template>` elements which define skin parts for a component. For example to create a custon button element using Lotus's built in button component you would do the following:
 
@@ -182,16 +193,6 @@ SampleApp.init = function(){
     SampleApp.resources = new SampleApp.Context(SampleApp.Model());
 }
 ````
-
-**Model View Web Component Framework Tools**
-
-- Web Component Presenter
-- Central Event Bus
-- Command Map
-- Model
-- Sand Boxed Context
-- Service Locator
-- Serialization
 
 **Light Weight**
 
