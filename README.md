@@ -1,7 +1,7 @@
 lotusJS
 =============
 
-LoutsJS is a framework basaed on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC container, but implements the Lotus web component objects as the presenter (MVWC).
+LoutsJS is a framework basaed on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
 
 ###Model View Presenter Framework that supports Web Components!
 
