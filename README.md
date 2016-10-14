@@ -214,7 +214,26 @@ To dispatch and event on the event bus:
 var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
 eventBus.dispatch(new Lavender.AbstractEvent('testEvent1', {data:myData}));
 ````
-Where `testEvent1` is the event type and `{data:myData}` is data that will be added to the event payload and can be accessed using `event.payload.data`. You can define any object structure you like for the event payload for example `{myData:myData, moreData:moreData}` which can be accessed using `event.payload.myData` and `event.payload.moreData`.
+Where `testEvent1` is the event type and `{data:myData}` is data that will be added to the event payload and can be accessed using `event.payload.data`. You can define any object structure you like for the event payload for example `{myData:myData, moreData:moreData}` which can be accessed using `event.payload.myData` and `event.payload.moreData`. 
+
+While this example uses `Lavender.AbstractEvent` you should never dispatch this event object. Instead extend `Lavender.AbstractEvent` and create your own custom event objects. For example:
+````
+SampleApp.AppEvent = function( eventType, payload ){
+    if( eventType == SampleApp.AppEvent.ITEM_SELECTED && ( payload.item === null || payload.item === undefined ) ){
+        throw  new Error('SampleApp.AppEvent payload.item is required');
+    }
+    Lavender.AbstractEvent.prototype.constructor.call(this, eventType, payload);
+}
+/************* Inherit from Subject for data binding *************/
+Lavender.ObjectUtils.extend( Lavender.AbstractEvent, SampleApp.AppEvent );
+
+SampleApp.AppEvent.prototype.clone = function(){
+    return new SampleApp.AppEvent( this.type, this.payload)
+}
+
+SampleApp.AppEvent.LOAD_IMAGES = 'smpLoadImages';
+SampleApp.AppEvent.IMAGES_LOADED = 'smpImagesLoaded';
+````
 
 ###Command Map
 
