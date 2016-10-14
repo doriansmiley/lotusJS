@@ -16,7 +16,7 @@ LoutsJS is a framework basaed on x-tag and lavenderJS for developing HTML5 appli
 
 ###Web Component View
 
-Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can ne mediated to provide application level event mediation, data binding set up, and virtually any other behavior that is specific to the surrounding application.
+Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
 
 To map a component you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
 ````
@@ -63,17 +63,16 @@ All components using the Lotus framework implement their own `onSkinPartAdded` f
 
 To define skin parts for a component you map a skin part name to an attribute of your component as follows:
 ````
-Lotus.AbstractThumbnailView.prototype.defineSkinParts = function(){
-    Lotus.AbstractItemView.prototype.defineSkinParts.call(this);
+Lotus.Button.prototype.defineSkinParts = function(){
     //set up skin parts
-    this.skinParts.addItem(new Lotus.SkinPart('thumbnail', this, 'thumbnail'));
-    this.skinParts.addItem(new Lotus.SkinPart('thumbnailContainer', this, 'thumbnailContainer'));
+    this.skinParts.addItem(new Lotus.SkinPart('button', this, 'buttonSkinPart'));
 }
 ````
-In this example the `thumbnail` and `thumbnailContainer` found in the components `<template>` will be mapped to the attributes `thumbnail` and `thumbnailContainer` of the `AbstractThumbnailView` instance.
+In this example the `button` skin part found in the component's `<template>` will be mapped to the attributes `buttonSkinPart` of the `Button` instance.
 
-For a complete example that demostrates the power and flexibility of the Lotus component map and skins see out [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
-###Out of box collection and item views
+For a complete example that demostrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+
+#####Collection and Item views
 
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
 
