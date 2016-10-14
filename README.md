@@ -197,7 +197,7 @@ To add an event listener you call its `addEventDispatcher` method:
 var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
 eventBus.addEventListener('eventType', this, 'myEventHAndler');
 ````
-Where `eventType` is the event that will be dispatched, `this` is a reference to the instance adding the listener, and `myEventHAndler` is an instance method of the object adding the listener.
+Where `eventType` is the event that will be dispatched, `this` is a reference to the instance adding the listener, and `myEventHAndler` is an instance method of the instance adding the listener (`this`).
 
 To remove an event listener you call its `removeEventListener` method:
 ````
