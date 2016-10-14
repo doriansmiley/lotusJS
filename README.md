@@ -72,6 +72,7 @@ Lotus.AbstractThumbnailView.prototype.defineSkinParts = function(){
 ````
 In this example the `thumbnail` and `thumbnailContainer` found in the components `<template>` will be mapped to the attributes `thumbnail` and `thumbnailContainer` of the `AbstractThumbnailView` instance.
 
+For a complete example that demostrates the power and flexibility of the Lotus component map and skins see out <a hreff="https://github.com/doriansmiley/lotusJS/tree/dev/example/button">button example</a>.
 ###Out of box collection and item views
 
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
