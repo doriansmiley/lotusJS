@@ -6,12 +6,11 @@ LoutsJS is a framework basaed on x-tag and lavenderJS for developing HTML5 appli
 ###Model View Presenter Framework that supports Web Components!
 
 - [Web Component View](#web-component-view)
-- [Dependency Injection](#pookie)
-- [Central Event Bus](#pookie)
+- [Dependency Injection](#inversion-of-control)
+- [Central Event Bus](#central-event-bus)
 - [Command Map](#pookie)
-- [Model](#pookie)
-- [Service Locator](#pookie)
-- [Serialization](#pookie)
+- [View Mediators](#pookie)
+- [Data Binding](#pookie)
 - [Sand Boxed Context](#pookie)
 
 ###Web Component View
@@ -77,54 +76,66 @@ For a complete example that demostrates the power and flexibility of the Lotus c
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
 
 ````
-<div id="replaceImageUserUpload" class="spi-row spi-row-align-center imageGallery">
-
+<template>
+    <style>
+        div{
+            border: solid 1px black;
+        }
+        button {
+            border-radius: 4px;
+            min-height: 28px;
+            cursor: pointer;
+        }
+        /* ***************************************************************************************************** */
+        /* Default interaction css */
+        /* ***************************************************************************************************** */
+        .enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+<div id="replaceImageUserUpload" attribute-item-view="SampleApp.ImageGalleryView" class="spi-row spi-row-align-center imageGallery">
     <!-- record set navigation -->
     <div data-skin-part="navButtonContainer" data-enabled-class="enabled" data-disabled-class="disabled" class="navButtonContainer">
         <button data-skin-part="firstBtn" id="firstBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-backward"></i></label>
         </button>
-
-
         <button data-skin-part="pervBtn" id="pervBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-left" ></i></label>
         </button>
-
         <button data-skin-part="nextBtn" id="nextBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-right"></i></label>
         </button>
-
         <button data-skin-part="lastBtn" id="lastBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-forward"></i></label>
         </button>
     </div>
-
     <div>
         <select data-skin-part="categoryList"></select>
         <select data-skin-part="propertyList"></select>
     </div>
-
     <div data-skin-part="collectionContainer" id="collectionContainer">
-
         <!-- Itemrenderer skin -->
         <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="100" data-attribute-thumb-height="100">
             <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" data-selected-class="imageGallerySelectedImage">
                 <img data-skin-part="thumbnail" data-selected-class="thumbSelected" draggable="true"/>
             </div>
         </div>
-
     </div>
-
-
 </div>
+</template>
 ````
-Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. For a complete example see our sample application under the examples directory.
+Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
 
-###Create custom components built on Lotus and offer them through the component exchange
+The item view component used to render each item in the collection is defined in the `attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
 
-TODO
+For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
-###Inversion of Control Container
+###Inversion of Control
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
 
@@ -136,20 +147,6 @@ SampleApp.Context = function (model, params) {
 /************* Inherit from Subject for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
 
-SampleApp.Context.prototype.mapComponents = function(){
-    //sample
-    //this.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
-}
-
-SampleApp.Context.prototype.mapCommands = function(){
-    //sample
-    //this.commandMap.addCommand( 'testEvent1', Lotus.SampleCommand );
-    // you can optionally pass functionName and useSingleton
-    //functionName defaults to 'execute'
-    //if useSingleton is true only a single instance of the command will be executed when the events is dispatched, use this options with extreme caution
-    //this.commandMap.addCommand( 'testEvent1', Lotus.SampleCommand, 'myFunction', true )
-}
-
 SampleApp.Context.prototype.mapObjects = function(){
     //map objects for construction
     this.injector.mapObject(SampleApp.HTTP_SERVICE_KEY, SampleApp.HttpServiceFactory.getInstance().getHttpServiceForInjection(this.config));
@@ -160,18 +157,7 @@ SampleApp.Context.prototype.mapObjects = function(){
     this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));
     this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, this.model);
 }
-
-SampleApp.Context.prototype.mapMediators = function(){
-
-}
-
-SampleApp.IMAGE_ASSETS_PARSER_KEY = 'imageAssetsParser';
-SampleApp.HTTP_SERVICE_KEY = 'xhr';
-SampleApp.APP_SERVICES = 'appServices';
-SampleApp.SERVICE_RESULT_PARSER_KEY = 'serviceResultParser';
-SampleApp.SERIALIZE_FACTORY_KEY = 'serializeFactoryKey';
-SampleApp.EVENT_DISPATCHER_KEY = 'eventDispatcher';
-SampleApp.MODEL_KEY = 'images';
+...
 ````
 
 Note you can map objects that will be created by the IOC container using `mapObject` or map to a singleton using `mapSingletonInstance`. You can still use factories to set up your injections. This is useful when you want to be able to change injections without effecting application code using a config file.
@@ -194,7 +180,14 @@ SampleApp.init = function(){
     SampleApp.resources = new SampleApp.Context(SampleApp.Model());
 }
 ````
+###Central Event Bus
+
+
 
 ###Light Weight
 
 Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small pacakge.
+
+###Create custom components built on Lotus and offer them through the component exchange
+
+TODO
