@@ -14,16 +14,16 @@ Inversion of control framework basaed on x-tag and lavenderJS for developing HTM
 - [Serialization](#pookie)
 - [Sand Boxed Context](#pookie)
 
-###Seperates presentation from code with web component skins
+###Web Component View
 
-<a name="wc">Web component</a> skins are html `<template>` elements which define skin parts for a component. For example to create a custon button element using Lotus's built in button component you would do the following:
+Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can ne mediated to provide application level event mediation, data binding set up, and virtually any other behavior that is specific to the surrounding application.
 
-Map the component:
+To map a component you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
 ````
 var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
 ````
-Component creation in the HTML DOM:
+Once the component is mapped you can add the custom tag to HTML DOM:
 ````
 <x-lotus-button type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>
 ````
@@ -57,19 +57,20 @@ Lotus.Button.prototype.onSkinPartAdded = function(part, skinPart){
             break;
     }
 }
-
-Lotus.Button.prototype.addEventListeners = function(){
-    Lotus.AbstractComponent.prototype.addEventListeners.call(this);
-    this.buttonSkinPart.addEventListener('click', this.clickProxy);
-}
-
-Lotus.Button.prototype.onClick = function( event ){
-    console.log('Lotus.Button.prototype.onClick: event is ' + event);
-    console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
-    this.dispatch(new Lavender.AbstractEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
-}
+...
 ````
 All components using the Lotus framework implement their own `onSkinPartAdded` function and attach behaviors accordingly. This avoids using selectors and allows the component skin to be totally decoupled from the web component's code. It also allows skins to be developed by designers using a common "data contract" that are the skin parts of the component. Skins can be developed and offered separately from base components as well. This is a key point of separation between Lotus and other web component frameworks.
+
+To define skin parts for a component you map a skin part name to an attribute of your component as follows:
+````
+Lotus.AbstractThumbnailView.prototype.defineSkinParts = function(){
+    Lotus.AbstractItemView.prototype.defineSkinParts.call(this);
+    //set up skin parts
+    this.skinParts.addItem(new Lotus.SkinPart('thumbnail', this, 'thumbnail'));
+    this.skinParts.addItem(new Lotus.SkinPart('thumbnailContainer', this, 'thumbnailContainer'));
+}
+````
+In this example the `thumbnail` and `thumbnailContainer` found in the components `<template>` will be mapped to the attributes `thumbnail` and `thumbnailContainer` of the `AbstractThumbnailView` instance.
 
 ###Out of box collection and item views
 
