@@ -43,7 +43,7 @@ Notice the the `template-url` attribute. This is a special attribute defined by 
     <button skin-part="button"><label>testButton external</label></button>
 </template>
 ````
-Notice the `skin-part` attribute. This is a special attribute used by the frame work. It will pass any element containing this attribute to the web component's `onSkinPartAdded` function. In this example that function does the following:
+Notice the `skin-part` attribute. This is a special attribute used by the framework. It will pass any element containing this attribute to the web component's `onSkinPartAdded` function. In this example that function does the following:
 
 ````
 Lotus.Button.prototype.onSkinPartAdded = function(part, skinPart){
@@ -68,11 +68,11 @@ Lotus.Button.prototype.defineSkinParts = function(){
     this.skinParts.addItem(new Lotus.SkinPart('button', this, 'buttonSkinPart'));
 }
 ````
-In this example the `button` `skin-part` found in the component's `<template>` will be mapped to the attributes `buttonSkinPart` of the `Button` instance.
+In this example the `button` `skin-part` found in the component's `<template>` will be mapped to the `buttonSkinPart` attribute of the `Button` instance.
 
 For a complete example that demostrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
-#####Collection and Item views
+####Collection and Item views
 
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
 
