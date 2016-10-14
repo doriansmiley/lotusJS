@@ -5,7 +5,7 @@ LoutsJS is a MVP framework running inside an inversion of control container basa
 
 ###Model View Presenter Framework that supports Web Components!
 
-- [Web Component View](#user-content-wc)
+- [Web Component View](#web-component-view)
 - [Dependency Injection](#pookie)
 - [Central Event Bus](#pookie)
 - [Command Map](#pookie)
