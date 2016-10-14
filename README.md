@@ -8,10 +8,10 @@ LoutsJS is a framework basaed on x-tag and lavenderJS for developing HTML5 appli
 - [Web Component View](#web-component-view)
 - [Dependency Injection](#inversion-of-control)
 - [Central Event Bus](#central-event-bus)
-- [Command Map](#pookie)
-- [View Mediators](#pookie)
-- [Data Binding](#pookie)
-- [Sand Boxed Context](#pookie)
+- [Command Map](#command-map)
+- [View Mediators](#view-mediators)
+- [Data Binding](#data-binding)
+- [Sand Boxed Context](#sand-boxed-context)
 
 ###Web Component View
 
@@ -182,7 +182,49 @@ SampleApp.init = function(){
 ````
 ###Central Event Bus
 
+Lotus includes a central event bus to handle distaching application level events, and registering listeners for this events. This central event bus should not be confused with, or used in, your Lotus web components. Web components extend `Lavender.AbstractEventDispatcher` and can dispatch events directly by calling their `dispatch` method. 
 
+The event bus is located on the applications context and can by defined for dependency injection as follows:
+````
+this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));    
+````
+You can then access the event bus as follows:
+````
+SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
+````
+To add an event listener you call its `addEventDispatcher` method:
+````
+var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
+eventBus.addEventListener('eventType', this, 'myEventHAndler');
+````
+Where `eventType` is the event that will be dispatched, `this` is a reference to the instance adding the listener, and `myEventHAndler` is an instance method of the object adding the listener.
+
+To remove an event listener you call its `removeEventListener` method:
+````
+var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
+eventBus.removeEventListener('eventType', this, 'myEventHAndler');
+````
+To see if the event bus can listen call its `canListen` method:
+````
+var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
+eventBus.canListen('eventType', this, 'myEventHAndler');
+````
+To dispatch and event on the event bus:
+````
+var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
+eventBus.dispatch(new Lavender.AbstractEvent('testEvent1', {data:myData}));
+````
+Where `testEvent1` is the event type and `{data:myData}` is data that will be added to the event payload and can be accessed using `event.payload.data`. You can define any object structure you like for the event payload for example `{myData:myData, moreData:moreData}` which can be accessed using `event.payload.myData` and `event.payload.moreData`.
+
+###Command Map
+
+###View Mediators
+
+###Data Binding
+
+###Sand Boxed Context
+
+All application services and sand boxed to the applications context. This allows for distributing your applications as  reusable modules. Simply minify your application, iclude it in your project, and instantiate the context.
 
 ###Light Weight
 
