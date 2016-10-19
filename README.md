@@ -237,7 +237,73 @@ SampleApp.AppEvent.IMAGES_LOADED = 'smpImagesLoaded';
 
 ###Command Map
 
+Lotus includes a command map that maps both fresh instances and signleton instancs of a command to an event dispatched by the central event bus. Below is an example of how to map a command:
+````
+SampleApp.Context.prototype.mapCommands = function(){
+    //triggers loading of images
+    this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand );
+    // you can optionally pass functionName and useSingleton
+    //functionName defaults to 'execute'
+    //if useSingleton is true only a single instance of the command will be executed when the events is dispatched, use this options with extreme caution
+    //this.commandMap.addCommand( 'testEvent1', Lotus.SampleCommand, 'myFunction', true )
+}
+````
+In this example the function to execute defaults to `execute`. But as the comments explain you can pass the function name as an optional agrument. For example:
+````
+this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand, 'myFunction' );
+````
+In this example the `myFunction` instance method will be called passing the event object. And to register `SampleApp.LoadImageAssetsCommand` as a singleton calling `myFunction` you simply add:
+````
+this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand, 'myFunction', true );
+````
+Lotus ships with `Lotus.AbstractCommand` which is a useful baseclass if you do not intend to create your own command implementation. Commands do not need to extend `Lotus.AbstractCommand`, but it is recomended you do so as it will reduce the amount of redundant code in your application, and allow commands to be easily reused in other applications. For a complete example of implementing a subclass of `Lotus.AbstractCommand` see the `SampleApp.LoadImageAssetsCommand` implementation that's part of our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
+
 ###View Mediators
+
+View mediation is an important part of MVP frameworks that enables essentially dumb views to particiapte in the surrounding application without knowing or caring about their involvement. In most implmentations this includes things like binding your application's model data to instance attributes of your view, and deligating events dispatched by your view to the central event bus. To map a mediator to a component in Lotus you do the following in your application's context:
+````
+SampleApp.Context.prototype.mapMediators = function(){
+    this.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
+    //you can optionally add a singleton instance using the following form
+    //context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
+}
+````
+In this example all instances of the `x-lotus-image-gallery` custom tag found in the DOM will be mapped to an instance of `SampleApp.ImageGalleryMediator`. If you want to use a singleton instance you simply supply `true` as the optional third parameter:
+````
+context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
+````
+All mediators must extend `Lotus.AbstractMediator` and the MUST OVERRIDE `Lotus.AbstractMediator.toString` returning the name of the constructor function. For example below is the `toString` override found in `SampleApp.ImageGalleryMediator`:
+````
+SampleApp.ImageGalleryMediator.toString = function(){
+    return 'SampleApp.ImageGalleryMediator';
+}
+````
+Mediators should also implement the `init` method. The `init` method is called once the tag is proccessed by x-tag and the Lotus component map. This ensures your component instance is completly contructed and its `element` property defined before your mediator set up code is triggered. Below is the init method from `SampleApp.ImageGalleryMediator`
+````
+SampleApp.ImageGalleryMediator.prototype.init = function () {
+    Lotus.AbstractMediator.prototype.init.call(this);
+    var recordSetLabel = this.componentInstance.element.getAttribute('source');//note the attribute recordset should be set on the element identitifed as your component root in your template file (templates/imageGallery.html)
+    var model = this.context.injector.inject(SampleApp.MODEL_KEY);
+    if( model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === null || model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === undefined ){
+        //create the record set for the source if it's not already defined
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] = new Lavender.RecordSet(null, Lavender.ArrayList);
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].createdOn = new Date();
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].id = Lavender.UuidUtils.generateUUID();
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].recordsPerPage = model.config.galleryItemsPerPage;
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].results.allowDuplicates = true;
+        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].source = recordSetLabel;
+    }
+
+    this.componentInstance.collection = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel];
+    this.componentInstance.collection.addEventListener(Lavender.RecordSetEvent.LOAD_PAGE_DATA, this, 'onLoadPageData');
+    this.componentInstance.collection.selectedPage = 1;//will trigger data load
+}
+````
+Be sure you call `Lotus.AbstractMediator.prototype.init.call(this);` as the first call in your `init` method. In this example the component creates a recordset object in the model and assigns it to the component. The component uses this collections as its data provider for constructing collection items. 
+
+Mediators are critical to ensuring your view components remain abstract and properly encapsulated so they can be resused across many applications. You are heavliy encouraged to use them.
+
+For a complete example of how to implement view mediators soo our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp) and our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
 ###Data Binding
 
