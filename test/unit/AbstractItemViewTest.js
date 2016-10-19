@@ -12,8 +12,7 @@ describe('AbstractItemViewTest', function() {
         var model = {};
         document.body.appendChild(element);
         element.innerHTML = '<button sking-part="button" attribute-test="test"><label skin-part="label">Test</label></button>';
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        component.created(element, context);
+        component.created(element);
         component.model = model;
         expect( component.element === element ).toBe( true );
         expect( component.model === model ).toBe( true );

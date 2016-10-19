@@ -20,8 +20,7 @@ describe('AbstractCollectionViewTest', function() {
             '</div>';
         var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
         var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        component.created(element, context);
+        component.created(element);
         expect( component.element === element ).toBe( true );
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );

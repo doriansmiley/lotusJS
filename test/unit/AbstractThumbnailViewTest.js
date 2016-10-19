@@ -9,7 +9,6 @@ describe('AbstractThumbnailView', function() {
     describe('Lotus.ThumbnailPageNavigation', function(){
 
         it('should test default AbstractThumbnailView values', function() {
-            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 
             var component = new Lotus.AbstractThumbnailView();
             var element = document.createElement('div');
@@ -40,7 +39,7 @@ describe('AbstractThumbnailView', function() {
             asset.thumbUrl = asset.thumbnailUriPath;
             //IMPORTANT: the model is always set before  created is called
             component.model = asset;
-            component.created(element, context);
+            component.created(element);
 
 
             expect( component.element === element ).toBe( true );

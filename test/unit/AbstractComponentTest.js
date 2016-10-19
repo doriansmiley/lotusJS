@@ -15,8 +15,7 @@ describe('AbstractComponentTest', function () {
         element.setAttribute('attribute-id', '1234');
         element.innerHTML = '<div skin-part="testProperty">' +
             '</div>';
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        component.created(element, context);
+        component.created(element);
         expect(component.element === element).toBe(true);
         expect(component.ready).toBe(true);
         expect(component.id === '1234').toBe(true);
