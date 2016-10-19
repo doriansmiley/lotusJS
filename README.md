@@ -309,7 +309,7 @@ For a complete example of how to implement view mediators soo our [sample applic
 
 Lotus incorporates Lavender's data binding utilities into it's mediator base class `Lotus.AbstractMediator`. While you are free to implement data binding in any layer of your application, you are encouraged to encapsulate data binding in your mediators. This ensures your web components remain properly encapsulated and reusable, and delegates data binding operations to a single layer within your application.
 
-In order to participate in data binding your web component must define a bindable end point. This is always done using the `addProperties` method in the your components constructor. For example:
+In order to notify observers of changes you must define the bindable end point. This is always done using the `addProperties` method in the your components constructor. For example:
 ````
 Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
@@ -335,7 +335,7 @@ Lavender.RecordSet = function (timeToLive, listFunction) {
 /************* Inherit from Lotus.AbstractComponent for data binding *************/
 Lavender.ObjectUtils.extend(Lavender.Subject, Lavender.RecordSet);
 ````
-In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an extension of the Observer pattern, and the call to `Notify` handles notification for all registered observers. 
+In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an implementation of the Observer pattern, and the call to `Notify` handles notification for all registered observers. 
 
 IMPORTANT: `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
@@ -354,9 +354,9 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (
 ````
 You do not have to create the instance assigned to `this.binder`. It is instantiated in the `Lotus.AbstractMediator` constructor.
 
-If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
+IMPORTANT: You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects. Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
-IMPORTANT: For objects to participate in data binding they must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
+If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
 
 ###Sand Boxed Context
 
