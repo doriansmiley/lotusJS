@@ -69,13 +69,13 @@ Lotus.ImageGalleryItemDetail.prototype.created = function (element) {
 Lotus.ImageGalleryItemDetail.prototype.render = function () {
     if (this.asset && this.ready) {
         if(this.nameLabel){
-            this.nameLabel.value = this.asset.objectName;
+            this.nameLabel.innerHTML = this.asset.objectName;
         }
         if(this.dateCreatedLabel){
-            this.dateCreatedLabel.value = this.asset.createdDate.toDateString();
+            this.dateCreatedLabel.innerHTML = this.asset.createdDate.toDateString();
         }
         if(this.urlLabel){
-            this.urlLabel.value = this.asset.url;
+            this.urlLabel.innerHTML = this.asset.url;
         }
     }
 }

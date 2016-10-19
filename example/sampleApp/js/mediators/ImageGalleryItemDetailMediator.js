@@ -25,5 +25,12 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.init = function () {
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].results.allowDuplicates = true;
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].source = recordSetLabel;
     }
-    this.binder.bind(validator, 'pageList', this , 'onIsValidChange', validator.id);
+    this.binder.bind(model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel], 'pageList', this , 'onPageListChange');
+}
+
+SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (value) {
+    if(!value){
+        return;
+    }
+    this.componentInstance.asset = value.getItemAt(0);
 }

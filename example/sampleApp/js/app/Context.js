@@ -35,6 +35,7 @@ SampleApp.Context.prototype.mapObjects = function(){
 
 SampleApp.Context.prototype.mapMediators = function(){
     this.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
+    this.mediatorMap.add('x-lotus-gallery-detail',SampleApp.ImageGalleryItemDetailMediator);
     //you can optionally add a singleton instance using the following form
     //context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
 }
