@@ -109,10 +109,9 @@ Lotus.AbstractComponent.prototype.onReady = function(){
     this.dispatch(new Lotus.ComponentEvent(Lotus.ComponentEvent.READY));
 }
 
-Lotus.AbstractComponent.prototype.created = function(element, context){
+Lotus.AbstractComponent.prototype.created = function(element){
     console.log('Lotus.AbstractComponent.prototype.created');
     this.element = element;
-    this.context = context;
     this.init();
     this.onReady();
 }
@@ -168,6 +167,5 @@ Lotus.AbstractComponent.prototype.destroy = function(){
     this.binder = null;
     this.observer = null;
     this.element = null;
-    this.context = null;
     this.id = null;
 }
