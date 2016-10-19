@@ -311,33 +311,33 @@ Lotus incorporates Lavender's data binding utilities into it's mediator base cla
 
 In order to participate in data binding your web component must define a bindable end point. This is always done using the `addProperties` method in the your components constructor. For example:
 ````
-Lotus.ImageGalleryItemDetail = function () {
+Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
-    var _asset;
-    var _nameLabel;
-    var _dateCreatedLabel;
-    var _urlLabel;
+    ...full code omitted
+    var _pageList = new listFunction();
     // Define our getters and setters
     this.addProperties({
-            asset: {
-                get: function () {
-                    return _asset;
-                },
-                set: function (val) {
-                    _asset = val;
-                    this.Notify(val, 'asset');
-                    this.render();
-                }
+            pageList: {
+            get: function () {
+                return _pageList;
             },
+            set: function (val) {
+                _pageList = val;
+                this.Notify(val, "pageList");
+                this.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.PAGE_LIST_CHANGE));
+            }
+        },
             ... full code omitted
         }
     );
-    Lotus.AbstractComponent.prototype.constructor.call(this);
+    Lavender.Subject.prototype.constructor.call(this);
 }
 /************* Inherit from Lotus.AbstractComponent for data binding *************/
-Lavender.ObjectUtils.extend(Lotus.AbstractComponent, Lotus.ImageGalleryItemDetail);
+Lavender.ObjectUtils.extend(Lavender.Subject, Lavender.RecordSet);
 ````
-In this example `Lotus.ImageGalleryItemDetail` defines the bindable end point `asset` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lotus.AbstractComponent` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an extension of the Observer pattern, and the call to `Notify` handles notification for all registered observers.
+In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an extension of the Observer pattern, and the call to `Notify` handles notification for all registered observers. 
+
+IMPORTANT: `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
 Once you define a bindable end point you can bind to it. For example in `SampleApp.ImageGalleryItemDetailMediator.prototype.init` the record set's `pageList` property is bound to the `onPageListChange` of the mediator"
 ````
@@ -352,15 +352,17 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (
     this.componentInstance.asset = value.getItemAt(0);
 }
 ````
-You do not have to create the instance of assigned to `this.binder`. It is instantiated in the `Lotus.AbstractMediator` constructor.
+You do not have to create the instance assigned to `this.binder`. It is instantiated in the `Lotus.AbstractMediator` constructor.
 
-If you want to create an instance of `Lavender.Binder` for use elsewhere in yur application simple call  `myVar = new Lavender.Binder();`.
+If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
 
-IMPORTANT: For objects to participate in data binding the must extend `Lavender.Subject` and they must create bindable end point in calls to `this.addProperties` in the objects constructor.
+IMPORTANT: For objects to participate in data binding they must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
 ###Sand Boxed Context
 
-All application services and sand boxed to the applications context. This allows for distributing your applications as  reusable modules. Simply minify your application, include it in your project, and instantiate the context.
+All application services are sand boxed to the application's context. This allows for distributing your applications as  reusable modules. Simply minify your application, include it in your project, and instantiate the context.
+
+TODO: module example
 
 ###Light Weight
 
