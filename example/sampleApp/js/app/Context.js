@@ -9,7 +9,7 @@ SampleApp.Context = function (model, params) {
 Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
 
 SampleApp.Context.prototype.mapComponents = function(){
-    this.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, SampleApp.ImageGalleryCollectionView, xtag);
+    this.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
 }
 
 SampleApp.Context.prototype.mapCommands = function(){

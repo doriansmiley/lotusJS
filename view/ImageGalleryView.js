@@ -1,13 +1,13 @@
 /**
  * Created by dsmiley on 8/18/15.
  */
-SampleApp.ImageGalleryView = function () {
+Lotus.ImageGalleryView = function () {
     Lotus.AbstractThumbnailView.prototype.constructor.call(this);
 }
 /************* Inherit from Subject for data binding *************/
-Lavender.ObjectUtils.extend(Lotus.AbstractThumbnailView, SampleApp.ImageGalleryView);
+Lavender.ObjectUtils.extend(Lotus.AbstractThumbnailView, Lotus.ImageGalleryView);
 
-SampleApp.ImageGalleryView.prototype.onDragStart = function ( event ) {
+Lotus.ImageGalleryView.prototype.onDragStart = function ( event ) {
     if( event.dataTransfer !== null && event.dataTransfer !== undefined ){
         event.dataTransfer.effectAllowed = 'all';
         try{

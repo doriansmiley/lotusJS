@@ -7,7 +7,7 @@
 describe('ImageGalleryMediatorTest', function () {
 
     it('check functions', function () {
-        var view = new SampleApp.ImageGalleryCollectionView();
+        var view = new Lotus.ImageGalleryCollectionView();
         SampleApp.init();
         var context = SampleApp.resources;
         var mediator = new SampleApp.ImageGalleryMediator(view, context);

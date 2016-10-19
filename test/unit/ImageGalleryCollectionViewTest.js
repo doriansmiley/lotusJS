@@ -6,9 +6,9 @@ describe('ImageGalleryItemCollectionViewTest', function() {
   describe('Lotus.ImageGalleryCollectionView', function(){
 
     it('should test default ImageGalleryCollectionView values', function() {
-        var component = new SampleApp.ImageGalleryCollectionView();
+        var component = new Lotus.ImageGalleryCollectionView();
         var element = document.createElement('div');
-        element.setAttribute('attribute-item-view', 'SampleApp.ImageGalleryView');
+        element.setAttribute('attribute-item-view', 'Lotus.ImageGalleryView');
         document.body.appendChild(element);
         element.innerHTML = '<div skin-part="collectionContainer">' +
             '<div skin-part="itemTemplate">' +
@@ -27,8 +27,8 @@ describe('ImageGalleryItemCollectionViewTest', function() {
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );
         expect( component.itemTemplate === itemTemplate ).toBe( true );
-        expect( component.itemView === 'SampleApp.ImageGalleryView' ).toBe( true );
-        expect( component.createChildView() instanceof SampleApp.ImageGalleryView ).toBe( true );
+        expect( component.itemView === 'Lotus.ImageGalleryView' ).toBe( true );
+        expect( component.createChildView() instanceof Lotus.ImageGalleryView ).toBe( true );
         var resultSet = new Lavender.ArrayList();
         resultSet.addItem( {thumbUrl:'http://wallfinest.com/wp-content/uploads/2014/06/vintage-sunset-wallpaper.jpg'} );
         resultSet.addItem( {thumbUrl:'http://upload.wikimedia.org/wikipedia/commons/5/58/Sunset_2007-1.jpg'} );

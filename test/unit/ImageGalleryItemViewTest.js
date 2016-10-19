@@ -9,7 +9,7 @@ describe('ImageGalleryItemViewTest', function() {
     describe('SampleApp.ImageGalleryItemView', function(){
 
         it('should test default AlternateLayoutView values', function() {
-            var component = new SampleApp.ImageGalleryView();
+            var component = new Lotus.ImageGalleryView();
             var element = document.createElement('div');
             document.body.appendChild(element);
             element.innerHTML = '<div skin-part="thumbnailContainer">' +
