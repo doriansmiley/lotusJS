@@ -39,11 +39,6 @@ Lotus.Button.prototype.defineSkinParts = function(){
     this.skinParts.addItem(new Lotus.SkinPart('button', this, 'buttonSkinPart'));
 }
 
-Lotus.Button.prototype.created = function(element, context){
-    console.log('Lotus.Button.prototype.created');
-    Lotus.AbstractComponent.prototype.created.call(this,element, context);
-}
-
 //stub for override
 Lotus.Button.prototype.onSkinPartAdded = function(part, skinPart){
     switch( part ){
