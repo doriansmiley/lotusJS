@@ -69,3 +69,8 @@ Lotus.Button.prototype.onClick = function( event ){
     console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
     this.dispatch(new Lavender.AbstractEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
 }
+
+Lotus.Button.prototype.destroy = function(){
+    Lotus.AbstractComponent.prototype.destroy.call(this);
+    this.buttonSkinPart = null;
+}
