@@ -1,17 +1,18 @@
 lotusJS
 =============
 
-LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
+LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC (Inversion of Control) container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
 
 ###Model View Presenter Framework that supports Web Components!
 
 - [Web Component View](#web-component-view)
-- [Dependency Injection](#inversion-of-control)
+- [Dependency Injection](#dependency-injection)
 - [Central Event Bus](#central-event-bus)
 - [Command Map](#command-map)
 - [View Mediators](#view-mediators)
 - [Data Binding](#data-binding)
 - [Sand Boxed Context](#sand-boxed-context)
+- [Examples](#examples)
 
 ###Web Component View
 
@@ -135,7 +136,7 @@ The item view component used to render each item in the collection is defined in
 
 For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
-###Inversion of Control
+###Dependency Injection
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
 
@@ -368,6 +369,13 @@ TODO: module example
 
 Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small package.
 
+###Examples
+For a complete example of how to implement Lotus in an application using the IOC container see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp). For an example of how to just use our web component frameowrk see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+
 ###Create custom components built on Lotus and offer them through the component exchange
+
+TODO
+
+###Create custom skins using CSS and offer them through the component exchange
 
 TODO
