@@ -384,6 +384,6 @@ For a complete example of how to implement Lotus in an application using the IOC
 
 TODO
 
-###Create custom skins using CSS and offer them through the component exchange
+###Create custom skins and offer them through the component exchange
 
 TODO
