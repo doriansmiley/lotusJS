@@ -27,7 +27,7 @@ context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype,
 ````
 Once the component is mapped you can add the custom tag to HTML DOM:
 ````
-<x-lotus-button type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>
+<x-lotus-button template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>
 ````
 
 Notice the the `template-url` attribute. This is a special attribute defined by the framework which triggers the loading and parsing of the file contents. This can be a relative or absolute path (includes http links) to the html file containing the components `<template>` definition. In this example the contents of that file are as follows:
@@ -74,7 +74,7 @@ In this example the `button` `skin-part` found in the component's `<template>` w
 
 You can also pass attribute values to your components at runtime using the special `attribute-xxx` tage where `attribute-` is the required prefix and `xxx` is your component's attribute name. When the framework evaluates these attributes the prefix is removed and dashes will be replace with camel case to evaluate the attribute value. So attribute-my-attribute-value will become myAttributeValue and evaluated using hasOwnProperty on your component instance. For example:
 ````
-<x-lotus-button2 attribute-type="testButton" type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]'></x-lotus-button2>
+<x-lotus-button2 attribute-type="testButton" template-url="templates/button2.html" component-root='[skin-part="button"]'></x-lotus-button2>
 ````
 In this example `attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
 
