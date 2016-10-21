@@ -40,12 +40,14 @@
 </p>
 <x-lotus-button2 id="eventSampleBtn"  template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
 <script language="JavaScript">
-    var listener = {
-        onClick:function(event){
-            console.log('I mediated and event dispatched by a lotus component instance. My component could pass whatever data it wants here.');
-        }
-    };
-    document.getElementById('eventSampleBtn').lotusComponentInstance.addEventListener('click', listener, 'onClick');
+    window.onload = function(){
+        var listener = {
+            onClick:function(event){
+                console.log('I mediated and event dispatched by a lotus component instance. My component could pass whatever data it wants here.');
+            }
+        };
+        document.getElementById('eventSampleBtn').lotusComponentInstance.addEventListener('click', listener, 'onClick');
+    }
 </script>
 <p>
     This example shows how easily you can change your layout while using the same component definitions. This is the true power of skin parts.
