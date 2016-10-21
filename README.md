@@ -18,7 +18,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 
 Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
 
-You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minamum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy` methods.
+You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
 
 To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
 ````
