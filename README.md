@@ -10,7 +10,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Central Event Bus](#central-event-bus)
 - [Command Map](#command-map)
 - [View Mediators](#view-mediators)
-- [Data Binding](#data-binding)
+- [Data Binding](#binding)
 - [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
 
@@ -109,36 +109,36 @@ Creating collection components is made easy with Lotus. You can extend the base 
     </style>
 <div id="replaceImageUserUpload" attribute-item-view="SampleApp.ImageGalleryView" class="spi-row spi-row-align-center imageGallery">
     <!-- record set navigation -->
-    <div data-skin-part="navButtonContainer" data-enabled-class="enabled" data-disabled-class="disabled" class="navButtonContainer">
-        <button data-skin-part="firstBtn" id="firstBtn" class="spi-button">
+    <div skin-part="navButtonContainer" enabled-class="enabled" disabled-class="disabled" class="navButtonContainer">
+        <button skin-part="firstBtn" id="firstBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-backward"></i></label>
         </button>
-        <button data-skin-part="pervBtn" id="pervBtn" class="spi-button">
+        <button skin-part="pervBtn" id="pervBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-left" ></i></label>
         </button>
-        <button data-skin-part="nextBtn" id="nextBtn" class="spi-button">
+        <button skin-part="nextBtn" id="nextBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-right"></i></label>
         </button>
-        <button data-skin-part="lastBtn" id="lastBtn" class="spi-button">
+        <button skin-part="lastBtn" id="lastBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-forward"></i></label>
         </button>
     </div>
     <div>
-        <select data-skin-part="categoryList"></select>
-        <select data-skin-part="propertyList"></select>
+        <select skin-part="categoryList"></select>
+        <select skin-part="propertyList"></select>
     </div>
-    <div data-skin-part="collectionContainer" id="collectionContainer">
+    <div skin-part="collectionContainer" id="collectionContainer">
         <!-- Itemrenderer skin -->
-        <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="100" data-attribute-thumb-height="100">
-            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" data-selected-class="imageGallerySelectedImage">
-                <img data-skin-part="thumbnail" data-selected-class="thumbSelected" draggable="true"/>
+        <div skin-part="itemTemplate" class="itemRenderer" attribute-thumb-width="100" attribute-thumb-height="100">
+            <div class="thumbnailContainer someClass" skin-part="thumbnailContainer" selected-class="imageGallerySelectedImage">
+                <img skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
             </div>
         </div>
     </div>
 </div>
 </template>
 ````
-Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
+Notice the `skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
 
 The item view component used to render each item in the collection is defined in the `attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
 
