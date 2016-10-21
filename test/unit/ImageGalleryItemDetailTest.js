@@ -28,9 +28,9 @@ describe('ImageGalleryItemDetailTest', function() {
             expect( component.dateCreatedLabel === element.querySelector('[skin-part=dateCreatedLabel]') ).toBe( true );
             expect( component.nameLabel === element.querySelector('[skin-part=nameLabel]') ).toBe( true );
             expect( component.urlLabel === element.querySelector('[skin-part=urlLabel]') ).toBe( true );
-            expect( component.nameLabel.value ).toBe( 'sampleFile.jpg' );
-            expect( component.dateCreatedLabel.value ).toBe( model.createdDate.toDateString() );
-            expect( component.urlLabel.value ).toBe( 'http://www.someuri.com/sampleFile.jpg' );
+            expect( component.nameLabel.innerHTML ).toBe( 'sampleFile.jpg' );
+            expect( component.dateCreatedLabel.innerHTML ).toBe( model.createdDate.toDateString() );
+            expect( component.urlLabel.innerHTML ).toBe( 'http://www.someuri.com/sampleFile.jpg' );
             component.destroy();
             expect( component.element ).toBe( null );
             expect( component.asset ).toBe( null );
