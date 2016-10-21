@@ -18,7 +18,9 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 
 Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
 
-To map a component you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
+You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minamum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy` methods.
+
+To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
 ````
 var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
@@ -69,6 +71,12 @@ Lotus.Button.prototype.defineSkinParts = function(){
 }
 ````
 In this example the `button` `skin-part` found in the component's `<template>` will be mapped to the `buttonSkinPart` attribute of the `Button` instance.
+
+You can also pass attribute values to your components at runtime using the special `attribute-xxx` tage where `attribute-` is the required prefix and `xxx` is your component's attribute name. When the framework evaluates these attributes the prefix is removed and dashes will be replace with camel case to evaluate the attribute value. So attribute-my-attribute-value will become myAttributeValue and evaluated using hasOwnProperty on your component instance. For example:
+````
+<x-lotus-button2 attribute-type="testButton" type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]'></x-lotus-button2>
+````
+In this example `attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
 
 For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
