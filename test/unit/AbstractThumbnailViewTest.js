@@ -12,11 +12,11 @@ describe('AbstractThumbnailView', function() {
 
             var component = new Lotus.AbstractThumbnailView();
             var element = document.createElement('div');
-            element.setAttribute('attribute-thumb-width', '96');
-            element.setAttribute('attribute-thumb-height', '96');
+            element.setAttribute('data-attribute-thumb-width', '96');
+            element.setAttribute('data-attribute-thumb-height', '96');
             document.body.appendChild(element);
-            element.innerHTML = '<div skin-part="thumbnailContainer">' +
-                '<img skin-part="thumbnail"></image>' +
+            element.innerHTML = '<div data-skin-part="thumbnailContainer">' +
+                '<img data-skin-part="thumbnail"></image>' +
                 '</div>';
             component.element = element;
             component.id = '1234';
@@ -45,8 +45,8 @@ describe('AbstractThumbnailView', function() {
             expect( component.element === element ).toBe( true );
             expect( component.model === asset ).toBe( true );
             expect( component.id ).toBe( '1234' );
-            expect( component.thumbnailContainer === element.querySelector('[skin-part=thumbnailContainer]') ).toBe( true );
-            expect( component.thumbnail === element.querySelector('[skin-part=thumbnail]') ).toBe( true );
+            expect( component.thumbnailContainer === element.querySelector('[data-skin-part=thumbnailContainer]') ).toBe( true );
+            expect( component.thumbnail === element.querySelector('[data-skin-part=thumbnail]') ).toBe( true );
             expect( component.thumbnail.getAttribute('src') ).toBe( '/base/unit/assets/test.png' );
             component.destroy();
             expect( component.element === null ).toBe( true );

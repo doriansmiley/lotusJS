@@ -11,31 +11,27 @@ describe('ImageGalleryMediatorTest', function () {
         SampleApp.init();
         var context = SampleApp.resources;
         var mediator = new SampleApp.ImageGalleryMediator(view, context);
-        var model = context.injector.inject(SampleApp.MODEL_KEY)
+        var model = context.injector.inject(SampleApp.MODEL_KEY);
         expect(mediator.componentInstance).toBe(view);
         expect(mediator.context).toBe(context);
         expect(mediator.id.length > 0).toBe(true);
         expect(mediator.toString()).toBe(mediator.id);
 
         var element = document.createElement('div');
-        element.setAttribute('attribute-item-view', 'SampleApp.ImageGalleryView');
-        element.setAttribute('source', 'sampleAPI');
+        element.setAttribute('data-attribute-item-view', 'Lotus.ImageGalleryView');
         document.body.appendChild(element);
-        element.innerHTML = '<div skin-part="collectionContainer">' +
-            '<div skin-part="itemTemplate">' +
-            '<div skin-part="thumbnailContainer" selected-class="someClass">' +
-            '<img skin-part="thumbnail"></image>' +
+        element.innerHTML = '<div data-skin-part="collectionContainer">' +
+            '<div data-skin-part="itemTemplate">' +
+            '<div data-skin-part="thumbnailContainer" selected-class="someClass">' +
+            '<img data-skin-part="thumbnail"></image>' +
             '</div>';
         '</button>' +
         '</div>' +
         '</div>';
-        var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
-        var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
+        var collectionContainer = element.querySelector('[data-skin-part=collectionContainer]');
+        var itemTemplate = element.querySelector('[data-skin-part=itemTemplate]');
         
         view.created(element,context);
-
-        expect(mediator.componentInstance.collection).toBe(model.recordsetModel.recordSets.recordSetsBySource['sampleAPI']);
-        expect(mediator.componentInstance.collection.source).toBe('sampleAPI');
 
         mediator.destroy();
         expect(mediator.id).toBe(null);

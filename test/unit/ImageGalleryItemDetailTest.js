@@ -12,9 +12,9 @@ describe('ImageGalleryItemDetailTest', function() {
             var component = new Lotus.ImageGalleryItemDetail();
             var element = document.createElement('div');
             document.body.appendChild(element);
-            element.innerHTML = '<label skin-part="nameLabel"></label>' +
-                '<label skin-part="dateCreatedLabel"></label>' +
-                '<label skin-part="urlLabel"></label>';
+            element.innerHTML = '<label data-skin-part="nameLabel"></label>' +
+                '<label data-skin-part="dateCreatedLabel"></label>' +
+                '<label data-skin-part="urlLabel"></label>';
             component.id = '1234';
             var model = {};
             model.createdDate = new Date();
@@ -25,9 +25,9 @@ describe('ImageGalleryItemDetailTest', function() {
 
             expect( component.element === element ).toBe( true );
             expect( component.asset === model ).toBe( true );
-            expect( component.dateCreatedLabel === element.querySelector('[skin-part=dateCreatedLabel]') ).toBe( true );
-            expect( component.nameLabel === element.querySelector('[skin-part=nameLabel]') ).toBe( true );
-            expect( component.urlLabel === element.querySelector('[skin-part=urlLabel]') ).toBe( true );
+            expect( component.dateCreatedLabel === element.querySelector('[data-skin-part=dateCreatedLabel]') ).toBe( true );
+            expect( component.nameLabel === element.querySelector('[data-skin-part=nameLabel]') ).toBe( true );
+            expect( component.urlLabel === element.querySelector('[data-skin-part=urlLabel]') ).toBe( true );
             expect( component.nameLabel.innerHTML ).toBe( 'sampleFile.jpg' );
             expect( component.dateCreatedLabel.innerHTML ).toBe( model.createdDate.toDateString() );
             expect( component.urlLabel.innerHTML ).toBe( 'http://www.someuri.com/sampleFile.jpg' );

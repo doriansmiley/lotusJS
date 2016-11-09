@@ -9,17 +9,17 @@ describe('ComponentMapTest', function () {
     it('check ComponentMap function and values', function () {
         var buttonDOMElement = document.createElement('x-lotus-button2');
         buttonDOMElement.setAttribute('id', 'myButton');
-        buttonDOMElement.setAttribute('skin-part', 'button');
-        buttonDOMElement.setAttribute('attribute-type', 'test');
+        buttonDOMElement.setAttribute('data-skin-part', 'button');
+        buttonDOMElement.setAttribute('data-attribute-type', 'test');
         buttonDOMElement.setAttribute('data-attribute-not-an-attribute', 'test');
-        buttonDOMElement.innerHTML = '<button id="myButton" skin-part="button"><label>testButton</label></button>';
+        buttonDOMElement.innerHTML = '<button id="myButton" data-skin-part="button"><label>testButton</label></button>';
 
         var buttonDOMElement2 = document.createElement('x-lotus-button');
         buttonDOMElement2.setAttribute('id', 'myButton');
-        buttonDOMElement2.setAttribute('skin-part', 'button');
-        buttonDOMElement2.setAttribute('template-url', '/base/unit/assets/button.html');//'/base/unitNode/services/assets/template.zip',
+        buttonDOMElement2.setAttribute('data-skin-part', 'button');
+        buttonDOMElement2.setAttribute('data-template-url', '/base/unit/assets/button.html');//'/base/unitNode/services/assets/template.zip',
         buttonDOMElement2.setAttribute('template-root', '#lotusButton');
-        buttonDOMElement2.setAttribute('component-root', '[skin-part="button"]');
+        buttonDOMElement2.setAttribute('data-component-root', '[data-skin-part="button"]');
         //document.appendChild(buttonHTML)
         var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
         context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);

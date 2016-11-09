@@ -12,8 +12,8 @@ describe('ImageGalleryItemViewTest', function() {
             var component = new Lotus.ImageGalleryView();
             var element = document.createElement('div');
             document.body.appendChild(element);
-            element.innerHTML = '<div skin-part="thumbnailContainer">' +
-                '<img skin-part="thumbnail"></image>' +
+            element.innerHTML = '<div data-skin-part="thumbnailContainer">' +
+                '<img data-skin-part="thumbnail"></image>' +
                 '</div>';
             component.id = '1234';
             var model = {};
@@ -27,7 +27,7 @@ describe('ImageGalleryItemViewTest', function() {
             expect( component.element === element ).toBe( true );
             expect( component.model === model ).toBe( true );
             expect( component.id ).toBe( '1234' );
-            expect( component.thumbnail === element.querySelector('[skin-part=thumbnail]') ).toBe( true );
+            expect( component.thumbnail === element.querySelector('[data-skin-part=thumbnail]') ).toBe( true );
             expect( component.thumbnail.getAttribute('src') ).toBe( 'http://www.someuri.com' );
             component.destroy();
             expect( component.element === null ).toBe( true );

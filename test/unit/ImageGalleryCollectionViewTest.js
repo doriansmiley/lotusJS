@@ -8,18 +8,18 @@ describe('ImageGalleryItemCollectionViewTest', function() {
     it('should test default ImageGalleryCollectionView values', function() {
         var component = new Lotus.ImageGalleryCollectionView();
         var element = document.createElement('div');
-        element.setAttribute('attribute-item-view', 'Lotus.ImageGalleryView');
+        element.setAttribute('data-attribute-item-view', 'Lotus.ImageGalleryView');
         document.body.appendChild(element);
-        element.innerHTML = '<div skin-part="collectionContainer">' +
-            '<div skin-part="itemTemplate">' +
-                '<div skin-part="thumbnailContainer" selected-class="someClass">' +
-                    '<img skin-part="thumbnail"></image>' +
+        element.innerHTML = '<div data-skin-part="collectionContainer">' +
+            '<div data-skin-part="itemTemplate">' +
+                '<div data-skin-part="thumbnailContainer" selected-class="someClass">' +
+                    '<img data-skin-part="thumbnail"></image>' +
                 '</div>';
             '</button>' +
             '</div>' +
             '</div>';
-        var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
-        var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
+        var collectionContainer = element.querySelector('[data-skin-part=collectionContainer]');
+        var itemTemplate = element.querySelector('[data-skin-part=itemTemplate]');
         component.id = '1234';
         component.created(element);
         expect( component.element === element ).toBe( true );

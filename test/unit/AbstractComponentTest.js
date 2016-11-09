@@ -12,8 +12,8 @@ describe('AbstractComponentTest', function () {
         var skinPart = new Lotus.SkinPart('testProperty', component, 'testProperty');
         component.skinParts.addItem(skinPart);
         var element = document.createElement('div');
-        element.setAttribute('attribute-id', '1234');
-        element.innerHTML = '<div skin-part="testProperty">' +
+        element.setAttribute('data-attribute-id', '1234');
+        element.innerHTML = '<div data-skin-part="testProperty">' +
             '</div>';
         component.created(element);
         expect(component.element === element).toBe(true);
