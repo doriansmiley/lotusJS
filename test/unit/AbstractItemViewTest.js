@@ -8,10 +8,10 @@ describe('AbstractItemViewTest', function() {
     it('should test default AbstractItemView values', function() {
         var component = new Lotus.AbstractItemView();
         var element = document.createElement('div');
-        element.setAttribute('attribute-id', '1234');
+        element.setAttribute('data-attribute-id', '1234');
         var model = {};
         document.body.appendChild(element);
-        element.innerHTML = '<button sking-part="button" attribute-test="test"><label skin-part="label">Test</label></button>';
+        element.innerHTML = '<button data-skin-part="button" data-attribute-test="test"><label skin-part="label">Test</label></button>';
         component.created(element);
         component.model = model;
         expect( component.element === element ).toBe( true );
