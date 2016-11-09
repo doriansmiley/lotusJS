@@ -10,7 +10,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Central Event Bus](#central-event-bus)
 - [Command Map](#command-map)
 - [View Mediators](#view-mediators)
-- [Data Binding](#binding)
+- [Data Binding](#data-binding)
 - [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
 
