@@ -15,7 +15,7 @@ Lotus.ComponentMap.prototype.success = function(result){
     //clone the contents
     var clone = document.importNode(div.childNodes[0].content, true);
     //select the root component node
-    var component = clone.querySelector(tagInstance.getAttribute('component-root'));
+    var component = clone.querySelector(tagInstance.getAttribute('data-component-root'));
     component.lotusComponentInstance = tagInstance.lotusComponentInstance;
     //create a shadow host from the tag instance and append the clone to it
     var host = tagInstance.createShadowRoot();
@@ -43,7 +43,7 @@ Lotus.ComponentMap.prototype.addComponent = function( tagInstance, functionConst
     //trigger mediator assignment if any
     this.context.mediatorMap.apply(tagInstance.tagName.toLowerCase(), tagInstance.lotusComponentInstance);
     //if the tag instance defines a scr attribute load the template and set up the shadow DOM
-    var src = tagInstance.getAttribute('template-url');
+    var src = tagInstance.getAttribute('data-template-url');
     if( src !== null && src !== undefined ){
         var httpService = new Lavender.XhrHttpService();
         httpService.addResponder(this);

@@ -80,10 +80,11 @@ Lotus.AbstractComponent.prototype.getComponentInstance = function () {
 Lotus.AbstractComponent.prototype.addAttributes = function () {
     for( var i=0; i < this.element.attributes.length; i++ ){
         var attribute = this.element.attributes[i];
-        if( attribute.name.indexOf('attribute-') >= 0 ){
-            var index = attribute.name.indexOf('attribute-') + 10;
+        if( attribute.name.indexOf('attribute') >= 0 ){
+            var index = attribute.name.indexOf('attribute') + 10;
             var newProp = attribute.name.substring(index);//remove prefix
             //convert dashes to camel case
+            //LEGACY: using the data- prefix should trigger camel case on dash automagically
             var camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
             if( this.hasOwnProperty(camelCased) ){
                 this[camelCased] = attribute.value;
@@ -93,14 +94,14 @@ Lotus.AbstractComponent.prototype.addAttributes = function () {
 }
 
 Lotus.AbstractComponent.prototype.addSkinParts = function () {
-    if( this.element.getAttribute('skin-part') !== null && this.element.getAttribute('skin-part') !== undefined ){
-        this.addSkinPart(this.element.getAttribute('skin-part'), this.element);
+    if( this.element.getAttribute('data-skin-part') !== null && this.element.getAttribute('data-skin-part') !== undefined ){
+        this.addSkinPart(this.element.getAttribute('data-skin-part'), this.element);
     }
-    var skinPartsNodeList = this.element.querySelectorAll('[skin-part]');
+    var skinPartsNodeList = this.element.querySelectorAll('[data-skin-part]');
     for (var i = 0; i < skinPartsNodeList.length; i++) {
         // iterate over matches
         //call addSkinPart on the component passing skin part attribute value and the element
-        this.addSkinPart(skinPartsNodeList[i].getAttribute('skin-part'), skinPartsNodeList[i]);
+        this.addSkinPart(skinPartsNodeList[i].getAttribute('data-skin-part'), skinPartsNodeList[i]);
     }
 }
 
