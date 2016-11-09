@@ -27,10 +27,10 @@ context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype,
 ````
 Once the component is mapped you can add the custom tag to HTML DOM:
 ````
-<x-lotus-button template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button>
+<x-lotus-button data-template-url="templates/button.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button>
 ````
 
-Notice the the `template-url` attribute. This is a special attribute defined by the framework which triggers the loading and parsing of the file contents. This can be a relative or absolute path (includes http links) to the html file containing the components `<template>` definition. In this example the contents of that file are as follows:
+Notice the the `data-template-url` attribute. This is a special attribute defined by the framework which triggers the loading and parsing of the file contents. This can be a relative or absolute path (includes http links) to the html file containing the components `<template>` definition. In this example the contents of that file are as follows:
 
 ````
 <template>
@@ -42,10 +42,10 @@ Notice the the `template-url` attribute. This is a special attribute defined by 
             border: solid 1px red;
         }
     </style>
-    <button skin-part="button"><label>testButton external</label></button>
+    <button data-skin-part="button"><label>testButton external</label></button>
 </template>
 ````
-Notice the `skin-part` attribute. This is a special attribute used by the framework. It will pass any element containing this attribute to the web component's `onSkinPartAdded` function. In this example that function does the following:
+Notice the `data-skin-part` attribute. This is a special attribute used by the framework. It will pass any element containing this attribute to the web component's `onSkinPartAdded` function. In this example that function does the following:
 
 ````
 Lotus.Button.prototype.onSkinPartAdded = function(part, skinPart){
@@ -70,13 +70,13 @@ Lotus.Button.prototype.defineSkinParts = function(){
     this.skinParts.addItem(new Lotus.SkinPart('button', this, 'buttonSkinPart'));
 }
 ````
-In this example the `button` `skin-part` found in the component's `<template>` will be mapped to the `buttonSkinPart` attribute of the `Button` instance.
+In this example the `button` `data-skin-part` found in the component's `<template>` will be mapped to the `buttonSkinPart` attribute of the `Button` instance.
 
-You can also pass attribute values to your components at runtime using the special `attribute-xxx` tage where `attribute-` is the required prefix and `xxx` is your component's attribute name. When the framework evaluates these attributes the prefix is removed and dashes will be replace with camel case to evaluate the attribute value. So attribute-my-attribute-value will become myAttributeValue and evaluated using hasOwnProperty on your component instance. For example:
+You can also pass attribute values to your components at runtime using the special `data-attribute-xxx` tage where `data-attribute-` is the required prefix and `xxx` is your component's attribute name. When the framework evaluates these attributes the prefix is removed and dashes will be replace with camel case to evaluate the attribute value. So data-attribute-my-data-attribute-value will become myAttributeValue and evaluated using hasOwnProperty on your component instance. For example:
 ````
-<x-lotus-button2 attribute-type="testButton" template-url="templates/button2.html" component-root='[skin-part="button"]'></x-lotus-button2>
+<x-lotus-button2 data-attribute-type="testButton" data-template-url="templates/button2.html" data-component-root='[data-skin-part="button"]'></x-lotus-button2>
 ````
-In this example `attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
+In this example `data-attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
 
 For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
@@ -107,40 +107,40 @@ Creating collection components is made easy with Lotus. You can extend the base 
             pointer-events: none;
         }
     </style>
-<div id="replaceImageUserUpload" attribute-item-view="SampleApp.ImageGalleryView" class="spi-row spi-row-align-center imageGallery">
+<div id="replaceImageUserUpload" data-attribute-item-view="SampleApp.ImageGalleryView" class="spi-row spi-row-align-center imageGallery">
     <!-- record set navigation -->
-    <div skin-part="navButtonContainer" enabled-class="enabled" disabled-class="disabled" class="navButtonContainer">
-        <button skin-part="firstBtn" id="firstBtn" class="spi-button">
+    <div data-skin-part="navButtonContainer" data-enabled-class="enabled" data-disabled-class="disabled" class="navButtonContainer">
+        <button data-skin-part="firstBtn" id="firstBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-backward"></i></label>
         </button>
-        <button skin-part="pervBtn" id="pervBtn" class="spi-button">
+        <button data-skin-part="pervBtn" id="pervBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-left" ></i></label>
         </button>
-        <button skin-part="nextBtn" id="nextBtn" class="spi-button">
+        <button data-skin-part="nextBtn" id="nextBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-caret-right"></i></label>
         </button>
-        <button skin-part="lastBtn" id="lastBtn" class="spi-button">
+        <button data-skin-part="lastBtn" id="lastBtn" class="spi-button">
             <label style="pointer-events:none;"><i class="fa fa-fast-forward"></i></label>
         </button>
     </div>
     <div>
-        <select skin-part="categoryList"></select>
-        <select skin-part="propertyList"></select>
+        <select data-skin-part="categoryList"></select>
+        <select data-skin-part="propertyList"></select>
     </div>
-    <div skin-part="collectionContainer" id="collectionContainer">
+    <div data-skin-part="collectionContainer" id="collectionContainer">
         <!-- Itemrenderer skin -->
-        <div skin-part="itemTemplate" class="itemRenderer" attribute-thumb-width="100" attribute-thumb-height="100">
-            <div class="thumbnailContainer someClass" skin-part="thumbnailContainer" selected-class="imageGallerySelectedImage">
-                <img skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
+        <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="100" data-attribute-thumb-height="100">
+            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="imageGallerySelectedImage">
+                <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
             </div>
         </div>
     </div>
 </div>
 </template>
 ````
-Notice the `skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
+Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
 
-The item view component used to render each item in the collection is defined in the `attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
+The item view component used to render each item in the collection is defined in the `data-attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
 
 For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
