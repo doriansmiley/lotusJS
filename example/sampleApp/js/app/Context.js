@@ -15,6 +15,7 @@ SampleApp.Context.prototype.mapComponents = function(){
 
 SampleApp.Context.prototype.mapCommands = function(){
     //triggers loading of images
+    //TODO: we need to replace Lavender.RecordSetEvent.LOAD_PAGE_DATA with a component specific event, like MyAppEvent.LOAD_IMAGE_ASSETS
     this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand );
     // you can optionally pass functionName and useSingleton
     //functionName defaults to 'execute'
