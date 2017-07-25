@@ -5,3 +5,5 @@ export * from './context/IContext';
 export * from './context/Context';
 export * from './context/IInjector';
 export * from './context/Injector';
+export * from './context/ICommandMap';
+export * from './context/CommandMap';
