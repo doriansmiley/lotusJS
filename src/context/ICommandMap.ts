@@ -9,9 +9,9 @@ export interface ICommandMap{
     instanceMap:Object;
     context:IContext;
 
-    addCommand(eventType:string, handler:any, functionName:string, useSingleton:boolean);
-    hasCommandMap(eventType:string, handler:Object, functionName:string);
-    removeCommand(eventType:string, handler:Object);
-    removeAllCommands();
-    routeEventToCommand(event:IEvent);
+    addCommand(eventType:string, handler:any, functionName:string, useSingleton:boolean):void;
+    hasCommandMap(eventType:string, handler:Object, functionName:string):boolean;
+    removeCommand(eventType:string, handler:Object):void;
+    removeAllCommands():void;
+    routeEventToCommand(event:IEvent):void;
 }

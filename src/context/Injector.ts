@@ -13,12 +13,12 @@ export class Injector implements IInjector{
         this.objectMap = {};
     }
 
-    public mapObject(key:string, constructor:Function, useSingleton:boolean=false){
+    public mapObject(key:string, constructor:Function, useSingleton:boolean=false):void{
         //instantiate singleton instance upon request is more efficient
         this.objectMap[key] = {constructor:constructor, useSingleton:useSingleton, instance:null};
     }
 
-    public mapSingletonInstance(key:string, instance:any){
+    public mapSingletonInstance(key:string, instance:any):void{
         //map injector as sigleton using the supplied instance
         //this method is very useful for mapping objects that are themselves singletons and may have already been constructed
         //prime example is the model wich generally is constructed before injections are defined

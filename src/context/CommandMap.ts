@@ -17,7 +17,7 @@ export class CommandMap implements ICommandMap{
         this.context = context;
     }
 
-    public addCommand(eventType:string, handler:any, functionName:string='execute', useSingleton:boolean=false){
+    public addCommand(eventType:string, handler:any, functionName:string='execute', useSingleton:boolean=false):void{
         if( this.eventFunctionMap[eventType] === null || this.eventFunctionMap[eventType] === undefined ){
             this.eventFunctionMap[eventType] = [];
         }
@@ -41,12 +41,12 @@ export class CommandMap implements ICommandMap{
         }
     }
 
-    public hasCommandMap(eventType:string, handler:Object, functionName:string){
-        var hasCommand = false;
+    public hasCommandMap(eventType:string, handler:Object, functionName:string):boolean{
+        let hasCommand = false;
         if( this.eventFunctionMap[eventType] !== null && this.eventFunctionMap[eventType] !== undefined ){
-            var mapArray = this.eventFunctionMap[eventType];
-            for( var itemIndex = 0; itemIndex < mapArray.length; itemIndex++){
-                var item = mapArray[ itemIndex ];
+            let mapArray = this.eventFunctionMap[eventType];
+            for( let itemIndex = 0; itemIndex < mapArray.length; itemIndex++){
+                let item = mapArray[ itemIndex ];
                 if( item.handler == handler && item.functionName == functionName ){
                     hasCommand = true;
                     break;
@@ -56,11 +56,11 @@ export class CommandMap implements ICommandMap{
         return hasCommand;
     }
 
-    public removeCommand(eventType:string, handler:Object){
+    public removeCommand(eventType:string, handler:Object):void{
         if( this.eventFunctionMap[eventType] !== null && this.eventFunctionMap[eventType] !== undefined ){
-            var mapArray = this.eventFunctionMap[eventType];
-            for( var itemIndex = mapArray.length - 1; itemIndex >= 0; itemIndex--){
-                var item = mapArray[ itemIndex ];
+            let mapArray = this.eventFunctionMap[eventType];
+            for( let itemIndex = mapArray.length - 1; itemIndex >= 0; itemIndex--){
+                let item = mapArray[ itemIndex ];
                 if( item.handler == handler ){
                     //remove the item form the array
                     switch (itemIndex) {
@@ -71,8 +71,8 @@ export class CommandMap implements ICommandMap{
                             mapArray.pop();
                             break;
                         default:
-                            var head = mapArray.slice(0, itemIndex);
-                            var tail = mapArray.slice(itemIndex + 1);
+                            let head = mapArray.slice(0, itemIndex);
+                            let tail = mapArray.slice(itemIndex + 1);
                             mapArray = head.concat(tail);
                             break;
                     }
@@ -85,21 +85,21 @@ export class CommandMap implements ICommandMap{
         }
     }
 
-    public removeAllCommands(){
+    public removeAllCommands():void{
         this.eventFunctionMap = {};
         this.instanceMap = {};
         this.context.eventDispatcher.removeAllEventListeners(this);
     }
 
-    public routeEventToCommand(event:IEvent){
+    public routeEventToCommand(event:IEvent):void{
         if( this.eventFunctionMap[event.type] !== null && this.eventFunctionMap[event.type] !== undefined ){
-            var mapArray = this.eventFunctionMap[event.type];
-            for( var itemIndex = 0; itemIndex < mapArray.length; itemIndex++){
-                var item = mapArray[ itemIndex ];
+            let mapArray = this.eventFunctionMap[event.type];
+            for( let itemIndex = 0; itemIndex < mapArray.length; itemIndex++){
+                let item = mapArray[ itemIndex ];
                 if( item.useSingleton ){
                     this.instanceMap[item.event.type][item.handler][item.functionName]();
                 }else{
-                    var instance;
+                    let instance;
                     if( typeof item.handler === 'object' ){
                         instance = item.handler;
                     }else{

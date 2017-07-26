@@ -7,3 +7,5 @@ export * from './context/IInjector';
 export * from './context/Injector';
 export * from './context/ICommandMap';
 export * from './context/CommandMap';
+export * from './context/IComponentList';
+export * from './context/ComponentList';
