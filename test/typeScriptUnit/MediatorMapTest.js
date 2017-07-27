@@ -12,6 +12,7 @@ describe('MediatorMap', function () {
         var mediatorMap = new Lotus.MediatorMap(context);
         expect(mediatorMap.context).toBe(context);
         expect(typeof mediatorMap.tagConstructorMap == 'object').toBe(true);
+        expect(typeof mediatorMap.mediatorInstanceMap == 'object').toBe(true);
         mediatorMap.add('x-lotus-button',Lotus.ButtonMediator);
         mediatorMap.add('x-lotus-data-grid',Lotus.AbstractMediator);
         mediatorMap.add('x-lotus-button',Lotus.ButtonMediator);
