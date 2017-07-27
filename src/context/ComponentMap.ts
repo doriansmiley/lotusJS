@@ -1,4 +1,4 @@
-import IXtag = xtag.IXtag;
+import {IXtag} from "../../custom_definitions/xtag";
 /**
  * Created by dsmiley on 7/25/17.
  */
