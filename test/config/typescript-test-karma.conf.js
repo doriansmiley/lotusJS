@@ -3,17 +3,17 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
+            'lib/xtag/*.js',
             'lib/lavender/lavenderJS-UMD.min.js',
             '../lib/lotusJS-UMD.min.js',
             '../global/Globals.js',
+            {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             'typeScriptUnit/**/*.js'
         ],
 
         proxies: {
             "/local": "http://localhost"
         },
-
-        exclude: ['lib/angular/angular-scenario.js'],
 
         autoWatch: true,
 

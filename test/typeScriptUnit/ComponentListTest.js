@@ -7,9 +7,6 @@
 describe('RecordSetListTest', function () {
 
     it('check RecordSetList function and values', function () {
-        Lotus.Button = function(){
-            
-        }
         var lotusComponentList = new Lotus.ComponentList();
 
         var button1 = new Lotus.Button();

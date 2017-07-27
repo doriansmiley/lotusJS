@@ -2,7 +2,7 @@ export declare interface ILifecycle {
 	created?: Function;
 	inserted?: Function;
 	removed?: Function;
-	attributeChanged?: (attrName: string, oldValue: any, newValue: any) => Function;
+	attributeChanged?: (attrName: string, oldValue: any, newValue: any) => void;
 }
 export declare interface IAccessors {
 	attribute?: { name?: string };
@@ -12,6 +12,7 @@ export declare interface IAccessors {
 export declare interface IDefinition {
 	content?: string;
 	lifecycle?: ILifecycle;
+	prototype?: any;
 	events?: { [name: string]: (event: Event) => void; };
 	accessors?: { [name: string]: IAccessors; };
 	methods?: { [name: string]: (...args: any[]) => void; }
