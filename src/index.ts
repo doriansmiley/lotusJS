@@ -23,6 +23,8 @@ export * from './factory/IServiceFactory';
 export * from './factory/ServiceFactory';
 export * from './control/service/IService';
 export * from './control/service/SampleService';
+export * from './control/service/ISampleService';
+export * from './control/actions/SampleAction';
 export * from './mediators/IMediator';
 export * from './mediators/AbstractMediator';
 export * from './mediators/ButtonMediator';

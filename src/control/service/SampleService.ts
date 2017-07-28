@@ -2,15 +2,17 @@ import {IService} from "./IService";
 import {Config} from '../../../node_modules/lavenderjs/lib';
 import {IResponder} from '../../../node_modules/lavenderjs/lib';
 import {StringUtil} from '../../../node_modules/lavenderjs/lib';
+import {AbstractHttpService} from '../../../node_modules/lavenderjs/lib';
 import {HttpServiceFactory} from '../../factory/HttpServiceFactory'
 /**
  * Created by dsmiley on 7/27/17.
  */
-export class SampleService implements IService{
+export class SampleService extends AbstractHttpService implements IService{
     public config:Config;
     public serviceMap:Object;
 
     constructor(config:Config){
+        super();
         this.config = config;
         this.serviceMap = (config.hasOwnProperty('serviceMap')) ? config['serviceMap'] :
         {

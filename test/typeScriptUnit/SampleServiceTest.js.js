@@ -8,7 +8,7 @@ describe('SampleService Test ', function () {
 
     it('check SampleService echoJSON route', function (done) {
         var config = new Lavender.Config();
-        config.baseUrl = 'http://localhost'
+        config.baseUrl = 'http://localhost';
         var request = new Lotus.SampleService(config);
         var success = false;
         var successObject;
