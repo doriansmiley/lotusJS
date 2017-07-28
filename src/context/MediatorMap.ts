@@ -39,7 +39,7 @@ export class MediatorMap implements IMediatorMap{
             return;//don't add the mediatorConstructor/function twice
         }
 
-        var mapId = this.tagConstructorMap[tagName].id;
+        let mapId = this.tagConstructorMap[tagName].id;
 
         this.tagConstructorMap[tagName] = null;
         delete this.tagConstructorMap[tagName];
@@ -48,7 +48,7 @@ export class MediatorMap implements IMediatorMap{
             return;//mo mediators were applied to this mapping
         }
         //iterate in reverse over all instance and destroy
-        for( var i=0; i < (this._mediatorInstanceMap[mapId] as Array<IMediator>).length ; i++){
+        for( let i=0; i < (this._mediatorInstanceMap[mapId] as Array<IMediator>).length ; i++){
             this._mediatorInstanceMap[mapId][i].destroy();
         }
         //make the array eligible for garbage collection
@@ -59,7 +59,7 @@ export class MediatorMap implements IMediatorMap{
     }
 
     public apply(tagName:string, componentInstance:IComponent):void{
-        var map = this.tagConstructorMap[tagName];
+        let map = this.tagConstructorMap[tagName];
 
         if(!map){
             return;//no mediator found for this tag

@@ -24,7 +24,7 @@ export class EventDispatcherFactory implements IEventDispatcherFactory{
     }
 
     public getEventDispatcher(eventDispatcherCode:string='EventDispatcher'):IEventDispatcher{
-        var dispatcher;
+        let dispatcher;
         //config.daoCode defaults to jquery
         switch( eventDispatcherCode ){
             case "EventDispatcher":
