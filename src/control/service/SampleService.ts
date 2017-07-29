@@ -6,6 +6,7 @@ import {AbstractHttpService} from '../../../node_modules/lavenderjs/lib';
 import {HttpServiceFactory} from '../../factory/HttpServiceFactory'
 /**
  * Created by dsmiley on 7/27/17.
+ * This is a sample asynchronous action used in unit tests. It can be used as a template though for all asynch actions
  */
 export class SampleService extends AbstractHttpService implements IService{
     public config:Config;
