@@ -2,6 +2,7 @@ import {IService} from "./IService";
 import {Config} from '../../../node_modules/lavenderjs/lib';
 import {IResponder} from '../../../node_modules/lavenderjs/lib';
 import {StringUtil} from '../../../node_modules/lavenderjs/lib';
+import {IHttpService} from '../../../node_modules/lavenderjs/lib';
 import {AbstractHttpService} from '../../../node_modules/lavenderjs/lib';
 import {HttpServiceFactory} from '../../factory/HttpServiceFactory'
 /**
@@ -50,7 +51,7 @@ export class SampleService extends AbstractHttpService implements IService{
             cache = false;
         }
 
-        var httpRequestInstance = HttpServiceFactory.getInstance().getHttpService(this.config.serviceCode);
+        var httpRequestInstance:IHttpService = HttpServiceFactory.getInstance().getHttpService(this.config.serviceCode);
         httpRequestInstance.addResponder(responder);
         var requestType = (isPostRequest) ? 'POST' : 'GET';
         return httpRequestInstance.send(requestType, url, params, contentType, format, cache);
