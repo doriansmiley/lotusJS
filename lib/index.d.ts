@@ -26,6 +26,8 @@ export * from './control/service/SampleService';
 export * from './control/service/ISampleService';
 export * from './control/events/ActionSuccessEvent';
 export * from './control/events/ActionErrorEvent';
+export * from './control/events/ComponentEvent';
+export * from './control/events/ItemViewEvent';
 export * from './control/command/AbstractCommand';
 export * from './control/command/SampleCommand';
 export * from './mediators/IMediator';
