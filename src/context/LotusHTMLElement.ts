@@ -8,4 +8,8 @@ export class LotusHTMLElement extends HTMLElement{
     public createShadowRoot():Element{
         return null;
     }
+
+    public getComponentInstance():IComponent{
+        return this.lotusComponentInstance;
+    }
 }

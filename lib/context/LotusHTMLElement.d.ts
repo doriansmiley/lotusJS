@@ -5,4 +5,5 @@ import { IComponent } from "../view/IComponent";
 export declare class LotusHTMLElement extends HTMLElement {
     lotusComponentInstance: IComponent;
     createShadowRoot(): Element;
+    getComponentInstance(): IComponent;
 }
