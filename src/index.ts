@@ -39,4 +39,5 @@ export * from './view/SkinPartList';
 export * from './view/AbstractComponent';
 export * from './view/IComponent';
 export * from './view/AbstractComponent';
+export * from './view/AbstractItemView';
 export * from './view/Button';

@@ -11,7 +11,7 @@ import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export class AbstractComponent extends Subject implements IComponent, IEventDispatcher{
+export abstract class AbstractComponent extends Subject implements IComponent, IEventDispatcher{
     private _element:LotusHTMLElement;
     private _context:IContext;
     private _ready:boolean = false;
@@ -94,7 +94,11 @@ export class AbstractComponent extends Subject implements IComponent, IEventDisp
                 //convert dashes to camel case
                 //LEGACY: using the data- prefix should trigger camel case on dash automagically
                 let camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-                if( this.hasOwnProperty(camelCased) ){
+                //typescript for some reason, even though the compiler is using Object.defineProperty passing the prototype with enumerable set to true, is emitting code that hides accesssor methods in sub classes
+                //this requires we check the prototype and '_' + camelCased to find them.
+                //this required private properties use the _ in their name though which is not ideal
+                //TODO: figure out why accessor methods in base classes are not showing up on the enumerated properties of sub classes
+                if( this.hasOwnProperty(camelCased) || Object.getPrototypeOf(this).hasOwnProperty(camelCased) || this.hasOwnProperty('_' + camelCased)){
                     this[camelCased] = attribute.value;
                 }
             }

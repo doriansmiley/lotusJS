@@ -14,7 +14,7 @@ import {IService} from "../service/IService";
 /**
  * Created by dsmiley on 7/28/17.
  */
-export class AbstractCommand extends EventDispatcher implements ICommand{
+export abstract class AbstractCommand extends EventDispatcher implements ICommand{
     protected service:IService;
     protected opModel:AsyncOperationModel;
     protected parser:IParser;

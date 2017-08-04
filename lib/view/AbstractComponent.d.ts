@@ -8,7 +8,7 @@ import { LotusHTMLElement } from "../context/LotusHTMLElement";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export declare class AbstractComponent extends Subject implements IComponent, IEventDispatcher {
+export declare abstract class AbstractComponent extends Subject implements IComponent, IEventDispatcher {
     private _element;
     private _context;
     private _ready;
