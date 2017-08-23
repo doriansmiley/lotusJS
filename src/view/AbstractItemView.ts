@@ -36,6 +36,11 @@ export abstract class AbstractItemView extends AbstractComponent{
         }
     }
 
+    //stub for override
+    public resetState():void{
+
+    }
+
     public destroy():void{
         super.destroy();
         this.model = null;

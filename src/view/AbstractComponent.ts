@@ -94,15 +94,32 @@ export abstract class AbstractComponent extends Subject implements IComponent, I
                 //convert dashes to camel case
                 //LEGACY: using the data- prefix should trigger camel case on dash automagically
                 let camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-                //typescript for some reason, even though the compiler is using Object.defineProperty passing the prototype with enumerable set to true, is emitting code that hides accesssor methods in sub classes
-                //this requires we check the prototype and '_' + camelCased to find them.
-                //this required private properties use the _ in their name though which is not ideal
-                //TODO: figure out why accessor methods in base classes are not showing up on the enumerated properties of sub classes
-                if( this.hasOwnProperty(camelCased) || Object.getPrototypeOf(this).hasOwnProperty(camelCased) || this.hasOwnProperty('_' + camelCased)){
+                let properties:Array<string> = this.getAllPropertyNames(this);
+                if( properties.indexOf(camelCased) >= 0 ){
                     this[camelCased] = attribute.value;
                 }
             }
         }
+    }
+
+    public getAllPropertyNames(obj:Object, iterateSelfBool:boolean=true, iteratePrototypeBool:boolean=true):Array<string>{
+        let props:Array<string> = [];
+
+        do {
+            if (iterateSelfBool) {
+                Object.getOwnPropertyNames(obj).forEach(function(prop) {
+                    if (props.indexOf(prop) === -1) {
+                        props.push(prop);
+                    }
+                });
+            }
+            if (!iteratePrototypeBool) {
+                break;
+            }
+            iterateSelfBool = true;
+        } while (obj = Object.getPrototypeOf(obj));
+
+        return props;
     }
 
     public addSkinParts():void{

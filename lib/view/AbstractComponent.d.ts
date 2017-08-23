@@ -28,6 +28,7 @@ export declare abstract class AbstractComponent extends Subject implements IComp
     skinParts: SkinPartList;
     init(): void;
     addAttributes(): void;
+    getAllPropertyNames(obj: Object, iterateSelfBool?: boolean, iteratePrototypeBool?: boolean): Array<string>;
     addSkinParts(): void;
     addSkinPart(part: string, element: Element): void;
     onReady(): void;

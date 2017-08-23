@@ -1,30 +1,22 @@
 /**
  * Created by dsmiley on 8/4/17.
  */
-import {IComponent} from "./IComponent";
 import {ArrayList} from '../../node_modules/lavenderjs/lib';
 import {CollectionEvent} from '../../node_modules/lavenderjs/lib';
-import {IEventDispatcher} from '../../node_modules/lavenderjs/lib';
-import {EventDispatcher} from '../../node_modules/lavenderjs/lib';
-import {IEvent} from '../../node_modules/lavenderjs/lib';
 import {IList} from '../../node_modules/lavenderjs/lib';
-import {ObjectUtils} from '../../node_modules/lavenderjs/lib';
-import {IContext} from "../context/IContext";
-import {SkinPartList} from "./SkinPartList";
-import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {ComponentEvent} from "../control/events/ComponentEvent";
 import {AbstractComponent} from "./AbstractComponent";
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
+import {LotusHTMLElement} from "../context/LotusHTMLElement";
 
 export class AbstractCollectionView extends AbstractComponent{
     private _collectionContainer;
-    private _itemTemplate;
-    private _selectedItem;
-    private _collection;
-    private _itemView;//IMPORTANT: this value must be defined on the tag
-    private _childViews = new ArrayList();
+    private _itemTemplate:HTMLElement;
+    private _selectedItem:AbstractItemView;
+    private _collection:IList;
+    private _itemView:string;//IMPORTANT: this value must be defined on the tag
+    private _childViews:ArrayList = new ArrayList();
     
     constructor(){
         super();
@@ -134,7 +126,7 @@ export class AbstractCollectionView extends AbstractComponent{
         //clone the view
         let clone = this.itemTemplate.cloneNode(true);
         view.model = model;
-        view.element = clone;
+        view.element = clone as LotusHTMLElement;
         view.init();
         this.childViews.addItem( view );
         if( this.collectionContainer !== null && this.collectionContainer !== undefined ){
@@ -209,12 +201,16 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
-    public init():void{
-        super.init();
+    protected initCollection():void{
         //assign a default collection if it has not already been set
         if( this.collection === null || this.collection === undefined ){
             this.collection = this.getCollection();
         }
+    }
+
+    public init():void{
+        super.init();
+        this.initCollection();
         this.render();
     }
 

@@ -1,3 +1,6 @@
+/**
+ * Created by dsmiley on 8/4/17.
+ */
 import { ArrayList } from '../../node_modules/lavenderjs/lib';
 import { CollectionEvent } from '../../node_modules/lavenderjs/lib';
 import { IList } from '../../node_modules/lavenderjs/lib';
@@ -13,11 +16,11 @@ export declare class AbstractCollectionView extends AbstractComponent {
     private _childViews;
     constructor();
     collectionContainer: any;
-    itemTemplate: any;
-    selectedItem: any;
-    collection: any;
+    itemTemplate: HTMLElement;
+    selectedItem: AbstractItemView;
+    collection: IList;
     readonly childViews: ArrayList;
-    itemView: any;
+    itemView: string;
     protected destroyChildViews(): void;
     protected addCollectionEventListeners(): void;
     protected removeCollectionEventListeners(): void;
@@ -33,6 +36,7 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeChildView(view: AbstractItemView): void;
     protected removeElement(element: HTMLElement): void;
     protected removeChildViewFromModel(model: Object): void;
+    protected initCollection(): void;
     init(): void;
     render(): void;
     defineSkinParts(): void;

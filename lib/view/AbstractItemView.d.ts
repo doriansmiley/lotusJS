@@ -7,5 +7,6 @@ export declare abstract class AbstractItemView extends AbstractComponent {
     constructor();
     model: Object;
     setElementDisplay(element: HTMLElement, display: string): void;
+    resetState(): void;
     destroy(): void;
 }
