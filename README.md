@@ -3,7 +3,7 @@ lotusJS
 
 LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC (Inversion of Control) container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
 
-###Model View Presenter Framework that supports Web Components!
+# Model View Presenter Framework that supports Web Components!
 
 - [Web Component View](#web-component-view)
 - [Dependency Injection](#dependency-injection)
@@ -14,7 +14,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
 
-###Web Component View
+# Web Component View
 
 Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
 
@@ -144,7 +144,7 @@ The item view component used to render each item in the collection is defined in
 
 For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
-###Dependency Injection
+# Dependency Injection
 
 Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
 
@@ -189,7 +189,7 @@ SampleApp.init = function(){
     SampleApp.resources = new SampleApp.Context(SampleApp.Model());
 }
 ````
-###Central Event Bus
+# Central Event Bus
 
 Lotus includes a central event bus to handle dispatching application level events, and registering listeners for this events. This central event bus should not be confused with, or used in, your Lotus web components. Web components extend `Lavender.AbstractEventDispatcher` and can dispatch events directly by calling their `dispatch` method. 
 
@@ -244,7 +244,7 @@ SampleApp.AppEvent.LOAD_IMAGES = 'smpLoadImages';
 SampleApp.AppEvent.IMAGES_LOADED = 'smpImagesLoaded';
 ````
 
-###Command Map
+# Command Map
 
 Lotus includes a command map that maps both fresh instances and singleton instance of a command to an event dispatched by the central event bus. Below is an example of how to map a command:
 ````
@@ -267,7 +267,7 @@ this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.Lo
 ````
 Lotus ships with `Lotus.AbstractCommand` which is a useful base class if you do not intend to create your own command implementation. Commands do not need to extend `Lotus.AbstractCommand`, but it is recommended you do so as it will reduce the amount of redundant code in your application, and allow commands to be easily reused in other applications. For a complete example of implementing a subclass of `Lotus.AbstractCommand` see the `SampleApp.LoadImageAssetsCommand` implementation that's part of our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
-###View Mediators
+# View Mediators
 
 View mediation is an important part of MVP frameworks that enables essentially dumb views to participate in the surrounding application without knowing or caring about their involvement. In most implementations this includes things like binding your application's model data to instance attributes of your view, and delegating events dispatched by your view to the central event bus. To map a mediator to a component in Lotus you do the following in your application's context:
 ````
@@ -314,7 +314,7 @@ Mediators are critical to ensuring your view components remain abstract and prop
 
 For a complete example of how to implement view mediators soo our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp) and our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
-###Data Binding
+# Data Binding
 
 Lotus incorporates Lavender's data binding utilities into it's mediator base class `Lotus.AbstractMediator`. While you are free to implement data binding in any layer of your application, you are encouraged to encapsulate data binding in your mediators. This ensures your web components remain properly encapsulated and reusable, and delegates data binding operations to a single layer within your application.
 
@@ -367,23 +367,23 @@ IMPORTANT: You can also bind to methods, instance varibales and accessor methods
 
 If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
 
-###Sand Boxed Context
+# Sand Boxed Context
 
 All application services are sand boxed to the application's context. This allows for distributing your applications as  reusable modules. Simply minify your application, include it in your project, and instantiate the context.
 
 TODO: module example
 
-###Light Weight
+# Light Weight
 
 Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small package.
 
-###Examples
+# Examples
 For a complete example of how to implement Lotus in an application using the IOC container see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp). For an example of how to just use our web component frameowrk see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
-###Create custom components built on Lotus and offer them through the component exchange
+# Create custom components built on Lotus and offer them through the component exchange
 
 TODO
 
-###Create custom skins and offer them through the component exchange
+# Create custom skins and offer them through the component exchange
 
 TODO
