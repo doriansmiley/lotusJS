@@ -40,4 +40,5 @@ export * from './view/AbstractComponent';
 export * from './view/IComponent';
 export * from './view/AbstractComponent';
 export * from './view/AbstractItemView';
+export * from './view/AbstractCollectionView';
 export * from './view/Button';
