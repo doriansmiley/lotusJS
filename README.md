@@ -80,7 +80,7 @@ In this example `data-attribute-type` will be evaluated as `myButtonInstance.typ
 
 For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
 
-####Collection and Item views
+#### Collection and Item views
 
 Creating collection components is made easy with Lotus. You can extend the base Lotus.AbstractCollectionView and Lotus.AbstractRecordSetCollectionView (supports pagination) to create custom collection components that define item renderers in their skin file. For example:
 
