@@ -9,7 +9,7 @@ describe('EventDispatcherFactoryTest', function () {
             var service = Lotus.EventDispatcherFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getEventDispatcher).toBeDefined();
-            expect(service.getEventDispatcher().constructor.name).toBe(Lotus.EventDispatcher.name);
+            expect(service.getEventDispatcher().constructor.name).toBe(Lavender.EventDispatcher.name);
         });
 
     });

@@ -9,7 +9,7 @@ describe('ServiceFactory Test', function () {
             var service = Lotus.ServiceFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getService).toBeDefined();
-            expect(service.getService( new Lotus.Config() ).constructor.name == Lotus.SampleService.name).toBe(true);
+            expect(service.getService( new Lavender.Config() ).constructor.name == Lotus.SampleService.name).toBe(true);
         });
 
     });

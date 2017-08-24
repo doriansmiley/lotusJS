@@ -10,7 +10,7 @@ describe('ContextTest', function () {
         var context = new Lotus.Context({});
         expect(context.commandMap instanceof Lotus.CommandMap).toBe(true);
         expect(context.componentMap instanceof Lotus.ComponentMap).toBe(true);
-        expect(context.eventDispatcher.constructor.name).toBe(Lotus.EventDispatcher.name);
+        expect(context.eventDispatcher.constructor.name).toBe(Lavender.EventDispatcher.name);
         expect(context.injector instanceof Lotus.Injector).toBe(true);
         expect(context.mediatorMap instanceof Lotus.MediatorMap).toBe(true);
     });

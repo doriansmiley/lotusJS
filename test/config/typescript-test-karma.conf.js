@@ -4,6 +4,7 @@ module.exports = function (config) {
 
         files: [
             'lib/xtag/*.js',
+            'lib/lavender/lavenderJS-UMD.min.js',
             '../lib/lotusJS-UMD.min.js',
             '../global/Globals.js',
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},

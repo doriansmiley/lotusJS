@@ -29,10 +29,10 @@ describe('AbstractRecordSetCollectionViewTest', function() {
         expect( component.itemView === 'Lotus.AbstractItemView' ).toBe( true );
         expect( component.createChildView() instanceof Lotus.AbstractItemView ).toBe( true );
         var resultSet = new Lotus.ArrayList();
-        resultSet.addItem( new Lotus.Config());
-        resultSet.addItem( new Lotus.Config());
-        resultSet.addItem( new Lotus.Config());
-        resultSet.addItem( new Lotus.Config());
+        resultSet.addItem( new Lavender.Config());
+        resultSet.addItem( new Lavender.Config());
+        resultSet.addItem( new Lavender.Config());
+        resultSet.addItem( new Lavender.Config());
         component.recordSet.id = '1234';
         component.recordSet.selectedPage = 1;
         component.recordSet.createdOn = new Date(2014,1,1);//Date;
@@ -56,7 +56,7 @@ describe('AbstractRecordSetCollectionViewTest', function() {
         expect( component.childViews.length ).toBe( 0 );
         component.recordSet.totalRecords = 3;
         component.recordSet.selectedPage = 1;
-        component.recordSet.results.addAll([new Lotus.Config(),new Lotus.Config(),new Lotus.Config()]);
+        component.recordSet.results.addAll([new Lavender.Config(),new Lavender.Config(),new Lavender.Config()]);
         expect( component.recordSet.results.length ).toBe( 3 );
         expect( component.recordSet.pageList.length ).toBe( 2 );
         expect( component.collectionContainer.childNodes.length ).toBe( 2 );

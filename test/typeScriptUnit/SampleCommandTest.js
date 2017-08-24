@@ -7,13 +7,13 @@
 describe('SampleCommand Test', function () {
 
     it('check SampleCommand function and values', function (done) {
-        var config = new Lotus.Config();
+        var config = new Lavender.Config();
         config.baseUrl = 'http://localhost';
         var context = new Lotus.Context(config);
         var service = new Lotus.SampleService( config );
         var parser = {parse:function(result){return result}};
-        var opModel = new Lotus.AsyncOperationModel();
-        var errorModel = new Lotus.ErrorModel();
+        var opModel = new Lavender.AsyncOperationModel();
+        var errorModel = new Lavender.ErrorModel();
 
         context.injector.mapSingletonInstance('service', service);
         context.injector.mapSingletonInstance('parser', parser);
@@ -39,7 +39,7 @@ describe('SampleCommand Test', function () {
         expect(command.parser === parser).toBe(true);
         expect(command.opModel === opModel).toBe(true);
         expect(command.errorModel === errorModel).toBe(true);
-        command.addEventListener(Lotus.ActionSuccessEvent.SUCCESS, responder1, 'success');
+        command.addEventListener(Lavender.ActionSuccessEvent.SUCCESS, responder1, 'success');
         command.execute();
 
     });
