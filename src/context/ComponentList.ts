@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 7/25/17.
  */
-import {ArrayList} from '../../node_modules/lavenderjs/lib';
+import {ArrayList} from 'lavenderjs/lib';
 import {IComponentList} from './IComponentList';
 
 export class ComponentList extends ArrayList implements IComponentList{

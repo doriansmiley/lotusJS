@@ -3,7 +3,7 @@
  */
 import { IContext } from './IContext';
 import { ICommandMap } from './ICommandMap';
-import { IEvent } from '../../node_modules/lavenderjs/lib';
+import { IEvent } from 'lavenderjs/lib';
 export declare class CommandMap implements ICommandMap {
     eventFunctionMap: Object;
     instanceMap: Object;

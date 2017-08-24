@@ -1,7 +1,7 @@
 import { IContext } from "./IContext";
 import { IComponentList } from "./IComponentList";
-import { IResult } from '../../node_modules/lavenderjs/lib';
-import { IFault } from '../../node_modules/lavenderjs/lib';
+import { IResult } from 'lavenderjs/lib';
+import { IFault } from 'lavenderjs/lib';
 import { IXtag } from "../../custom_definitions/xtag";
 import { IComponentMap } from "./IComponentMap";
 import { LotusHTMLElement } from "./LotusHTMLElement";

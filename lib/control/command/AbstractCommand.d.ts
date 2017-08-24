@@ -1,12 +1,12 @@
 import { ICommand } from "./ICommand";
 import { IContext } from "../../context/IContext";
-import { IEvent } from '../../../node_modules/lavenderjs/lib';
-import { EventDispatcher } from '../../../node_modules/lavenderjs/lib';
-import { IParser } from '../../../node_modules/lavenderjs/lib';
-import { AsyncOperationModel } from '../../../node_modules/lavenderjs/lib';
-import { ErrorModel } from '../../../node_modules/lavenderjs/lib';
-import { IResult } from '../../../node_modules/lavenderjs/lib';
-import { IFault } from '../../../node_modules/lavenderjs/lib';
+import { IEvent } from 'lavenderjs/lib';
+import { EventDispatcher } from 'lavenderjs/lib';
+import { IParser } from 'lavenderjs/lib';
+import { AsyncOperationModel } from 'lavenderjs/lib';
+import { ErrorModel } from 'lavenderjs/lib';
+import { IResult } from 'lavenderjs/lib';
+import { IFault } from 'lavenderjs/lib';
 import { IService } from "../service/IService";
 /**
  * Created by dsmiley on 7/28/17.

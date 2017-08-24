@@ -1,8 +1,8 @@
 /**
  * Created by dsmiley on 8/23/17.
  */
-import {ResizeUtils} from '../../node_modules/lavenderjs/lib';
-import {widthHeightObject} from '../../node_modules/lavenderjs/lib';
+import {ResizeUtils} from 'lavenderjs/lib';
+import {widthHeightObject} from 'lavenderjs/lib';
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";

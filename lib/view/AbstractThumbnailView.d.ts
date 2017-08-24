@@ -1,4 +1,4 @@
-import { widthHeightObject } from '../../node_modules/lavenderjs/lib';
+import { widthHeightObject } from 'lavenderjs/lib';
 import { AbstractItemView } from "./AbstractItemView";
 export declare class AbstractThumbnailView extends AbstractItemView {
     private _thumbWidth;

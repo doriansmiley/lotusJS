@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 8/23/17.
  */
-import { RecordSetEvent } from '../../node_modules/lavenderjs/lib';
-import { IList } from '../../node_modules/lavenderjs/lib';
-import { RecordSet } from '../../node_modules/lavenderjs/lib';
+import { RecordSetEvent } from 'lavenderjs/lib';
+import { IList } from 'lavenderjs/lib';
+import { RecordSet } from 'lavenderjs/lib';
 import { AbstractCollectionView } from "./AbstractCollectionView";
 export declare class AbstractRecordSetCollectionView extends AbstractCollectionView {
     private _navBtnEnabledClass;

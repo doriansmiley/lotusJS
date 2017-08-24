@@ -1,6 +1,6 @@
 import {IHttpServiceFactory} from "./IHttpServiceFactory";
-import {IHttpService} from '../../node_modules/lavenderjs/lib';
-import {XhrHttpService} from '../../node_modules/lavenderjs/lib';
+import {IHttpService} from 'lavenderjs/lib';
+import {XhrHttpService} from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/27/17.
  */

@@ -1,9 +1,9 @@
 import {IService} from "./IService";
-import {Config} from '../../../node_modules/lavenderjs/lib';
-import {IResponder} from '../../../node_modules/lavenderjs/lib';
-import {StringUtil} from '../../../node_modules/lavenderjs/lib';
-import {IHttpService} from '../../../node_modules/lavenderjs/lib';
-import {AbstractHttpService} from '../../../node_modules/lavenderjs/lib';
+import {Config} from 'lavenderjs/lib';
+import {IResponder} from 'lavenderjs/lib';
+import {StringUtil} from 'lavenderjs/lib';
+import {IHttpService} from 'lavenderjs/lib';
+import {AbstractHttpService} from 'lavenderjs/lib';
 import {HttpServiceFactory} from '../../factory/HttpServiceFactory'
 /**
  * Created by dsmiley on 7/27/17.

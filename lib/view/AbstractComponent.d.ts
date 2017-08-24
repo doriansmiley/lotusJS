@@ -1,7 +1,7 @@
 import { IComponent } from "./IComponent";
-import { Subject } from '../../node_modules/lavenderjs/lib';
-import { IEventDispatcher } from '../../node_modules/lavenderjs/lib';
-import { IEvent } from '../../node_modules/lavenderjs/lib';
+import { Subject } from 'lavenderjs/lib';
+import { IEventDispatcher } from 'lavenderjs/lib';
+import { IEvent } from 'lavenderjs/lib';
 import { IContext } from "../context/IContext";
 import { SkinPartList } from "./SkinPartList";
 import { LotusHTMLElement } from "../context/LotusHTMLElement";

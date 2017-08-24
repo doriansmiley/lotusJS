@@ -1,8 +1,8 @@
 import {IContext} from "../../context/IContext";
-import {IEvent} from '../../../node_modules/lavenderjs/lib';
-import {IEventDispatcher} from '../../../node_modules/lavenderjs/lib';
-import {IResult} from '../../../node_modules/lavenderjs/lib';
-import {IFault} from '../../../node_modules/lavenderjs/lib';
+import {IEvent} from 'lavenderjs/lib';
+import {IEventDispatcher} from 'lavenderjs/lib';
+import {IResult} from 'lavenderjs/lib';
+import {IFault} from 'lavenderjs/lib';
 
 /**
  * Created by dsmiley on 7/28/17.

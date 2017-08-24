@@ -1,6 +1,6 @@
 import {IEventDispatcherFactory} from "./IEventDispatcherFactory";
-import {IEventDispatcher} from '../../node_modules/lavenderjs/lib';
-import {EventDispatcher} from '../../node_modules/lavenderjs/lib';
+import {IEventDispatcher} from 'lavenderjs/lib';
+import {EventDispatcher} from 'lavenderjs/lib';
 
 /**
  * Created by dsmiley on 7/27/17.

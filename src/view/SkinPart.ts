@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 8/1/17.
  */
-import {Subject} from '../../node_modules/lavenderjs/lib';
+import {Subject} from 'lavenderjs/lib';
 import {AbstractComponent} from "./AbstractComponent";
 
 export class SkinPart extends Subject{

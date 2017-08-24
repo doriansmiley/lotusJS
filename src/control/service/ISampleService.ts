@@ -1,5 +1,5 @@
 import {IService} from "../service/IService";
-import {IResponder} from '../../../node_modules/lavenderjs/lib';
+import {IResponder} from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/28/17.
  */

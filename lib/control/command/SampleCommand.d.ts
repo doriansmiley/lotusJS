@@ -1,6 +1,6 @@
 import { AbstractCommand } from "./AbstractCommand";
 import { IContext } from "../../context/IContext";
-import { IResult } from '../../../node_modules/lavenderjs/lib';
+import { IResult } from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/28/17.
  */

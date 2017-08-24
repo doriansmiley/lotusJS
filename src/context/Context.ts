@@ -1,4 +1,4 @@
-import {IEventDispatcher} from '../../node_modules/lavenderjs/lib';
+import {IEventDispatcher} from 'lavenderjs/lib';
 import {IMediatorMap} from "./IMediatorMap";
 import {IComponentMap} from "./IComponentMap";
 import {ICommandMap} from "./ICommandMap";

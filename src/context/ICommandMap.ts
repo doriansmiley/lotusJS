@@ -2,7 +2,7 @@
  * Created by dsmiley on 7/24/17.
  */
 import {IContext} from './IContext';
-import {IEvent} from '../../node_modules/lavenderjs/lib';
+import {IEvent} from 'lavenderjs/lib';
 
 export interface ICommandMap{
     eventFunctionMap:Object;

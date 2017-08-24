@@ -1,7 +1,7 @@
 import {IMediatorMap} from "./IMediatorMap";
 import {IContext} from "./IContext";
 import {IComponent} from "../view/IComponent";
-import {UuidUtils} from '../../node_modules/lavenderjs/lib';
+import {UuidUtils} from 'lavenderjs/lib';
 import {IMediator} from "../mediators/IMediator";
 
 /**

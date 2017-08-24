@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 8/4/17.
  */
-import {ArrayList} from '../../node_modules/lavenderjs/lib';
-import {CollectionEvent} from '../../node_modules/lavenderjs/lib';
-import {IList} from '../../node_modules/lavenderjs/lib';
+import {ArrayList} from 'lavenderjs/lib';
+import {CollectionEvent} from 'lavenderjs/lib';
+import {IList} from 'lavenderjs/lib';
 import {AbstractComponent} from "./AbstractComponent";
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";

@@ -1,7 +1,7 @@
 import { IService } from "./IService";
-import { Config } from '../../../node_modules/lavenderjs/lib';
-import { IResponder } from '../../../node_modules/lavenderjs/lib';
-import { AbstractHttpService } from '../../../node_modules/lavenderjs/lib';
+import { Config } from 'lavenderjs/lib';
+import { IResponder } from 'lavenderjs/lib';
+import { AbstractHttpService } from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/27/17.
  * This is a sample asynchronous action used in unit tests. It can be used as a template though for all asynch actions

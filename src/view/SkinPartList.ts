@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 8/1/17.
  */
-import {ArrayList} from '../../node_modules/lavenderjs/lib';
+import {ArrayList} from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 
 export class SkinPartList extends ArrayList{

@@ -1,8 +1,8 @@
 import {IContext} from "./IContext";
 import {IComponentList} from "./IComponentList";
-import {IResult} from '../../node_modules/lavenderjs/lib';
-import {IFault} from '../../node_modules/lavenderjs/lib';
-import {XhrHttpService} from '../../node_modules/lavenderjs/lib';
+import {IResult} from 'lavenderjs/lib';
+import {IFault} from 'lavenderjs/lib';
+import {XhrHttpService} from 'lavenderjs/lib';
 import {IXtag, IDefinition, ILifecycle} from "../../custom_definitions/xtag";
 import {IComponentMap} from "./IComponentMap";
 import {ComponentList} from "./ComponentList";

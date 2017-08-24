@@ -1,6 +1,6 @@
 import { IContext } from "./IContext";
 import { IComponentList } from "./IComponentList";
-import { IResponder } from '../../node_modules/lavenderjs/lib';
+import { IResponder } from 'lavenderjs/lib';
 import { IXtag } from "../../custom_definitions/xtag";
 import { LotusHTMLElement } from "./LotusHTMLElement";
 /**
