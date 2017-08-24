@@ -13,20 +13,20 @@ describe('MediatorMap', function () {
         expect(mediatorMap.context).toBe(context);
         expect(typeof mediatorMap.tagConstructorMap == 'object').toBe(true);
         expect(typeof mediatorMap.mediatorInstanceMap == 'object').toBe(true);
-        mediatorMap.add('x-lotus-button',Lotus.ButtonMediator);
+        mediatorMap.add('x-lotus-button',Lotus.AbstractMediator);
         mediatorMap.add('x-lotus-data-grid',Lotus.AbstractMediator);
-        mediatorMap.add('x-lotus-button',Lotus.ButtonMediator);
-        mediatorMap.add('x-lotus-list',Lotus.ListMediator);
+        mediatorMap.add('x-lotus-button',Lotus.AbstractMediator);
+        mediatorMap.add('x-lotus-list',Lotus.AbstractMediator);
         //add singleton tag test
         mediatorMap.add('x-lotus-service-status',Lotus.AbstractMediator, true);
         mediatorMap.add('x-lotus-service-status',Lotus.AbstractMediator, true);
         mediatorMap.add('x-lotus-service-status',Lotus.AbstractMediator, true);
         mediatorMap.add('x-lotus-service-status',Lotus.AbstractMediator, true);
-        expect(mediatorMap.tagConstructorMap['x-lotus-button'].constructor).toBe(Lotus.ButtonMediator);
+        expect(mediatorMap.tagConstructorMap['x-lotus-button'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-button'].useSingleton).toBe(false);
         expect(mediatorMap.tagConstructorMap['x-lotus-data-grid'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-data-grid'].useSingleton).toBe(false);
-        expect(mediatorMap.tagConstructorMap['x-lotus-list'].constructor).toBe(Lotus.ListMediator);
+        expect(mediatorMap.tagConstructorMap['x-lotus-list'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-list'].useSingleton).toBe(false);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].useSingleton).toBe(true);
@@ -46,7 +46,7 @@ describe('MediatorMap', function () {
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-data-grid'].id].length).toBe(2);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-list'].id].length).toBe(2);
-        var mapId = mediatorMap.remove('x-lotus-button',Lotus.ButtonMediator);
+        var mapId = mediatorMap.remove('x-lotus-button',Lotus.AbstractMediator);
         expect(mediatorMap.mediatorInstanceMap[mapId]).toBe(undefined);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-data-grid'].id].length).toBe(2);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
@@ -58,7 +58,7 @@ describe('MediatorMap', function () {
         expect(mediatorMap.mediatorInstanceMap[mapId]).toBe(undefined);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-list'].id].length).toBe(2);
-        mapId = mediatorMap.remove('x-lotus-list',Lotus.ListMediator);
+        mapId = mediatorMap.remove('x-lotus-list',Lotus.AbstractMediator);
         expect(mediatorMap.mediatorInstanceMap[mapId]).toBe(undefined);
         expect(mediatorMap.mediatorInstanceMap[mediatorMap.tagConstructorMap['x-lotus-service-status'].id].length).toBe(1);
         mapId = mediatorMap.remove('x-lotus-service-status',Lotus.AbstractMediator);
