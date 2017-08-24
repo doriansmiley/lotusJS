@@ -33,6 +33,9 @@
     "url": "https://github.com/doriansmiley/lotusJS/issues"
   },
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
+  "dependencies": {
+    "lavenderjs":"^1.0.11"
+  },
   "devDependencies": {
     "awesome-typescript-loader": "^3.1.2",
     "chai": "^3.5.0",
@@ -45,7 +48,6 @@
     "karma-jasmine": "^1.1.0",
     "karma-junit-reporter": "^1.2.0",
     "karma-sauce-launcher": "^1.1.0",
-    "lavenderjs": "^1.0.10",
     "mocha": "^3.3.0",
     "rimraf": "^2.6.1",
     "typescript": "^2.2.2",
