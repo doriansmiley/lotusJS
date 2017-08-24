@@ -41,4 +41,3 @@ export * from './view/AbstractItemView';
 export * from './view/AbstractCollectionView';
 export * from './view/AbstractRecordSetCollectionView';
 export * from './view/AbstractThumbnailView';
-export * from 'lavenderjs/lib';
