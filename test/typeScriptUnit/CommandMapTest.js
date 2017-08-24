@@ -3,7 +3,7 @@
  */
 'use strict';
 describe('CommandMapTest', function () {
-    var context = {eventDispatcher:new Lavender.EventDispatcher()};
+    var context = {eventDispatcher:new Lotus.EventDispatcher()};
     var commandMap = new Lotus.CommandMap(context);
 
     it('check SpiRef.CommandMapper function', function () {
@@ -52,7 +52,7 @@ describe('CommandMapTest', function () {
         };
 
         commandMap.addCommand( 'testEvent1', responder, 'execute' );
-        commandMap.context.eventDispatcher.dispatch(new Lavender.AbstractEvent('testEvent1', {}));
+        commandMap.context.eventDispatcher.dispatch(new Lotus.AbstractEvent('testEvent1', {}));
 
     });
 
@@ -66,7 +66,7 @@ describe('CommandMapTest', function () {
         };
 
         commandMap.addCommand( 'testEvent2', responder, 'execute' );
-        commandMap.context.eventDispatcher.dispatch(new Lavender.AbstractEvent('testEvent2', {}));
+        commandMap.context.eventDispatcher.dispatch(new Lotus.AbstractEvent('testEvent2', {}));
 
     });
 

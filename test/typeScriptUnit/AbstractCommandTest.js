@@ -15,13 +15,13 @@ describe('AbstractServiceActionTest ', function () {
          protected errorModel:ErrorModel;
          public context:IContext;
         * */
-        var config = new Lavender.Config();
+        var config = new Lotus.Config();
         config.baseUrl = 'http://localhost';
         var context = new Lotus.Context(config);
         var service = new Lotus.SampleService(config);
         var parser = {parse:function(result){return result}};
-        var opModel = new Lavender.AsyncOperationModel();
-        var errorModel = new Lavender.ErrorModel();
+        var opModel = new Lotus.AsyncOperationModel();
+        var errorModel = new Lotus.ErrorModel();
 
         context.injector.mapSingletonInstance('service', service);
         context.injector.mapSingletonInstance('parser', parser);
@@ -39,7 +39,7 @@ describe('AbstractServiceActionTest ', function () {
         expect(abstractCommand.opModel.asyncOperationComplete).toBe(false);
         expect(abstractCommand.opModel.asyncOperationCount).toBe(1);
 
-        result = abstractCommand.success( new Lavender.HttpSuccess({},'test', '1234') );
+        result = abstractCommand.success( new Lotus.HttpSuccess({},'test', '1234') );
         expect(opModel.asyncOperationComplete).toBe(true);
         expect(opModel.asyncOperationCount).toBe(0);
         expect(abstractCommand.service).toBe(null);
@@ -58,7 +58,7 @@ describe('AbstractServiceActionTest ', function () {
         expect(opModel.asyncOperationComplete).toBe(false);
         expect(opModel.asyncOperationCount).toBe(1);
 
-        result = abstractCommand.fault( new Lavender.HttpFault({},'test', 'message') );
+        result = abstractCommand.fault( new Lotus.HttpFault({},'test', 'message') );
         expect(opModel.asyncOperationComplete).toBe(true);
         expect(opModel.asyncOperationCount).toBe(0);
         expect(errorModel.appError).toBe(true);

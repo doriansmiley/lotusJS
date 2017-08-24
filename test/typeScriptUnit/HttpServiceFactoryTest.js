@@ -9,8 +9,8 @@ describe('HttpServiceFactoryTest', function () {
             var service = Lotus.HttpServiceFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getHttpService).toBeDefined();
-            expect(service.getHttpService().constructor.name == Lavender.XhrHttpService.name).toBe(true);
-            expect(service.getHttpService('XhrHttpService').constructor.name == Lavender.XhrHttpService.name).toBe(true);
+            expect(service.getHttpService().constructor.name == Lotus.XhrHttpService.name).toBe(true);
+            expect(service.getHttpService('XhrHttpService').constructor.name == Lotus.XhrHttpService.name).toBe(true);
         });
 
     });

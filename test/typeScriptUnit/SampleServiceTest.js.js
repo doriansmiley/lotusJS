@@ -7,7 +7,7 @@
 describe('SampleService Test ', function () {
 
     it('check SampleService echoJSON route', function (done) {
-        var config = new Lavender.Config();
+        var config = new Lotus.Config();
         config.baseUrl = 'http://localhost';
         var request = new Lotus.SampleService(config);
         var success = false;
@@ -34,7 +34,7 @@ describe('SampleService Test ', function () {
     });
 
     it('check SampleService testRequestUsingIncludedAPI route', function (done) {
-        var config = new Lavender.Config();
+        var config = new Lotus.Config();
         config.baseUrl = 'http://localhost'
         var request = new Lotus.SampleService(config);
         var success = false;

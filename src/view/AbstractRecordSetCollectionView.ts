@@ -21,7 +21,9 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
     }
 
     set recordSet(value:RecordSet) {
+        this.removeCollectionEventListeners();//must occur first
         this._recordSet = value;
+        this.addCollectionEventListeners();//must occur after line above
         this.notify(value, 'recordSet');
     }
 

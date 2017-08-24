@@ -56,7 +56,9 @@ export class AbstractCollectionView extends AbstractComponent{
     set collection(value) {
         this.removeCollectionEventListeners();//must occur first
         this._collection = value;
-        this.addCollectionEventListeners();//must occur after line above
+        if(value){
+            this.addCollectionEventListeners();
+        }//must occur after line above
         this.notify(value, 'collection');
     }
 

@@ -43,3 +43,4 @@ export * from './view/AbstractItemView';
 export * from './view/AbstractCollectionView';
 export * from './view/AbstractRecordSetCollectionView';
 export * from './view/Button';
+export * from '../node_modules/lavenderjs/lib';
