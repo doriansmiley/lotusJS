@@ -22,8 +22,8 @@ describe('ComponentMapTest', function () {
         buttonDOMElement2.setAttribute('data-component-root', '[data-skin-part="button"]');
         //document.appendChild(buttonHTML)
         var componentMap = new Lotus.ComponentMap(new Lotus.Context());
-        componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button);
-        componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
+        componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.AbstractItemView);
+        componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.AbstractItemView);
         expect(componentMap.componentInstances.length).toBe(2);
         //TODO: comment in when view components are done
         //expect(componentMap.componentInstances.getItemAt(0).type).toBe('test');

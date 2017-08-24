@@ -30,7 +30,7 @@ describe('MediatorMap', function () {
         expect(mediatorMap.tagConstructorMap['x-lotus-list'].useSingleton).toBe(false);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].constructor).toBe(Lotus.AbstractMediator);
         expect(mediatorMap.tagConstructorMap['x-lotus-service-status'].useSingleton).toBe(true);
-        var buttonInstance = new Lotus.Button();
+        var buttonInstance = new Lotus.AbstractItemView();
         var abstractInstance = new Lotus.AbstractComponent();
         mediatorMap.apply('x-lotus-button', buttonInstance);
         mediatorMap.apply('x-lotus-button', buttonInstance);
