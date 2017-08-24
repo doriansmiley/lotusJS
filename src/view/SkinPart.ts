@@ -1,10 +1,10 @@
 /**
  * Created by dsmiley on 8/1/17.
  */
-import {Subject} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {AbstractComponent} from "./AbstractComponent";
 
-export class SkinPart extends Subject{
+export class SkinPart extends Lavender.Subject{
 
     private _label:string;
     private _attribute:string;

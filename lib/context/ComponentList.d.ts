@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 7/25/17.
  */
-import { ArrayList } from 'lavenderjs/lib';
 import { IComponentList } from './IComponentList';
-export declare class ComponentList extends ArrayList implements IComponentList {
+import * as Lavender from 'lavenderjs/lib';
+export declare class ComponentList extends Lavender.ArrayList implements IComponentList {
     instancesByConstructor: Object;
     constructor();
     protected addToHash(object: any): void;

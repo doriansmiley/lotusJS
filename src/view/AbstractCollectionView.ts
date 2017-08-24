@@ -1,9 +1,7 @@
 /**
  * Created by dsmiley on 8/4/17.
  */
-import {ArrayList} from 'lavenderjs/lib';
-import {CollectionEvent} from 'lavenderjs/lib';
-import {IList} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {AbstractComponent} from "./AbstractComponent";
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
@@ -14,10 +12,10 @@ export class AbstractCollectionView extends AbstractComponent{
     private _collectionContainer;
     private _itemTemplate:HTMLElement;
     private _selectedItem:AbstractItemView;
-    private _collection:IList;
+    private _collection:Lavender.IList;
     private _itemView:string;//IMPORTANT: this value must be defined on the tag
-    private _childViews:ArrayList = new ArrayList();
-    
+    private _childViews:Lavender.ArrayList = new Lavender.ArrayList();
+
     constructor(){
         super();
     }
@@ -49,7 +47,7 @@ export class AbstractCollectionView extends AbstractComponent{
         this.notify(value, 'selectedItem');
     }
 
-    get collection() {
+    get collection():Lavender.IList {
         return this._collection;
     }
 
@@ -62,7 +60,7 @@ export class AbstractCollectionView extends AbstractComponent{
         this.notify(value, 'collection');
     }
 
-    get childViews():ArrayList {
+    get childViews():Lavender.ArrayList {
         return this._childViews;
     }
 
@@ -94,17 +92,17 @@ export class AbstractCollectionView extends AbstractComponent{
 
     protected addCollectionEventListeners():void{
         if( this.collection !== null && this.collection !== undefined ){
-            this.collection.addEventListener(CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
+            this.collection.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
         }
     }
 
     protected removeCollectionEventListeners():void{
         if( this.collection !== null && this.collection !== undefined ){
-            this.collection.removeEventListener(CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
+            this.collection.removeEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
         }
     }
 
-    protected onCollectionChange(event:CollectionEvent):void{
+    protected onCollectionChange(event:Lavender.CollectionEvent):void{
         switch(event.payload['type']){
             case 'add':
                 this.addChildView(event.payload['item']);
@@ -122,7 +120,7 @@ export class AbstractCollectionView extends AbstractComponent{
         let evalClass = eval(this.itemView);
         return new evalClass();
     }
-    
+
     protected addChildView(model:Object):void{
         let view:AbstractItemView = this.createChildView( model );
         //clone the view
@@ -138,7 +136,7 @@ export class AbstractCollectionView extends AbstractComponent{
         }
         this.addViewEventListeners( view );
     }
-    
+
     protected addViewEventListeners(view:AbstractItemView):void{
         view.addEventListener(ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
         view.addEventListener(ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
@@ -150,7 +148,7 @@ export class AbstractCollectionView extends AbstractComponent{
         view.removeEventListener(ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
         view.removeEventListener(ItemViewEvent.REMOVE_ITEM, this, 'onItemRemove');
     }
-    
+
     protected onItemSelectedDeselect(event:ItemViewEvent):void{
         if( this.selectedItem !== null && this.selectedItem !== undefined && this.selectedItem != event.payload['item'] ){
             this.selectedItem.resetState();
@@ -166,7 +164,7 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     //IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
-    protected addAllChildViews(models:IList):void{
+    protected addAllChildViews(models:Lavender.IList):void{
         for( let i=0; i < models.length; i++ ){
             this.addChildView( models[i] );
         }
@@ -192,7 +190,7 @@ export class AbstractCollectionView extends AbstractComponent{
             this.element.removeChild(element);
         }
     }
-    
+
     protected removeChildViewFromModel(model:Object):void{
         //get the view associated with the model
         for( let i=0; i < this.childViews.length; i++){
@@ -243,8 +241,8 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
-    public getCollection():IList{
-        return new ArrayList();
+    public getCollection():Lavender.IList{
+        return new Lavender.ArrayList();
     }
 
     public destroy():void{

@@ -3,7 +3,7 @@
  */
 import {IContext} from './IContext';
 import {ICommandMap} from './ICommandMap';
-import {IEvent} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 
 export class CommandMap implements ICommandMap{
     public eventFunctionMap:Object;
@@ -91,7 +91,7 @@ export class CommandMap implements ICommandMap{
         this.context.eventDispatcher.removeAllEventListeners(this);
     }
 
-    public routeEventToCommand(event:IEvent):void{
+    public routeEventToCommand(event:Lavender.IEvent):void{
         if( this.eventFunctionMap[event.type] !== null && this.eventFunctionMap[event.type] !== undefined ){
             let mapArray = this.eventFunctionMap[event.type];
             for( let itemIndex = 0; itemIndex < mapArray.length; itemIndex++){

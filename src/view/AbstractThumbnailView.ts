@@ -1,8 +1,7 @@
 /**
  * Created by dsmiley on 8/23/17.
  */
-import {ResizeUtils} from 'lavenderjs/lib';
-import {widthHeightObject} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
@@ -73,9 +72,9 @@ export class AbstractThumbnailView extends AbstractItemView{
         if( this.thumbnail === null ||  this.thumbnail === undefined ){
             return;
         }
-        let defaultSize:widthHeightObject = this.getDefaultSize();
-        let containerSize:widthHeightObject = this.getContainerSize();
-        let scale = ResizeUtils.getScaleToFit(defaultSize, containerSize);
+        let defaultSize:Lavender.widthHeightObject = this.getDefaultSize();
+        let containerSize:Lavender.widthHeightObject = this.getContainerSize();
+        let scale = Lavender.ResizeUtils.getScaleToFit(defaultSize, containerSize);
         let width = defaultSize['width'] * scale;
         let height = defaultSize['height'] * scale;
         //console.log("width/height "+width+"/"+height)
@@ -98,15 +97,15 @@ export class AbstractThumbnailView extends AbstractItemView{
         return this.model['thumbUrl'];
     }
 
-    protected getDefaultSize():widthHeightObject{
-        return {width:parseInt(this.thumbnail.getAttribute('width')), height:parseInt(this.thumbnail.getAttribute('height'))} as widthHeightObject;
+    protected getDefaultSize():Lavender.widthHeightObject{
+        return {width:parseInt(this.thumbnail.getAttribute('width')), height:parseInt(this.thumbnail.getAttribute('height'))} as Lavender.widthHeightObject;
     }
 
-    protected getContainerSize():widthHeightObject{
+    protected getContainerSize():Lavender.widthHeightObject{
         var returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined ) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
         //if the container has a defined width and height set in the tempalte use that instead of our defaults
         if( !isNaN( parseInt(this.thumbWidth) ) && !isNaN( parseInt(this.thumbWidth) ) ){
-            returnObj = {width:parseInt(this.thumbWidth), height:parseInt(this.thumbHeight)} as widthHeightObject;
+            returnObj = {width:parseInt(this.thumbWidth), height:parseInt(this.thumbHeight)} as Lavender.widthHeightObject;
         }
         return returnObj;
     }

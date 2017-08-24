@@ -1,7 +1,7 @@
 import {IMediatorMap} from "./IMediatorMap";
 import {IContext} from "./IContext";
 import {IComponent} from "../view/IComponent";
-import {UuidUtils} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {IMediator} from "../mediators/IMediator";
 
 /**
@@ -31,7 +31,7 @@ export class MediatorMap implements IMediatorMap{
         if( this.hasMediatorMap( tagName, mediatorConstructor ) ){
             return;//don't add the mediatorConstructor/function twice
         }
-        this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor, id:UuidUtils.generateUUID(), name:mediatorConstructor.toString()};
+        this.tagConstructorMap[tagName] = {useSingleton:useSingleton, constructor:mediatorConstructor, id:Lavender.UuidUtils.generateUUID(), name:mediatorConstructor.toString()};
     }
 
     public remove(tagName:string, mediatorConstructor:Function):string{

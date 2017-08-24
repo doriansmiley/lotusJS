@@ -3,7 +3,7 @@
  */
 import { IContext } from './IContext';
 import { ICommandMap } from './ICommandMap';
-import { IEvent } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 export declare class CommandMap implements ICommandMap {
     eventFunctionMap: Object;
     instanceMap: Object;
@@ -13,5 +13,5 @@ export declare class CommandMap implements ICommandMap {
     hasCommandMap(eventType: string, handler: Object, functionName: string): boolean;
     removeCommand(eventType: string, handler: Object): void;
     removeAllCommands(): void;
-    routeEventToCommand(event: IEvent): void;
+    routeEventToCommand(event: Lavender.IEvent): void;
 }

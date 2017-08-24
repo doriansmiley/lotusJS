@@ -39,7 +39,7 @@ describe('SampleCommand Test', function () {
         expect(command.parser === parser).toBe(true);
         expect(command.opModel === opModel).toBe(true);
         expect(command.errorModel === errorModel).toBe(true);
-        command.addEventListener(Lavender.ActionSuccessEvent.SUCCESS, responder1, 'success');
+        command.addEventListener(Lotus.ActionSuccessEvent.SUCCESS, responder1, 'success');
         command.execute();
 
     });

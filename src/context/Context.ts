@@ -1,4 +1,4 @@
-import {IEventDispatcher} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {IMediatorMap} from "./IMediatorMap";
 import {IComponentMap} from "./IComponentMap";
 import {ICommandMap} from "./ICommandMap";
@@ -15,7 +15,7 @@ import {EventDispatcherFactory} from "../factory/EventDispatcherFactory";
  */
 export class Context implements IContext{
     public config:Object;
-    public eventDispatcher:IEventDispatcher;
+    public eventDispatcher:Lavender.IEventDispatcher;
     public componentMap:IComponentMap;
     public commandMap:ICommandMap;
     public injector:IInjector

@@ -1,24 +1,18 @@
 import {ICommand} from "./ICommand";
 import {IContext} from "../../context/IContext";
-import {IEvent} from 'lavenderjs/lib';
-import {EventDispatcher} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {ActionSuccessEvent} from '../events/ActionSuccessEvent';
 import {ActionErrorEvent} from '../events/ActionErrorEvent';
-import {IParser} from 'lavenderjs/lib';
-import {AsyncOperationModel} from 'lavenderjs/lib';
-import {ErrorModel} from 'lavenderjs/lib';
-import {IResult} from 'lavenderjs/lib';
-import {IFault} from 'lavenderjs/lib';
 import {IService} from "../service/IService";
 
 /**
  * Created by dsmiley on 7/28/17.
  */
-export abstract class AbstractCommand extends EventDispatcher implements ICommand{
+export abstract class AbstractCommand extends Lavender.EventDispatcher implements ICommand{
     protected service:IService;
-    protected opModel:AsyncOperationModel;
-    protected parser:IParser;
-    protected errorModel:ErrorModel;
+    protected opModel:Lavender.AsyncOperationModel;
+    protected parser:Lavender.IParser;
+    protected errorModel:Lavender.ErrorModel;
     public context:IContext;
 
 
@@ -26,12 +20,12 @@ export abstract class AbstractCommand extends EventDispatcher implements IComman
         super();
         this.context = context;
         this.service = context.injector.inject('service') as IService;
-        this.parser = context.injector.inject('parser') as IParser;
-        this.opModel = context.injector.inject('opModel') as AsyncOperationModel;
-        this.errorModel = context.injector.inject('errorModel') as ErrorModel;
+        this.parser = context.injector.inject('parser') as Lavender.IParser;
+        this.opModel = context.injector.inject('opModel') as Lavender.AsyncOperationModel;
+        this.errorModel = context.injector.inject('errorModel') as Lavender.ErrorModel;
     }
     
-    public execute(event:IEvent):string{
+    public execute(event:Lavender.IEvent):string{
         if (this.service === null || this.service === undefined || this.opModel === null || this.opModel === undefined || this.parser === null || this.parser === undefined) {
             this.executionError();
         }
@@ -48,7 +42,7 @@ export abstract class AbstractCommand extends EventDispatcher implements IComman
 
     //Override this method in subclasses
     //it should parse the result and return the resulting Object tree
-    protected parseResponse(result:IResult):Object{
+    protected parseResponse(result:Lavender.IResult):Object{
         return null;
     }
 
@@ -57,7 +51,7 @@ export abstract class AbstractCommand extends EventDispatcher implements IComman
         this.dispatch(doneEvent);
     }
 
-    public success(result:IResult):void{
+    public success(result:Lavender.IResult):void{
         try {
             //result is instance of Lavender.HttpSuccess
             let parsedResult = this.parseResponse(result);
@@ -78,7 +72,7 @@ export abstract class AbstractCommand extends EventDispatcher implements IComman
         }
     }
 
-    public fault(fault:IFault):void{
+    public fault(fault:Lavender.IFault):void{
         //fault is an instance of Lavender.HttpFault
         this.opModel.asyncOperationCount -= 1;
         if (this.opModel.asyncOperationCount == 0) {

@@ -24,6 +24,9 @@ module.exports = {
             include: /\.min\.js$/,
         })
     ],
+    externals: {
+        "lavenderjs/lib": "Lavender"
+    },
     module: {
         loaders: [{
             test: /\.tsx?$/,

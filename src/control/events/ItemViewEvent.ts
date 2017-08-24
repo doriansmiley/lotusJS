@@ -1,10 +1,9 @@
 /**
  * Created by dsmiley on 7/31/17.
  */
-import {IEvent} from 'lavenderjs/lib';
-import {AbstractEvent} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 
-export class ItemViewEvent extends AbstractEvent{
+export class ItemViewEvent extends Lavender.AbstractEvent{
     constructor(type:string, payload?:Object){
         super(type, payload);
 
@@ -17,7 +16,7 @@ export class ItemViewEvent extends AbstractEvent{
     public static ITEM_DESELECTED = 'itemViewItemDeselected';
     public static REMOVE_ITEM = 'itemViewRemoveItem';
 
-    clone(type:string, payload:Object):IEvent{
+    clone(type:string, payload:Object):Lavender.IEvent{
         return new ItemViewEvent(this.type, this.payload)
     }
 }

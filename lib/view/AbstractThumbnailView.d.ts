@@ -1,4 +1,7 @@
-import { widthHeightObject } from 'lavenderjs/lib';
+/**
+ * Created by dsmiley on 8/23/17.
+ */
+import * as Lavender from 'lavenderjs/lib';
 import { AbstractItemView } from "./AbstractItemView";
 export declare class AbstractThumbnailView extends AbstractItemView {
     private _thumbWidth;
@@ -19,8 +22,8 @@ export declare class AbstractThumbnailView extends AbstractItemView {
     protected onThumbClick(event: Event): void;
     protected onDragStart(event: Event): void;
     protected getImageURL(): string;
-    protected getDefaultSize(): widthHeightObject;
-    protected getContainerSize(): widthHeightObject;
+    protected getDefaultSize(): Lavender.widthHeightObject;
+    protected getContainerSize(): Lavender.widthHeightObject;
     addEventListeners(): void;
     removeEventListeners(): void;
     defineSkinParts(): void;

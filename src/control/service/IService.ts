@@ -1,11 +1,10 @@
-import {Config} from 'lavenderjs/lib';
-import {IResponder} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/27/17.
  */
 export interface IService{
-    config:Config;
+    config:Lavender.Config;
     serviceMap:Object;
 
-    sendRequest(isPostRequest:boolean, responder:IResponder, url:string, paramObj?:Object, format?:string, contentType?:string, cache?:boolean):string;
+    sendRequest(isPostRequest:boolean, responder:Lavender.IResponder, url:string, paramObj?:Object, format?:string, contentType?:string, cache?:boolean):string;
 }

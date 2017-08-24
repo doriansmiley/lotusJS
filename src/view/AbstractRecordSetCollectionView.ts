@@ -1,9 +1,7 @@
 /**
  * Created by dsmiley on 8/23/17.
  */
-import {RecordSetEvent} from 'lavenderjs/lib';
-import {IList} from 'lavenderjs/lib';
-import {RecordSet} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 import {AbstractCollectionView} from "./AbstractCollectionView";
 
@@ -14,13 +12,13 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
     private _pervBtn:HTMLElement;
     private _firstBtn:HTMLElement;
     private _lastBtn:HTMLElement;
-    private _recordSet:RecordSet;
+    private _recordSet:Lavender.RecordSet;
 
-    get recordSet():RecordSet {
+    get recordSet():Lavender.RecordSet {
         return this._recordSet;
     }
 
-    set recordSet(value:RecordSet) {
+    set recordSet(value:Lavender.RecordSet) {
         this.removeCollectionEventListeners();//must occur first
         this._recordSet = value;
         this.addCollectionEventListeners();//must occur after line above
@@ -92,7 +90,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
     protected addCollectionEventListeners():void{
         //IMPORTANT, do not call super, we don't want to listen for collection change events but instead the events below
         if( this.recordSet !== null && this.recordSet !== undefined ){
-            this.recordSet.addEventListener(RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
+            this.recordSet.addEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
             this.binder.bind(this.recordSet, 'pageList', this, 'onPageListChange', null, null, 'pageListChaneHandler');
         }
     }
@@ -102,7 +100,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
         //This method can be called as part of a destroy sequence where the collection is nulled out, so we check for NPE
         if( this.recordSet !== null && this.recordSet !== undefined ){
             //remove old event listeners
-            this.recordSet.removeEventListener(RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
+            this.recordSet.removeEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
         }
         if( this.binder !== null && this.binder !== undefined ){
             this.binder.unbind('pageListChaneHandler');
@@ -149,18 +147,18 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
         button.classList.add(classToAdd);
     }
     
-    protected onResultsChange(event:RecordSetEvent):void{
+    protected onResultsChange(event:Lavender.RecordSetEvent):void{
         this.render();
     }
 
-    protected onPageListChange(value:IList):void{
+    protected onPageListChange(value:Lavender.IList):void{
         this.render();
     }
 
     protected initCollection():void{
         //assign a default collection if it has not already been set
         if( this.recordSet === null || this.recordSet === undefined ){
-            this.recordSet = new RecordSet();
+            this.recordSet = new Lavender.RecordSet();
         }
     }
 

@@ -1,6 +1,5 @@
 import {IEventDispatcherFactory} from "./IEventDispatcherFactory";
-import {IEventDispatcher} from 'lavenderjs/lib';
-import {EventDispatcher} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 
 /**
  * Created by dsmiley on 7/27/17.
@@ -23,13 +22,13 @@ export class EventDispatcherFactory implements IEventDispatcherFactory{
         return EventDispatcherFactory.INSTANCE;
     }
 
-    public getEventDispatcher(eventDispatcherCode:string='EventDispatcher'):IEventDispatcher{
+    public getEventDispatcher(eventDispatcherCode:string='Lavender.EventDispatcher'):Lavender.IEventDispatcher{
         let dispatcher;
         //config.daoCode defaults to jquery
         switch( eventDispatcherCode ){
-            case "EventDispatcher":
+            case "Lavender.EventDispatcher":
             default:
-                dispatcher = new EventDispatcher();
+                dispatcher = new Lavender.EventDispatcher();
         }
         return dispatcher;
     }

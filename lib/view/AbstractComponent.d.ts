@@ -1,14 +1,12 @@
 import { IComponent } from "./IComponent";
-import { Subject } from 'lavenderjs/lib';
-import { IEventDispatcher } from 'lavenderjs/lib';
-import { IEvent } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import { IContext } from "../context/IContext";
 import { SkinPartList } from "./SkinPartList";
 import { LotusHTMLElement } from "../context/LotusHTMLElement";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export declare abstract class AbstractComponent extends Subject implements IComponent, IEventDispatcher {
+export declare abstract class AbstractComponent extends Lavender.Subject implements IComponent, Lavender.IEventDispatcher {
     private _element;
     private _context;
     private _ready;
@@ -19,7 +17,7 @@ export declare abstract class AbstractComponent extends Subject implements IComp
     canListen: (eventType: string, instance: Object, handler: string) => boolean;
     removeEventListener: (event: string, instance: Object, handler: string) => void;
     removeAllEventListeners: (instance: Object) => void;
-    dispatch: (event: IEvent) => void;
+    dispatch: (event: Lavender.IEvent) => void;
     constructor();
     element: LotusHTMLElement;
     context: IContext;

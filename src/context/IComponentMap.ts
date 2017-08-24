@@ -1,13 +1,13 @@
 import {IContext} from "./IContext";
 import {IComponentList} from "./IComponentList";
-import {IResponder} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {IXtag} from "../../custom_definitions/xtag";
 import {LotusHTMLElement} from "./LotusHTMLElement";
 
 /**
  * Created by dsmiley on 7/26/17.
  */
-export interface IComponentMap extends IResponder{
+export interface IComponentMap extends Lavender.IResponder{
     context:IContext;
     componentInstances:IComponentList;
     tagInstanceToRequestId:Object;

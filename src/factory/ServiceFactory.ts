@@ -1,7 +1,7 @@
 import {IService} from "../control/service/IService";
 import {IServiceFactory} from "./IServiceFactory";
 import {SampleService} from "../control/service/SampleService";
-import {Config} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/27/17.
  */
@@ -23,7 +23,7 @@ export class ServiceFactory implements IServiceFactory{
         return ServiceFactory.INSTANCE;
     }
 
-    public getService(config:Config):IService{
+    public getService(config:Lavender.Config):IService{
         var service;
         switch( config.serviceCode ){
             default:

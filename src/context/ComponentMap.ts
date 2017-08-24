@@ -1,8 +1,6 @@
 import {IContext} from "./IContext";
 import {IComponentList} from "./IComponentList";
-import {IResult} from 'lavenderjs/lib';
-import {IFault} from 'lavenderjs/lib';
-import {XhrHttpService} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {IXtag, IDefinition, ILifecycle} from "../../custom_definitions/xtag";
 import {IComponentMap} from "./IComponentMap";
 import {ComponentList} from "./ComponentList";
@@ -24,7 +22,7 @@ export class ComponentMap implements IComponentMap{
         this.tagInstanceToRequestId = {};
     }
     
-    public success(result:IResult):void{
+    public success(result:Lavender.IResult):void{
         let tagInstance:LotusHTMLElement = this.tagInstanceToRequestId[result.requestId];
         let div:HTMLDivElement = document.createElement('div');
         div.innerHTML = result.resultObj as string;
@@ -45,7 +43,7 @@ export class ComponentMap implements IComponentMap{
         }
     }
 
-    public fault(fault:IFault):void{
+    public fault(fault:Lavender.IFault):void{
         console.log(fault);
         throw new Error('Could not load template. Please check you defined the correct path.');
     }
@@ -66,7 +64,7 @@ export class ComponentMap implements IComponentMap{
         //if the tag instance defines a scr attribute load the template and set up the shadow DOM
         let src:string = tagInstance.getAttribute('data-template-url');
         if( src !== null && src !== undefined ){
-            let httpService = new XhrHttpService();
+            let httpService = new Lavender.XhrHttpService();
             httpService.addResponder(this);
             httpService.send(
                 'GET',

@@ -1,9 +1,7 @@
 /**
  * Created by dsmiley on 8/23/17.
  */
-import { RecordSetEvent } from 'lavenderjs/lib';
-import { IList } from 'lavenderjs/lib';
-import { RecordSet } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import { AbstractCollectionView } from "./AbstractCollectionView";
 export declare class AbstractRecordSetCollectionView extends AbstractCollectionView {
     private _navBtnEnabledClass;
@@ -13,7 +11,7 @@ export declare class AbstractRecordSetCollectionView extends AbstractCollectionV
     private _firstBtn;
     private _lastBtn;
     private _recordSet;
-    recordSet: RecordSet;
+    recordSet: Lavender.RecordSet;
     navBtnEnabledClass: string;
     navBtnDisabledClass: string;
     nextBtn: HTMLElement;
@@ -25,8 +23,8 @@ export declare class AbstractRecordSetCollectionView extends AbstractCollectionV
     protected removeCollectionEventListeners(): void;
     protected onClickHandler(event: Event): void;
     protected refreshNavButtonDisplay(button: HTMLElement, type: String): void;
-    protected onResultsChange(event: RecordSetEvent): void;
-    protected onPageListChange(value: IList): void;
+    protected onResultsChange(event: Lavender.RecordSetEvent): void;
+    protected onPageListChange(value: Lavender.IList): void;
     protected initCollection(): void;
     defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;

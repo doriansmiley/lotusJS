@@ -1,9 +1,7 @@
 /**
  * Created by dsmiley on 8/4/17.
  */
-import { ArrayList } from 'lavenderjs/lib';
-import { CollectionEvent } from 'lavenderjs/lib';
-import { IList } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import { AbstractComponent } from "./AbstractComponent";
 import { AbstractItemView } from "./AbstractItemView";
 import { ItemViewEvent } from "../control/events/ItemViewEvent";
@@ -18,20 +16,20 @@ export declare class AbstractCollectionView extends AbstractComponent {
     collectionContainer: any;
     itemTemplate: HTMLElement;
     selectedItem: AbstractItemView;
-    collection: IList;
-    readonly childViews: ArrayList;
+    collection: Lavender.IList;
+    readonly childViews: Lavender.ArrayList;
     itemView: string;
     protected destroyChildViews(): void;
     protected addCollectionEventListeners(): void;
     protected removeCollectionEventListeners(): void;
-    protected onCollectionChange(event: CollectionEvent): void;
+    protected onCollectionChange(event: Lavender.CollectionEvent): void;
     protected createChildView(model: Object): AbstractItemView;
     protected addChildView(model: Object): void;
     protected addViewEventListeners(view: AbstractItemView): void;
     protected removeViewEventListeners(view: AbstractItemView): void;
     protected onItemSelectedDeselect(event: ItemViewEvent): void;
     protected onItemRemove(event: ItemViewEvent): void;
-    protected addAllChildViews(models: IList): void;
+    protected addAllChildViews(models: Lavender.IList): void;
     protected removeAllChildViews(): void;
     protected removeChildView(view: AbstractItemView): void;
     protected removeElement(element: HTMLElement): void;
@@ -41,6 +39,6 @@ export declare class AbstractCollectionView extends AbstractComponent {
     render(): void;
     defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
-    getCollection(): IList;
+    getCollection(): Lavender.IList;
     destroy(): void;
 }

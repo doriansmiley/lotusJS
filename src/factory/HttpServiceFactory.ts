@@ -1,6 +1,5 @@
 import {IHttpServiceFactory} from "./IHttpServiceFactory";
-import {IHttpService} from 'lavenderjs/lib';
-import {XhrHttpService} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 /**
  * Created by dsmiley on 7/27/17.
  */
@@ -23,12 +22,12 @@ export class HttpServiceFactory implements IHttpServiceFactory{
     }
 
     //override this method to return custon IService implementations
-    public getHttpService(code:string='XhrHttpService'):IHttpService{
+    public getHttpService(code:string='Lavender.XhrHttpService'):Lavender.IHttpService{
         let httpService;
         switch(code){
-            case "XhrHttpService":
+            case "Lavender.XhrHttpService":
             default:
-                httpService = new XhrHttpService();
+                httpService = new Lavender.XhrHttpService();
                 break;
         }
         return httpService;

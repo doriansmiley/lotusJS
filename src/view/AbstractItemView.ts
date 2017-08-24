@@ -1,13 +1,3 @@
-import {IComponent} from "./IComponent";
-import {Subject} from 'lavenderjs/lib';
-import {IEventDispatcher} from 'lavenderjs/lib';
-import {EventDispatcher} from 'lavenderjs/lib';
-import {IEvent} from 'lavenderjs/lib';
-import {ObjectUtils} from 'lavenderjs/lib';
-import {IContext} from "../context/IContext";
-import {SkinPartList} from "./SkinPartList";
-import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {ComponentEvent} from "../control/events/ComponentEvent";
 import {AbstractComponent} from "./AbstractComponent";
 /**
  * Created by dsmiley on 8/4/17.

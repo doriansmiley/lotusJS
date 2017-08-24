@@ -1,10 +1,10 @@
 /**
  * Created by dsmiley on 8/1/17.
  */
-import {ArrayList} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 
-export class SkinPartList extends ArrayList{
+export class SkinPartList extends Lavender.ArrayList{
     public skinPartsByLabel:Object = {};
     
     constructor(source?:Array<any>, allowDuplicates:boolean = true){

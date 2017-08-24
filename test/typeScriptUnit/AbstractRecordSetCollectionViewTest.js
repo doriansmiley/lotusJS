@@ -28,7 +28,7 @@ describe('AbstractRecordSetCollectionViewTest', function() {
         expect( component.itemTemplate === itemTemplate ).toBe( true );
         expect( component.itemView === 'Lotus.AbstractItemView' ).toBe( true );
         expect( component.createChildView() instanceof Lotus.AbstractItemView ).toBe( true );
-        var resultSet = new Lotus.ArrayList();
+        var resultSet = new Lavender.ArrayList();
         resultSet.addItem( new Lavender.Config());
         resultSet.addItem( new Lavender.Config());
         resultSet.addItem( new Lavender.Config());

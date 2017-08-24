@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 8/1/17.
  */
-import { ArrayList } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import { SkinPart } from "./SkinPart";
-export declare class SkinPartList extends ArrayList {
+export declare class SkinPartList extends Lavender.ArrayList {
     skinPartsByLabel: Object;
     constructor(source?: Array<any>, allowDuplicates?: boolean);
     addItem(object: SkinPart, hash?: Object, key?: string): number;

@@ -1,9 +1,5 @@
 import {IComponent} from "./IComponent";
-import {Subject} from 'lavenderjs/lib';
-import {IEventDispatcher} from 'lavenderjs/lib';
-import {EventDispatcher} from 'lavenderjs/lib';
-import {IEvent} from 'lavenderjs/lib';
-import {ObjectUtils} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import {IContext} from "../context/IContext";
 import {SkinPartList} from "./SkinPartList";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
@@ -11,7 +7,7 @@ import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export abstract class AbstractComponent extends Subject implements IComponent, IEventDispatcher{
+export abstract class AbstractComponent extends Lavender.Subject implements IComponent, Lavender.IEventDispatcher{
     private _element:LotusHTMLElement;
     private _context:IContext;
     private _ready:boolean = false;
@@ -24,11 +20,11 @@ export abstract class AbstractComponent extends Subject implements IComponent, I
     canListen: (  eventType:string, instance:Object, handler:string )  => boolean;
     removeEventListener: ( event:string, instance:Object, handler:string )  => void;
     removeAllEventListeners: ( instance:Object )  =>  void;
-    dispatch: ( event:IEvent )  =>  void;
+    dispatch: ( event:Lavender.IEvent )  =>  void;
 
     constructor(){
         super();
-        ObjectUtils.mixin(EventDispatcher, AbstractComponent, this);
+        Lavender.ObjectUtils.mixin(Lavender.EventDispatcher, AbstractComponent, this);
     }
 
     get element():LotusHTMLElement {

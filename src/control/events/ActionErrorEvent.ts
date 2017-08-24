@@ -1,10 +1,9 @@
 /**
  * Created by dsmiley on 5/18/17.
  */
-import {IEvent} from 'lavenderjs/lib';
-import {AbstractEvent} from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 
-export class ActionErrorEvent extends AbstractEvent{
+export class ActionErrorEvent extends Lavender.AbstractEvent{
     constructor(type:string, payload?:Object){
         super(type, payload);
 
@@ -15,7 +14,7 @@ export class ActionErrorEvent extends AbstractEvent{
 
     public static ERROR:string = 'actionError';
 
-    clone(type:string, payload:Object):IEvent{
+    clone(type:string, payload:Object):Lavender.IEvent{
         return new ActionErrorEvent(this.type, this.payload)
     }
 }

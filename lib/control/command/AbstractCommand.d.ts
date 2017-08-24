@@ -1,29 +1,23 @@
 import { ICommand } from "./ICommand";
 import { IContext } from "../../context/IContext";
-import { IEvent } from 'lavenderjs/lib';
-import { EventDispatcher } from 'lavenderjs/lib';
-import { IParser } from 'lavenderjs/lib';
-import { AsyncOperationModel } from 'lavenderjs/lib';
-import { ErrorModel } from 'lavenderjs/lib';
-import { IResult } from 'lavenderjs/lib';
-import { IFault } from 'lavenderjs/lib';
+import * as Lavender from 'lavenderjs/lib';
 import { IService } from "../service/IService";
 /**
  * Created by dsmiley on 7/28/17.
  */
-export declare abstract class AbstractCommand extends EventDispatcher implements ICommand {
+export declare abstract class AbstractCommand extends Lavender.EventDispatcher implements ICommand {
     protected service: IService;
-    protected opModel: AsyncOperationModel;
-    protected parser: IParser;
-    protected errorModel: ErrorModel;
+    protected opModel: Lavender.AsyncOperationModel;
+    protected parser: Lavender.IParser;
+    protected errorModel: Lavender.ErrorModel;
     context: IContext;
     constructor(context: IContext);
-    execute(event: IEvent): string;
+    execute(event: Lavender.IEvent): string;
     protected executeServiceMethod(): string;
-    protected parseResponse(result: IResult): Object;
+    protected parseResponse(result: Lavender.IResult): Object;
     protected dispatchSuccess(parsedResult: Object): void;
-    success(result: IResult): void;
-    fault(fault: IFault): void;
+    success(result: Lavender.IResult): void;
+    fault(fault: Lavender.IFault): void;
     onProgress(progress: number): void;
     protected getFaultString(): string;
     protected getErrorMessage(): string;
