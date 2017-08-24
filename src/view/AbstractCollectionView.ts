@@ -159,7 +159,7 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     protected onItemRemove(event:ItemViewEvent):void{
-        var index = this.collection.indexOf( event.payload['item'].model );
+        let index = this.collection.indexOf( event.payload['item'].model );
         if( index >= 0 ){
             this.collection.removeItemAt(index);
         }
@@ -167,13 +167,13 @@ export class AbstractCollectionView extends AbstractComponent{
 
     //IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
     protected addAllChildViews(models:IList):void{
-        for( var i=0; i < models.length; i++ ){
+        for( let i=0; i < models.length; i++ ){
             this.addChildView( models[i] );
         }
     }
 
     protected removeAllChildViews():void{
-        for( var i=this.childViews.length-1; i >= 0; i--){
+        for( let i=this.childViews.length-1; i >= 0; i--){
             this.removeChildView( this.childViews.getItemAt(i) );
         }
     }
@@ -195,7 +195,7 @@ export class AbstractCollectionView extends AbstractComponent{
     
     protected removeChildViewFromModel(model:Object):void{
         //get the view associated with the model
-        for( var i=0; i < this.childViews.length; i++){
+        for( let i=0; i < this.childViews.length; i++){
             if( this.childViews.getItemAt(i).model == model ){
                 this.removeChildView( this.childViews.getItemAt(i) );
                 break;

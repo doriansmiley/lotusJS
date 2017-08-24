@@ -140,7 +140,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
         if(button.classList.contains(this.navBtnEnabledClass)){
             button.classList.remove(this.navBtnEnabledClass)
         }
-        var classToAdd;
+        let classToAdd;
         if( type === 'next' ){
             classToAdd = ( this.recordSet.selectedPage + 1 > this.recordSet.totalPages ) ? this.navBtnDisabledClass : this.navBtnEnabledClass;
         }else{
@@ -222,8 +222,8 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
             return;
         }
         //populate the new view using the record set's current page
-        for (var i = 0; i < this.recordSet.pageList.length; i++) {
-            var model = this.recordSet.pageList.getItemAt(i);
+        for (let i = 0; i < this.recordSet.pageList.length; i++) {
+            let model = this.recordSet.pageList.getItemAt(i);
             this.addChildView(model);
         }
         this.selectedItem = null;//reset the selected item state
