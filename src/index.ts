@@ -44,3 +44,6 @@ export * from './view/AbstractCollectionView';
 export * from './view/AbstractRecordSetCollectionView';
 export * from './view/AbstractThumbnailView';
 export * from './view/Button';
+export * from './view/ImageGalleryCollectionView';
+export * from './view/ImageGalleryItemDetail';
+export * from './view/ImageGalleryView';
