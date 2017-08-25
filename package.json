@@ -12,7 +12,7 @@
     "clean-dist": "rimraf ./lib/*",
     "prebuild": "npm run clean-dist",
     "build": "tsc && webpack",
-    "test": "grunt"
+    "test": "sh ./scripts/typescript.sh"
   },
   "repository": {
     "type": "git",
