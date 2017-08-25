@@ -9,4 +9,5 @@ export declare class ButtonMediator extends AbstractMediator {
     protected onClick(event: Event): void;
     protected addEventListeners(): void;
     protected removeEventListeners(): void;
+    toString(): string;
 }

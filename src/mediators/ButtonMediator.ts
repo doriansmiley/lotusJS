@@ -1,9 +1,6 @@
 import {AbstractMediator} from "./AbstractMediator";
-import {IMediator} from "./IMediator";
 import {IContext} from "../context/IContext";
-import * as Lavender from 'lavenderjs/lib';
 import {IComponent} from "../view/IComponent";
-import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
@@ -24,5 +21,9 @@ export class ButtonMediator extends AbstractMediator{
     protected removeEventListeners():void{
         super.removeEventListeners();
         this.componentInstance.removeEventListener('click', this, 'onClick');
+    }
+
+    public toString():string{
+        return 'Lotus.ButtonMediator';
     }
 }
