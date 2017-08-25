@@ -32,6 +32,7 @@ export * from './control/command/AbstractCommand';
 export * from './control/command/SampleCommand';
 export * from './mediators/IMediator';
 export * from './mediators/AbstractMediator';
+export * from './mediators/ButtonMediator';
 export * from './view/SkinPart';
 export * from './view/SkinPartList';
 export * from './view/AbstractComponent';

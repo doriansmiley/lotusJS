@@ -30,9 +30,10 @@ export class Button extends AbstractComponent{
         this.notify( value, 'type' );
     }
 
-    protected onClick(event:Event):void{
+    public onClick(event:Event):void{
         console.log('Lotus.Button.prototype.onClick: event is ' + event);
         console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
+        console.log('Lotus.Button.prototype.onClick: this ' + this);
         this.dispatch(new ComponentEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
     }
 
@@ -57,7 +58,7 @@ export class Button extends AbstractComponent{
 
     public addEventListeners():void{
         super.addEventListeners();
-        this.buttonSkinPart.addEventListener('click', this.onClick);
+        this.buttonSkinPart.addEventListener('click', this.onClick.bind(this));
     }
 
     public removeEventListeners():void{

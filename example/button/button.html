@@ -5,11 +5,11 @@
     <link rel="stylesheet" type="text/css" href="button.css" />
     <script type="text/javascript" src="../../test/lib/bower_components/webcomponentsjs/webcomponents.js"></script>
     <script type="text/javascript" src="../../test/lib/xtag/core.js"></script>
-    <script type="text/javascript" src="../../test/lib/lavender/lavender.min.js"></script>
-    <script type="text/javascript" src="../../minify/lotus.min.js"></script>
+    <script type="text/javascript" src="node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
+    <script type="text/javascript" src="node_modules/lotusjs-components/lib/lotusJS-UMD.min.js"></script>
     <script language="JavaScript">
         var context = (function( xtag ){
-            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+            var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button, xtag);

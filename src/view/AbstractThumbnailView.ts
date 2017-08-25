@@ -116,8 +116,8 @@ export class AbstractThumbnailView extends AbstractItemView{
             return;
         }
         this.thumbnail.setAttribute('draggable', (this.allowDrag) ? 'true' : 'false');
-        this.thumbnail.addEventListener('click', this.onThumbClick);
-        this.thumbnail.addEventListener('dragstart', this.onDragStart);
+        this.thumbnail.addEventListener('click', this.onThumbClick.bind(this));
+        this.thumbnail.addEventListener('dragstart', this.onDragStart.bind(this));
     }
 
     public removeEventListeners():void{

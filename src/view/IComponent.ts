@@ -1,7 +1,10 @@
 /**
  * Created by dsmiley on 7/26/17.
  */
-export interface IComponent{
+import * as Lavender from 'lavenderjs/lib';
+
+export interface IComponent extends Lavender.IEventDispatcher{
+    ready:boolean;
     destroy():void;
     created(element:HTMLElement):void;
     inserted(element:HTMLElement):void;

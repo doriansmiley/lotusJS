@@ -8,7 +8,7 @@ export declare class Button extends AbstractComponent {
     constructor();
     buttonSkinPart: HTMLElement;
     type: string;
-    protected onClick(event: Event): void;
+    onClick(event: Event): void;
     defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
     addEventListeners(): void;

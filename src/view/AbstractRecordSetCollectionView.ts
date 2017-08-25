@@ -176,16 +176,16 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
         switch(part){
             //optional container for displaying collection elements
             case 'nextBtn':
-                this.nextBtn.addEventListener('click', this.onClickHandler);
+                this.nextBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
             case 'pervBtn':
-                this.pervBtn.addEventListener('click', this.onClickHandler);
+                this.pervBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
             case 'firstBtn':
-                this.firstBtn.addEventListener('click', this.onClickHandler);
+                this.firstBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
             case 'lastBtn':
-                this.lastBtn.addEventListener('click', this.onClickHandler);
+                this.lastBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
         }
         //IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
@@ -229,6 +229,18 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
 
     public destroy():void{
         super.destroy();
+        if( this.nextBtn ){
+            this.nextBtn.removeEventListener('click', this.onClickHandler);
+        }
+        if( this.pervBtn ){
+            this.pervBtn.removeEventListener('click', this.onClickHandler);
+        }
+        if( this.firstBtn ){
+            this.firstBtn.removeEventListener('click', this.onClickHandler);
+        }
+        if( this.lastBtn ){
+            this.lastBtn.removeEventListener('click', this.onClickHandler);
+        }
         this.recordSet.destroy();
         this.navBtnEnabledClass = null;
         this.navBtnDisabledClass = null;

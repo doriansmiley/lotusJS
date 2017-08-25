@@ -7,7 +7,7 @@ import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export abstract class AbstractComponent extends Lavender.Subject implements IComponent, Lavender.IEventDispatcher{
+export abstract class AbstractComponent extends Lavender.Subject implements IComponent{
     private _element:LotusHTMLElement;
     private _context:IContext;
     private _ready:boolean = false;
