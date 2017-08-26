@@ -2,7 +2,7 @@
  * Created by dsmiley on 6/26/15.
  */
 SampleApp.Model = function() {
-    var model = Lavender.ModelLocator.getInstance();
+    var model = {config:new Lavender.Config()};
 //add dynamic config properties
     model.config.httpServiceCode = 'xhr';
     model.config.eventDispatcherCode = "abstract";
@@ -24,5 +24,7 @@ SampleApp.Model = function() {
     };
 //set up record set model where our image gallery records will be loaded
      model.recordsetModel = new Lavender.RecordSetModel();
+     model.opMpdel = new Lavender.AsyncOperationModel();
+     model.errorModel = new Lavender.ErrorModel();
     return model;
 }

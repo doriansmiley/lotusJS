@@ -33,7 +33,10 @@ export class Context implements IContext{
     }
 
     public startUp(){
-
+        this.mapComponents();
+        this.mapCommands();
+        this.mapObjects();
+        this.mapMediators();
     }
 
     public mapComponents(){
