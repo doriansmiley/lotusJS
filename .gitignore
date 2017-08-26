@@ -11,3 +11,4 @@
 /node_modules
 .DS_Store
 /example/button/node_modules
+/example/sampleApp/node_modules
