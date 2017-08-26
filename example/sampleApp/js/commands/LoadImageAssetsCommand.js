@@ -14,6 +14,12 @@ SampleApp.LoadImageAssetsCommand = function(context){
 Lavender.ObjectUtils.extend(Lotus.AbstractCommand, SampleApp.LoadImageAssetsCommand);
 
 //execute the service call
+SampleApp.LoadImageAssetsCommand.prototype.execute = function (event) {
+    Lotus.AbstractCommand.prototype.execute.call(this, event);
+    this.recordSet = event.payload.recordSet;
+}
+
+//execute the service call
 SampleApp.LoadImageAssetsCommand.prototype.executeServiceMethod = function () {
     //params, key, responder, format, contentType, localRequest, cache
     return this.service.readImageAssets(['userID','all','public'], 'readImageAssets', this, 'json', null, true, true);
@@ -26,7 +32,6 @@ SampleApp.LoadImageAssetsCommand.prototype.parseResponse = function (result) {
     }
     this.updateResults(imageAssets);
     SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:imageAssets}));
-    this.destroy();
 }
 
 //get string to append to fault message
