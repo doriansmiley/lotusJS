@@ -129,6 +129,18 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
                 this.recordSet.selectedPage = this.recordSet.totalPages;
                 break;
         }
+        if( this.nextBtn ){
+            this.refreshNavButtonDisplay( this.nextBtn, 'next');
+        }
+        if( this.pervBtn ){
+            this.refreshNavButtonDisplay( this.pervBtn, 'prev');
+        }
+        if( this.firstBtn ){
+            this.refreshNavButtonDisplay( this.firstBtn, 'prev');
+        }
+        if( this.lastBtn ){
+            this.refreshNavButtonDisplay( this.lastBtn, 'next');
+        }
     }
 
     protected refreshNavButtonDisplay(button:HTMLElement, type:String):void{
