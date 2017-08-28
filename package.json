@@ -1,0 +1,56 @@
+{
+  "name": "lotusjs-components",
+  "version": "1.1.7",
+  "description": "LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.",
+  "main": "lib/index.js",
+  "directories": {
+    "example": "example",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "clean-dist": "rimraf ./lib/*",
+    "prebuild": "npm run clean-dist",
+    "build": "tsc && webpack",
+    "test": "sh ./scripts/typescript.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://doriansmiley@yahoo.com@github.com/doriansmiley/lotusJS.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "IOC",
+    "MVC",
+    "Framework",
+    "Web",
+    "Components",
+    "xTag"
+  ],
+  "author": "Dorian Smiley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/doriansmiley/lotusJS/issues"
+  },
+  "homepage": "https://github.com/doriansmiley/lotusJS#readme",
+  "dependencies": {
+    "lavenderjs": "^1.0.15"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.1.2",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-mocha-test": "^0.13.2",
+    "jasmine": "^2.6.0",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-sauce-launcher": "^1.1.0",
+    "mocha": "^3.3.0",
+    "rimraf": "^2.6.1",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1"
+  }
+}

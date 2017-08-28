@@ -18,7 +18,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _id = val;
-                this.Notify(val, "id");
+                this.notify(val, "id");
             }
         },
         thumbUrl: {
@@ -27,7 +27,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _thumbUrl = val;
-                this.Notify(val, "thumbUrl");
+                this.notify(val, "thumbUrl");
             }
         },
         url: {
@@ -36,7 +36,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _url = val;
-                this.Notify(val, "url");
+                this.notify(val, "url");
             }
         },
         createdDate: {
@@ -45,7 +45,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _createdDate = new Date(val);
-                this.Notify(val, "createdDate");
+                this.notify(val, "createdDate");
             }
         },
         lastAccessDate: {
@@ -54,7 +54,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _lastAccessDate = new Date(val);
-                this.Notify(val, "lastAccessDate");
+                this.notify(val, "lastAccessDate");
             }
         },
         objectName: {
@@ -63,7 +63,7 @@ SampleApp.ImageAsset = function(){
             },
             set: function (val) {
                 _objectName = val;
-                this.Notify(val, "objectName");
+                this.notify(val, "objectName");
             }
         }
     });

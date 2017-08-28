@@ -32,6 +32,8 @@ SampleApp.Context.prototype.mapObjects = function(){
     this.injector.mapSingletonInstance(SampleApp.APP_SERVICES, new SampleApp.SampleService(this.model.config));
     this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));
     this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, this.model);
+    this.injector.mapSingletonInstance(SampleApp.OP_MODEL_KEY, this.model.opMpdel);
+    this.injector.mapSingletonInstance(SampleApp.ERROR_MODEL_KEY, this.model.errorModel);
 }
 
 SampleApp.Context.prototype.mapMediators = function(){
@@ -43,8 +45,10 @@ SampleApp.Context.prototype.mapMediators = function(){
 
 SampleApp.IMAGE_ASSETS_PARSER_KEY = 'imageAssetsParser';
 SampleApp.HTTP_SERVICE_KEY = 'xhr';
-SampleApp.APP_SERVICES = 'appServices';
-SampleApp.SERVICE_RESULT_PARSER_KEY = 'serviceResultParser';
+SampleApp.APP_SERVICES = 'service';
+SampleApp.SERVICE_RESULT_PARSER_KEY = 'parser';
 SampleApp.SERIALIZE_FACTORY_KEY = 'serializeFactoryKey';
 SampleApp.EVENT_DISPATCHER_KEY = 'eventDispatcher';
 SampleApp.MODEL_KEY = 'model';
+SampleApp.OP_MODEL_KEY = 'opModel';
+SampleApp.ERROR_MODEL_KEY = 'errorModel';

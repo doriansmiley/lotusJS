@@ -13,21 +13,40 @@ SampleApp.LoadImageAssetsCommand = function(context){
 /************* Inherit from Subject for data binding *************/
 Lavender.ObjectUtils.extend(Lotus.AbstractCommand, SampleApp.LoadImageAssetsCommand);
 
-SampleApp.LoadImageAssetsCommand.prototype.getAction = function (event) {
-    //config, service, opModel, parser, errorModel
+//execute the service call
+SampleApp.LoadImageAssetsCommand.prototype.execute = function (event) {
+    Lotus.AbstractCommand.prototype.execute.call(this, event);
     this.recordSet = event.payload.recordSet;
-    return new SampleApp.LoadImageAssetsAction(this.service, this.model.asyncOperationModel, this.parser, this.model.errorModel);
 }
 
-SampleApp.LoadImageAssetsCommand.prototype.onSuccess = function(event){
-    this.updateResults(event.payload.result);
-    SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:event.payload.result}));
-    this.destroy();
+//execute the service call
+SampleApp.LoadImageAssetsCommand.prototype.executeServiceMethod = function () {
+    //params, key, responder, format, contentType, localRequest, cache
+    return this.service.readImageAssets(['userID','all','public'], 'readImageAssets', this, 'json', null, true, true);
 }
 
-SampleApp.LoadImageAssetsCommand.prototype.onError = function (event) {
-    alert('Error: ' + event.payload.message);
-    Lotus.AbstractCommand.prototype.onError.call(this,event);
+SampleApp.LoadImageAssetsCommand.prototype.parseResponse = function (result) {
+    var imageAssets = this.parser.parserImageAssets(result.resultObj);
+    if(imageAssets === null || imageAssets === undefined ){
+        throw new Error('Unable to parse image assets from results: ' + result.resultObj);
+    }
+    this.updateResults(imageAssets);
+    SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:imageAssets}));
+}
+
+//get string to append to fault message
+SampleApp.LoadImageAssetsCommand.prototype.getFaultString = function () {
+    return 'Failed to load image assets. Please be sure the image api is running and reachable. Config.js contains the api settings.';
+}
+
+//get string to append to error message
+SampleApp.LoadImageAssetsCommand.prototype.getErrorMessage = function () {
+    return 'SampleApp.LoadImageAssetsCommand.prototype.getErrorMessage:  ';
+}
+
+//get string to append to execution error message
+SampleApp.LoadImageAssetsCommand.prototype.getExecErrorString = function (msg) {
+    return 'SampleApp.LoadImageAssetsCommand.prototype.executionError: the following are required: ';
 }
 
 SampleApp.LoadImageAssetsCommand.prototype.updateResults = function (items) {
