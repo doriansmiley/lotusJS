@@ -1,6 +1,4 @@
 /**
  * Created by dsmiley on 11/10/14.
  */
-var Lotus = function(){
-
-}
+var Lotus = (window && window.Lotus) ? window.Lotus : function Lotus(){};

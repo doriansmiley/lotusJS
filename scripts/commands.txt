@@ -1,37 +1,56 @@
-export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
+export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
 
-cd $SPI_SDK_HOME
+cd $LOTUS_HOME
 sh ./scripts/test.sh
 
-export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
+export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
 
-cd $SPI_SDK_HOME
+cd $LOTUS_HOME
 sh ./scripts/testSauce.sh
 
-export SPI_SDK_HOME=/Users/dsmiley/workspace/lotusJS
+export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
 
-uglifyjs $SPI_SDK_HOME/global/Globals.js \
-$SPI_SDK_HOME/context/Context.js \
-$SPI_SDK_HOME/context/CommandMap.js \
-$SPI_SDK_HOME/context/ComponentList.js \
-$SPI_SDK_HOME/context/ComponentMap.js \
-$SPI_SDK_HOME/context/MediatorMap.js \
-$SPI_SDK_HOME/context/Injector.js \
-$SPI_SDK_HOME/events/ItemViewEvent.js \
-$SPI_SDK_HOME/command/AbstractCommand.js \
-$SPI_SDK_HOME/factory/EventDispatcherFactory.js \
-$SPI_SDK_HOME/factory/HttpServiceFactory.js \
-$SPI_SDK_HOME/factory/SerializeFactory.js \
-$SPI_SDK_HOME/factory/ServiceFactory.js \
-$SPI_SDK_HOME/mediators/AbstractMediator.js \
-$SPI_SDK_HOME/mediators/ButtonMediator.js \
-$SPI_SDK_HOME/mediators/ListMediator.js \
-$SPI_SDK_HOME/view/SkinPart.js \
-$SPI_SDK_HOME/view/SkinPartList.js \
-$SPI_SDK_HOME/view/AbstractComponent.js \
-$SPI_SDK_HOME/view/AbstractCollectionView.js \
-$SPI_SDK_HOME/view/AbstractRecordSetCollectionView.js \
-$SPI_SDK_HOME/view/AbstractItemView.js \
-$SPI_SDK_HOME/view/Button.js \
--o $SPI_SDK_HOME/minify/lotus.min.js \
---source-map $SPI_SDK_HOME/minify/lotus.min.js.map
+cd $LOTUS_HOME
+sh ./scripts/typescript.sh
+
+#compile typescript and webpack
+export LOTUS_HOME=~/workspace/lotusJS
+cd $LOTUS_HOME
+npm run build
+
+#build webpack
+export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
+cd $LOTUS_HOME
+./node_modules/.bin/webpack --config webpack.config.js
+
+export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
+
+uglifyjs $LOTUS_HOME/global/Globals.js \
+$LOTUS_HOME/context/Context.js \
+$LOTUS_HOME/context/CommandMap.js \
+$LOTUS_HOME/context/ComponentList.js \
+$LOTUS_HOME/context/ComponentMap.js \
+$LOTUS_HOME/context/MediatorMap.js \
+$LOTUS_HOME/context/Injector.js \
+$LOTUS_HOME/events/ItemViewEvent.js \
+$LOTUS_HOME/events/ComponentEvent.js \
+$LOTUS_HOME/command/AbstractCommand.js \
+$LOTUS_HOME/factory/EventDispatcherFactory.js \
+$LOTUS_HOME/factory/HttpServiceFactory.js \
+$LOTUS_HOME/factory/SerializeFactory.js \
+$LOTUS_HOME/factory/ServiceFactory.js \
+$LOTUS_HOME/mediators/AbstractMediator.js \
+$LOTUS_HOME/mediators/ButtonMediator.js \
+$LOTUS_HOME/mediators/ListMediator.js \
+$LOTUS_HOME/view/SkinPart.js \
+$LOTUS_HOME/view/SkinPartList.js \
+$LOTUS_HOME/view/AbstractComponent.js \
+$LOTUS_HOME/view/AbstractCollectionView.js \
+$LOTUS_HOME/view/AbstractRecordSetCollectionView.js \
+$LOTUS_HOME/view/ImageGalleryCollectionView.js \
+$LOTUS_HOME/view/AbstractItemView.js \
+$LOTUS_HOME/view/AbstractThumbnailView.js \
+$LOTUS_HOME/view/ImageGalleryView.js \
+$LOTUS_HOME/view/Button.js \
+-b -o $LOTUS_HOME/minify/lotus.min.js \
+--source-map $LOTUS_HOME/minify/lotus.min.js.map

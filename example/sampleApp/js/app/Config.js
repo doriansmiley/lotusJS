@@ -2,7 +2,7 @@
  * Created by dsmiley on 6/26/15.
  */
 SampleApp.Model = function() {
-    var model = Lavender.ModelLocator.getInstance();
+    var model = {config:new Lavender.Config()};
 //add dynamic config properties
     model.config.httpServiceCode = 'xhr';
     model.config.eventDispatcherCode = "abstract";
@@ -12,6 +12,7 @@ SampleApp.Model = function() {
     model.config.defaultSystemId = 'printimages';//IMPORTANT:no trailing slash
     model.config.defaultAssetType = 'photos';//IMPORTANT:no trailing slash
     model.config.defaultAssetVisibility = 'private';//IMPORTANT:no trailing slash
+    model.config.galleryItemsPerPage = 1;
 //define the service end points
     model.config.serviceMap = {
         //IMPORTANT: these end points are used by unit tests!!!
@@ -21,15 +22,9 @@ SampleApp.Model = function() {
         'localRequest': ':3000/printondemand/1234/photos/{0}',
         'readImageAssets': ':3000/readImageAssets/{0}/{1}/{2}'
     };
-//set up our custom model object where we will store image assets accessed by the view
-     model.imageAssetModel = new SampleApp.ImageGalleryModel();
-    var recordSet = new Lavender.RecordSet();
-    recordSet.id = '1234';
-    recordSet.selectedPage = 1;
-    recordSet.createdOn = new Date();//Date;;
-    recordSet.timeToLive = 500000;
-    recordSet.source = model.config.baseUrl + model.config.serviceMap['readImageAssets'];
-    recordSet.recordsPerPage = 2;
-    model.imageAssetModel.imageAssets = recordSet;
+//set up record set model where our image gallery records will be loaded
+     model.recordsetModel = new Lavender.RecordSetModel();
+     model.opMpdel = new Lavender.AsyncOperationModel();
+     model.errorModel = new Lavender.ErrorModel();
     return model;
 }

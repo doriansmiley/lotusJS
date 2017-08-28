@@ -3,17 +3,16 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="button.css" />
-    <script type="text/javascript" src="../../test/lib/bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <script type="text/javascript" src="../../test/lib/xtag/core.js"></script>
-    <script type="text/javascript" src="../../test/lib/lavender/lavender.min.js"></script>
-    <script type="text/javascript" src="../../minify/lotus.min.js"></script>
+    <script type="text/javascript" src="node_modules/x-tag/lib/webcomponents.js"></script>
+    <script type="text/javascript" src="node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js"></script>
+    <script type="text/javascript" src="node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
+    <script type="text/javascript" src="node_modules/lotusjs-components/lib/lotusJS-UMD.min.js"></script>
     <script language="JavaScript">
         var context = (function( xtag ){
-            var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
+            var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button, xtag);
-            context.componentMap.mapComponent('x-lotus-button4', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.mediatorMap.add('x-lotus-button4',Lotus.ButtonMediator);
             return context;
         }( xtag ));
@@ -23,46 +22,42 @@
 <p>
     This is an example of inline tags. Not a lot of value here unless you just want custom tag functionality without the DOM encapsulation of shadowRoot
 </p>
-<x-lotus-button type="navButton">
-    <button id="myButton" skin-part="button"><label>testButton</label></button>
+<x-lotus-button >
+    <button id="myButton" data-skin-part="button"><label>testButton</label></button>
 </x-lotus-button>
 <p>
     This is an example of loading the component from an external template file. The contents will be appended to the DOM by creating a shadowRoot.
-    The component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
-    tags can define attributes used by the component at runtime. Use the attribute- prefix to define attributes
+    The data-component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
+    tags can define attributes used by the component at runtime. Use the data-attribute- prefix to define attributes
     IMPORTANT: the prefix is removed and dashes will be replace with camel case to evaluate the attribute value
-    so attribute-my-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
-    By passing these the template-url, component-root, and attributes in the tag instance you can effectively completely change you layout while reusing the same controller
+    so data-attribute-my-data-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
+    By passing these the data-template-url, data-component-root, and attributes in the tag instance you can effectively completely change you layout while reusing the same controller
 </p>
-<x-lotus-button2 type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
+<x-lotus-button2  data-template-url="templates/button.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
 <p>
     Here's a duplicate instance of the button with event mediation. All web components are assigned a <pre style="display: inline">lotusComponentInstance</pre> property. This is the instance of the function created when <pre style="display: inline">context.componentMap.mapComponent</pre> is called.
-    You do not have to mediate events in this fashion. Our sample application shows how to extend core components to provide application level event mediation in a subclass of the component.
-    If you do not want to use the <pre style="display: inline">lotusComponentInstance</pre> property you can build your components to dispatch events using the components element property (which in this case is the x-lotus-button2 tag).
+    You do not have to mediate events in this fashion. Our sample application shows how to extend core components to provide application level event mediation with Lotus mediators.
 </p>
-<x-lotus-button2 id="eventSampleBtn" type="navButton" template-url="templates/button.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
+<x-lotus-button2 id="eventSampleBtn"  data-template-url="templates/button.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
 <script language="JavaScript">
-    var listener = {
-        onClick:function(event){
-            console.log('I mediated and event dispatched by a lotus component instance. My component could pass whatever data it wants here.');
-        }
-    };
-    document.getElementById('eventSampleBtn').lotusComponentInstance.addEventListener('click', listener, 'onClick');
+    window.onload = function(){
+        var listener = {
+            onClick:function(event){
+                console.log('I mediated and event dispatched by a lotus component instance. My component could pass whatever data it wants here.');
+            }
+        };
+        document.getElementById('eventSampleBtn').lotusComponentInstance.addEventListener('click', listener, 'onClick');
+    }
 </script>
 <p>
-    This example shows how easily you can change your layout while using the same controller and component definitions. This is the true power of skin parts.
+    This example shows how easily you can change your layout while using the same component definitions. This is the true power of skin parts.
     If your browser does not support shadowDOM natively the CSS styles in the first loaded instance of x-lotus-button2 (the one above) will override the next (the one below)
     This is due to the fact the pollyfill prefixes the styles with the tag name. To avoid this you should create a new tag name like the example below.
 </p>
-<x-lotus-button2 type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button2>
+<x-lotus-button2  data-template-url="templates/button2.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
 <p>
     This is an example of the recommended work around for the shadowDOM pollyfill issue described above. It requires you create a new custom element and map it, but the controller and template are identical.
 </p>
-<x-lotus-button3 type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button3>
-<p>
-    This example shows how to attach a mediator to a buttun. Mediators are used for event mediation and the triggering of application behavior using the central event bus.
-</p>
-<x-lotus-button4 type="navButton" template-url="templates/button2.html" component-root='[skin-part="button"]' attribute-type="testButton"></x-lotus-button4>
-
+<x-lotus-button3  data-template-url="templates/button2.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button3>
 </body>
 </html>

@@ -6,29 +6,28 @@ describe('ImageGalleryItemCollectionViewTest', function() {
   describe('Lotus.ImageGalleryCollectionView', function(){
 
     it('should test default ImageGalleryCollectionView values', function() {
-        var component = new SampleApp.ImageGalleryCollectionView();
+        var component = new Lotus.ImageGalleryCollectionView();
         var element = document.createElement('div');
-        element.setAttribute('attribute-item-view', 'SampleApp.ImageGalleryView');
+        element.setAttribute('data-attribute-item-view', 'Lotus.ImageGalleryView');
         document.body.appendChild(element);
-        element.innerHTML = '<div skin-part="collectionContainer">' +
-            '<div skin-part="itemTemplate">' +
-                '<div skin-part="thumbnailContainer" selected-class="someClass">' +
-                    '<img skin-part="thumbnail"></image>' +
+        element.innerHTML = '<div data-skin-part="collectionContainer">' +
+            '<div data-skin-part="itemTemplate">' +
+                '<div data-skin-part="thumbnailContainer" selected-class="someClass">' +
+                    '<img data-skin-part="thumbnail"></image>' +
                 '</div>';
             '</button>' +
             '</div>' +
             '</div>';
-        var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
-        var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
+        var collectionContainer = element.querySelector('[data-skin-part=collectionContainer]');
+        var itemTemplate = element.querySelector('[data-skin-part=itemTemplate]');
         component.id = '1234';
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        component.created(element, context);
+        component.created(element);
         expect( component.element === element ).toBe( true );
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );
         expect( component.itemTemplate === itemTemplate ).toBe( true );
-        expect( component.itemView === 'SampleApp.ImageGalleryView' ).toBe( true );
-        expect( component.createChildView() instanceof SampleApp.ImageGalleryView ).toBe( true );
+        expect( component.itemView === 'Lotus.ImageGalleryView' ).toBe( true );
+        expect( component.createChildView() instanceof Lotus.ImageGalleryView ).toBe( true );
         var resultSet = new Lavender.ArrayList();
         resultSet.addItem( {thumbUrl:'http://wallfinest.com/wp-content/uploads/2014/06/vintage-sunset-wallpaper.jpg'} );
         resultSet.addItem( {thumbUrl:'http://upload.wikimedia.org/wikipedia/commons/5/58/Sunset_2007-1.jpg'} );

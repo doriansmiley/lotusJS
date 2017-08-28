@@ -24,6 +24,7 @@ module.exports = function (config) {
             '../example/sampleApp/js/commands/**/*.js',
             '../example/sampleApp/js/events/**/*.js',
             '../example/sampleApp/js/model/**/*.js',
+            '../example/sampleApp/js/mediators/**/*.js',
             '../example/sampleApp/js/serialization/**/*.js',
             '../example/sampleApp/js/services/**/*.js',
             '../example/sampleApp/js/factory/**/*.js',

@@ -14,6 +14,8 @@ describe('AbstractComponentTest', function () {
         button.created(element, context);
         button.addSkinPart('button', skinBart);
         expect(button.buttonSkinPart === skinBart).toBe(true);
+        button.destroy();
+        expect(button.buttonSkinPart === null).toBe(true);
 
     });
 });

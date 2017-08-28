@@ -1,33 +1,47 @@
 <template>
     <style>
         div{
-            background-color: chartreuse;
-            border: solid 1px red;
+            border: solid 1px black;
+        }
+
+        button {
+            border-radius: 4px;
+            min-height: 28px;
+            cursor: pointer;
+        }
+
+        /* ***************************************************************************************************** */
+        /* Default interaction css */
+        /* ***************************************************************************************************** */
+        .enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
     </style>
-<div id="imageGalleryPanel">
+<div id="imageGalleryPanel" data-source="sampleAPI" data-attribute-item-view="Lotus.ImageGalleryView">
 
     <!-- record set navigation -->
     <div data-skin-part="navButtonContainer" data-enabled-class="enabled" data-disabled-class="disabled">
-        <button data-skin-part="firstBtn" id="firstBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
-            <label style="pointer-events:none;"><img src="skins/css/theme-desktop/assets/i_first.png" border="0"/></label>
+        <button data-skin-part="firstBtn" data-enabled-class="enabled" data-disabled-class="disabled" id="firstBtn">
+            <label style="pointer-events:none;"><img src="css/assets/i_first.png" border="0"/></label>
         </button>
 
 
-        <button data-skin-part="pervBtn" id="pervBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
-            <label style="pointer-events:none;"><img src="skins/css/theme-desktop/assets/i_previous.png" border="0"/></label>
+        <button data-skin-part="pervBtn" data-enabled-class="enabled" data-disabled-class="disabled" id="pervBtn">
+            <label style="pointer-events:none;"><img src="css/assets/i_previous.png" border="0"/></label>
         </button>
 
-        <button data-skin-part="nextBtn" id="nextBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
-            <label style="pointer-events:none;"><img src="skins/css/theme-desktop/assets/i_next.png" border="0"/></label>
+        <button data-skin-part="nextBtn" data-enabled-class="enabled" data-disabled-class="disabled" id="nextBtn">
+            <label style="pointer-events:none;"><img src="css/assets/i_next.png" border="0"/></label>
         </button>
 
-        <button data-skin-part="lastBtn" id="lastBtn" class="spi-button spi-button-icon-only button"
-                style="width:28px;height:24px;">
-            <label style="pointer-events:none;"><img src="skins/css/theme-desktop/assets/i_last.png" border="0"/></label>
+        <button data-skin-part="lastBtn" data-enabled-class="enabled" data-disabled-class="disabled" id="lastBtn">
+            <label style="pointer-events:none;"><img src="css/assets/i_last.png" border="0"/></label>
         </button>
     </div>
 
@@ -35,8 +49,8 @@
 
         <!-- Itemrenderer skin -->
         <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="96" data-attribute-thumb-height="96">
-            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" data-selected-class="selectedThumbContainer">
-                <img data-skin-part="thumbnail" data-selected-class="thumbSelected" draggable="true"/>
+            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="selectedThumbContainer">
+                <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
             </div>
         </div>
 

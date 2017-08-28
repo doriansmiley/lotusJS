@@ -8,20 +8,19 @@ describe('AbstractCollectionViewTest', function() {
     it('should test default AbstractCollectionView values', function() {
         var component = new Lotus.AbstractCollectionView();
         var element = document.createElement('div');
-        element.setAttribute('attribute-item-view', 'Lotus.AbstractItemView');
-        element.setAttribute('attribute-id', '1234');
+        element.setAttribute('data-attribute-item-view', 'Lotus.AbstractItemView');
+        element.setAttribute('data-attribute-id', '1234');
         document.body.appendChild(element);
-        element.innerHTML = '<div skin-part="collectionContainer">' +
-            '<div skin-part="itemTemplate">' +
-                '<button skin-part="button">' +
-                    '<label skin-part="label">TestButton</label>' +
+        element.innerHTML = '<div data-skin-part="collectionContainer">' +
+            '<div data-skin-part="itemTemplate">' +
+                '<button data-skin-part="button">' +
+                    '<label data-skin-part="label">TestButton</label>' +
                 '</button>' +
             '</div>' +
             '</div>';
-        var collectionContainer = element.querySelector('[skin-part=collectionContainer]');
-        var itemTemplate = element.querySelector('[skin-part=itemTemplate]');
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        component.created(element, context);
+        var collectionContainer = element.querySelector('[data-skin-part=collectionContainer]');
+        var itemTemplate = element.querySelector('[data-skin-part=itemTemplate]');
+        component.created(element);
         expect( component.element === element ).toBe( true );
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );

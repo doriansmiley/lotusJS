@@ -16,9 +16,11 @@ describe('LoadImageAssetsCommandTest', function () {
                 done.fail(faultObj.errorObj)
             }
         };
+        var recordSet = new Lavender.RecordSet();
+        recordSet.source = 'test';
         SampleApp.init();
-        SampleApp.resources.eventDispatcher.addEventListener(SampleApp.ItemViewEvent.IMAGES_LOADED, responder, 'success');
+        SampleApp.resources.eventDispatcher.addEventListener(SampleApp.AppEvent.IMAGES_LOADED, responder, 'success');
         //the context has mapped the command alreay, so all we need to do is dispatch
-        SampleApp.resources.eventDispatcher.dispatch(new SampleApp.ItemViewEvent(SampleApp.ItemViewEvent.LOAD_IMAGES));
+        SampleApp.resources.eventDispatcher.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.LOAD_PAGE_DATA, {recordSet:recordSet}));
     });
 });
