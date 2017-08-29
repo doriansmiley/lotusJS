@@ -6,6 +6,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 # A MVW Framework that supports Web Components!
 
 - [npm Package Manager](#npm-package-manager)
+- [Typescript Source](#typescript-source)
 - [Web Component View](#web-component-view)
 - [Dependency Injection](#dependency-injection)
 - [Central Event Bus](#central-event-bus)
@@ -18,6 +19,10 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 # npm Package Manager
 
 The lotus module is distributed through npm and can be added to your project using `npm install lotusjs-components`. For more check us out on npm.
+
+# Typescript Source
+
+The lotus core is built using Typescript which enables us fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
 
 # Web Component View
 
