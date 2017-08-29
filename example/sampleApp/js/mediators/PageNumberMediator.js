@@ -1,18 +1,21 @@
 /**
+ * Created by dsmiley on 8/28/17.
+ */
+/**
  * Created by dsmiley on 9/15/16.
  */
-SampleApp.ImageGalleryItemDetailMediator = function (componentInstance, context) {
+SampleApp.PageNumberMediator = function (componentInstance, context) {
     Lotus.AbstractMediator.prototype.constructor.call(this, componentInstance, context);
-    
+
 }
 /************* Inherit from AbstractEventDispatcher for event dispatching *************/
-Lavender.ObjectUtils.extend(Lotus.AbstractMediator, SampleApp.ImageGalleryItemDetailMediator);
+Lavender.ObjectUtils.extend(Lotus.AbstractMediator, SampleApp.PageNumberMediator);
 
-SampleApp.ImageGalleryItemDetailMediator.toString = function(){
-    return 'SampleApp.ImageGalleryItemDetailMediator';
+SampleApp.PageNumberMediator.toString = function(){
+    return 'SampleApp.PageNumberMediator';
 }
 
-SampleApp.ImageGalleryItemDetailMediator.prototype.init = function () {
+SampleApp.PageNumberMediator.prototype.init = function () {
     Lotus.AbstractMediator.prototype.init.call(this);
     var recordSetLabel = this.componentInstance.element.getAttribute('data-source');//note the attribute recordset should be set on the element identitifed as your component root in your template file (templates/imageGallery.html)
     var model = this.context.injector.inject(SampleApp.MODEL_KEY);
@@ -25,12 +28,6 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.init = function () {
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].results.allowDuplicates = true;
         model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].source = recordSetLabel;
     }
-    this.binder.bind(model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel], 'pageList', this , 'onPageListChange');
-}
-
-SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (value) {
-    if(!value){
-        return;
-    }
-    this.componentInstance.asset = value.getItemAt(0);
+    this.binder.bind(model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel], 'selectedPage', this.componentInstance , 'model');
+    this.componentInstance.model = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].selectedPage
 }

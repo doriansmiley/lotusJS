@@ -16,6 +16,7 @@ export abstract class AbstractItemView extends AbstractComponent{
 
     set model(val:Object) {
         this._model = val;
+        this.onModelChange(val);
         this.notify(val, 'model');
     }
 
@@ -24,6 +25,11 @@ export abstract class AbstractItemView extends AbstractComponent{
         if( element !== null && element !== undefined ){
             element.style.display = display;
         }
+    }
+
+    //stub for override
+    public onModelChange(value):void{
+
     }
 
     //stub for override

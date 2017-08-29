@@ -51,10 +51,14 @@
         <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="96" data-attribute-thumb-height="96">
             <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="selectedThumbContainer">
                 <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
+                <!-- example of a nested component that is a skin part-->
+                <x-lotus-gallery-detail data-skin-part="itemDetail" data-template-url="templates/galleryItemDetail.html" data-component-root='div'></x-lotus-gallery-detail>
             </div>
         </div>
 
     </div>
+    <!-- example of a nested component -->
+    <x-lotus-page-number data-template-url="templates/pageNumberDisplay.html" data-source="sampleAPI" data-component-root='div'></x-lotus-page-number>
 
 </div>
 </template>

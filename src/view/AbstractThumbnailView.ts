@@ -64,10 +64,6 @@ export class AbstractThumbnailView extends AbstractItemView{
         this.notify(value, 'allowDrag');
     }
 
-    protected setUpBindings():void{
-        this.binder.bind(this, 'model', this, 'onModelChange');
-    }
-
     protected sizeImage():void{
         if( this.thumbnail === null ||  this.thumbnail === undefined ){
             return;
