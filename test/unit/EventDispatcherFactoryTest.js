@@ -9,10 +9,7 @@ describe('EventDispatcherFactoryTest', function () {
             var service = Lotus.EventDispatcherFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getEventDispatcher).toBeDefined();
-            expect(service.getEventDispatcher( new Lavender.Config() ) instanceof Lavender.AbstractEventDispatcher).toBe(true);
-            var config = new Lavender.Config();
-            config.eventDispatcherCode = 'angular';
-            expect(service.getEventDispatcher( config ) instanceof Lavender.AngularEventDispatcher).toBe(true);
+            expect(service.getEventDispatcher().constructor.name).toBe(Lavender.EventDispatcher.name);
         });
 
     });

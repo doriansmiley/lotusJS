@@ -18,7 +18,7 @@ describe('AbstractComponentTest', function () {
         component.created(element);
         expect(component.element === element).toBe(true);
         expect(component.ready).toBe(true);
-        expect(component.id === '1234').toBe(true);
+        expect(component.id > 0).toBe(true);
         expect(component.skinParts.skinPartsByLabel['testProperty'].element === element.firstChild ).toBe(true);
     });
 });

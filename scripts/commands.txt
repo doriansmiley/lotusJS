@@ -1,11 +1,6 @@
 export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
 
 cd $LOTUS_HOME
-sh ./scripts/test.sh
-
-export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
-
-cd $LOTUS_HOME
 sh ./scripts/testSauce.sh
 
 export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS

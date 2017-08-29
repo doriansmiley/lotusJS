@@ -53,8 +53,6 @@ describe('AbstractThumbnailView', function() {
             expect( component.model === null ).toBe( true );
             expect( component.thumbnail === null ).toBe( true );
             expect( component.thumbnailContainer === null ).toBe( true );
-            expect( component.thumbnailSelectedClass === null ).toBe( true );
-            expect( component.thumbClickProxy === null ).toBe( true );
             expect( component.id ).toBe( null );
         });
 

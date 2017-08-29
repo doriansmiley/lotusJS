@@ -44,34 +44,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'lib/xtag/*.js',
-        'lib/lavender/*.js',
-        '../global/*.js',//set up the sdk namespace
-        '../example/sampleApp/global/*.js',//set up the sample app namespace
-        '../context/*.js',
-        '../events/*.js',
-        '../mediators/AbstractMediator.js',
-        '../mediators/*.js',
-        '../factory/*.js',
-        '../services/*.js',
-        '../view/AbstractComponent.js',
-        '../view/AbstractItemView.js',
-        '../view/AbstractCollectionView.js',
-        '../view/*.js',
-        '../actions/*.js',
-        '../commands/*.js',
-        '../context/*.js',
-        '../example/sampleApp/js/actions/**/*.js',
-        '../example/sampleApp/js/commands/**/*.js',
-        '../example/sampleApp/js/events/**/*.js',
-        '../example/sampleApp/js/model/**/*.js',
-        '../example/sampleApp/js/mediators/**/*.js',
-        '../example/sampleApp/js/serialization/**/*.js',
-        '../example/sampleApp/js/services/**/*.js',
-        '../example/sampleApp/js/factory/**/*.js',
-        '../example/sampleApp/js/view/**/*.js',
+        '../node_modules/x-tag/lib/webcomponents.js',
+        '../node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js',
+        '../node_modules/lavenderjs/lib/lavenderJS-UMD.min.js',
+        '../lib/lotusJS-UMD.min.js',
+        '../global/Globals.js',
         {pattern: 'unit/assets/**', watched: false, included: false, served: true},
-        'unit/*.js',
         'unit/**/*.js'
     ],
 

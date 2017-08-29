@@ -20,8 +20,8 @@ describe('ImageGalleryItemDetailTest', function() {
             model.createdDate = new Date();
             model.url = 'http://www.someuri.com/sampleFile.jpg';
             model.objectName = model.url.substr(model.url.lastIndexOf('/')+1);
-            component.asset = model;
             component.created(element);
+            component.asset = model;
 
             expect( component.element === element ).toBe( true );
             expect( component.asset === model ).toBe( true );

@@ -1,7 +1,7 @@
 'use strict';
 
 /* jasmine specs for controllers go here */
-describe('AbstractServiceFactoryTest', function () {
+describe('ServiceFactory Test', function () {
 
     describe('Test access to singletom', function () {
 
@@ -9,7 +9,7 @@ describe('AbstractServiceFactoryTest', function () {
             var service = Lotus.ServiceFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getService).toBeDefined();
-            expect(service.getService( new Lavender.Config() ) instanceof Lotus.SampleService).toBe(true);
+            expect(service.getService( new Lavender.Config() ).constructor.name == Lotus.SampleService.name).toBe(true);
         });
 
     });

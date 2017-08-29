@@ -9,12 +9,8 @@ describe('HttpServiceFactoryTest', function () {
             var service = Lotus.HttpServiceFactory.getInstance();
             expect(service).toBeDefined();
             expect(service.getHttpService).toBeDefined();
-            expect(service.getHttpService( new Lavender.Config() ) instanceof Lavender.XhrHttpService).toBe(true);
-            var config = new Lavender.Config();
-            config.httpServiceCode = 'jquery';
-            expect(service.getHttpService( config ) instanceof Lavender.JqueryHttpService).toBe(true);
-            config.httpServiceCode = undefined;
-            expect(service.getHttpService( config ) instanceof Lavender.XhrHttpService).toBe(true);
+            expect(service.getHttpService().constructor.name == Lavender.XhrHttpService.name).toBe(true);
+            expect(service.getHttpService('XhrHttpService').constructor.name == Lavender.XhrHttpService.name).toBe(true);
         });
 
     });
