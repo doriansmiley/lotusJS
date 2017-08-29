@@ -5,6 +5,7 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 
 # A MVW Framework that supports Web Components!
 
+- [npm Package Manager](#npm-package-manager)
 - [Web Component View](#web-component-view)
 - [Dependency Injection](#dependency-injection)
 - [Central Event Bus](#central-event-bus)
@@ -13,6 +14,10 @@ LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Data Binding](#data-binding)
 - [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
+
+# npm Package Manager
+
+The lotus module is distributed through npm and can be added to your project using `npm install lotusjs-components`. For more check us out on npm.
 
 # Web Component View
 
