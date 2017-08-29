@@ -1,11 +1,11 @@
 lotusJS Sample Application
 =============
 
-This simple application demonstrates how to use the built in `Lotus.ImageGalleryCollectionView` complete with pagination. Records are loaded using the provided nodeJS service. To use the application run `npm install` from the `sampleApp` directory. Then launch the included node app under the `api` directory. If you plan to launch the service somewhere other than localhost:3000, be sure to update `Config.js` with the new location.
+This is a pure Javascript example for people not using typescript. This simple application demonstrates how to use the built in `Lotus.ImageGalleryCollectionView` complete with pagination. Records are loaded using the provided nodeJS service. To use the application run `npm install` from the `sampleApp` directory. Then launch the included node app under the `api` directory. If you plan to launch the service somewhere other than localhost:3000, be sure to update `Config.js` with the new location.
 
 The sample application demonstrates the use of nested web components both as skin parts and stand alone component instances. Please see `templates\imageGallery.html` and look for `x-lotus` component instances.
 
-The sample application also includes an implementation of the following patterns:
+The sample application also includes an implementation of the following framework features:
 
 - Service Locator
 - Command
