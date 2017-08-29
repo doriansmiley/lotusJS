@@ -1,7 +1,7 @@
 lotusJS
 =============
 
-LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC (Inversion of Control) container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
+LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.
 
 # Model View Presenter Framework that supports Web Components!
 
@@ -138,9 +138,31 @@ Creating collection components is made easy with Lotus. You can extend the base 
 </div>
 </template>
 ````
-Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
+Notice the `data-skin-part="collectionContainer` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view.
 
 The item view component used to render each item in the collection is defined in the `data-attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
+
+#### Nested components
+
+You can also nest web components within component skins. For example:
+
+````
+<div data-skin-part="collectionContainer" id="collectionContainer">
+
+        <!-- Item renderer skin -->
+        <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="96" data-attribute-thumb-height="96">
+            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="selectedThumbContainer">
+                <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
+                <!-- example of a nested component that is a skin part-->
+                <x-lotus-gallery-detail data-skin-part="itemDetail" data-template-url="templates/galleryItemDetail.html" data-component-root='div'></x-lotus-gallery-detail>
+            </div>
+        </div>
+
+    </div>
+    <!-- example of a nested component -->
+    <x-lotus-page-number data-template-url="templates/pageNumberDisplay.html" data-source="sampleAPI" data-component-root='div'></x-lotus-page-number>
+````
+In this example the `x-lotus-gallery-detail` component is passed as a skin part, and the `x-lotus-page-number` component is nested stand alone. Once these tags are added to the DOM they will be mapped to a component instance just like any other.
 
 For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
 
