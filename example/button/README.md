@@ -5,7 +5,7 @@ This is a pure Javascript example for people not using typescript. The button ex
 
 This example also demonstrates how component skins can be loaded remotely and mapped to the component instance. This allows component skins to be developed and distributed separately from component code.
 
-There is also and example of event mediation using a custom event mediator. Event mediators are a powerful abstraction layer for your applications. They can be used to trigger application behaviors are not, and should not be known to your web components.
+There is also and example of event mediation using a custom event mediator. Event mediators are a powerful abstraction layer for your applications. They can be used to trigger application behaviors that are not, and should not be known to your web components.
 
 You can also create your own custom components and use them in your application wihtou using the rest of the framework. Simply create your component subclass and skin then add the following to your html:
 
