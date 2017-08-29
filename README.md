@@ -3,7 +3,7 @@ lotusJS
 
 LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.
 
-# Model View Presenter Framework that supports Web Components!
+# A MVW Framework that supports Web Components!
 
 - [Web Component View](#web-component-view)
 - [Dependency Injection](#dependency-injection)
