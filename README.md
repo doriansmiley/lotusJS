@@ -22,7 +22,7 @@ The lotus module is distributed through npm and can be added to your project usi
 
 # Typescript Source
 
-The lotus core is built using Typescript which enables us fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
+The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
 
 # Web Component View
 
