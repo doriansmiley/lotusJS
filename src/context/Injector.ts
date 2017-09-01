@@ -23,6 +23,7 @@ export class Injector implements IInjector{
                     return false;
                 }
             });
+            //TODO:refactror to overrite index
             if(mapIndex < 0){
                 this.typeMap.push({constructor:constructor, useSingleton:useSingleton, instance:null, type:key});
             }
@@ -41,6 +42,7 @@ export class Injector implements IInjector{
                     return false;
                 }
             });
+            //TODO:refactror to overrite index
             if(mapIndex < 0){
                 this.typeMap.push({constructor: null, useSingleton: true, instance: instance});
             }
@@ -56,7 +58,7 @@ export class Injector implements IInjector{
         if(typeof key == 'function'){
             var map:Object;
             this.typeMap.forEach(function(value:any, index:number){
-                if(value.type == key){
+                if(value.type == key || value.instance instanceof key){
                     map = value;
                     return false;
                 }

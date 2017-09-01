@@ -10,10 +10,13 @@ export function inject(target:any, key:string){
         // Needed to support react native inheritance
         t = Reflect.getMetadata('design:type', target.constructor, key);
     }
-    if(target['resolveInjections']){
-        (target['resolveInjections'] as Array<injectionResolver>).push({property:key, type:t});
+    if(!target['resolveInjections']){
+        target['resolveInjections'] = new Array<injectionResolver>();
     }
+    (target['resolveInjections'] as Array<injectionResolver>).push({property:key, type:t});
+    //TODO:see if we can overrite the constructor in target to include the code in AbstractMediator that resolves injections
     console.log('key: ' + key);
     console.log('t.name: ' + t.name);
     console.log('target.constructor.name: ' + target.constructor.name);
+    console.log('target.constructor.prototype: ' + target.constructor.prototype);
 }

@@ -10,7 +10,7 @@ export declare abstract class AbstractMediator extends Lavender.Subject implemen
     private _id;
     private _componentInstance;
     private _context;
-    protected resolveInjections: Array<injectionResolver>;
+    resolveInjections: Array<injectionResolver>;
     constructor(componentInstance: IComponent, context: IContext);
     id: string;
     componentInstance: IComponent;
