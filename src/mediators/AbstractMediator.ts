@@ -3,6 +3,7 @@ import {IContext} from "../context/IContext";
 import * as Lavender from 'lavenderjs/lib';
 import {IComponent} from "../view/IComponent";
 import {ComponentEvent} from "../control/events/ComponentEvent";
+import {injectionResolver} from '../reflection/InjectorDecorator'
 /**
  * Created by dsmiley on 7/26/17.
  */
@@ -10,6 +11,7 @@ export abstract class AbstractMediator extends Lavender.Subject implements IMedi
     private _id:string;
     private _componentInstance:IComponent;
     private _context:IContext;
+    protected resolveInjections:Array<injectionResolver> = [];
 
     constructor(componentInstance:IComponent, context:IContext){
         super();
@@ -21,6 +23,13 @@ export abstract class AbstractMediator extends Lavender.Subject implements IMedi
         }else{
             this.init();
         }
+        //TODO: move this method to a decorator that sets up this.resolveInjections as an accessor and adds this functionality to the contructor
+        this.resolveInjections.forEach(function(value:injectionResolver, index:number){
+            var constructorFunction:FunctionConstructor = this.context.injector.inject(value.type);
+            if(constructorFunction){
+                this[value.property] = new constructorFunction();
+            }
+        })
     }
 
 
