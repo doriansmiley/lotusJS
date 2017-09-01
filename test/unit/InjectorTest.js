@@ -27,5 +27,23 @@ describe('InjectorTest', function () {
         expect( recordSetList2).toBeDefined();
         expect( recordSetList2 instanceof Lavender.RecordSetList).toBe(true);
         expect( recordSetList2 === recordSetList).toBe(false);
+
+        injector.mapObject(Lotus.AbstractComponent, Lotus.Button);
+        var button = injector.inject(Lotus.AbstractComponent);
+        expect( button).toBeDefined();
+        expect( button instanceof Lotus.Button).toBe(true);
+        var button2 = injector.inject(Lotus.AbstractComponent);
+        expect( button2).toBeDefined();
+        expect( button2 instanceof Lotus.Button).toBe(true);
+        expect( button2 === button).toBe(false);
+
+        //this is how you use the injector with factories or singletons
+        injector.mapSingletonInstance(Lavender.ImageAsset, new Lavender.ErrorModel());
+        var injectedModel = injector.inject(Lavender.ImageAsset);
+        expect( injectedModel ).toBeDefined();
+        expect( injectedModel instanceof Lavender.ErrorModel).toBe(true);
+        var injectedModel2 = injector.inject(Lavender.ImageAsset);
+        var injectedModel3 = injector.inject(Lavender.ImageAsset);
+        expect( injectedModel === injectedModel2 && injectedModel2 == injectedModel3 && injectedModel3 === injectedModel ).toBe(true);
     });
 });

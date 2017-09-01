@@ -4,9 +4,9 @@
 'use strict';
 
 /* jasmine specs for controllers go here */
-describe('AbstractServiceActionTest ', function () {
+describe('AbstractCommandTest ', function () {
 
-    it('check AbstractServiceAction function and values', function () {
+    it('check AbstractCommand function and values', function () {
         /*
          protected action:IAction;
          protected service:IService;
