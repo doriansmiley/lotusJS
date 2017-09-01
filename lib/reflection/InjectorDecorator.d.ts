@@ -1,0 +1,9 @@
+/**
+ * Created by dsmiley on 8/30/17.
+ */
+import 'reflect-metadata';
+export declare type injectionResolver = {
+    property: string;
+    type: Function;
+};
+export declare function inject(target: any, key: string): void;
