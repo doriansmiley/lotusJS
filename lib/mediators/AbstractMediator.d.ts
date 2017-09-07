@@ -2,7 +2,6 @@ import { IMediator } from "./IMediator";
 import { IContext } from "../context/IContext";
 import * as Lavender from 'lavenderjs/lib';
 import { IComponent } from "../view/IComponent";
-import { injectionResolver } from '../reflection/InjectorDecorator';
 /**
  * Created by dsmiley on 7/26/17.
  */
@@ -10,7 +9,6 @@ export declare abstract class AbstractMediator extends Lavender.Subject implemen
     private _id;
     private _componentInstance;
     private _context;
-    resolveInjections: Array<injectionResolver>;
     constructor(componentInstance: IComponent, context: IContext);
     id: string;
     componentInstance: IComponent;

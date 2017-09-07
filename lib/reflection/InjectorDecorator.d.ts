@@ -7,3 +7,4 @@ export declare type injectionResolver = {
     type: Function;
 };
 export declare function inject(target: any, key: string): void;
+export declare function injectable(target: any): any;
