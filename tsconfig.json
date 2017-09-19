@@ -9,12 +9,6 @@
     "experimentalDecorators":true,
     "emitDecoratorMetadata":true
   },
-  "typeRoots": [
-    "./src/custom_definitions"
-  ],
-  "types": [
-    "xtag"
-  ],
   "exclude": [
     "node_modules"
   ],

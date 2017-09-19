@@ -14,6 +14,7 @@ export * from './context/IMediatorMap';
 export * from './context/MediatorMap';
 export * from './context/IComponentMap';
 export * from './context/ComponentMap';
+export * from './context/xtag';
 export * from './factory/IEventDispatcherFactory';
 export * from './factory/EventDispatcherFactory';
 export * from './factory/ISerializeFactory';
