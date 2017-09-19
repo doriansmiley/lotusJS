@@ -178,7 +178,7 @@ For a complete example see our [sample application under the examples directory]
 
 # Dependency Injection
 
-Lotus ships with a build in injector. It supports both an imperative and declarative syntax. Using the imperative syntax you can define objects for injection as follows:
+Lotus ships with a built in injector. It supports both an imperative and declarative syntax. Using the imperative syntax you can define objects for injection as follows:
 
 ````
 SampleApp.Context = function (model, params) {
