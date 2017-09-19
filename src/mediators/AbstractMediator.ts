@@ -3,6 +3,7 @@ import {IContext} from "../context/IContext";
 import * as Lavender from 'lavenderjs/lib';
 import {IComponent} from "../view/IComponent";
 import {ComponentEvent} from "../control/events/ComponentEvent";
+import {injectable} from "../reflection/InjectorDecorator";
 /**
  * Created by dsmiley on 7/26/17.
  */

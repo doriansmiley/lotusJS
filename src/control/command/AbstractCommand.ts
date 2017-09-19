@@ -4,7 +4,7 @@ import * as Lavender from 'lavenderjs/lib';
 import {ActionSuccessEvent} from '../events/ActionSuccessEvent';
 import {ActionErrorEvent} from '../events/ActionErrorEvent';
 import {IService} from "../service/IService";
-
+import {injectable} from "../../reflection/InjectorDecorator";
 /**
  * Created by dsmiley on 7/28/17.
  */

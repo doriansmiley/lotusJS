@@ -31,13 +31,13 @@ SampleApp.SerializeFactory.prototype.getImageAssetParser = function(schemaKey)
 /*
  * get the service parser used to deserialize service responses
  * */
-SampleApp.SerializeFactory.prototype.getServiceResultParser = function(config)
+SampleApp.SerializeFactory.prototype.getServiceResultParser = function(context)
 {
     var parser;
-    switch( config.parserCode ){
+    switch( context.config.parserCode ){
         case 'testApp':
         default:
-            parser = new SampleApp.ServiceResultParser();
+            parser = new SampleApp.ServiceResultParser(context);
             break;
     }
     return parser;

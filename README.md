@@ -178,7 +178,7 @@ For a complete example see our [sample application under the examples directory]
 
 # Dependency Injection
 
-Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
+Lotus ships with a built in injector. It supports both an imperative and declarative syntax. Using the imperative syntax you can define objects for injection as follows:
 
 ````
 SampleApp.Context = function (model, params) {
@@ -218,9 +218,26 @@ SampleApp = function(){
 }
 
 SampleApp.init = function(){
-    SampleApp.resources = new SampleApp.Context(SampleApp.Model());
+    return new SampleApp.Context(SampleApp.Model());
 }
 ````
+
+If you are working in typescript you can take advantage of class decorators and use the declarative syntax. In order to inject into a class you must first mark it as injectable. For example:
+
+````
+@injectable
+export class ButtonMediator extends AbstractMediator
+````
+
+The `@injectable` decorator will use the reflection API to include the required code to support injections. You can then inject instances into properties as follows:
+
+````
+@inject
+public serviceFactory:HttpServiceFactory;
+````
+
+Please note that using decorators will increase the size of your application. For this reason we encourage people to use the imperative syntax instead of the declarative syntax.
+
 # Central Event Bus
 
 Lotus includes a central event bus to handle dispatching application level events, and registering listeners for this events. This central event bus should not be confused with, or used in, your Lotus web components. Web components extend `Lavender.AbstractEventDispatcher` and can dispatch events directly by calling their `dispatch` method. 
@@ -350,7 +367,7 @@ For a complete example of how to implement view mediators soo our [sample applic
 
 Lotus incorporates Lavender's data binding utilities into it's mediator base class `Lotus.AbstractMediator`. While you are free to implement data binding in any layer of your application, you are encouraged to encapsulate data binding in your mediators. This ensures your web components remain properly encapsulated and reusable, and delegates data binding operations to a single layer within your application.
 
-In order to notify observers of changes you must define the bindable end point. This is always done using the `addProperties` method in the your components constructor. For example:
+In order to notify observers of changes you must define the bindable end point. Lotus exposes both an imperative and declarative syntax for defining bindable end points. The imperative syntax requires you call the objects `notify` method. This is typeically done within the `addProperties` method in the your components constructor. For example:
 ````
 Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
@@ -364,7 +381,7 @@ Lavender.RecordSet = function (timeToLive, listFunction) {
             },
             set: function (val) {
                 _pageList = val;
-                this.Notify(val, "pageList");
+                this.notify(val, "pageList");
                 this.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.PAGE_LIST_CHANGE));
             }
         },
@@ -379,6 +396,15 @@ Lavender.ObjectUtils.extend(Lavender.Subject, Lavender.RecordSet);
 In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an implementation of the Observer pattern, and the call to `Notify` handles notification for all registered observers. 
 
 IMPORTANT: `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
+
+If you are working in typescript you can take advantage of class decorators and use the declarative syntax. For example:
+
+````
+@bindable
+public test:string;
+````
+
+The declarative syntax can only be used on public properties at this time. It can not be used with accessor methods.
 
 Once you define a bindable end point you can bind to it. For example in `SampleApp.ImageGalleryItemDetailMediator.prototype.init` the record set's `pageList` property is bound to the `onPageListChange` of the mediator"
 ````

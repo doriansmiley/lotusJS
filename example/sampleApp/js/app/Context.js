@@ -28,9 +28,9 @@ SampleApp.Context.prototype.mapObjects = function(){
     //map objects for construction
     this.injector.mapObject(SampleApp.HTTP_SERVICE_KEY, SampleApp.HttpServiceFactory.getInstance().getHttpServiceForInjection(this.config));
     //Map singletons
-    this.injector.mapSingletonInstance(SampleApp.SERVICE_RESULT_PARSER_KEY, SampleApp.SerializeFactory.getInstance().getServiceResultParser(this.config));
+    this.injector.mapSingletonInstance(SampleApp.SERVICE_RESULT_PARSER_KEY, SampleApp.SerializeFactory.getInstance().getServiceResultParser(this));
     this.injector.mapSingletonInstance(SampleApp.SERIALIZE_FACTORY_KEY, SampleApp.SerializeFactory.getInstance());
-    this.injector.mapSingletonInstance(SampleApp.APP_SERVICES, new SampleApp.SampleService(this.model.config));
+    this.injector.mapSingletonInstance(SampleApp.APP_SERVICES, new SampleApp.SampleService(this));
     this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));
     this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, this.model);
     this.injector.mapSingletonInstance(SampleApp.OP_MODEL_KEY, this.model.opMpdel);

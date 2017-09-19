@@ -4,10 +4,11 @@
  * This is a sample service implementation using Lotus's HttpServiceFactory. As you can see we abstract out the service implementation by delegating the object creation to HttpServiceFactory.
  * All concrete http service objects expose a common API consisting of the addResponder and send method. Application configuration determines which concrete instance is used.
  */
-SampleApp.SampleService = function( config ){
+SampleApp.SampleService = function( context ){
     var _config;//IContextConfigModel
-    this.config = config;
-    this.serviceMap = (config.serviceMap) ? config.serviceMap :
+    this.config = context.config;
+    this.context = context;
+    this.serviceMap = (this.config.serviceMap) ? this.config.serviceMap :
     {
         //loading local XML for now. If a service becomes available use the service API
         'readImageAssets'			: ':3000/readImageAssets/{0}/{1}/{2}'
@@ -52,7 +53,7 @@ SampleApp.SampleService.prototype.sendRequest = function( isPostRequest, respond
         cache = false;
     }
 
-    var httpRequestInstance = SampleApp.resources.injector.inject(SampleApp.HTTP_SERVICE_KEY);
+    var httpRequestInstance = this.context.injector.inject(SampleApp.HTTP_SERVICE_KEY);
     httpRequestInstance.addResponder(responder);
     var requestType = (isPostRequest) ? 'POST' : 'GET';
     return httpRequestInstance.send(requestType, url, params, contentType, dataType, cache);

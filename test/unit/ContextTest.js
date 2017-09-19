@@ -13,5 +13,7 @@ describe('ContextTest', function () {
         expect(context.eventDispatcher.constructor.name).toBe(Lavender.EventDispatcher.name);
         expect(context.injector instanceof Lotus.Injector).toBe(true);
         expect(context.mediatorMap instanceof Lotus.MediatorMap).toBe(true);
+
+        //TODO: test sandboxed contexts where the same injection injects different class instances
     });
 });

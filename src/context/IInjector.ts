@@ -6,7 +6,7 @@ import {IContext} from './IContext';
 export interface IInjector{
     context:IContext;
     objectMap:Object;
-    mapObject(key:string, constructor:Function, useSingleton:boolean):void;
-    mapSingletonInstance(key:string, instance:any):void;
-    inject(key:string):Object;
+    mapObject(key:any, constructor:Function, useSingleton:boolean):void;
+    mapSingletonInstance(key:any, instance:any):void;
+    inject(key:any):Object;
 }

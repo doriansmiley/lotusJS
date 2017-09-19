@@ -1,6 +1,7 @@
 /**
  * Created by dsmiley on 7/24/17.
  */
+export * from './reflection/InjectorDecorator';
 export * from './context/IContext';
 export * from './context/Context';
 export * from './context/IInjector';
