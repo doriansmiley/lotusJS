@@ -48,49 +48,32 @@ export function injectable(target:any){
 }
 
 export function bindable(target: any, key: string){
-
+    console.log('bindable decorator called');
     // property value
     var _val = target[key];
-
-    //define the private property:
-    target['_'+key] = _val;
 
     if(!target['notify']){
         console.log('notify is undefined. please extend Lavender.Subject.');
         return;
     }
-    //get the property descriptor
-    var descriptor = Object.getOwnPropertyDescriptor(target, key);
-    if(!descriptor){
-        console.log('Object.getOwnPropertyDescriptor returned null.');
-    }
 
     // property getter
     var getter = function () {
-        var returnValue = this['_'+key];
-        if(descriptor && descriptor.get){
-            //call the old getter
-            returnValue = descriptor.get();
-        }
         console.log('Get: ${key} => ${returnValue}');
-        return returnValue;
+        return this['_'+key];
     };
 
     // property setter
     var setter = function (newVal) {
         console.log('Set: ${key} => ${newVal}');
-        if(descriptor && descriptor.set){
-            //call the old getter
-            descriptor.set(newVal);
-        }else{
-            this['_'+key] = newVal;
-        }
+        this['_'+key] = newVal;
         this['notify']( newVal, key );
     };
 
     // Delete property.
     if (delete target[key]) {
-
+        //define the private property:
+        target['_'+key] = _val;
         // Create new property with getter and setter
         Object.defineProperty(target, key, {
             get: getter,
