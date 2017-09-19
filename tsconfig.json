@@ -10,7 +10,7 @@
     "emitDecoratorMetadata":true
   },
   "typeRoots": [
-    "./custom_definitions"
+    "./src/custom_definitions"
   ],
   "types": [
     "xtag"
