@@ -31,7 +31,7 @@ SampleApp.LoadImageAssetsCommand.prototype.parseResponse = function (result) {
         throw new Error('Unable to parse image assets from results: ' + result.resultObj);
     }
     this.updateResults(imageAssets);
-    SampleApp.resources.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:imageAssets}));
+    this.context.eventDispatcher.dispatch(new SampleApp.AppEvent(SampleApp.AppEvent.IMAGES_LOADED, {result:imageAssets}));
 }
 
 //get string to append to fault message

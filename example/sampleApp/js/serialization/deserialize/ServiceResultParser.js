@@ -1,14 +1,14 @@
 /**
  * Created by dsmiley on 6/26/15.
  */
-SampleApp.ServiceResultParser = function () {
-
+SampleApp.ServiceResultParser = function (context) {
+    this.context = context;
 }
 
 SampleApp.ServiceResultParser.prototype.parserImageAssets = function( result )
 {
     var parsedJSON = (typeof result == 'string') ? JSON.parse(result) : result;
-    var parser = SampleApp.resources.injector.inject(SampleApp.SERIALIZE_FACTORY_KEY).getImageAssetParser(parsedJSON.schemaKey);
+    var parser = this.context.injector.inject(SampleApp.SERIALIZE_FACTORY_KEY).getImageAssetParser(parsedJSON.schemaKey);
     //walk the theme list
     if( !parser.canParse(parsedJSON))
     {

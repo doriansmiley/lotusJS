@@ -7,7 +7,5 @@ SampleApp = function(){
 }
 
 SampleApp.init = function(){
-    if(!SampleApp.resources){
-        SampleApp.resources = new SampleApp.Context(SampleApp.Model());
-    }
+    return new SampleApp.Context(SampleApp.Model());
 }
