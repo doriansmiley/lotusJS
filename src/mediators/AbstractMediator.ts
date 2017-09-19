@@ -7,7 +7,6 @@ import {injectable} from "../reflection/InjectorDecorator";
 /**
  * Created by dsmiley on 7/26/17.
  */
-@injectable
 export abstract class AbstractMediator extends Lavender.Subject implements IMediator{
     private _id:string;
     private _componentInstance:IComponent;

@@ -8,7 +8,6 @@ import {injectable} from "../../reflection/InjectorDecorator";
 /**
  * Created by dsmiley on 7/28/17.
  */
-@injectable
 export abstract class AbstractCommand extends Lavender.EventDispatcher implements ICommand{
     protected service:IService;
     protected opModel:Lavender.AsyncOperationModel;
