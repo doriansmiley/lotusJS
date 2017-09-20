@@ -232,7 +232,7 @@ For an example of how easy it is to start building custom components using Lotus
 
 # MVW Framework
 
-The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, dependency injection, inversion of control, decorators, and more. If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://www.npmjs.com/package/lotusjs-mvw).
+The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, view mediation, dependency injection, decorators, and more. If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://www.npmjs.com/package/lotusjs-mvw).
 
 
 # Create custom components built on Lotus and offer them through the component exchange
