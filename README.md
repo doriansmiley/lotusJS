@@ -9,7 +9,6 @@ LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Typescript Source](#typescript-source)
 - [Web Component View](#web-component-view)
 - [Data Binding](#data-binding)
-- [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
 - [MVW Framework Extension](#mvw-framework)
 
@@ -23,7 +22,7 @@ The lotus core is built using Typescript which enables us to fully implement com
 
 # Web Component View
 
-Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
+Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
 
 You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
 
@@ -220,15 +219,9 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (
 ````
 You do not have to create the instance assigned to `this.binder`. It is instantiated in the `Lotus.AbstractMediator` constructor.
 
-IMPORTANT: You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects. Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
+IMPORTANT: You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects. Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
 If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
-
-# Sand Boxed Context
-
-All application services are sand boxed to the application's context. This allows for distributing your applications as  reusable modules. Simply minify your application, include it in your project, and instantiate the context.
-
-TODO: module example
 
 # Light Weight
 
