@@ -15,6 +15,7 @@ export * from './context/MediatorMap';
 export * from './context/IComponentMap';
 export * from './context/ComponentMap';
 export * from './context/xtag';
+export * from './context/LotusHTMLElement';
 export * from './factory/IEventDispatcherFactory';
 export * from './factory/EventDispatcherFactory';
 export * from './factory/ISerializeFactory';
