@@ -17,7 +17,6 @@ export declare class AbstractThumbnailView extends AbstractItemView {
     thumbnail: HTMLImageElement;
     thumbnailContainer: HTMLElement;
     allowDrag: boolean;
-    protected setUpBindings(): void;
     protected sizeImage(): void;
     protected onThumbClick(event: Event): void;
     protected onDragStart(event: Event): void;

@@ -1,7 +1,7 @@
 import {IContext} from "./IContext";
 import {IComponentList} from "./IComponentList";
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag} from "../../custom_definitions/xtag";
+import {IXtag} from "./xtag";
 import {LotusHTMLElement} from "./LotusHTMLElement";
 
 /**

@@ -1,18 +1,25 @@
 lotusJS
 =============
 
-LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components. The framework is an adaptation of the MVP pattern in an IOC (Inversion of Control) container, but implements web components in the presentation layer replacing the need for a templating engine (MVWC).
+LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.
 
-# Model View Presenter Framework that supports Web Components!
+# A web component framework that separates presentation from code!
 
+- [npm Package Manager](#npm-package-manager)
+- [Typescript Source](#typescript-source)
 - [Web Component View](#web-component-view)
-- [Dependency Injection](#dependency-injection)
-- [Central Event Bus](#central-event-bus)
-- [Command Map](#command-map)
-- [View Mediators](#view-mediators)
 - [Data Binding](#data-binding)
 - [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
+- [MVW Framework Extension](#mvw-framework)
+
+# npm Package Manager
+
+The lotus module is distributed through npm and can be added to your project using `npm install lotusjs-components`. For more check us out on npm.
+
+# Typescript Source
+
+The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
 
 # Web Component View
 
@@ -138,187 +145,39 @@ Creating collection components is made easy with Lotus. You can extend the base 
 </div>
 </template>
 ````
-Notice the `data-skin-part="collectionContainer"` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view. 
+Notice the `data-skin-part="collectionContainer` attribute. This is a special attribute whose value must be set to `collectionContainer`. This attribute tells the web component where the items are to be inserted. The element which defines the `data-skin-part="itemTemplate"` attribute will be used to render each item in the collection. This element is passed to the collection's item view.
 
 The item view component used to render each item in the collection is defined in the `data-attribute-item-view` attribute. At this point in time the attribute must be defined on the top level element of the component's `<template>`. In the example above each item in the collection will create a new instance of `SampleApp.ImageGalleryView`. 
 
-For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
+#### Nested components
 
-# Dependency Injection
-
-Lotus ships with a build in injector. In your application's context you can define objects for injection as follows:
+You can also nest web components within component skins. For example:
 
 ````
-SampleApp.Context = function (model, params) {
-    this.model = model;
-    Lotus.Context.prototype.constructor.call(this, this,model.config, params);
-}
-/************* Inherit from Subject for data binding *************/
-Lavender.ObjectUtils.extend(Lotus.Context, SampleApp.Context);
+<div data-skin-part="collectionContainer" id="collectionContainer">
 
-SampleApp.Context.prototype.mapObjects = function(){
-    //map objects for construction
-    this.injector.mapObject(SampleApp.HTTP_SERVICE_KEY, SampleApp.HttpServiceFactory.getInstance().getHttpServiceForInjection(this.config));
-    //Map singletons
-    this.injector.mapSingletonInstance(SampleApp.SERVICE_RESULT_PARSER_KEY, SampleApp.SerializeFactory.getInstance().getServiceResultParser(this.config));
-    this.injector.mapSingletonInstance(SampleApp.SERIALIZE_FACTORY_KEY, SampleApp.SerializeFactory.getInstance());
-    this.injector.mapSingletonInstance(SampleApp.APP_SERVICES, new SampleApp.SampleService(this.config));
-    this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));
-    this.injector.mapSingletonInstance(SampleApp.MODEL_KEY, this.model);
-}
-...
-````
+        <!-- Item renderer skin -->
+        <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="96" data-attribute-thumb-height="96">
+            <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="selectedThumbContainer">
+                <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
+                <!-- example of a nested component that is a skin part-->
+                <x-lotus-gallery-detail data-skin-part="itemDetail" data-template-url="templates/galleryItemDetail.html" data-component-root='div'></x-lotus-gallery-detail>
+            </div>
+        </div>
 
-Note you can map objects that will be created by the IOC container using `mapObject` or map to a singleton using `mapSingletonInstance`. You can still use factories to set up your injections. This is useful when you want to be able to change injections without effecting application code using a config file.
+    </div>
+    <!-- example of a nested component -->
+    <x-lotus-page-number data-template-url="templates/pageNumberDisplay.html" data-source="sampleAPI" data-component-root='div'></x-lotus-page-number>
+````
+In this example the `x-lotus-gallery-detail` component is passed as a skin part, and the `x-lotus-page-number` component is nested stand alone. Once these tags are added to the DOM they will be mapped to a component instance just like any other.
 
-To inject objects you use the context's injector as follows:
-
-````
-SampleApp.resources.injector.inject(SampleApp.HTTP_SERVICE_KEY)
-````
-
-Where `SampleApp.resources` is defined as follows:
-
-````
-//global namespace for app
-SampleApp = function(){
-
-}
-
-SampleApp.init = function(){
-    SampleApp.resources = new SampleApp.Context(SampleApp.Model());
-}
-````
-# Central Event Bus
-
-Lotus includes a central event bus to handle dispatching application level events, and registering listeners for this events. This central event bus should not be confused with, or used in, your Lotus web components. Web components extend `Lavender.AbstractEventDispatcher` and can dispatch events directly by calling their `dispatch` method. 
-
-The event bus is located on the applications context and can by defined for dependency injection as follows:
-````
-this.injector.mapSingletonInstance(SampleApp.EVENT_DISPATCHER_KEY, Lotus.EventDispatcherFactory.getInstance().getEventDispatcher( this.config ));    
-````
-You can then access the event bus as follows:
-````
-SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
-````
-To add an event listener you call its `addEventDispatcher` method:
-````
-var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
-eventBus.addEventListener('eventType', this, 'myEventHandler');
-````
-Where `eventType` is the event that will be dispatched, `this` is a reference to the instance adding the listener, and `myEventHandler` is an instance method of the instance adding the listener (`this`).
-
-To remove an event listener you call its `removeEventListener` method:
-````
-var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
-eventBus.removeEventListener('eventType', this, 'myEventHandler');
-````
-To see if the event bus can listen call its `canListen` method:
-````
-var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
-eventBus.canListen('eventType', this, 'myEventHandler');
-````
-To dispatch and event on the event bus:
-````
-var eventBus = SampleApp.resources.injector.inject(SampleApp.EVENT_DISPATCHER_KEY);
-eventBus.dispatch(new Lavender.AbstractEvent('testEvent1', {data:myData}));
-````
-Where `testEvent1` is the event type and `{data:myData}` is data that will be added to the event payload and can be accessed using `event.payload.data`. You can define any object structure you like for the event payload for example `{myData:myData, moreData:moreData}` which can be accessed using `event.payload.myData` and `event.payload.moreData`. 
-
-While this example uses `Lavender.AbstractEvent` you should never dispatch this event object. Instead extend `Lavender.AbstractEvent` and create your own custom event objects. For example:
-````
-SampleApp.AppEvent = function( eventType, payload ){
-    if( eventType == SampleApp.AppEvent.ITEM_SELECTED && ( payload.item === null || payload.item === undefined ) ){
-        throw  new Error('SampleApp.AppEvent payload.item is required');
-    }
-    Lavender.AbstractEvent.prototype.constructor.call(this, eventType, payload);
-}
-/************* Inherit from Subject for data binding *************/
-Lavender.ObjectUtils.extend( Lavender.AbstractEvent, SampleApp.AppEvent );
-
-SampleApp.AppEvent.prototype.clone = function(){
-    return new SampleApp.AppEvent( this.type, this.payload)
-}
-
-SampleApp.AppEvent.LOAD_IMAGES = 'smpLoadImages';
-SampleApp.AppEvent.IMAGES_LOADED = 'smpImagesLoaded';
-````
-
-# Command Map
-
-Lotus includes a command map that maps both fresh instances and singleton instance of a command to an event dispatched by the central event bus. Below is an example of how to map a command:
-````
-SampleApp.Context.prototype.mapCommands = function(){
-    //triggers loading of images
-    this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand );
-    // you can optionally pass functionName and useSingleton
-    //functionName defaults to 'execute'
-    //if useSingleton is true only a single instance of the command will be executed when the events is dispatched, use this options with extreme caution
-    //this.commandMap.addCommand( 'testEvent1', Lotus.SampleCommand, 'myFunction', true )
-}
-````
-In this example the function to execute defaults to `execute`. But as the comments explain you can pass the function name as an optional argument. For example:
-````
-this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand, 'myFunction' );
-````
-In this example the `myFunction` instance method will be called passing the event object. And to register `SampleApp.LoadImageAssetsCommand` as a singleton calling `myFunction` you simply add:
-````
-this.commandMap.addCommand( Lavender.RecordSetEvent.LOAD_PAGE_DATA, SampleApp.LoadImageAssetsCommand, 'myFunction', true );
-````
-Lotus ships with `Lotus.AbstractCommand` which is a useful base class if you do not intend to create your own command implementation. Commands do not need to extend `Lotus.AbstractCommand`, but it is recommended you do so as it will reduce the amount of redundant code in your application, and allow commands to be easily reused in other applications. For a complete example of implementing a subclass of `Lotus.AbstractCommand` see the `SampleApp.LoadImageAssetsCommand` implementation that's part of our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp).
-
-# View Mediators
-
-View mediation is an important part of MVP frameworks that enables essentially dumb views to participate in the surrounding application without knowing or caring about their involvement. In most implementations this includes things like binding your application's model data to instance attributes of your view, and delegating events dispatched by your view to the central event bus. To map a mediator to a component in Lotus you do the following in your application's context:
-````
-SampleApp.Context.prototype.mapMediators = function(){
-    this.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator);
-    //you can optionally add a singleton instance using the following form
-    //context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
-}
-````
-In this example all instances of the `x-lotus-image-gallery` custom tag found in the DOM will be mapped to an instance of `SampleApp.ImageGalleryMediator`. If you want to use a singleton instance you simply supply `true` as the optional third parameter:
-````
-context.mediatorMap.add('x-lotus-image-gallery',SampleApp.ImageGalleryMediator,true);
-````
-All mediators must extend `Lotus.AbstractMediator` and the MUST OVERRIDE `Lotus.AbstractMediator.toString` returning the name of the constructor function. For example below is the `toString` override found in `SampleApp.ImageGalleryMediator`:
-````
-SampleApp.ImageGalleryMediator.toString = function(){
-    return 'SampleApp.ImageGalleryMediator';
-}
-````
-Mediators should also implement the `init` method. The `init` method is called once the tag is processed by x-tag and the Lotus component map. This ensures your component instance is completely constructed and its `element` property defined before your mediator set up code is triggered. Below is the init method from `SampleApp.ImageGalleryMediator`
-````
-SampleApp.ImageGalleryMediator.prototype.init = function () {
-    Lotus.AbstractMediator.prototype.init.call(this);
-    var recordSetLabel = this.componentInstance.element.getAttribute('source');//note the attribute recordset should be set on the element identified as your component root in your template file (templates/imageGallery.html)
-    var model = this.context.injector.inject(SampleApp.MODEL_KEY);
-    if( model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === null || model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] === undefined ){
-        //create the record set for the source if it's not already defined
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel] = new Lavender.RecordSet(null, Lavender.ArrayList);
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].createdOn = new Date();
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].id = Lavender.UuidUtils.generateUUID();
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].recordsPerPage = model.config.galleryItemsPerPage;
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].results.allowDuplicates = true;
-        model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel].source = recordSetLabel;
-    }
-
-    this.componentInstance.collection = model.recordsetModel.recordSets.recordSetsBySource[recordSetLabel];
-    this.componentInstance.collection.addEventListener(Lavender.RecordSetEvent.LOAD_PAGE_DATA, this, 'onLoadPageData');
-    this.componentInstance.collection.selectedPage = 1;//will trigger data load
-}
-````
-Be sure you call `Lotus.AbstractMediator.prototype.init.call(this);` as the first call in your `init` method. In this example the component creates a recordset object in the model and assigns it to the component. The component uses this collections as its data provider for constructing collection items. 
-
-Mediators are critical to ensuring your view components remain abstract and properly encapsulated so they can be reused across many applications. You are heavily encouraged to use them.
-
-For a complete example of how to implement view mediators soo our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp) and our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp).
 
 # Data Binding
 
 Lotus incorporates Lavender's data binding utilities into it's mediator base class `Lotus.AbstractMediator`. While you are free to implement data binding in any layer of your application, you are encouraged to encapsulate data binding in your mediators. This ensures your web components remain properly encapsulated and reusable, and delegates data binding operations to a single layer within your application.
 
-In order to notify observers of changes you must define the bindable end point. This is always done using the `addProperties` method in the your components constructor. For example:
+In order to notify observers of changes you must define the bindable end point. For example:
 ````
 Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
@@ -332,7 +191,7 @@ Lavender.RecordSet = function (timeToLive, listFunction) {
             },
             set: function (val) {
                 _pageList = val;
-                this.Notify(val, "pageList");
+                this.notify(val, "pageList");
                 this.dispatch(new Lavender.RecordSetEvent(Lavender.RecordSetEvent.PAGE_LIST_CHANGE));
             }
         },
@@ -375,10 +234,15 @@ TODO: module example
 
 # Light Weight
 
-Both the Lotus (32kb) and Lavander (51kb) frameworks total only 83 kb combined. That's a lot of power in a small package.
+Lotus is only 6497 bytes when gzipped, and Lavander is only 10363 bytes when gzipped. That's a lot of power in a small package.
 
 # Examples
-For a complete example of how to implement Lotus in an application using the IOC container see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/sampleApp). For an example of how to just use our web component frameowrk see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For an example of how easy it is to start building custom components using LotusJS see our [sample button under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+
+# MVW Framework
+
+The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, dependency injection, inversion of control, decorators, and more. If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://github.com/doriansmiley/lotusJS-MWV/tree/master/).
+
 
 # Create custom components built on Lotus and offer them through the component exchange
 

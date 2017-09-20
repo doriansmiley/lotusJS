@@ -1,7 +1,7 @@
 import { IContext } from "./IContext";
 import { IComponentList } from "./IComponentList";
 import * as Lavender from 'lavenderjs/lib';
-import { IXtag } from "../../custom_definitions/xtag";
+import { IXtag } from "./xtag";
 import { IComponentMap } from "./IComponentMap";
 import { LotusHTMLElement } from "./LotusHTMLElement";
 /**
@@ -15,6 +15,7 @@ export declare class ComponentMap implements IComponentMap {
     success(result: Lavender.IResult): void;
     fault(fault: Lavender.IFault): void;
     onProgress(progress: number): void;
+    protected mapMediators(tagInstance: LotusHTMLElement): void;
     addComponent(tagInstance: LotusHTMLElement, functionConstructor: any): void;
     createComponent(tagInstance: LotusHTMLElement): void;
     mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: IXtag): void;

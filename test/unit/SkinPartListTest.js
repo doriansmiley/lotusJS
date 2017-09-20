@@ -16,7 +16,7 @@ describe('SkinPartListTest', function () {
         var skinPart2 = new Lotus.SkinPart('testSkinPart2', component2, 'testProperty');
         var skinPart3 = new Lotus.SkinPart('testSkinPart3', component3, 'testProperty');
         skinPartList.addAll([skinPart1, skinPart2, skinPart3]);
-        expect(skinPartList.length()).toBe(3);
+        expect(skinPartList.length).toBe(3);
         var skinPart4 = new Lotus.SkinPart('testSkinPart4', component4, 'testProperty');
         skinPartList.insert(skinPart4,1);
         expect(skinPartList.getItemAt(1) === skinPart4).toBe(true);

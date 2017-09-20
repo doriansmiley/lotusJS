@@ -7,11 +7,9 @@
 describe('ContextTest', function () {
 
     it('check Context function and values', function () {
-        var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-        expect(context.commandMap instanceof Lotus.CommandMap).toBe(true);
+        var context = new Lotus.Context({});
         expect(context.componentMap instanceof Lotus.ComponentMap).toBe(true);
-        expect(context.eventDispatcher instanceof Lavender.AbstractEventDispatcher).toBe(true);
-        expect(context.injector instanceof Lotus.Injector).toBe(true);
-        expect(context.mediatorMap instanceof Lotus.MediatorMap).toBe(true);
+
+        //TODO: test sandboxed contexts where the same injection injects different class instances
     });
 });
