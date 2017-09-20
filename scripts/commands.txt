@@ -11,7 +11,7 @@ sh ./scripts/typescript.sh
 #compile typescript and webpack
 export LOTUS_HOME=~/workspace/lotusJS
 cd $LOTUS_HOME
-npm run build
+sudo npm run build
 
 #build webpack
 export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS

@@ -15,6 +15,7 @@ export declare class ComponentMap implements IComponentMap {
     success(result: Lavender.IResult): void;
     fault(fault: Lavender.IFault): void;
     onProgress(progress: number): void;
+    protected mapMediators(tagInstance: LotusHTMLElement): void;
     addComponent(tagInstance: LotusHTMLElement, functionConstructor: any): void;
     createComponent(tagInstance: LotusHTMLElement): void;
     mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: IXtag): void;

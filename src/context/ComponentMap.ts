@@ -52,6 +52,11 @@ export class ComponentMap implements IComponentMap{
 
     }
 
+    //stub for override in LotusJS-MVW
+    protected mapMediators(tagInstance:LotusHTMLElement):void{
+
+    }
+
     public addComponent(tagInstance:LotusHTMLElement, functionConstructor):void{
         // fired once at the time a component
         // is initially created or parsed
@@ -60,7 +65,7 @@ export class ComponentMap implements IComponentMap{
             this.componentInstances.addItem(tagInstance.lotusComponentInstance);
         }
         //trigger mediator assignment if any
-        this.context.mediatorMap.apply(tagInstance.tagName.toLowerCase(), tagInstance.lotusComponentInstance);
+        this.mapMediators(tagInstance)
         //if the tag instance defines a scr attribute load the template and set up the shadow DOM
         let src:string = tagInstance.getAttribute('data-template-url');
         if( src !== null && src !== undefined ){

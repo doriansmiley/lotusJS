@@ -13,8 +13,6 @@
             context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button, xtag);
-            context.componentMap.mapComponent('x-lotus-button4', HTMLButtonElement.prototype, Lotus.Button, xtag);
-            context.mediatorMap.add('x-lotus-button4',Lotus.ButtonMediator);
             return context;
         }( xtag ));
     </script>
@@ -35,11 +33,6 @@
     By passing these the data-template-url, data-component-root, and attributes in the tag instance you can effectively completely change you layout while reusing the same controller
 </p>
 <x-lotus-button2  data-template-url="templates/button.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
-<p>
-    Here's a duplicate instance of the button with event mediation. All web components are assigned a <pre style="display: inline">lotusComponentInstance</pre> property. This is the instance of the function created when <pre style="display: inline">context.componentMap.mapComponent</pre> is called.
-    You do not have to mediate events in this fashion. Our sample application shows how to extend core components to provide application level event mediation with Lotus mediators.
-</p>
-<x-lotus-button4 id="eventSampleBtn"  data-template-url="templates/button.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button4>
 <p>
     This example shows how easily you can change your layout while using the same component definitions. This is the true power of skin parts.
     If your browser does not support shadowDOM natively the CSS styles in the first loaded instance of x-lotus-button2 (the one above) will override the next (the one below)
