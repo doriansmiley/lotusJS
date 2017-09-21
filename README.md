@@ -5,12 +5,26 @@ LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 
 # A web component framework that separates presentation from code!
 
+- [Another Framework! Why should I care](#why-should-i-care)
+- [Is anybody using this?](#is-anybody-using-this)
 - [npm Package Manager](#npm-package-manager)
 - [Typescript Source](#typescript-source)
 - [Web Component View](#web-component-view)
 - [Data Binding](#data-binding)
 - [Examples](#examples)
 - [MVW Framework Extension](#mvw-framework)
+
+# Why should I care
+
+LotusJS allows you to put your design and programming teams on completely independent tracks. You can even have programming and design teams from different organizations working on the same component in parallel. At Silicon Publishing we have been using lotusJS to successfully offload component skins to our client's in house design teams. This has saved countless developer hours, and made it easier for our clients to get the exact look and feel they want.
+
+Another reason to love lotusJS is that is delivers the good of HTML imports without the bad. Component skins are external HTML template files. This means designers are free to work with static HTML in their native tools without any dependency on the framework itself. However all javascript code are ES modules managed though npm. This avoids many of the problems related to tree shaking and other issues when component code is imported through HTML imports.
+
+And finally you should care about LotusJS because it will make it easy for you to make your own web components and distribute them. In short if you build a killer component you can sell it, have designers all over the world create skins for it, and hopefully make you a bunch of money!
+
+# Is anybody using this
+
+Yes! Silicon Publishing has been using the LotusJS component model for years in its HTML5 Silicon Designer product (similar to Canva). Companies like Printing.com, AmazingMail, Jackprints, and St. Jude have been using LotusJS with a worldwide user base and are realizing the benefits of a decoupled component skins. You should too!
 
 # npm Package Manager
 
@@ -174,7 +188,7 @@ For a complete example see our [sample application under the examples directory]
 
 # Data Binding
 
-Lotus incorporates Lavender's data binding utilities to define dinable end points in your objects, and to set up data bindings. Before you can bind to a property of an object you have to make sure your object extends `Lavender.Subject` somehwere is its inheritance chain, and you must make sure to call the object's `notify` method when changes occur. For example:
+Lotus incorporates Lavender's data binding utilities to define bindable end points in your objects, and to set up data bindings. Before you can bind to a property of an object you have to make sure your object extends `Lavender.Subject` somehwere is its inheritance chain, and you must make sure to call the object's `notify` method when changes occur. For example:
 ````
 Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
