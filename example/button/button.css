@@ -67,10 +67,22 @@ body {
 }
 
 
-Button {
+
+
+button {
+	cursor:pointer;
 	padding:10px;
-	font-size:12px;
-	font-weight:bold;
-	border-radius:6px;
-	font-family:'SegoeUI';
+	border-radius:3px;
+	box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
+	border:1px solid #666;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+0,d6d6d6+100 */
+	background: #ededed; /* Old browsers */
+	background: -moz-linear-gradient(top, #ededed 0%, #d6d6d6 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #ededed 0%,#d6d6d6 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #ededed 0%,#d6d6d6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#d6d6d6',GradientType=0 ); /* IE6-9 */
+}
+
+button * {
+	cursor:pointer;
 }
