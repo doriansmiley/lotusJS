@@ -1,0 +1,76 @@
+/* Web Components CSS */
+/* Font - used to match the Adobe CC font type */
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('fonts/segoeui.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('fonts/segoeuib.ttf') format('truetype');
+
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('fonts/segoeuii.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+html {
+	height:100%;
+	width:100%;
+}
+
+body {
+	font-family:'SegoeUI',Arial,Helvetica;
+	font-size:16px;
+	padding:10px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+18,1e5799+99 */
+	background: #5bb0d8; /* Old browsers */
+	background: -moz-linear-gradient(top, #5bb0d8 0%, #1e5799 18%, #1e5799 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #5bb0d8 0%,#1e5799 18%,#1e5799 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #5bb0d8 0%,#1e5799 18%,#1e5799 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+}
+
+.page-header {
+	font-size:28px;
+	color:#fff;
+	text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
+	margin:0px;
+}
+
+.content-panel {
+	margin-top:15px;
+	margin-bottom:15px;
+	border-radius:4px;
+	background:#ccc;
+	padding:15px;
+	background:rgba(255,255,255,0.9);
+	box-shadow: -3px 3px 4px rgba(0,0,0,0.3);
+}
+
+.content-panel h3 {
+	margin-top:0px;
+	margin-bottom:5px;
+	padding-bottom:0px;
+	color:#11498b;
+}
+
+
+#myButton {
+	padding:10px;
+	font-size:12px;
+	font-weight:bold;
+	border-radius:6px;
+	font-family:'SegoeUI';
+}
