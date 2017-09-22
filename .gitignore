@@ -10,5 +10,4 @@
 /.DS_Store
 /node_modules
 .DS_Store
-/example/button/node_modules
-/example/input/node_modules
+**/node_modules
