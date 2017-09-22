@@ -34,7 +34,7 @@ export class Button extends AbstractComponent{
         console.log('Lotus.Button.prototype.onClick: event is ' + event);
         console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
         console.log('Lotus.Button.prototype.onClick: this ' + this);
-        this.dispatch(new ComponentEvent('click', {target:this.buttonSkinPart, originalEvent:event}))
+        this.dispatch(new ComponentEvent(ComponentEvent.CLICK, {target:this.buttonSkinPart, originalEvent:event}))
     }
 
     public defineSkinParts():void{

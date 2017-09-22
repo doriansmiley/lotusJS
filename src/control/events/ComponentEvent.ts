@@ -9,6 +9,7 @@ export class ComponentEvent extends Lavender.AbstractEvent{
     }
 
     public static READY:string = 'lotusComponentReady';
+    public static CLICK:string = 'click';
 
     clone(type:string, payload:Object):Lavender.IEvent{
         return new ComponentEvent(this.type, this.payload)

@@ -1,0 +1,12 @@
+/.idea/workspace.xml
+.idea/lavenderJS.iml
+
+/.DS_Store
+
+/.idea/
+/node_modules
+/global
+/scripts
+/src
+/tsconfig.json
+/webpack.config.js
