@@ -6,11 +6,11 @@ describe('ListCollectionView Test', function() {
     it('should test default ListCollectionView values', function() {
         var component = new Lotus.ListCollectionView();
         var element = document.createElement('select');
-        element.setAttribute('data-attribute-item-view', 'Lotus.ListItemValue');
+        element.setAttribute('data-attribute-item-view', 'Lotus.ListItemView');
         element.setAttribute('data-skin-part', 'collectionContainer');
         document.body.appendChild(element);
         element.innerHTML = '<option data-skin-part="itemTemplate"></option>';
-        var collectionContainer = document.querySelector('[data-skin-part=collectionContainer]');
+        var collectionContainer = element;
         var itemTemplate = element.querySelector('[data-skin-part=itemTemplate]');
         component.id = '1234';
         component.created(element);
@@ -18,7 +18,7 @@ describe('ListCollectionView Test', function() {
         expect( component.id ).toBe( '1234' );
         expect( component.collectionContainer === collectionContainer ).toBe( true );
         expect( component.itemTemplate === itemTemplate ).toBe( true );
-        expect( component.itemView === 'Lotus.ListItemValue' ).toBe( true );
+        expect( component.itemView === 'Lotus.ListItemView' ).toBe( true );
         expect( component.createChildView() instanceof Lotus.ListItemView ).toBe( true );
         var collection = new Lavender.ArrayList();
         collection.addItem( {label:'some label 1', value:'some value 1'} );
@@ -28,9 +28,6 @@ describe('ListCollectionView Test', function() {
         component.collection = collection;
         expect( component.collection.length ).toBe( 4 );
         expect( component.collectionContainer.childNodes.length ).toBe( 4 );
-        component.childViews.getItemAt(0).resetState();
-        expect( component.selectedItem ).toBe( component.childViews.getItemAt(0) );
-        component.childViews.getItemAt(0).resetState();
-        expect( component.selectedItem ).toBe( null );
+        //add tests to set selected item
     });
 });

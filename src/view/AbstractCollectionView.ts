@@ -58,6 +58,10 @@ export class AbstractCollectionView extends AbstractComponent{
             this.addCollectionEventListeners();
         }//must occur after line above
         this.notify(value, 'collection');
+        //render the view as long as there are items in the collection
+        if(value && this.ready){
+            this.render();
+        }
     }
 
     get childViews():Lavender.ArrayList {
@@ -171,6 +175,9 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     protected removeAllChildViews():void{
+        if(!this.childViews){
+            return;
+        }
         for( let i=this.childViews.length-1; i >= 0; i--){
             this.removeChildView( this.childViews.getItemAt(i) );
         }
@@ -218,6 +225,7 @@ export class AbstractCollectionView extends AbstractComponent{
         if( this.itemView === null || this.itemView == undefined ){
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
         }
+        this.removeAllChildViews();
         for( let i=0; i < this.collection.length; i++ ){
             this.addChildView( this.collection.getItemAt(i) );
         }
