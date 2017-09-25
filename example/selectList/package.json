@@ -1,7 +1,7 @@
 {
-  "name": "lotusjs-components-example-form",
+  "name": "lotusjs-components-example-select-list",
   "version": "1.0.0",
-  "description": "sample web component application for HTML buttons",
+  "description": "sample web component for HTML select list",
   "main": "index.js",
   "scripts": {
     "test": "grunt"
@@ -14,7 +14,8 @@
     "HTML5",
     "web",
     "components",
-    "button",
+    "select",
+    "list",
     "LotusJS"
   ],
   "author": "Dorian Smiley",

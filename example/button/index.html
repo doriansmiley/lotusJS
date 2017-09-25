@@ -2,7 +2,9 @@
 <html>
 <head>
     <title>LotusJS Buttom Component Example</title>
-    <link rel="stylesheet" type="text/css" href="button.css" />
+	<link rel="stylesheet" href="../css/highlight/styles/default.css">
+	<script src="../css/highlight/highlight.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css"/>
     <script type="text/javascript" src="node_modules/x-tag/lib/webcomponents.js"></script>
     <script type="text/javascript" src="node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js"></script>
     <script type="text/javascript" src="node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
@@ -20,6 +22,7 @@
 		//As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
 		//A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
 		window.onload = function() {
+			hljs.initHighlighting();
 			var list = document.getElementsByTagName('x-lotus-button2');
 			var handler = {
 				onChange:function(event){
@@ -39,7 +42,7 @@
 <h3 class="page-header">Lotus Web Components Button Control</h3>
 
 <div class="content-panel">
-	<h3>Dummy Header Example</h3>
+	<h3>HTML Buttom</h3>
 	<p>
 		This is an example of inline tags. Not a lot of value here unless you just want custom tag functionality without the DOM encapsulation of shadowRoot
 	</p>
@@ -50,6 +53,7 @@
 
 
 <div class="content-panel">
+	<h3>Lotus Buttom</h3>
 	<p>
 		This is an example of loading the component from an external template file. The contents will be appended to the DOM by creating a shadowRoot.
 		The data-component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
@@ -62,6 +66,7 @@
 </div>
 
 <div class="content-panel">
+	<h3>Dynamically Change Skin</h3>
 	<p>
 		This example shows how easily you can change your layout while using the same component definitions. This is the true power of skin parts.
 		If your browser does not support shadowDOM natively the CSS styles in the first loaded instance of x-lotus-button2 (the one above) will override the next (the one below)
@@ -71,6 +76,7 @@
 </div>
 
 <div class="content-panel">
+	<h3>xTag Pollyfill Workaround</h3>
 	<p>
 		This is an example of the recommended work around for the shadowDOM pollyfill issue described above. It requires you create a new custom element and map it, but the controller and template are identical.
 	</p>
@@ -78,6 +84,7 @@
 </div>
 
 <div class="content-panel">
+	<h3>Adding Callbacks</h3>
 	<p>
 		The <code>x-lotus-button</code> tags exposes a single click event by default. In order to listen for that event you have to assign an event handler after the document loads.
 		An example is below. However if you are serious about event mediation of we encourage you to check out <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a>.
