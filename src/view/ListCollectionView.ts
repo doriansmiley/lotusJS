@@ -23,8 +23,8 @@ export class ListCollectionView extends AbstractCollectionView{
         //set selected item view
         this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.collectionContainer, originalEvent:event}));
         //set the selected item
-        this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {payload:item['lotusComponentInstance']}));
-        console.log('Lotus.List.onChange: selected item is ' + item['lotusComponentInstance']);
+        this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:item['getComponentInstance']()}));
+        console.log('Lotus.List.onChange: selected item is ' + item['getComponentInstance']());
     }
     
     //(event.target as HTMLSelectElement).options[(event.target as HTMLSelectElement).selectedIndex].value

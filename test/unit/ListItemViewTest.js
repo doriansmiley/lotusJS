@@ -10,7 +10,7 @@ describe('ListItemView Test', function() {
 
         var component = new Lotus.ListItemView();
         var element = document.createElement('option');
-        element.setAttribute('data-skin-part', 'option');
+        element.setAttribute('data-skin-part', 'itemTemplate');
         document.body.appendChild(element);
         component.element = element;
         component.id = '1234';
