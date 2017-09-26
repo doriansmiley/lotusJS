@@ -17,14 +17,15 @@ export class ListCollectionView extends AbstractCollectionView{
     }
 
     public onChange(event:Event):void{
-        var item:HTMLOptionElement = (event.target as HTMLSelectElement).options[(event.target as HTMLSelectElement).selectedIndex] as HTMLOptionElement;
-        console.log('Lotus.Input.prototype.onChange: input value is ' + (item as HTMLOptionElement).value);
-        console.log('Lotus.Input.prototype.onChange: my id is ' + this.id);
+        //get the associated item view for the selected list item
+        let itemView:AbstractItemView = this.childViews.getItemAt((event.target as HTMLSelectElement).selectedIndex);
+        console.log('Lotus.List.prototype.onChange: input value is ' + itemView.element['value']);
+        console.log('Lotus.List.prototype.onChange: my id is ' + this.id);
         //set selected item view
         this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.collectionContainer, originalEvent:event}));
         //set the selected item
-        this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:item['getComponentInstance']()}));
-        console.log('Lotus.List.onChange: selected item is ' + item['getComponentInstance']());
+        this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:itemView}));
+        console.log('Lotus.List.prototype.onChange: selected item is ' + itemView);
     }
     
     //(event.target as HTMLSelectElement).options[(event.target as HTMLSelectElement).selectedIndex].value

@@ -8,7 +8,8 @@
     <script type="text/javascript" src="node_modules/x-tag/lib/webcomponents.js"></script>
     <script type="text/javascript" src="node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js"></script>
     <script type="text/javascript" src="node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
-    <script type="text/javascript" src="node_modules/lotusjs-components/lib/lotusJS-UMD.min.js"></script>
+    <!-- <script type="text/javascript" src="node_modules/lotusjs-components/lib/lotusJS-UMD.min.js"></script> -->
+    <script type="text/javascript" src="../../lib/lotusJS-UMD.min.js"></script>
     <script language="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
@@ -76,7 +77,7 @@
         HTMLSelectElement.prototype, Lotus.ListCollectionView, xtag);</code>.A new instance of <code class="JavaScript">Lotus.ListCollectionView</code>
         is attached to each tag instance. Open your console to observe the change in values.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select data-template-url="templates/radio.html" data-component-root='[data-skin-part="collectionContainer"]'
                     data-attribute-type="text"></x-lotus-select>
 </div>
 
@@ -88,7 +89,7 @@
         All using the same set of selectors encapsulated with Shadow DOM. Imagine how many skins could be created
         without a single change to the component code.
     </p>
-    <x-lotus-select data-template-url="templates/select2.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select data-template-url="templates/radio2.html" data-component-root='[data-skin-part="collectionContainer"]'
                     data-attribute-type="text"></x-lotus-select>
 </div>
 
@@ -98,7 +99,7 @@
         Note: If your browser does not natively support web components you have to attach the new skin using a different
         tag. This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
-    <x-lotus-select2 data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select2 data-template-url="templates/radio.html" data-component-root='[data-skin-part="collectionContainer"]'
                      data-attribute-type="text"></x-lotus-select2>
 </div>
 

@@ -78,9 +78,11 @@
 <div class="content-panel">
 	<h3>xTag Pollyfill Workaround</h3>
 	<p>
-		This is an example of the recommended work around for the shadowDOM pollyfill issue described above. It requires you create a new custom element and map it, but the controller and template are identical.
+		This is an example of the recommended work around for the shadowDOM pollyfill issue described above.
+		If your browser does not natively support web components you have to attach the new skin using a different
+		tag. This is an issue with the xTag core and how it encapsulates styles using the tag name.
 	</p>
-	<x-lotus-button3  data-template-url="templates/button-messages.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button3>
+	<x-lotus-button3  data-template-url="templates/button-blue.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button3>
 </div>
 
 <div class="content-panel">
