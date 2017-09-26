@@ -21,7 +21,7 @@ export class RadioCollectionView extends AbstractCollectionView{
         super.onItemSelectedDeselect(event);
         //if the selected item has changed dispatch input change event
         if( dispatchChange ){
-            this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.collectionContainer, originalEvent:event}));
+            this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.selectedItem, originalEvent:event}));
         }
     }
 }

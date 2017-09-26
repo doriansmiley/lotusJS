@@ -8,7 +8,7 @@ describe('RadioCollectionView Test', function () {
             onChange: function (event) {
                 expect(component.childViews.getItemAt(0).radio.checked).toBe(true);
                 expect(component.selectedItem == component.childViews.getItemAt(0)).toBe(true);
-                expect(event.payload.target === component.collectionContainer).toBe(true);
+                expect(event.payload.target === component.selectedItem).toBe(true);
                 done();
             }
         }

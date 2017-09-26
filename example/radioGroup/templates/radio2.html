@@ -25,7 +25,7 @@
         }
 
 
-        select{
+        input{
             cursor:pointer;
             color:#fff;
             box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
@@ -40,15 +40,15 @@
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
         }
 
-        select * {
+        input * {
             cursor:pointer;
         }
 
-        select:focus {
+        input:focus {
             outline: none;
         }
 
-        select:hover {
+        input:hover {
             border:1px solid #f00;
             /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
             background: #f9c67a; /* Old browsers */
@@ -58,7 +58,10 @@
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
         }
     </style>
-    <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer">
-        <option data-skin-part="itemTemplate"></option>
-    </select>
+    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+        <div data-skin-part="itemTemplate">
+            <input type="radio" data-skin-part="radio"/>
+            <label data-skin-part="label"></label>
+        </div>
+    </fieldset>
 </template>
