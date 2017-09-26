@@ -98,7 +98,7 @@ export class AbstractThumbnailView extends AbstractItemView{
     }
 
     protected getContainerSize():Lavender.widthHeightObject{
-        var returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined ) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
+        let returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined ) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
         //if the container has a defined width and height set in the tempalte use that instead of our defaults
         if( !isNaN( parseInt(this.thumbWidth) ) && !isNaN( parseInt(this.thumbWidth) ) ){
             returnObj = {width:parseInt(this.thumbWidth), height:parseInt(this.thumbHeight)} as Lavender.widthHeightObject;
@@ -157,7 +157,7 @@ export class AbstractThumbnailView extends AbstractItemView{
 
     public resetState():void{
         this.thumbnailContainer.classList.toggle(this._thumbnailSelectedClass);
-        var eventType = ( this.thumbnailContainer.classList.contains(this._thumbnailSelectedClass) ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
+        let eventType = ( this.thumbnailContainer.classList.contains(this._thumbnailSelectedClass) ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
         //dispatch event to notify view that the layout was selected/or deselected
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }

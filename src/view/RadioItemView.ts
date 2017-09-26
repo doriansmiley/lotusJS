@@ -33,7 +33,7 @@ export class RadioItemView extends AbstractItemView{
     }
 
     public onClick(event:Event):void{
-        var eventType = ( this.radio.checked ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
+        let eventType = ( this.radio.checked ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
         //dispatch event to notify view that the layout was selected/or deselected
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
