@@ -20,16 +20,26 @@ export class File extends Lavender.Subject{
     private _type:string;
     private _name:string;
     private _fileObj:any;
+    private _size:number;
 
     constructor(){
         super();
     }
 
-    get fileObj():File {
+    get size():number {
+        return this._size;
+    }
+
+    set size(value:number) {
+        this._size = value;
+        this.notify(value, 'size');
+    }
+
+    get fileObj():any {
         return this._fileObj;
     }
 
-    set fileObj(value:File) {
+    set fileObj(value:any) {
         this._fileObj = value;
         this.notify(value, 'fileObj');
     }

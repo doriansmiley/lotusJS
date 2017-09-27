@@ -10,6 +10,7 @@ export class FileEvent extends Lavender.AbstractEvent{
 
     public static REMOVE_FILE_FROM_COLLECTION:string = 'removeFileFromCollection';
     public static ABORT_FILE_UPLOAD:string = 'abortFileUpload';
+    public static UPLOAD_FILE:string = 'uploadFile';
 
     clone(type:string, payload:Object):Lavender.IEvent{
         return new FileEvent(this.type, this.payload)

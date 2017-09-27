@@ -32,3 +32,4 @@ export * from './view/ImageGalleryView';
 export * from './view/ListCollectionView';
 export * from './view/RadioCollectionView';
 export * from './view/FileView';
+export * from './view/FileCollectionView';

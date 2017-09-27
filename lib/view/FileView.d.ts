@@ -15,8 +15,10 @@ export declare class File extends Lavender.Subject {
     private _type;
     private _name;
     private _fileObj;
+    private _size;
     constructor();
-    fileObj: File;
+    size: number;
+    fileObj: any;
     percentLoaded: number;
     state: string;
     thumbnail: string;
