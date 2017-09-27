@@ -12,8 +12,8 @@
     <script language="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-upload', HTMLSelectElement.prototype, Lotus.FileCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-upload2', HTMLSelectElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);
             return context;
         }(xtag));
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -79,12 +79,12 @@
 <div class="content-panel">
     <h3>Lotus Select List</h3>
     <p>
-        Here's an example of lotus FileCollectionView component. The <code class="JavaScript">x-lotus-upload</code> tag
-        extends the <code class="JavaScript">select</code>
-        tag. Our <code class="JavaScript">x-lotus-upload</code> is also mapped to a Lotus component in the call to <code
-            class="JavaScript">context.componentMap.mapComponent('x-lotus-upload',
-        HTMLSelectElement.prototype, Lotus.FileCollectionView, xtag);</code>.A new instance of <code class="JavaScript">Lotus.FileCollectionView</code>
-        is attached to each tag instance. Open your console to observe the change in values.
+        Here's an example of lotus FileCollectionView component. The <code >x-lotus-upload</code> tag
+        extends the <code >div</code>
+        tag. Our <code >x-lotus-upload</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-upload',
+        HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);</code>.A new instance of <code >Lotus.FileCollectionView</code>
+        is attached to each tag instance. Open your console to observe the file upload callbacks. In order to upload files your callbacks should trigger upload behaviors
+        and update the files load status. See the commnets in the code example at the bottom of this page for psuedo code.
     </p>
     <x-lotus-upload data-template-url="templates/fileUpload.html"
                     data-component-root="[data-attribute-item-view='Lotus.FileView']"
@@ -118,9 +118,8 @@
 <div class="content-panel">
     <h3>Adding Callbacks</h3>
     <p>
-        The <code class="JavaScript">x-lotus-upload</code> tag exposes a single change event by default. In order to
-        listen for that event
-        you have to assign an event handler after the document loads. An example is below. However if you are serious
+        The <code class="JavaScript">x-lotus-upload</code> the following events: `Lotus.FileEvent.UPLOAD_FILE, Lotus.FileEvent.ABORT_FILE_UPLOAD`.
+        In order to listen for those events you have to assign an event handler after the document loads. An example is below. However if you are serious
         about event mediation of we encourage you to check out <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a>.
         This is a full blown MVW framework which comes with a mediator map for your components (and much more). This
         allows you to build application mediators that are mapped to your custom tags. Mediators can do all sorts of
