@@ -21,6 +21,9 @@ export class File extends Lavender.Subject{
     private _name:string;
     private _fileObj:any;
     private _size:number;
+    private _id:number = Math.random();
+
+    public id:number = Math.random();
 
     constructor(){
         super();

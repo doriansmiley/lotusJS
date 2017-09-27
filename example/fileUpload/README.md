@@ -1,7 +1,7 @@
-lotusJS Sample Button Component
+lotusJS Sample File Upload Component
 =============
 
-This is an example of how to use the `Lotus.Button`.
+This is an example of how to use the `Lotus.FileCollectionView` which allows user to perform multiple file uploads.
 
 To run this example deploy the files to your webserver and launch `index.html`. Note this example depends on the node_modules and libs directory found in the root of the git repo. If you want to run this example stand alone run `npm install` then adjust the following lines of code to point to the local node_modules directory:
 

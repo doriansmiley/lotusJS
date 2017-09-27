@@ -3,6 +3,7 @@
  */
 import { AbstractCollectionView } from "./AbstractCollectionView";
 import { FileEvent } from "../control/events/FileEvent";
+import { AbstractItemView } from "./AbstractItemView";
 export declare class FileCollectionView extends AbstractCollectionView {
     constructor();
     private _fileInput;
@@ -11,6 +12,9 @@ export declare class FileCollectionView extends AbstractCollectionView {
     selectBtn: HTMLButtonElement;
     protected getUploadEvent(file: any): FileEvent;
     protected uploadFiles(files: FileList): void;
+    protected addViewEventListeners(view: AbstractItemView): void;
+    protected removeViewEventListeners(view: AbstractItemView): void;
+    onRemoveAbortFile(event: FileEvent): void;
     defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
     onFileInputChange(event: Event): void;

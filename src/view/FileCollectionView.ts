@@ -5,6 +5,7 @@ import {AbstractCollectionView} from "./AbstractCollectionView";
 import {File} from "./FileView";
 import {SkinPart} from "./SkinPart";
 import {FileEvent} from "../control/events/FileEvent";
+import {AbstractItemView} from "./AbstractItemView";
 
 export class FileCollectionView extends AbstractCollectionView{
 
@@ -47,9 +48,28 @@ export class FileCollectionView extends AbstractCollectionView{
             file.size = files[i].size;
             file.fileObj = files[i];
             file.thumbnail = window.URL.createObjectURL(files[i]);
+            //add the item to the collection
+            this.collection.addItem(file);
             //dispatch event to load the file
             this.dispatch(this.getUploadEvent(file));
         }
+    }
+
+    protected addViewEventListeners(view:AbstractItemView):void{
+        super.addViewEventListeners(view);
+        view.addEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile')
+        view.addEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile')
+    }
+
+    protected removeViewEventListeners(view:AbstractItemView):void{
+        super.removeViewEventListeners(view);
+        view.removeEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile')
+        view.removeEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile')
+    }
+
+    public onRemoveAbortFile(event:FileEvent):void{
+        this.dispatch(event);
+        this.removeChildViewFromModel(event.payload['file']);
     }
 
     public defineSkinParts():void{
