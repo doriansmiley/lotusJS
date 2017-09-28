@@ -33,3 +33,4 @@ export * from './view/ListCollectionView';
 export * from './view/RadioCollectionView';
 export * from './view/FileView';
 export * from './view/FileCollectionView';
+export * from './view/DragDropFileCollectionView';

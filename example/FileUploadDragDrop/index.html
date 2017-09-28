@@ -12,8 +12,8 @@
     <script language="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-upload', HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-upload2', HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);
             return context;
         }(xtag));
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -67,7 +67,7 @@
 </head>
 <body>
 
-<h3 class="page-header">Lotus Web Components FileCollectionView Control</h3>
+<h3 class="page-header">Lotus Web Components DragDropFileCollectionView Control</h3>
 <div class="content-panel">
     <h3>HTML Input File</h3>
     <p>
@@ -79,10 +79,10 @@
 <div class="content-panel">
     <h3>Lotus Input File</h3>
     <p>
-        Here's an example of lotus FileCollectionView component. The <code >x-lotus-upload</code> tag
+        Here's an example of lotus DragDropFileCollectionView component. The <code >x-lotus-upload</code> tag
         extends the <code >div</code>
         tag. Our <code >x-lotus-upload</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-upload',
-        HTMLDivElement.prototype, Lotus.FileCollectionView, xtag);</code>.A new instance of <code >Lotus.FileCollectionView</code>
+        HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);</code>.A new instance of <code >Lotus.DragDropFileCollectionView</code>
         is attached to each tag instance. Open your console to observe the file upload callbacks. In order to upload files your callbacks should trigger upload behaviors
         and update the files load status. See the commnets in the code example at the bottom of this page for psuedo code.
     </p>
@@ -129,8 +129,8 @@
 		<code class="JavaScript">
             var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-upload', HTMLSelectElement.prototype, Lotus.FileCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-upload2', HTMLSelectElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', HTMLSelectElement.prototype, Lotus.DragDropFileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', HTMLSelectElement.prototype, Lotus.DragDropFileCollectionView, xtag);
             return context;
         }(xtag));
         //the following is an example of how you can mediate the component events that are dispatched.
