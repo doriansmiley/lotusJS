@@ -1,0 +1,65 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        input[type="radio"] + label span {
+            display:inline-block;
+            width:19px;
+            height:19px;
+            margin:-2px 10px 0 0;
+            vertical-align:middle;
+            background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/check_radio_sheet.png) -38px top no-repeat;
+            cursor:pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/check_radio_sheet.png) -57px top no-repeat;
+        }
+
+        label {
+            font-family: 'SegoeUI';
+            font-size:14px;
+        }
+
+        input[type=radio]:checked {
+            border: 5px solid #000000;
+        }
+
+        input[type=radio]:checked::before{
+            background: #000000;
+        }
+
+        input[type=radio]:checked ~ label{
+            color: #1012ff;
+        }
+        
+    </style>
+    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+        <div data-skin-part="itemTemplate">
+            <input type="radio" data-skin-part="radio"/>
+            <label data-skin-part="label"></label>
+        </div>
+    </fieldset>
+</template>

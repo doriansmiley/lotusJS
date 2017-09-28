@@ -1,17 +1,30 @@
 lotusJS
 =============
 
-LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.
+LotusJS is a framework based on xTag and lavenderJS for developing HTML5 applications using web components.
 
 # A web component framework that separates presentation from code!
 
+- [Another Framework! Why should I care](#why-should-i-care)
+- [Is anybody using this?](#is-anybody-using-this)
 - [npm Package Manager](#npm-package-manager)
 - [Typescript Source](#typescript-source)
-- [Web Component View](#web-component-view)
+- [Skinable Web Components](#skinable-web-components)
 - [Data Binding](#data-binding)
-- [Sand Boxed Context](#sand-boxed-context)
 - [Examples](#examples)
-- [MVW Framework Extension](#mvw-framework)
+- [MVW Framework Compatible](#mvw-framework)
+
+# Why should I care
+
+LotusJS allows you to put your design and programming teams on completely independent tracks. You can even have programming and design teams from different organizations working on the same component in parallel. At Silicon Publishing we have been using lotusJS to successfully offload component skins to our client's in house design teams. This has saved countless developer hours, and made it easier for our clients to get the exact look and feel they want.
+
+Another reason to love lotusJS is that it delivers the good of HTML imports without the bad. Component skins are external HTML template files. This means designers are free to work with static HTML in their native tools without any dependency on the framework itself. However all javascript code are ES modules managed though npm. This avoids many of the problems related to tree shaking and other issues when component code is imported through HTML imports.
+
+And finally you should care about LotusJS because it will make it easy for you to make your own web components and distribute them. In short if you build a killer component you can sell it, have designers all over the world create skins for it, and hopefully make you a bunch of money!
+
+# Is anybody using this
+
+Yes! Silicon Publishing has been using the LotusJS component model for years in its HTML5 Silicon Designer product (similar to Canva). Companies like Printing.com, AmazingMail, Jackprints, and St. Jude have been using LotusJS with a worldwide user base and are realizing the benefits of a decoupled component skins. You should too!
 
 # npm Package Manager
 
@@ -19,15 +32,28 @@ The lotus module is distributed through npm and can be added to your project usi
 
 # Typescript Source
 
-The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
+The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well.
 
-# Web Component View
+# Skinable Web Components
 
-Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, and more. Further, views can be mediated to provide application level event mediation, data binding, and virtually any other behavior that is specific to the surrounding application.
+Lotus uses a web component map based on xTag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
+Lotus ships with the following built in web components and skins:
 
-You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
+- Button
+- Input (supports all HTML input types such as text, radio, checkbox, etc)
+- Radio Group
+- Select List
+- Image Gallery
+- File Upload
+- Drag and Drop File Upload
+- Data Driven Form
 
-To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
+You can use the built in Lotus components or create your own custom components.
+To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass.
+Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
+
+To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional),
+and the constructor function of your view component. For example:
 ````
 var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
@@ -85,7 +111,7 @@ You can also pass attribute values to your components at runtime using the speci
 ````
 In this example `data-attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
 
-For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [examples](https://github.com/doriansmiley/lotusJS/tree/dev/example).
 
 #### Collection and Item views
 
@@ -171,13 +197,12 @@ You can also nest web components within component skins. For example:
 ````
 In this example the `x-lotus-gallery-detail` component is passed as a skin part, and the `x-lotus-page-number` component is nested stand alone. Once these tags are added to the DOM they will be mapped to a component instance just like any other.
 
-For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp).
+For a working example of this component example see our [sample application](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp) which is part of lotusJS-MWV.
+To see examples of other collection components see our [examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example).
 
 # Data Binding
 
-Lotus incorporates Lavender's data binding utilities into it's mediator base class `Lotus.AbstractMediator`. While you are free to implement data binding in any layer of your application, you are encouraged to encapsulate data binding in your mediators. This ensures your web components remain properly encapsulated and reusable, and delegates data binding operations to a single layer within your application.
-
-In order to notify observers of changes you must define the bindable end point. For example:
+Lotus incorporates Lavender's data binding utilities to define bindable end points in your objects, and to set up data bindings. Before you can bind to a property of an object you have to make sure your object extends `Lavender.Subject` somehwere is its inheritance chain, and you must make sure to call the object's `notify` method when changes occur. For example:
 ````
 Lavender.RecordSet = function (timeToLive, listFunction) {
     //Define private vars
@@ -203,9 +228,9 @@ Lavender.RecordSet = function (timeToLive, listFunction) {
 /************* Inherit from Lotus.AbstractComponent for data binding *************/
 Lavender.ObjectUtils.extend(Lavender.Subject, Lavender.RecordSet);
 ````
-In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `Notify`. Lavender's binding utilities are an implementation of the Observer pattern, and the call to `Notify` handles notification for all registered observers. 
+In this example `Lavender.RecordSet` defines the bindable end point `pageList` inside the call to `addProperties`. The `addProperties` method is defined in the Lavender's binding utilities and incorporated through `Lavender.RecordSet` extension of `Lavender.Subject`. Notice the call to `notify`. Lavender's binding utilities are an implementation of the Observer pattern, and the call to `notify` handles notification for all registered observers.
 
-IMPORTANT: `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
+IMPORTANT: `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
 Once you define a bindable end point you can bind to it. For example in `SampleApp.ImageGalleryItemDetailMediator.prototype.init` the record set's `pageList` property is bound to the `onPageListChange` of the mediator"
 ````
@@ -222,26 +247,23 @@ SampleApp.ImageGalleryItemDetailMediator.prototype.onPageListChange = function (
 ````
 You do not have to create the instance assigned to `this.binder`. It is instantiated in the `Lotus.AbstractMediator` constructor.
 
-IMPORTANT: You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects. Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.AbstractMediator`, `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
+IMPORTANT: You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects. Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject` and they must create bindable end points in calls to `this.addProperties` in the object's constructor. `Lotus.SkinPart` and `Lotus.AbstractComponent` already extend `Lavender.Subject`.
 
 If you want to create an instance of `Lavender.Binder` for use elsewhere in your application simply call `myVar = new Lavender.Binder();`.
-
-# Sand Boxed Context
-
-All application services are sand boxed to the application's context. This allows for distributing your applications as  reusable modules. Simply minify your application, include it in your project, and instantiate the context.
-
-TODO: module example
 
 # Light Weight
 
 Lotus is only 6497 bytes when gzipped, and Lavander is only 10363 bytes when gzipped. That's a lot of power in a small package.
 
 # Examples
-For an example of how easy it is to start building custom components using LotusJS see our [sample button under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For an example of how easy it is to start building custom components using LotusJS see our [examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example).
+There are numerous examples of the core components complete with documentation and code samples.
 
 # MVW Framework
 
-The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, dependency injection, inversion of control, decorators, and more. If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://github.com/doriansmiley/lotusJS-MWV/tree/master/).
+The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, view mediation, dependency injection, decorators, and more.
+If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://www.npmjs.com/package/lotusjs-mvw).
+Or use your favorite framework of choice and drop in custom elements powered by LotusJS!
 
 
 # Create custom components built on Lotus and offer them through the component exchange

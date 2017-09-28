@@ -1,0 +1,46 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+
+
+        input[type=radio]:checked{
+            border: 5px solid #1e5799;
+        }
+
+        input[type=radio]:checked::before{
+            background: #1e5799;
+        }
+
+        input[type=radio]:checked ~ label{
+            color: #ffffff;
+        }
+    </style>
+    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+        <div data-skin-part="itemTemplate">
+            <input type="radio" data-skin-part="radio"/>
+            <label data-skin-part="label"></label>
+        </div>
+    </fieldset>
+</template>

@@ -9,5 +9,6 @@ describe('ItemViewEventTest ', function () {
     it('check ComponentEvent function and values', function () {
         var layoutEvent = new Lotus.ComponentEvent(Lotus.ComponentEvent.READY);
         expect( layoutEvent.type ).toBe(Lotus.ComponentEvent.READY);
+        expect( layoutEvent.clone(layoutEvent.type, layoutEvent.payload).type ).toBe(Lotus.ComponentEvent.READY);
     });
 });

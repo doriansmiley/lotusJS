@@ -143,7 +143,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
 
     public onReady():void{
         this.ready = true;
-        this.dispatch(new ComponentEvent(ComponentEvent.READY));
+        this.dispatch(new ComponentEvent(ComponentEvent.READY, {target:this}));
     }
 
     public getComponentInstance():IComponent{

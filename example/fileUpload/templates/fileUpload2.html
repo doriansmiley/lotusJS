@@ -1,0 +1,197 @@
+<template>
+	<style>
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeui.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuib.ttf') format('truetype');
+
+			font-weight: 500;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuii.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: italic;
+		}
+
+
+		button{
+			cursor:pointer;
+			color:#fff;
+			width:190px;
+			height:50px;
+			box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
+			border: 1px solid #000000;
+
+			padding:10px;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+44,1e5799+89,1f6b8e+100 */
+			background: #fc000e; /* Old browsers */
+			background: -moz-linear-gradient(top, #fc000e 0%, #81000e 44%, #333333 89%, #000000 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #fc000e 0%, #81000e 44%, #333333 89%, #000000 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #fc000e 0%, #81000e 44%, #333333 89%, #000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
+		}
+
+		button * {
+			cursor:pointer;
+		}
+
+		button:focus {
+			outline: none;
+		}
+
+		button:hover {
+			border:1px solid #f00;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
+			background: #f9c67a; /* Old browsers */
+			background: -moz-linear-gradient(top, #f9c67a 1%, #fc7e1e 49%, #f9af02 87%, #ffcc68 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
+		}
+
+		button:hover label {
+			color:#b71a00;
+			text-shadow: 0px 0px 6px rgba(255, 189, 104, 1);
+		}
+
+		button label {
+			font-family: 'SegoeUI';
+			text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
+			font-size:14px;
+		}
+		.thumbnailContainer {
+			width: 85px;
+			height: 85px;
+			max-height: 85px;
+			max-width: 85px;
+		}
+		div[class=thumbnailContainer] img{
+			width: 100%;
+			height: auto;
+		}
+		.fileInfo {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: column;
+			flex-flow: column;
+			flex-direction: column;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start;
+			-webkit-align-items: flex-start;
+			align-items: flex-start;
+			width: 100%;
+			padding: 10px;
+		}
+		div[data-skin-part=itemTemplate] {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start;
+			-webkit-align-items: flex-start;
+			align-items: flex-start;
+			width: 100%;
+			padding: 10px;
+		}
+
+		label[data-skin-part=fileTypeLabel]{
+			color: #000;
+			margin: 5px;
+		}
+
+		button[data-skin-part=cancelBtn]{
+			margin: 5px;
+		}
+
+		label[data-skin-part=fileLabel]{
+			font-size: 12px;
+			font-weight: bold;
+			margin: 5px;
+		}
+		.noScrolling {
+			overflow: hidden;
+		}
+		.progressBar {
+			width: 100%;
+			background: #f2f2f2;
+			background: -moz-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -webkit-gradient(linear,left top,left bottom,color-stop(0%, #f2f2f2),color-stop(100%, #b5b5b5));
+			background: -webkit-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -o-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -ms-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: linear-gradient(to bottom,#f2f2f2 0%,#b5b5b5 100%);
+		}
+		div[data-skin-part=progressBar]{
+			min-width: 10px;
+			width: 10px;
+			height: 10px;
+			background: #fc000e;
+			background: -moz-linear-gradient(top, #fc000e 0%, #000000 100%);
+			background: -webkit-gradient(linear,left top,left bottom,color-stop(0%, #fc000e),color-stop(100%, #000000));
+			background: -webkit-linear-gradient(top, #fc000e 0%,#000000 100%);
+			background: -o-linear-gradient(top, #fc000e 0%,#000000 100%);
+			background: -ms-linear-gradient(top, #fc000e 0%,#000000 100%);
+			background: linear-gradient(to bottom, #fc000e 0%,#000000 100%);
+		}
+	</style>
+	<div data-attribute-item-view="Lotus.FileView">
+		<input type="file" multiple accept="image/*" style="display:none" data-skin-part="fileInput"/>
+		<!-- selectBtn can be any element that dispatches a click event-->
+
+		<!-- Upload file button -->
+		<button data-skin-part="selectBtn" id="replaceImageButton" style="width:100%;">
+			<label >Upload Photos</label>
+		</button>
+
+		<div data-skin-part="collectionContainer">
+
+			<!-- Itemrenderer skin -->
+			<div data-skin-part="itemTemplate">
+
+				<!-- Thumbnail -->
+				<div class="thumbnailContainer" >
+					<img data-skin-part="thumbnail"/>
+				</div>
+
+				<!-- Filename and type -->
+				<div class="fileInfo">
+					<label data-skin-part="fileLabel" class="noScrolling" >File Label</label>
+					<label data-skin-part="fileTypeLabel">File Type</label>
+
+					<!-- Progress Bar -->
+					<div class="progressBar">
+						<div data-skin-part="progressBar"></div>
+					</div>
+
+					<!-- Cancel/Clear Buttons -->
+					<div >
+						<button data-skin-part="cancelBtn">Cancel</button>
+						<button data-skin-part="clearBtn">Clear</button>
+					</div>
+
+					<!-- Status Indicators, add images or svg content as needed -->
+					<div data-skin-part="statusIndicator">
+						<img data-skin-part="loadIndicator"/>
+						<img data-skin-part="errorIndicator"/>
+						<img data-skin-part="progressIndicator"/>
+						<img data-skin-part="pendingIndicator"/>
+						<img data-skin-part="abortIndicator"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -34,6 +34,13 @@ export class ComponentMap implements IComponentMap{
         //create a shadow host from the tag instance and append the clone to it
         let host:Element = tagInstance.createShadowRoot();
         host.appendChild(clone);
+        //transfer data-attribute instance onto the component
+        for( let i=0; i < tagInstance.attributes.length; i++ ){
+            let attribute = tagInstance.attributes[i];
+            if( attribute.name.indexOf('attribute') >= 0 ){
+                component.setAttribute(attribute.name, attribute.value)
+            }
+        }
         //pass along the root component node to the view component
         this.createComponent(component);
         //Scope styles to the tag. This appends the tag's nodeName to all styles to simulate DOM encapsulation, however it will not shield the shadowDOM from selectors in the lightDOM. This is not possible with pollyfills at this time.

@@ -1,6 +1,6 @@
 {
   "name": "lotusjs-components",
-  "version": "1.3.0",
+  "version": "1.3.10",
   "description": "LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.",
   "main": "lib/index.js",
   "directories": {
@@ -20,6 +20,8 @@
   },
   "keywords": [
     "TypeScript",
+    "lotus",
+    "lotusJS",
     "web components",
     "Microsoft",
     "Framework",
@@ -36,7 +38,6 @@
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
     "lavenderjs": "^1.0.15",
-    "reflect-metadata": "^0.1.10",
     "x-tag": "^1.5.11"
   },
   "devDependencies": {
