@@ -12,7 +12,7 @@ LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Web Component View](#web-component-view)
 - [Data Binding](#data-binding)
 - [Examples](#examples)
-- [MVW Framework Extension](#mvw-framework)
+- [MVW Framework Compatible](#mvw-framework)
 
 # Why should I care
 
@@ -246,7 +246,9 @@ For an example of how easy it is to start building custom components using Lotus
 
 # MVW Framework
 
-The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, view mediation, dependency injection, decorators, and more. If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://www.npmjs.com/package/lotusjs-mvw).
+The Lotus team has also created a complete MVW (Model View Whatever) framework that includes command mapping, view mediation, dependency injection, decorators, and more.
+If you want to build more than just reusable web components with Lotus check it out at [LotusJS-MVW](https://www.npmjs.com/package/lotusjs-mvw).
+Or use your favorite framework of choice and drop in custom elements powered by LotusJS!
 
 
 # Create custom components built on Lotus and offer them through the component exchange
