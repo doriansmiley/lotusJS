@@ -12,8 +12,8 @@
     <script language="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-upload', HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-upload2', HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', Lotus.LotusHTMLElement.prototype, Lotus.DragDropFileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', Lotus.LotusHTMLElement.prototype, Lotus.DragDropFileCollectionView, xtag);
             return context;
         }(xtag));
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -82,7 +82,7 @@
         Here's an example of lotus DragDropFileCollectionView component. The <code >x-lotus-upload</code> tag
         extends the <code >div</code>
         tag. Our <code >x-lotus-upload</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-upload',
-        HTMLDivElement.prototype, Lotus.DragDropFileCollectionView, xtag);</code>.A new instance of <code >Lotus.DragDropFileCollectionView</code>
+        Lotus.LotusHTMLElement.prototype, Lotus.DragDropFileCollectionView, xtag);</code>.A new instance of <code >Lotus.DragDropFileCollectionView</code>
         is attached to each tag instance. Open your console to observe the file upload callbacks. In order to upload files your callbacks should trigger upload behaviors
         and update the files load status. See the commnets in the code example at the bottom of this page for psuedo code.
     </p>
@@ -94,10 +94,9 @@
 <div class="content-panel">
     <h3>Dynamically Change Skin</h3>
     <p>
-        Changing the appearance of any component instance is as simple as attaching a different skin.
-        Below is the exact same tag with a different skin attached.
-        All using the same set of selectors encapsulated with Shadow DOM. Imagine how many skins could be created
-        without a single change to the component code.
+        Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/fileUpload2.html"</code>. Below is the
+        exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
+        with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
     <x-lotus-upload data-template-url="templates/fileUpload2.html"
                     data-component-root="[data-attribute-item-view='Lotus.FileView']"
@@ -116,7 +115,7 @@
 </div>
 
 <div class="content-panel">
-    <h3>Adding Callbacks</h3>
+    <h3>Mediating Components</h3>
     <p>
         The <code class="JavaScript">x-lotus-upload</code> the following events: `Lotus.FileEvent.UPLOAD_FILE, Lotus.FileEvent.ABORT_FILE_UPLOAD`.
         In order to listen for those events you have to assign an event handler after the document loads. An example is below. However if you are serious

@@ -12,9 +12,9 @@
     <script language="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-gallery-detail', HTMLDivElement.prototype, Lotus.ImageGalleryItemDetail, xtag);
-            context.componentMap.mapComponent('x-lotus-image-gallery2', HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-image-gallery', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-gallery-detail', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryItemDetail, xtag);
+            context.componentMap.mapComponent('x-lotus-image-gallery2', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
             return context;
         }(xtag));
         //Set up the sample data for the image gallery. Normally this would be loaded from a service.
@@ -100,7 +100,7 @@
     <p>
         Here's an example of lotus ImageGalleryCollectionView component. The <code class="JavaScript">x-lotus-image-gallery</code> tag extends the <code>div</code>
         tag. Our <code>x-lotus-image-gallery</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-image-gallery',
-        HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);</code>.A new instance of <code >Lotus.ImageGalleryCollectionView</code>
+        Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryCollectionView, xtag);</code>.A new instance of <code >Lotus.ImageGalleryCollectionView</code>
         is attached to each tag instance. The component implements pagination by extending <code>Lotus.AbstractRecordSetCollectionView</code>.
         This component is designed to work with <code>Lavender.RecordSet</code> object and can have data lazy loaded into it's result set as results are fetched from a service.
         The <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a> sample application includes a mock service and functional example of lazy loading data to support pagination.
@@ -111,10 +111,9 @@
 <div class="content-panel">
     <h3>Dynamically Change Skin</h3>
     <p>
-        Changing the appearance of any component instance is as simple as attaching a different skin.
-        Below is the exact same tag with a different skin attached.
-        All using the same set of selectors encapsulated with Shadow DOM. Imagine how many skins could be created
-        without a single change to the component code.
+        Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/imageGallery2.html"</code>. Below is the
+        exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
+        with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
     <x-lotus-image-gallery data-template-url="templates/imageGallery2.html" data-component-root='[data-source="sampleAPI"]'></x-lotus-image-gallery>
 </div>
@@ -129,7 +128,7 @@
 </div>
 
 <div class="content-panel">
-    <h3>Adding Callbacks</h3>
+    <h3>Mediating Components</h3>
     <p>
         The <code class="JavaScript">x-lotus-image-gallery</code> tag exposes a single change event by default. In order to listen for that event
         you have to assign an event handler after the document loads. An example is below. However if you are serious
@@ -142,9 +141,9 @@
 		<code class="JavaScript">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-image-gallery', HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
-            context.componentMap.mapComponent('x-lotus-gallery-detail', HTMLDivElement.prototype, Lotus.ImageGalleryItemDetail, xtag);
-            context.componentMap.mapComponent('x-lotus-image-gallery2', HTMLDivElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-image-gallery', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-gallery-detail', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryItemDetail, xtag);
+            context.componentMap.mapComponent('x-lotus-image-gallery2', Lotus.LotusHTMLElement.prototype, Lotus.ImageGalleryCollectionView, xtag);
             return context;
         }(xtag));
         //Set up the sample data for the image gallery. Normally this would be loaded from a service.

@@ -12,9 +12,9 @@
     <script language="JavaScript">
         var context = (function( xtag ){
             var context = new Lotus.Context(new Lavender.Config);
-            context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button, xtag);
-            context.componentMap.mapComponent('x-lotus-button2', HTMLButtonElement.prototype, Lotus.Button, xtag);
-            context.componentMap.mapComponent('x-lotus-button3', HTMLButtonElement.prototype, Lotus.Button, xtag);
+            context.componentMap.mapComponent('x-lotus-button', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
+            context.componentMap.mapComponent('x-lotus-button2', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
+            context.componentMap.mapComponent('x-lotus-button3', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
             return context;
         }( xtag ));
 		//the following is an example of how you can mediate the component events that are dispatched.
@@ -86,7 +86,7 @@
 </div>
 
 <div class="content-panel">
-	<h3>Adding Callbacks</h3>
+	<h3>Mediating Components</h3>
 	<p>
 		The <code>x-lotus-button</code> tags exposes a single click event by default. In order to listen for that event you have to assign an event handler after the document loads.
 		An example is below. However if you are serious about event mediation of we encourage you to check out <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a>.

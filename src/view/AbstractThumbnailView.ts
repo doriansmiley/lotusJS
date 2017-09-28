@@ -89,7 +89,10 @@ export class AbstractThumbnailView extends AbstractItemView{
 
     }
 
-    protected getImageURL():string{
+    protected getImageURL(model?:Object):string{
+        if(model){
+            return model['thumbUrl'];
+        }
         return this.model['thumbUrl'];
     }
 
@@ -104,6 +107,24 @@ export class AbstractThumbnailView extends AbstractItemView{
             returnObj = {width:parseInt(this.thumbWidth), height:parseInt(this.thumbHeight)} as Lavender.widthHeightObject;
         }
         return returnObj;
+    }
+
+    protected onImageLoad(event:Event):void{
+        if(!this.thumbnail){
+            return;
+        }
+        this.thumbnail.onload = null;
+        this.setElementDisplay(this.thumbnail, this._thumbnailDisplay);
+        this.sizeImage();
+    }
+
+    protected setThumbnailSrc(src:string):void{
+        if(!this.thumbnail){
+            return
+        }
+        this.thumbnail.onload = this.onImageLoad.bind(this);
+        this.setElementDisplay(this.thumbnail, 'none');
+        this.thumbnail['src'] = src;
     }
 
     public addEventListeners():void{
@@ -132,21 +153,19 @@ export class AbstractThumbnailView extends AbstractItemView{
         this.skinParts.addItem(new SkinPart('thumbnailContainer', this, 'thumbnailContainer'));
     }
 
+    public onModelChange(model:Object):void{
+        if(model){
+            this.setThumbnailSrc(this.getImageURL(model));
+        }
+    }
+
     public onSkinPartAdded(part:string, element:HTMLElement):void{
         super.onSkinPartAdded(part, element);
         switch( part ){
             case 'thumbnail':
+                this.binder.bind(this, 'model', this, 'onModelChange');
                 this._thumbnailDisplay = this.thumbnail.style.display;
-                this.thumbnail.onload = function(event){
-                    if(!this.thumbnail){
-                        return;
-                    }
-                    this.thumbnail.onload = null;
-                    this.thumbnail.style.display = this._thumbnailDisplay;
-                    this.sizeImage();
-                }.bind(this);
-                this.thumbnail.style.display = 'none';
-                this.thumbnail['src'] = this.getImageURL();
+                this.setThumbnailSrc(this.getImageURL());
                 this.addEventListeners();
                 break;
             case 'thumbnailContainer':

@@ -2,11 +2,15 @@ import {IComponent} from "../view/IComponent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export class LotusHTMLElement extends HTMLElement{
+export class LotusHTMLElement extends HTMLDivElement{
     public lotusComponentInstance:IComponent;
 
+    constructor(){
+        super();
+    }
+
     public createShadowRoot():Element{
-        return null;
+        return super['createShadowRoot']();
     }
 
     public getComponentInstance():IComponent{

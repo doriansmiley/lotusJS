@@ -34,3 +34,4 @@ export * from './view/RadioCollectionView';
 export * from './view/FileView';
 export * from './view/FileCollectionView';
 export * from './view/DragDropFileCollectionView';
+export * from './view/Image';
