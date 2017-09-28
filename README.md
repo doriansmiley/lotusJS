@@ -197,7 +197,8 @@ You can also nest web components within component skins. For example:
 ````
 In this example the `x-lotus-gallery-detail` component is passed as a skin part, and the `x-lotus-page-number` component is nested stand alone. Once these tags are added to the DOM they will be mapped to a component instance just like any other.
 
-For a working of this component example see our [sample application](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp) which is part of lotusJS-MWV.
+For a working example of this component example see our [sample application](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp) which is part of lotusJS-MWV.
+To see examples of other collection components see our [examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example).
 
 # Data Binding
 
