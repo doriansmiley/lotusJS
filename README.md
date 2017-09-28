@@ -9,7 +9,7 @@ LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applic
 - [Is anybody using this?](#is-anybody-using-this)
 - [npm Package Manager](#npm-package-manager)
 - [Typescript Source](#typescript-source)
-- [External Web Component Skins](#external-web-component-skins)
+- [Skinable Web Components](#skinable-web-components)
 - [Data Binding](#data-binding)
 - [Examples](#examples)
 - [MVW Framework Compatible](#mvw-framework)
@@ -34,9 +34,10 @@ The lotus module is distributed through npm and can be added to your project usi
 
 The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
 
-# External Web Component Skins
+# Skinable Web Components
 
-Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more. Lotus ships with the following build in web components and skins:
+Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
+Lotus ships with the following build in web components and skins:
 
 - Button
 - Input (supports all HTML input types such as text, radio, checkbox, etc)
@@ -47,9 +48,12 @@ Lotus uses a web component map based on x-tag to allow you to create custom tags
 - Drag and Drop File Upload
 - Data Driven Form
 
-You can use the built in Lotus components or create your own custom components. To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass. Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
+You can use the built in Lotus components or create your own custom components.
+To create a custom component you extend `Lotus.AbstractComponent` or an existing subclass.
+Then override at a minimum the following methods: `defineSkinParts`, `onSkinPartAdded` and `destroy`.
 
-To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional), and the constructor function of your view component. For example:
+To map a component to a custom tag you simply create a context and call the `mapComponent` method passing your custom tag name, the prototype for the component (optional),
+and the constructor function of your view component. For example:
 ````
 var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
 context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
