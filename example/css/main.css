@@ -40,6 +40,8 @@ body {
     background: -webkit-linear-gradient(top, #5bb0d8 0%,#1e5799 18%,#1e5799 99%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, #5bb0d8 0%,#1e5799 18%,#1e5799 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+    background-repeat: no-repeat;
+    background-color: #1e5799;
 }
 
 .page-header {
