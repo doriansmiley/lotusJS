@@ -16,6 +16,38 @@
             context.componentMap.mapComponent('x-lotus-radio2', HTMLFieldSetElement.prototype, Lotus.RadioCollectionView, xtag);
             return context;
         }(xtag));
+        //define our handler to set up the component when it loads.
+        //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        var handler={
+            onReady:function(event){
+                handler.initComponent(event.payload.target);
+            },
+            initComponent:function(component){
+                var collection = new Lavender.ArrayList();
+                var group = Math.random();
+                collection.addItem({label: 'some label 1', value: 'some value 1',  name:group});
+                collection.addItem({label: 'some label 2', value: 'some value 2',  name:group});
+                collection.addItem({label: 'some label 3', value: 'some value 3',  name:group});
+                collection.addItem({label: 'some label 4', value: 'some value 4',  name:group, selected:true});
+                component.collection = collection;
+            },
+            onChange: function (event) {
+                console.log('My callback function received value: ' + event.payload.target.model.value);
+            },
+            addEventListeners:function (component) {
+                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
+                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
+                component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
+                //Do not set up data providers until the component is ready!
+                //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                if(!component.ready){
+                    component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                }else{
+                    handler.initComponent(component)
+                }
+            }
+        };
         //the following is an example of how you can mediate the component events that are dispatched.
         //Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
         //As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
@@ -23,34 +55,13 @@
         window.onload = function () {
             hljs.initHighlighting();
             var radioGroup = document.getElementsByTagName('x-lotus-radio');
-            var handler = {
-                onChange: function (event) {
-                    console.log('My callback function received value: ' + event.payload.target.model.value);
-                }
-            }
             for (var i = 0; i < radioGroup.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                radioGroup[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                var collection = new Lavender.ArrayList();
-                collection.addItem({label: 'some label 1', value: 'some value 1',  name:'testGroup'});
-                collection.addItem({label: 'some label 2', value: 'some value 2',  name:'testGroup'});
-                collection.addItem({label: 'some label 3', value: 'some value 3',  name:'testGroup'});
-                collection.addItem({label: 'some label 4', value: 'some value 4',  name:'testGroup', selected:true});
-                radioGroup[i].lotusComponentInstance.collection = collection;
+                handler.addEventListeners(radioGroup[i].lotusComponentInstance);
             }
             //set up work around for pollyfill issue with xTag core
             radioGroup = document.getElementsByTagName('x-lotus-radio2');
             for (var i = 0; i < radioGroup.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                radioGroup[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                var collection = new Lavender.ArrayList();
-                collection.addItem({label: 'some label 1', value: 'some value 1',  name:'testGroup'});
-                collection.addItem({label: 'some label 2', value: 'some value 2',  name:'testGroup'});
-                collection.addItem({label: 'some label 3', value: 'some value 3',  name:'testGroup'});
-                collection.addItem({label: 'some label 4', value: 'some value 4',  name:'testGroup', selected:true});
-                radioGroup[i].lotusComponentInstance.collection = collection;
+                handler.addEventListeners(radioGroup[i].lotusComponentInstance);
             }
         };
     </script>
@@ -114,12 +125,44 @@
         data binding within your surrounding application.
 		<pre>
 		<code class="JavaScript">
-var context = (function (xtag) {
+        var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-radio', HTMLFieldSetElement.prototype, Lotus.RadioCollectionView, xtag);
             context.componentMap.mapComponent('x-lotus-radio2', HTMLFieldSetElement.prototype, Lotus.RadioCollectionView, xtag);
             return context;
         }(xtag));
+        //define our handler to set up the component when it loads.
+        //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        var handler={
+            onReady:function(event){
+                handler.initComponent(event.payload.target);
+            },
+            initComponent:function(component){
+                var collection = new Lavender.ArrayList();
+                var group = Math.random();
+                collection.addItem({label: 'some label 1', value: 'some value 1',  name:group});
+                collection.addItem({label: 'some label 2', value: 'some value 2',  name:group});
+                collection.addItem({label: 'some label 3', value: 'some value 3',  name:group});
+                collection.addItem({label: 'some label 4', value: 'some value 4',  name:group, selected:true});
+                component.collection = collection;
+            },
+            onChange: function (event) {
+                console.log('My callback function received value: ' + event.payload.target.model.value);
+            },
+            addEventListeners:function (component) {
+                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
+                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
+                component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
+                //Do not set up data providers until the component is ready!
+                //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                if(!component.ready){
+                    component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                }else{
+                    handler.initComponent(component)
+                }
+            }
+        };
         //the following is an example of how you can mediate the component events that are dispatched.
         //Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
         //As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
@@ -127,34 +170,13 @@ var context = (function (xtag) {
         window.onload = function () {
             hljs.initHighlighting();
             var radioGroup = document.getElementsByTagName('x-lotus-radio');
-            var handler = {
-                onChange: function (event) {
-                    console.log('My callback function received value: ' + event.payload.target.value);
-                }
-            }
             for (var i = 0; i < radioGroup.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                radioGroup[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                var collection = new Lavender.ArrayList();
-                collection.addItem({label: 'some label 1', value: 'some value 1',  name:'testGroup'});
-                collection.addItem({label: 'some label 2', value: 'some value 2',  name:'testGroup'});
-                collection.addItem({label: 'some label 3', value: 'some value 3',  name:'testGroup'});
-                collection.addItem({label: 'some label 4', value: 'some value 4',  name:'testGroup', selected:true});
-                radioGroup[i].lotusComponentInstance.collection = collection;
+                handler.addEventListeners(radioGroup[i].lotusComponentInstance);
             }
             //set up work around for pollyfill issue with xTag core
             radioGroup = document.getElementsByTagName('x-lotus-radio2');
             for (var i = 0; i < radioGroup.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                radioGroup[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                var collection = new Lavender.ArrayList();
-                collection.addItem({label: 'some label 1', value: 'some value 1',  name:'testGroup'});
-                collection.addItem({label: 'some label 2', value: 'some value 2',  name:'testGroup'});
-                collection.addItem({label: 'some label 3', value: 'some value 3',  name:'testGroup'});
-                collection.addItem({label: 'some label 4', value: 'some value 4',  name:'testGroup', selected:true});
-                radioGroup[i].lotusComponentInstance.collection = collection;
+                handler.addEventListeners(radioGroup[i].lotusComponentInstance);
             }
         };
 		</code>

@@ -18,7 +18,7 @@ LotusJS is a framework based on xTag and lavenderJS for developing HTML5 applica
 
 LotusJS allows you to put your design and programming teams on completely independent tracks. You can even have programming and design teams from different organizations working on the same component in parallel. At Silicon Publishing we have been using lotusJS to successfully offload component skins to our client's in house design teams. This has saved countless developer hours, and made it easier for our clients to get the exact look and feel they want.
 
-Another reason to love lotusJS is that is delivers the good of HTML imports without the bad. Component skins are external HTML template files. This means designers are free to work with static HTML in their native tools without any dependency on the framework itself. However all javascript code are ES modules managed though npm. This avoids many of the problems related to tree shaking and other issues when component code is imported through HTML imports.
+Another reason to love lotusJS is that it delivers the good of HTML imports without the bad. Component skins are external HTML template files. This means designers are free to work with static HTML in their native tools without any dependency on the framework itself. However all javascript code are ES modules managed though npm. This avoids many of the problems related to tree shaking and other issues when component code is imported through HTML imports.
 
 And finally you should care about LotusJS because it will make it easy for you to make your own web components and distribute them. In short if you build a killer component you can sell it, have designers all over the world create skins for it, and hopefully make you a bunch of money!
 
@@ -32,12 +32,12 @@ The lotus module is distributed through npm and can be added to your project usi
 
 # Typescript Source
 
-The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well. Sample application coming soon!
+The lotus core is built using Typescript which enables us to fully implement common OOP patterns and controls within our codebase. You can also use lotus as a typescript module if you are already working in Typescript as well.
 
 # Skinable Web Components
 
 Lotus uses a web component map based on xTag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
-Lotus ships with the following build in web components and skins:
+Lotus ships with the following built in web components and skins:
 
 - Button
 - Input (supports all HTML input types such as text, radio, checkbox, etc)

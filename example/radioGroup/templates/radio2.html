@@ -42,6 +42,18 @@
             font-family: 'SegoeUI';
             font-size:14px;
         }
+
+        input[type=radio]:checked {
+            border: 5px solid #000000;
+        }
+
+        input[type=radio]:checked::before{
+            background: #000000;
+        }
+
+        input[type=radio]:checked ~ label{
+            color: #1012ff;
+        }
         
     </style>
     <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
