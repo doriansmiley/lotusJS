@@ -1,7 +1,7 @@
 lotusJS
 =============
 
-LotusJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.
+LotusJS is a framework based on xTag and lavenderJS for developing HTML5 applications using web components.
 
 # A web component framework that separates presentation from code!
 
@@ -36,7 +36,7 @@ The lotus core is built using Typescript which enables us to fully implement com
 
 # Skinable Web Components
 
-Lotus uses a web component map based on x-tag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
+Lotus uses a web component map based on xTag to allow you to create custom tags that encapsulate abstract functionality such as data grids, lists, buttons, image galleries, video players, and more.
 Lotus ships with the following build in web components and skins:
 
 - Button
@@ -111,7 +111,7 @@ You can also pass attribute values to your components at runtime using the speci
 ````
 In this example `data-attribute-type` will be evaluated as `myButtonInstance.type = navButton` where `myButtonInstance` is an instance of `Lotus.Button`.
 
-For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [button example](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For a complete example that demonstrates the power and flexibility of the Lotus component map and skins see our [examples](https://github.com/doriansmiley/lotusJS/tree/dev/example).
 
 #### Collection and Item views
 
@@ -197,7 +197,7 @@ You can also nest web components within component skins. For example:
 ````
 In this example the `x-lotus-gallery-detail` component is passed as a skin part, and the `x-lotus-page-number` component is nested stand alone. Once these tags are added to the DOM they will be mapped to a component instance just like any other.
 
-For a complete example see our [sample application under the examples directory](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp).
+For a working of this component example see our [sample application](https://github.com/doriansmiley/lotusJS-MWV/tree/master/example/sampleApp) which is part of lotusJS-MWV.
 
 # Data Binding
 
@@ -255,7 +255,8 @@ If you want to create an instance of `Lavender.Binder` for use elsewhere in your
 Lotus is only 6497 bytes when gzipped, and Lavander is only 10363 bytes when gzipped. That's a lot of power in a small package.
 
 # Examples
-For an example of how easy it is to start building custom components using LotusJS see our [sample button under the examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example/button).
+For an example of how easy it is to start building custom components using LotusJS see our [examples directory](https://github.com/doriansmiley/lotusJS/tree/dev/example).
+There are numerous examples of the core components complete with documentation and code samples.
 
 # MVW Framework
 
