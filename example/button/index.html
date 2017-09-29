@@ -14,16 +14,13 @@
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-button', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
             context.componentMap.mapComponent('x-lotus-button2', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
-            context.componentMap.mapComponent('x-lotus-button3', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
             return context;
         }( xtag ));
 		//the following is an example of how you can mediate the component events that are dispatched.
-		//Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
-		//As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
 		//A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
 		window.onload = function() {
 			hljs.initHighlighting();
-			var list = document.getElementsByTagName('x-lotus-button2');
+			var list = document.getElementsByTagName('x-lotus-button');
 			var handler = {
 				onChange:function(event){
 					console.log('My callback function received event type ' + event.type);
@@ -42,47 +39,44 @@
 <h3 class="page-header">Lotus Web Components Button Control</h3>
 
 <div class="content-panel">
-	<h3>HTML Buttom</h3>
+	<h3>HTML Button</h3>
 	<p>
-		This is an example of inline tags. Not a lot of value here unless you just want custom tag functionality without the DOM encapsulation of shadowRoot
+		This is an example of and HTML button. Blah!: <button><label>Call</label></button>
 	</p>
-	<x-lotus-button >
-		<button data-skin-part="button"><label>testButton</label></button>
-	</x-lotus-button>
 </div>
 
 
 <div class="content-panel">
-	<h3>Lotus Buttom</h3>
+	<h3>Lotus Button</h3>
 	<p>
-		This is an example of loading the component from an external template file. The contents will be appended to the DOM by creating a shadowRoot.
-		The data-component-root attribute is any valid selector that points to the root element of the component. This element is passed along to the controller
-		tags can define attributes used by the component at runtime. Use the data-attribute- prefix to define attributes
-		IMPORTANT: the prefix is removed and dashes will be replace with camel case to evaluate the attribute value
-		so data-attribute-my-data-attribute-value will become myAttributeValue and evaluated as such using hasOwnProperty
-		By passing these the data-template-url, data-component-root, and attributes in the tag instance you can effectively completely change you layout while reusing the same controller
+		Here's an example of a Lotus Button component. The <code >x-lotus-button</code> tag
+		extends the <code >Lotus.LotusHTMLElement</code>
+		tag. Our <code >x-lotus-button</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-button',
+		Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);</code>.A new instance of <code >Lotus.Button</code>
+		is attached to each tag instance. Open your console to observe the click callbacks.
 	</p>
-	<x-lotus-button2  data-template-url="templates/button-blue.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
+	<x-lotus-button  data-template-url="templates/button-blue.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button>
 </div>
 
 <div class="content-panel">
 	<h3>Dynamically Change Skin</h3>
+	<h5>If your browser does not natively support web component (Safari) you will not see any change. See the xTag polyfill workaround below.</h5>
 	<p>
-		This example shows how easily you can change your layout while using the same component definitions. This is the true power of skin parts.
-		If your browser does not support shadowDOM natively the CSS styles in the first loaded instance of x-lotus-button2 (the one above) will override the next (the one below)
-		This is due to the fact the pollyfill prefixes the styles with the tag name. To avoid this you should create a new tag name like the example below.
+		Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/button-messages.html"</code>. Below is the
+		exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
+		with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
 	</p>
-	<x-lotus-button2  data-template-url="templates/button-messages.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
+	<x-lotus-button  data-template-url="templates/button-messages.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button>
 </div>
 
 <div class="content-panel">
 	<h3>xTag Pollyfill Workaround</h3>
 	<p>
-		This is an example of the recommended work around for the shadowDOM pollyfill issue described above.
-		If your browser does not natively support web components you have to attach the new skin using a different
-		tag. This is an issue with the xTag core and how it encapsulates styles using the tag name.
+		Note: If your browser does not natively support web components you have to attach the new skin using a different tag.
+		In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-button2', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);</code>.
+		This is an issue with the xTag core and how it encapsulates styles using the tag name.
 	</p>
-	<x-lotus-button3  data-template-url="templates/button-blue.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button3>
+	<x-lotus-button2  data-template-url="templates/button-blue.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button2>
 </div>
 
 <div class="content-panel">
@@ -95,23 +89,28 @@
 		Mediators can do all sorts of useful things like triggering business logic, dispatching application events to trigger commands, and setting up data binding within your surrounding application.
 		<pre>
 		<code>
-//the following is an example of how you can mediate the component events that are dispatched.
-//Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
-//As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
-//A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
-window.onload = function() {
-	var list = document.getElementsByTagName('x-lotus-button2');
-	var handler = {
-	onChange:function(event){
-		console.log('My callback function received value: ' + event.type);
-	}
-	}
-	for (var i = 0; i < list.length; i++) {
-		//the lotus syntax for addEventListener is slightly different than that of DOM elements,
-		//but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-		list[i].lotusComponentInstance.addEventListener(Lotus.ComponentEvent.CLICK, handler, 'onChange')
-	}
-};
+		var context = (function( xtag ){
+            var context = new Lotus.Context(new Lavender.Config);
+            context.componentMap.mapComponent('x-lotus-button', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
+            context.componentMap.mapComponent('x-lotus-button2', Lotus.LotusHTMLElement.prototype, Lotus.Button, xtag);
+            return context;
+        }( xtag ));
+		//the following is an example of how you can mediate the component events that are dispatched.
+		//A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+		window.onload = function() {
+			hljs.initHighlighting();
+			var list = document.getElementsByTagName('x-lotus-button');
+			var handler = {
+				onChange:function(event){
+					console.log('My callback function received event type ' + event.type);
+				}
+			}
+			for (var i = 0; i < list.length; i++) {
+				//the lotus syntax for addEventListener is slightly different than that of DOM elements,
+				//but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
+				list[i].lotusComponentInstance.addEventListener(Lotus.ComponentEvent.CLICK, handler, 'onChange')
+			}
+		};
 		</code>
 		</pre>
 	</p>

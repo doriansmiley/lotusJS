@@ -49,8 +49,6 @@
             }
         };
         //the following is an example of how you can mediate the component events that are dispatched.
-        //Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
-        //As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
             hljs.initHighlighting();
@@ -93,6 +91,7 @@
 
 <div class="content-panel">
     <h3>Dynamically Change Skin</h3>
+    <h5>If your browser does not natively support web component (Safari) you will not see any change. See the xTag polyfill workaround below.</h5>
     <p>
         Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/select2.html"</code>. Below is the
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
@@ -105,8 +104,9 @@
 <div class="content-panel">
     <h3>xTag Pollyfill Workaround</h3>
     <p>
-        Note: If your browser does not natively support web components you have to attach the new skin using a different
-        tag. This is an issue with the xTag core and how it encapsulates styles using the tag name.
+        Note: If your browser does not natively support web components you have to attach the new skin using a different tag.
+        In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-select2', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);</code>.
+        This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
     <x-lotus-select2 data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]'
                      data-attribute-type="text"></x-lotus-select2>
@@ -163,8 +163,6 @@
             }
         };
         //the following is an example of how you can mediate the component events that are dispatched.
-        //Lotus tag instances do not inherit directly from the base you supply, instead their skins define their child elements and behaviors
-        //As a result to receive specific component events you can access the lotusComponentInstance tht is exposed
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
             hljs.initHighlighting();
