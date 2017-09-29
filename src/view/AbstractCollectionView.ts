@@ -9,7 +9,7 @@ import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
 
 export class AbstractCollectionView extends AbstractComponent{
-    private _collectionContainer;
+    private _collectionContainer:HTMLElement;
     private _itemTemplate:HTMLElement;
     private _selectedItem:AbstractItemView;
     private _collection:Lavender.IList;
@@ -212,18 +212,6 @@ export class AbstractCollectionView extends AbstractComponent{
         //assign a default collection if it has not already been set
         if( this.collection === null || this.collection === undefined ){
             this.collection = this.getCollection();
-        }
-    }
-
-    public setSelectedItemFromModel(model:Object):void{
-        if(this.selectedItem && this.selectedItem.model == model){
-            return;
-        }
-        for( let i=0; i < this.childViews.length; i++){
-            if( this.childViews.getItemAt(i).model == model){
-                this.onItemSelectedDeselect( new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}) );
-                break;
-            }
         }
     }
 

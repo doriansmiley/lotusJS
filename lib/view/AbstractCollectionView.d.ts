@@ -13,7 +13,7 @@ export declare class AbstractCollectionView extends AbstractComponent {
     private _itemView;
     private _childViews;
     constructor();
-    collectionContainer: any;
+    collectionContainer: HTMLElement;
     itemTemplate: HTMLElement;
     selectedItem: AbstractItemView;
     collection: Lavender.IList;
@@ -35,7 +35,6 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeElement(element: HTMLElement): void;
     protected removeChildViewFromModel(model: Object): void;
     protected initCollection(): void;
-    setSelectedItemFromModel(model: Object): void;
     init(): void;
     render(): void;
     defineSkinParts(): void;

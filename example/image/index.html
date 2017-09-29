@@ -17,9 +17,9 @@
             context.componentMap.mapComponent('x-lotus-select', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
             return context;
         }(xtag));
-        //start binding source set up
-        //below we create a source for data binding. Component should always effect an application model instead of acting on the view directly
-        //you can then use two way data bindings on the model to keep your components in sync with changes in the model and resolve the changes in thier view
+        //start binding source set up. This is a crude example. Most application should use a MVW framework like lotusjs-mwv set create data models and apply bindings using mediators.
+        //below we create a source for data binding. Components should always effect an application model instead of acting on the view directly
+        //you can then use two way data bindings on the model to keep your components in sync with model. Changes in the model are then resolved by the component.
         var BindingSource = function(){
             Lavender.Subject.prototype.constructor.call(this);
             var _selectedItem;
@@ -58,13 +58,15 @@
                 }
             }
         };
+        //Lavender.ObjectUtils has some handy utility methods including extend which enbales prototypal inheritance between objects
+        //Lavender.Subject exposes several useful methods including addProperties and notify which is part of an implmentation of the observable pattern
         Lavender.ObjectUtils.extend(Lavender.Subject, BindingSource);
         //end binding source set up
         //create an instance of our source
         var bindingSource = new BindingSource();
         //define our handler to set up the component when it loads.
         //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
-        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatically
         var handler={
             onReady:function(event){
                 handler.initComponent(event.payload.target);
@@ -73,16 +75,16 @@
                 //set the image source
                 if(component instanceof Lotus.Image){
                     component.model = bindingSource.selectedItem;
-                    //bind changes in the binding source's selected item atrribute to our components model attribute
+                    //bind changes in the binding source's selected item attribute to our components model attribute
                     bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'model');
 
                 }else{
                     component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
 
                     component.collection = bindingSource.collection;
-                    //collection view components expose a method to set the selected item view from the model
+                    //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
                     bindingSource.binder.bind(component, 'selectedItem', bindingSource, 'setSelectedItemFromCollectionView');
-                    bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItemFromModel');
+                    bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItem');
                 }
             },
             addEventListeners:function (component) {
@@ -134,10 +136,13 @@
     <p>
         Here are examples of lotus image component. The <code>x-lotus-image</code> tag extends the <code>Lotus.LotusHTMLElement</code>
         tag. Our <code>x-lotus-image</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-image',
-        HTMLInputElement.prototype, Lotus.Image, xtag);</code>.A new instance of <code>Lotus.Image</code> is attached to
-        each tag instance. Use the select list to change the image source. Observe the loading icon that is displayed. If images become cached or load too quickly open your dev tools and turn on throttling.
-        Images will be sized according the skin's <code>data-attribute-thumb-width data-attribute-thumb-height</code> attributes.
+        Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.A new instance of <code>Lotus.Image</code> is attached to
+        each tag instance. Use the select list to change the image source. Observe the loading icon that is displayed. If images become cached or loads too quickly open your dev tools and turn on throttling.
+        Images will be sized according the skin's <code>data-attribute-thumb-width</code> and <code>data-attribute-thumb-height</code> attributes.
         The control will set the max width and height of the image based on a scaling algorithm that preserves aspect ratio.
+    </p>
+    <p>
+        We also implement two way data binding in this example as a means to keep all the selected list items in sync with each other. See the code below for a complete explination of data binding in LotusJS.
     </p>
     <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
     <x-lotus-image data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
@@ -162,6 +167,7 @@
         tag. In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
+    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
     <x-lotus-image2 data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]' data-attribute-type="text"></x-lotus-image2>
 </div>
 
@@ -177,17 +183,63 @@
         data binding within your surrounding application.
 		<pre>
 		<code>
-var context = (function (xtag) {
+        var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-image', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);
             context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);
             context.componentMap.mapComponent('x-lotus-select', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
             return context;
         }(xtag));
+        //start binding source set up. This is a crude example. Most application should use a MVW framework like lotusjs-mwv set create data models and apply bindings using mediators.
+        //below we create a source for data binding. Components should always effect an application model instead of acting on the view directly
+        //you can then use two way data bindings on the model to keep your components in sync with model. Changes in the model are then resolved by the component.
+        var BindingSource = function(){
+            Lavender.Subject.prototype.constructor.call(this);
+            var _selectedItem;
+            var _collection = new Lavender.ArrayList();
+            this.addProperties({
+                selectedItem: {
+                    get: function () {
+                        return _selectedItem;
+                    },
+                    set: function (val) {
+                        _selectedItem = val;
+                        this.notify(val, "selectedItem");
+                    }
+                },
+                collection: {
+                    get: function () {
+                        return _collection;
+                    },
+                    set: function (val) {
+                        _collection = val;
+                        this.notify(val, "collection");
+                    }
+                }
+            });
+            //set up pour collection
+            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg', selected:true});
+            this.collection.addItem({label: 'Sunset 2', value: 'assets/photos/Sunset-socialphy.com_.jpg', src: 'assets/photos/Sunset-socialphy.com_.jpg'});
+            this.collection.addItem({label: 'Sunset 3', value: 'assets/photos/sunset-birds1.jpg', src: 'assets/photos/sunset-birds1.jpg'});
+            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg'});
+            //set the selected item
+            this.selectedItem = this.collection.getItemAt(0);
+
+            BindingSource.prototype.setSelectedItemFromCollectionView = function(item){
+                if(item && item.model != this.selectedItem ){
+                    this.selectedItem = item.model;
+                }
+            }
+        };
+        //Lavender.ObjectUtils has some handy utility methods including extend which enbales prototypal inheritance between objects
+        //Lavender.Subject exposes several useful methods including addProperties and notify which is part of an implmentation of the observable pattern
+        Lavender.ObjectUtils.extend(Lavender.Subject, BindingSource);
+        //end binding source set up
+        //create an instance of our source
+        var bindingSource = new BindingSource();
         //define our handler to set up the component when it loads.
         //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
-        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
-        var selectListImage;
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatically
         var handler={
             onReady:function(event){
                 handler.initComponent(event.payload.target);
@@ -195,16 +247,17 @@ var context = (function (xtag) {
             initComponent:function(component){
                 //set the image source
                 if(component instanceof Lotus.Image){
-                    component.model = {src:'assets/photos/Sunset_2007-1.jpg'};
+                    component.model = bindingSource.selectedItem;
+                    //bind changes in the binding source's selected item attribute to our components model attribute
+                    bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'model');
+
                 }else{
                     component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                    //set up select list options to change the image source
-                    var collection = new Lavender.ArrayList();
-                    collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg',  selected:true});
-                    collection.addItem({label: 'Sunset 2', value: 'assets/photos/Sunset-socialphy.com_.jpg'});
-                    collection.addItem({label: 'Sunset 3', value: 'assets/photos/sunset-birds1.jpg'});
-                    collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg'});
-                    component.collection = collection;
+
+                    component.collection = bindingSource.collection;
+                    //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
+                    bindingSource.binder.bind(component, 'selectedItem', bindingSource, 'setSelectedItemFromCollectionView');
+                    bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItem');
                 }
             },
             addEventListeners:function (component) {
@@ -213,13 +266,11 @@ var context = (function (xtag) {
                 if(!component.ready){
                     component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
                 }else{
-                    handler.initComponent(component)
+                    handler.initComponent(component);
                 }
             },
             onChange: function (event) {
                 console.log('My callback function received value: ' + event.payload.target.value);
-                //update the model to trigger a change in the image view
-                selectListImage.model = {src:event.payload.target.value};
             }
         }
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -228,9 +279,6 @@ var context = (function (xtag) {
             hljs.initHighlighting();
             var list = document.getElementsByTagName('x-lotus-image');
             for (var i = 0; i < list.length; i++) {
-                if(i==0){
-                    selectListImage = list[i].lotusComponentInstance;
-                }
                 handler.addEventListeners(list[i].lotusComponentInstance);
             }
             //set up work around for pollyfill issue with xTag core
