@@ -215,6 +215,18 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
+    public setSelectedItemFromModel(model:Object):void{
+        if(this.selectedItem && this.selectedItem.model == model){
+            return;
+        }
+        for( let i=0; i < this.childViews.length; i++){
+            if( this.childViews.getItemAt(i).model == model){
+                this.onItemSelectedDeselect( new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}) );
+                break;
+            }
+        }
+    }
+
     public init():void{
         super.init();
         this.initCollection();

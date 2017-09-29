@@ -35,6 +35,7 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeElement(element: HTMLElement): void;
     protected removeChildViewFromModel(model: Object): void;
     protected initCollection(): void;
+    setSelectedItemFromModel(model: Object): void;
     init(): void;
     render(): void;
     defineSkinParts(): void;
