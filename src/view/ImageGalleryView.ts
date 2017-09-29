@@ -3,9 +3,7 @@
  */
 import {AbstractThumbnailView} from "./AbstractThumbnailView";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
-import {AbstractItemView} from "./AbstractItemView";
 import {ImageGalleryItemDetail, asset} from "./ImageGalleryItemDetail";
 import {ComponentEvent} from "../control/events/ComponentEvent";
 

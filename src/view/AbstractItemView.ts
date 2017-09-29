@@ -28,7 +28,7 @@ export abstract class AbstractItemView extends AbstractComponent{
     }
 
     //stub for override
-    public onModelChange(value):void{
+    public onModelChange(value:Object):void{
 
     }
 

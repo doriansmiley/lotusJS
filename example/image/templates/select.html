@@ -2,7 +2,7 @@
     <style>
         @font-face {
             font-family: 'SegoeUI';
-            src: url('fonts/segoeui.ttf') format('truetype');
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
 
             font-weight: normal;
             font-style: normal;
@@ -10,7 +10,7 @@
 
         @font-face {
             font-family: 'SegoeUI';
-            src: url('fonts/segoeuib.ttf') format('truetype');
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
 
             font-weight: 500;
             font-style: normal;
@@ -18,19 +18,20 @@
 
         @font-face {
             font-family: 'SegoeUI';
-            src: url('fonts/segoeuii.ttf') format('truetype');
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
 
             font-weight: normal;
             font-style: italic;
         }
 
 
-        input{
+        select{
             cursor:pointer;
             color:#fff;
+            border-radius:26px;
             box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
-            border: 1px solid #000000;
-            border-radius:0px;
+            border: 1px solid #4099ff;
+
             padding:10px;
             /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+44,1e5799+89,1f6b8e+100 */
             background: #5bb0d8; /* Old browsers */
@@ -40,15 +41,15 @@
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
         }
 
-        input * {
+        select * {
             cursor:pointer;
         }
 
-        input:focus {
+        select:focus {
             outline: none;
         }
 
-        input:hover {
+        select:hover {
             border:1px solid #f00;
             /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
             background: #f9c67a; /* Old browsers */
@@ -58,5 +59,7 @@
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
         }
     </style>
-    <input data-skin-part="input"/>
+    <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer">
+        <option data-skin-part="itemTemplate"></option>
+    </select>
 </template>

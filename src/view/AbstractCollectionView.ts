@@ -9,7 +9,7 @@ import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
 
 export class AbstractCollectionView extends AbstractComponent{
-    private _collectionContainer;
+    private _collectionContainer:HTMLElement;
     private _itemTemplate:HTMLElement;
     private _selectedItem:AbstractItemView;
     private _collection:Lavender.IList;

@@ -20,12 +20,15 @@ export declare class AbstractThumbnailView extends AbstractItemView {
     protected sizeImage(): void;
     protected onThumbClick(event: Event): void;
     protected onDragStart(event: Event): void;
-    protected getImageURL(): string;
+    protected getImageURL(model?: Object): string;
     protected getDefaultSize(): Lavender.widthHeightObject;
     protected getContainerSize(): Lavender.widthHeightObject;
+    protected onImageLoad(event: Event): void;
+    protected setThumbnailSrc(src: string): void;
     addEventListeners(): void;
     removeEventListeners(): void;
     defineSkinParts(): void;
+    onModelChange(model: Object): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
     resetState(): void;
     destroy(): void;
