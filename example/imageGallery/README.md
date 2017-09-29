@@ -1,7 +1,7 @@
-lotusJS Sample Select List Component
+lotusJS Sample Image Gallery Component
 =============
 
-This is an examp[le ofhow to use the `Lotus.ListCollectionView` which allows user to create select lists for use in form interfaces.
+This is an example of how to use the `Lotus.ImageGalleryCollectionView` which allows user navigate a list of images.
 
 To run this example deploy the files to your webserver and launch `index.html`. Note this example depends on the node_modules and libs directory found in the root of the git repo. If you want to run this example stand alone run `npm install` then adjust the following lines of code to point to the local node_modules directory:
 

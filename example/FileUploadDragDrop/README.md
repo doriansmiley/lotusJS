@@ -1,4 +1,4 @@
-lotusJS Sample File Upload Component
+lotusJS Sample File Upload Drag and Drop Component
 =============
 
 This is an example of how to use the `Lotus.DragDropFileCollectionView` which allows user to perform multiple file uploads while dragging files onto a drop target.

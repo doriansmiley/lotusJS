@@ -285,19 +285,19 @@ If you want to enable two way data binding, for example:
 bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'model');
 bindingSource.binder.bind(component, 'model', bindingSource, 'selectedItem');
 ````
-To enable two way data binding in the example you have to make sure `component.model` is also a bindable end point.
+you have to make sure `component.model` is also a bindable end point.
 
 You can also bind to methods, instance varibales and accessor methods of plain old Javascript objects.
 Just remeber if you want an object to be a bindable end point that can notify observers of changes you must extend `Lavender.Subject`
 and they must create bindable end points by declaring accessor methods that call `this.notify(value, 'attribute')` where `value` is the new value and `attribute` is the name of the attribute.
 
-IMPORTANT: in order to prevent recursion the Lavender core automatically checks that incoming values of attribute bindings are different than the opne currently applied.
+IMPORTANT: in order to prevent recursion the Lavender core automatically checks that incoming values of attribute bindings are different than the one currently applied.
 ````
 if (this.instance[this.chainProp] != value) {
     this.instance[this.chainProp] = value;
 }
 ````
-However it does not do this if the proeprty in the vhain is a function. Be sure if you setup functions and binding callbacks they check that the incoming value is different than the current one.
+However it does not do this if the property in the chain is a function. Be sure if you setup functions as binding callbacks they check that the incoming value is different than the current one.
 For example:
 ````
 BindingSource.prototype.setSelectedItemFromCollectionView = function(item){
