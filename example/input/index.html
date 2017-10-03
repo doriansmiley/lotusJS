@@ -10,7 +10,6 @@
     <script type="text/javascript" src="../../node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
     <script type="text/javascript" src="../../lib/lotusJS-UMD.min.js"></script>
     <script language="JavaScript">
-        var instances = [];
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-input', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
@@ -57,6 +56,9 @@
             //add event listener to capture changes in our sample input box
             document.getElementById('bindingInput').addEventListener('change', bindingSource.onInputChange.bind(bindingSource))
             var handler = {
+                onReady:function(event){
+                    handler.setUpBindings(event.payload.target);
+                },
                 onChange: function (event) {
                     console.log('My callback function received value: ' + event.payload.target.value);
                 },
@@ -70,15 +72,23 @@
                         bindingSource.binder.bind(component, 'value', bindingSource, 'value');
                         bindingSource.binder.bind(bindingSource, 'value', component, 'value');
                     }
+                },
+                addEventListeners:function (component) {
+                    //Do not set up data providers until the component is ready!
+                    //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                    if(!component.ready){
+                        component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                    }else{
+                        handler.setUpBindings(component);
+                    }
                 }
             }
             for (var i = 0; i < list.length; i++) {
-                component = list[i].lotusComponentInstance;
-                handler.setUpBindings(list[i].lotusComponentInstance);
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
             list = document.getElementsByTagName('x-lotus-input2');
             for (var i = 0; i < list.length; i++) {
-                handler.setUpBindings(list[i].lotusComponentInstance);
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
         };
     </script>
@@ -220,7 +230,6 @@
         data binding within your surrounding application.
 		<pre>
 		<code>
-        var instances = [];
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-input', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
@@ -267,6 +276,9 @@
             //add event listener to capture changes in our sample input box
             document.getElementById('bindingInput').addEventListener('change', bindingSource.onInputChange.bind(bindingSource))
             var handler = {
+                onReady:function(event){
+                    handler.setUpBindings(event.payload.target);
+                },
                 onChange: function (event) {
                     console.log('My callback function received value: ' + event.payload.target.value);
                 },
@@ -280,15 +292,23 @@
                         bindingSource.binder.bind(component, 'value', bindingSource, 'value');
                         bindingSource.binder.bind(bindingSource, 'value', component, 'value');
                     }
+                },
+                addEventListeners:function (component) {
+                    //Do not set up data providers until the component is ready!
+                    //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                    if(!component.ready){
+                        component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                    }else{
+                        handler.setUpBindings(component);
+                    }
                 }
             }
             for (var i = 0; i < list.length; i++) {
-                component = list[i].lotusComponentInstance;
-                handler.setUpBindings(list[i].lotusComponentInstance);
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
             list = document.getElementsByTagName('x-lotus-input2');
             for (var i = 0; i < list.length; i++) {
-                handler.setUpBindings(list[i].lotusComponentInstance);
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
         };
 		</code>
