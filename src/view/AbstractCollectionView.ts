@@ -215,6 +215,28 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
+    protected refreshView(value:any):void{
+        //stub for override
+    }
+
+    public setSelectedItem(model:Object):void{
+        //since this can be used as a bindable end point make sure recursion does not occur
+        if(this.selectedItem && this.selectedItem.model == model){
+            return;
+        }
+        for( let i=0; i < this.childViews.length; i++){
+            if( this.childViews.getItemAt(i).model == model){
+                //set the selected item
+                this.onItemSelectedDeselect( new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}) );
+                //refresh the view
+                if(this.selectedItem){
+                    this.refreshView(model['value']);
+                }
+                break;
+            }
+        }
+    }
+
     public init():void{
         super.init();
         this.initCollection();

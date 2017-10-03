@@ -51,19 +51,8 @@ export class ListCollectionView extends AbstractCollectionView{
         }
     }
 
-    public setSelectedItem(model:Object):void{
-        //since this can be used as a bindable end point make sure recursion does not occur
-        if(this.selectedItem && this.selectedItem.model == model){
-            return;
-        }
-        for( let i=0; i < this.childViews.length; i++){
-            if( this.childViews.getItemAt(i).model == model){
-                this.onItemSelectedDeselect( new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}) );
-                //refresh the view
-                (this.collectionContainer as HTMLSelectElement).value = model['value'];
-                break;
-            }
-        }
+    protected refreshView(value:any):void{
+        (this.collectionContainer as HTMLSelectElement).value = value;
     }
 
     public destroy():void{
