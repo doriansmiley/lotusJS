@@ -14,7 +14,7 @@ describe('AbstractComponentTest', function () {
         var handler = {
             onChange:function(event){
                 expect(event.type === Lotus.InputEvent.CHANGE).toBe(true);
-                expect(event.payload.target.value === 'test value').toBe(true);
+                expect(event.payload.target.value === 'xxx-test value').toBe(true);
                 expect(event.payload.target.getAttribute('type') === 'text').toBe(true);
                 input.removeEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
                 input.destroy();
@@ -26,6 +26,9 @@ describe('AbstractComponentTest', function () {
         input.addSkinPart('input', skinBart);
         expect(input.inputSkinPart === skinBart).toBe(true);
         input.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
+        input.format = function(value){
+            return 'xxx-' + value;
+        }
         input.inputSkinPart.value = 'test value';
         //note setting the inputs value in javascript will not trigger an on change event by itself
         //we have to manually dispatch and the change event is triggered after the element is interacted with by the end user

@@ -10,6 +10,8 @@ export class Input extends AbstractComponent{
     private _type:string;
     private _value:string;
 
+    public format:(value:string) => string;
+
     constructor(type?:string){
         super();
         this.type = type;
@@ -38,6 +40,9 @@ export class Input extends AbstractComponent{
     }
 
     set value(value:string) {
+        if(this.format){
+            value = this.format(value);
+        }
         this._value = value;
         this.notify( value, 'value' );
         if(this.inputSkinPart && this.inputSkinPart.value != value){
