@@ -4,23 +4,18 @@
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {InputEvent} from "../control/events/InputEvent";
 import {AbstractCollectionView} from "./AbstractCollectionView";
+import {AbstractItemView} from "./AbstractItemView";
+import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
 
-export class RadioCollectionView extends AbstractCollectionView{
+export class RadioCollectionView extends AbstractInputCollectionView{
 
     constructor(){
         super();
     }
 
-    protected onItemSelectedDeselect(event:ItemViewEvent):void{
-        let dispatchChange:boolean =  (this.selectedItem != event.payload['item']);
-        super.onItemSelectedDeselect(event);
-        //if the selected item has changed dispatch input change event
-        if( dispatchChange ){
-            this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.selectedItem, originalEvent:event}));
-        }
-    }
-
     protected refreshView(value:any):void{
-        this.selectedItem.element['checked'] = true;
+        if(this.selectedItem){
+            this.selectedItem.element['checked'] = true;
+        }
     }
 }

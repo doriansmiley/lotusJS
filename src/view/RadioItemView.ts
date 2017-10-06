@@ -1,13 +1,12 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
+import {InputModel} from "../model/InputModel";
 
-export type RadioItemValue = {label:string, value:any, name:string, selected?:boolean}
-;
-export class RadioItemView extends AbstractItemView{
+export class RadioItemView extends AbstractSelectableFormInput{
 
     private _radio:HTMLInputElement;
     private _label:HTMLLabelElement;
@@ -33,9 +32,13 @@ export class RadioItemView extends AbstractItemView{
     }
 
     public onClick(event:Event):void{
-        let eventType = ( this.radio.checked ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
-        //dispatch event to notify view that the layout was selected/or deselected
-        this.dispatch(new ItemViewEvent(eventType, {item:this}));
+        this.selected = this.radio.checked;
+    }
+
+    protected refreshView(selected:boolean):void{
+        if(this.radio){
+            this.radio.checked = selected;
+        }
     }
 
     public addEventListeners():void{
@@ -49,6 +52,7 @@ export class RadioItemView extends AbstractItemView{
             this.radio.removeEventListener('click', this.onClick);
         }
     }
+    
     public defineSkinParts():void{
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('radio', this, 'radio'));
@@ -60,13 +64,13 @@ export class RadioItemView extends AbstractItemView{
         switch( part ){
             case 'radio':
                 //set up listitem value and label
-                this.radio.value = (typeof (this.model as RadioItemValue).value == 'object') ? JSON.stringify((this.model as RadioItemValue).value) : (this.model as RadioItemValue).value;
-                this.radio.name = (this.model as RadioItemValue).name;
-                this.radio.checked = ((this.model as RadioItemValue).hasOwnProperty('selected')) ? (this.model as RadioItemValue).selected : false;
+                this.radio.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
+                this.radio.name = (this.model as InputModel).name;
+                this.radio.checked = this.selected;
                 this.addEventListeners();
                 break;
             case 'label':
-                this.label.innerHTML = (this.model as RadioItemValue).label;
+                this.label.innerHTML = (this.model as InputModel).label;
                 break;
         }
     }

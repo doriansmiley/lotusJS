@@ -1,11 +1,12 @@
 /**
  * Created by dsmiley on 9/21/17.
  */
-import {AbstractComponent} from "./AbstractComponent";
+import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {InputEvent} from "../control/events/InputEvent";
+import {InputModel} from "../model/InputModel";
 
-export class Input extends AbstractComponent{
+export class Input extends AbstractItemView{
     private _inputSkinPart:HTMLInputElement;
     private _type:string;
     private _value:string;
@@ -44,9 +45,20 @@ export class Input extends AbstractComponent{
             value = this.format(value);
         }
         this._value = value;
+        if(this.inputSkinPart && this.inputSkinPart.value != this.value){
+            //simply setting the value of the skin part will not trigger an onChange event, so we are safe from recursion
+            this.inputSkinPart.value = this.value;
+        }
+        //do this last
         this.notify( value, 'value' );
-        if(this.inputSkinPart && this.inputSkinPart.value != value){
-            this.inputSkinPart.value = value;
+    }
+
+    public onModelChange(value:Object):void{
+        super.onModelChange(value);
+        if(value instanceof InputModel){
+            //set up two way bindings
+            this.binder.bind(value, 'value', this, 'value');
+            this.binder.bind(this, 'value', value, 'value');
         }
     }
 

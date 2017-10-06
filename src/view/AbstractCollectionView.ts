@@ -7,6 +7,7 @@ import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
+import {InputModel} from "../model/InputModel";
 
 export class AbstractCollectionView extends AbstractComponent{
     private _collectionContainer:HTMLElement;
@@ -139,6 +140,11 @@ export class AbstractCollectionView extends AbstractComponent{
             this.element.appendChild(view.element);
         }
         this.addViewEventListeners( view );
+        //set the selected item from the model
+        //this allows data models to drive the selected item when they are assigned, or a new item added
+        if(view.model['selected']){
+            this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:view}));
+        }
     }
 
     protected addViewEventListeners(view:AbstractItemView):void{

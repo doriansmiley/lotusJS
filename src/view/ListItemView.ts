@@ -1,12 +1,12 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
 
 export type ListItemValue = {label:string, value:any};
 
-export class ListItemView extends AbstractItemView{
+export class ListItemView extends AbstractSelectableFormInput{
 
     private _option:HTMLOptionElement;
 
@@ -20,6 +20,28 @@ export class ListItemView extends AbstractItemView{
 
     set option(value:HTMLOptionElement) {
         this._option = value;
+    }
+
+    protected refreshView(selected:boolean):void{
+        if(this.option){
+            this.option.selected = selected;
+        }
+    }
+
+    public onClick(event:Event):void{
+        this.selected = true;
+    }
+
+    public addEventListeners():void{
+        super.addEventListeners();
+        this.option.addEventListener('click', this.onClick.bind(this));
+    }
+
+    public removeEventListeners():void{
+        super.removeEventListeners();
+        if(this.option){
+            this.option.removeEventListener('click', this.onClick);
+        }
     }
 
     public defineSkinParts():void{
@@ -36,6 +58,7 @@ export class ListItemView extends AbstractItemView{
                 //set up listitem value and label
                 this.option.value = (typeof (this.model as ListItemValue).value == 'object') ? JSON.stringify((this.model as ListItemValue).value) : (this.model as ListItemValue).value;
                 this.option.innerHTML = (this.model as ListItemValue).label;
+                this.option.selected = this.selected;
                 break;
         }
     }
