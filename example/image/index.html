@@ -219,10 +219,10 @@
                 }
             });
             //set up pour collection
-            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg', selected:true});
+            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg'});
             this.collection.addItem({label: 'Sunset 2', value: 'assets/photos/Sunset-socialphy.com_.jpg', src: 'assets/photos/Sunset-socialphy.com_.jpg'});
             this.collection.addItem({label: 'Sunset 3', value: 'assets/photos/sunset-birds1.jpg', src: 'assets/photos/sunset-birds1.jpg'});
-            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg'});
+            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg', selected:true});
             //set the selected item
             this.selectedItem = this.collection.getItemAt(0);
 
@@ -259,6 +259,7 @@
                     //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
                     bindingSource.binder.bind(component, 'selectedItem', bindingSource, 'setSelectedItemFromCollectionView');
                     bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItem');
+                    bindingSource.setSelectedItemFromCollectionView(component.selectedItem);
                 }
             },
             addEventListeners:function (component) {
