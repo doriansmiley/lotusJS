@@ -3,8 +3,7 @@
  */
 import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
-
-export type ListItemValue = {label:string, value:any};
+import {InputModel} from "../model/InputModel";
 
 export class ListItemView extends AbstractSelectableFormInput{
 
@@ -28,7 +27,7 @@ export class ListItemView extends AbstractSelectableFormInput{
         }
     }
 
-    public onClick(event:Event):void{
+    public onClick(event?:Event):void{
         this.selected = true;
     }
 
@@ -56,9 +55,12 @@ export class ListItemView extends AbstractSelectableFormInput{
         switch( part ){
             case 'itemTemplate':
                 //set up listitem value and label
-                this.option.value = (typeof (this.model as ListItemValue).value == 'object') ? JSON.stringify((this.model as ListItemValue).value) : (this.model as ListItemValue).value;
-                this.option.innerHTML = (this.model as ListItemValue).label;
+                this.option.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
+                this.option.innerHTML = (this.model as InputModel).label;
                 this.option.selected = this.selected;
+                if(this.selected){
+                    this.onClick();
+                }
                 break;
         }
     }
