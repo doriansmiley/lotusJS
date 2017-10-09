@@ -8,6 +8,11 @@ export class InputModel extends Lavender.Subject{
     private _value:string;
     private _name:string;
     private _selected:boolean = false;
+    private _type:string;
+    private _required:boolean = false;
+
+    public format:(value:string) => string;
+    public validate:(value:string) => boolean;
 
     constructor(label?:string, value?:string, name?:string, selected?:boolean){
         super();
@@ -51,5 +56,23 @@ export class InputModel extends Lavender.Subject{
     set selected(value:boolean) {
         this._selected = value;
         this.notify(value, 'selected');
+    }
+
+    get type():string {
+        return this._type;
+    }
+
+    set type(value:string) {
+        this._type = value;
+        this.notify(value, 'type');
+    }
+
+    get required():boolean {
+        return this._required;
+    }
+
+    set required(value:boolean) {
+        this._required = value;
+        this.notify(value, 'required');
     }
 }
