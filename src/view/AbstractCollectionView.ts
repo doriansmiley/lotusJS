@@ -126,12 +126,16 @@ export class AbstractCollectionView extends AbstractComponent{
         return new evalClass();
     }
 
+    protected cloneItemTemplate(model):LotusHTMLElement{
+        return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
+    }
+
     protected addChildView(model:Object):void{
         let view:AbstractItemView = this.createChildView( model );
         //clone the view
-        let clone = this.itemTemplate.cloneNode(true);
+        let clone:LotusHTMLElement = this.cloneItemTemplate(model);
         view.model = model;
-        view.element = clone as LotusHTMLElement;
+        view.element = clone;
         view.init();
         this.childViews.addItem( view );
         if( this.collectionContainer !== null && this.collectionContainer !== undefined ){
