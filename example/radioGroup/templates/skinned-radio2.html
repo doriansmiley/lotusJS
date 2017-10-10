@@ -1,0 +1,118 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+		
+		input[type=radio] {
+			cursor:pointer;
+		}
+		
+		input[type=radio]:focus {
+			outline: none;
+		}
+
+        input[type=radio]:checked{
+            border: 5px solid #1e5799;
+        }
+
+        input[type=radio]:checked::before{
+            background: #1e5799;
+        }
+
+        input[type=radio]:checked ~ label[data-skin-part="label"]{
+          /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1c1c1c+0,727272+100 */
+			background: #1c1c1c; /* Old browsers */
+			background: -moz-linear-gradient(top, #1c1c1c 0%, #727272 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #1c1c1c 0%,#727272 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #1c1c1c 0%,#727272 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1c1c1c', endColorstr='#727272',GradientType=0 ); /* IE6-9 */
+		    color:#fff;
+		    text-shadow: 0px -1px 0px rgba(0,0,0,0.5);
+        }
+		
+		div[data-skin-part="itemTemplate"] {
+		   	display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start ;
+			-webkit-align-items: center;
+			align-items: center;
+			border-bottom:1px solid rgba(0,0,0,0.4);
+				border-top:1px solid rgba(255,255,255,0.4);
+		}
+		
+		div[data-skin-part="itemTemplate"]:last-child {
+			border-bottom:1px solid rgba(0,0,0,0); /* use invisible border to prevent size issues */
+		}	
+
+		div[data-skin-part="itemTemplate"]:first-child {
+			border-top:1px solid rgba(255,255,255,0.0);		
+		}
+	
+		
+		fieldset[data-skin-part="collectionContainer"] {
+			border:none;
+			border:1px solid #888;
+			border-radius:6px;
+			width:150px;
+			background:#fff;
+			padding:0px;
+			box-shadow: -1px 1px 3px rgba(0,0,0,0.3);
+			
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4f4f4f+0,d3d3d3+49,898989+100 */
+			background: #4f4f4f; /* Old browsers */
+			background: -moz-linear-gradient(left, #4f4f4f 0%, #d3d3d3 49%, #898989 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(left, #4f4f4f 0%,#d3d3d3 49%,#898989 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to right, #4f4f4f 0%,#d3d3d3 49%,#898989 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f4f4f', endColorstr='#898989',GradientType=1 ); /* IE6-9 */
+			
+		}
+		
+		
+		label[data-skin-part="label"] {
+			 font-family: 'SegoeUI';
+			 font-size:14px;
+			 margin:5px;
+			 margin-left:0px;
+			 padding-left:10px;
+			 padding-right:10px;
+			 width:100%;
+			 border-radius:30px;
+			 padding-bottom:2px;
+			  text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+		}
+		
+		
+    </style>
+    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+        <div data-skin-part="itemTemplate">
+			
+            <input type="radio" data-skin-part="radio" />
+            <label data-skin-part="label"></label>
+        </div>
+    </fieldset>
+</template>
