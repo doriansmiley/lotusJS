@@ -40,6 +40,10 @@ export class Input extends AbstractItemView{
 
     set value(value:string) {
         this._value = value;
+        //manually this.inputSkinPart.value if there are no two way bindings
+        if(this.inputSkinPart && ( !this.model || !(this.model instanceof InputModel) )){
+            this.inputSkinPart.value = value;
+        }
         this.notify( value, 'value' );
     }
 
