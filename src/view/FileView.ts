@@ -329,45 +329,13 @@ export class FileView extends AbstractItemView{
     public onSkinPartAdded(part:string, element:HTMLElement):void{
         super.onSkinPartAdded(part, element);
         switch( part ){
-            case 'fileLabel':
-                this.fileLabel = element as HTMLLabelElement;
-                break;
-            case 'fileTypeLabel':
-                this.fileTypeLabel = element as HTMLLabelElement;
-                break;
-            case 'progressBar':
-                this.progressBar = element;
-                break;
             case 'cancelBtn':
-                this.cancelBtn = element as HTMLButtonElement;
                 this.cancelBtnDisplay = this.cancelBtn.style.display;//capture the original display state of the button
                 this.cancelBtn.addEventListener('click', this.onCancelBtnClick.bind(this));
                 break;
             case 'clearBtn':
-                this.clearBtn = element as HTMLButtonElement;
                 this.clearBtnDisplay = this.clearBtn.style.display;//capture the original display state of the button
                 this.clearBtn.addEventListener('click', this.onClearBtnClick.bind(this));
-                break;
-            case 'statusIndicator':
-                this.statusIndicator = element;
-                break;
-            case 'loadIndicator':
-                this.loadIndicator = element;
-                break;
-            case 'errorIndicator':
-                this.errorIndicator = element;
-                break;
-            case 'progressIndicator':
-                this.progressIndicator = element;
-                break;
-            case 'pendingIndicator':
-                this.pendingIndicator = element;
-                break;
-            case 'abortIndicator':
-                this.abortIndicator = element;
-                break;
-            case 'thumbnail':
-                this.thumbnail = element as HTMLImageElement;
                 break;
         }
     }

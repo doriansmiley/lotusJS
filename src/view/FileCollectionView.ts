@@ -84,11 +84,9 @@ export class FileCollectionView extends AbstractCollectionView{
         super.onSkinPartAdded(part, element);
         switch(part){
             case 'fileInput':
-                this.fileInput = element as HTMLInputElement;
                 this.fileInput.addEventListener("change", this.onFileInputChange.bind(this));
                 break;
             case 'selectBtn':
-                this.selectBtn = element as HTMLInputElement;
                 this.selectBtn.addEventListener("click", this.onFileBtnClick.bind(this));
                 break;
         }

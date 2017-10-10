@@ -43,7 +43,6 @@ export class DragDropFileCollectionView extends FileCollectionView{
         super.onSkinPartAdded(part, element);
         switch(part){
             case 'dropTarget':
-                this.dropTarget = element;
                 this.dropTarget.addEventListener("drop", this.onDrop.bind(this), false);
                 window.addEventListener("drop", this.onPreventDrop.bind(this), false);
                 window.addEventListener("dragover", this.onPreventDrop.bind(this), false);

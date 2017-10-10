@@ -69,11 +69,11 @@ export class AbstractCollectionView extends AbstractComponent{
         return this._childViews;
     }
 
-    get itemView() {
+    get itemView():string {
         return this._itemView;
     }
 
-    set itemView(value) {
+    set itemView(value:string) {
         this._itemView = value;
         this.notify(value, 'itemView');
     }
