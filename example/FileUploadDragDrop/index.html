@@ -84,7 +84,7 @@
         is attached to each tag instance. Open your console to observe the file upload callbacks. In order to upload files your callbacks should trigger upload behaviors
         and update the files load status. See the commnets in the code example at the bottom of this page for psuedo code.
     </p>
-    <x-lotus-upload data-template-url="templates/skinned-fileUploadDragDrop.html"
+    <x-lotus-upload data-template-url="templates/fileUpload.html"
                     data-component-root="[data-attribute-item-view='Lotus.FileView']"
                     data-attribute-type="text"></x-lotus-upload>
 </div>
@@ -97,7 +97,7 @@
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
         with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
-    <x-lotus-upload data-template-url="templates/skinned-fileUploadDragDrop2.html"
+    <x-lotus-upload data-template-url="templates/fileUpload2.html"
                     data-component-root="[data-attribute-item-view='Lotus.FileView']"
                     data-attribute-type="text"></x-lotus-upload>
 </div>
@@ -109,7 +109,7 @@
         In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-upload2', Lotus.LotusHTMLElement.prototype, Lotus.DragDropFileCollectionView, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
-    <x-lotus-upload2 data-template-url="templates/skinned-fileUploadDragDrop.html"
+    <x-lotus-upload2 data-template-url="templates/fileUpload.html"
                      data-component-root="[data-attribute-item-view='Lotus.FileView']"
                      data-attribute-type="text"></x-lotus-upload2>
 </div>

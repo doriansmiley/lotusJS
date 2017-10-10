@@ -1,46 +1,166 @@
 <template>
     <style>
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeui.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuib.ttf') format('truetype');
+
+			font-weight: 500;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuii.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: italic;
+		}
+	
         div[data-skin-part="collectionContainer"]{
             padding: 10px;
         }
 
-        button {
-            border-radius: 4px;
-            min-height: 28px;
-            cursor: pointer;
+		div[data-skin-part="collectionContainer"] > .itemRenderer {
+           
+		   	display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start ;
+			-webkit-align-items: center;
+			align-items: center;
         }
+		
 
         /* ***************************************************************************************************** */
         /* Default interaction css */
         /* ***************************************************************************************************** */
-        .enabled {
+        div[class="panel"]  .enabled {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .disabled {
+        div[class="panel"]  .disabled {
             opacity: 0.5;
             pointer-events: none;
         }
+		
+		
+		
+		
+		/* Button CSS */
+		
+		div[class="panel"] div[data-skin-part="navButtonContainer"] {
+			width:100%;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items: center;
+			align-items: center;
+		}
+		
+		div[class="panel"] div[data-skin-part="navButtonContainer"]>*:not(first-child) {
+			margin-left:10px;
+		}
+		
+		div[class="panel"] button[data-skin-part="firstBtn"], div[class="panel"] button[data-skin-part="pervBtn"],
+		div[class="panel"] button[data-skin-part="nextBtn"], div[class="panel"] button[data-skin-part="lastBtn"]		{
+			cursor:pointer;
+			color:#333;
+			border: 1px solid #333;
+			font-family:"SegoeUI";
+			font-size:16px;
+			padding:5px;
+			min-width:32px;
+			border-radius:6px;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f1f4eb+0,d6d6d6+100 */
+			background: #f1f4eb; /* Old browsers */
+			background: -moz-linear-gradient(top, #f1f1f1 0%, #c6c6c6 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #f1f1f1 0%,#c6c6c6 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #f1f1f1 0%,#c6c6c6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f4eb', endColorstr='#d6d6d6',GradientType=0 ); /* IE6-9 */	
+		}
+		
+		div[class="panel"] button[data-skin-part="firstBtn"]:hover, div[class="panel"] button[data-skin-part="pervBtn"]:hover,
+		div[class="panel"] button[data-skin-part="nextBtn"]:hover, div[class="panel"] button[data-skin-part="lastBtn"]:hover		{
+					/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f1f4eb+0,d6d6d6+100 */
+			background: #f1f4eb; /* Old browsers */
+			background: -moz-linear-gradient(top, #f1f4eb 0%, #d6d6d6 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #f1f4eb 0%,#d6d6d6 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #f1f4eb 0%,#d6d6d6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f4eb', endColorstr='#d6d6d6',GradientType=0 ); /* IE6-9 */	
+			
+		}
+		
+		div[class="panel"] button[data-skin-part="firstBtn"] *, div[class="panel"] button[data-skin-part="pervBtn"] *,
+		div[class="panel"] button[data-skin-part="nextBtn"] *,div[class="panel"] button[data-skin-part="lastBtn"] * {
+			cursor:pointer;
+		}
+		
+		div[class="panel"] button[data-skin-part="firstBtn"]:focus, div[class="panel"] button[data-skin-part="pervBtn"]:focus,
+		div[class="panel"] button[data-skin-part="nextBtn"]:focus,div[class="panel"] button[data-skin-part="lastBtn"]:focus {
+			outline: none;
+		}		
+		
+		/* Main Container Panel */
+		
+		div[class="panel"] {
+			padding:10px;
+			background:#ddd;
+			border:1px solid #444;
+			border-radius:0px;
+			max-width:550px;
+			box-shadow:-1px 1px 5px rgba(0,0,0,0.3);
+			font-family: 'SegoeUI';
+			
+		}
+		
+		/* Item Renderer */ 
+		div[class="panel"]  div[data-skin-part="itemTemplate"] {
+			border:1px solid #fff;
+			background:#fff;
+			border-radius:6px;
+			margin-bottom:6px;
+			padding:10px;
+		}	
+		
+		div[class="panel"]  div[data-skin-part="itemTemplate"]:hover {
+			border:1px dashed #222;
+		}	
+
     </style>
-<div data-source="sampleAPI" data-attribute-item-view="Lotus.ImageGalleryView">
+<div data-source="sampleAPI" data-attribute-item-view="Lotus.ImageGalleryView" class="panel">
 
     <!-- record set navigation -->
     <div data-skin-part="navButtonContainer" data-enabled-class="enabled" data-disabled-class="disabled">
-        <button data-skin-part="firstBtn" data-enabled-class="enabled" data-disabled-class="disabled">
+        <button data-skin-part="firstBtn" data-enabled-class="enabled" data-disabled-class="disabled" >
             <label style="pointer-events:none;"><img src="assets/i_first.png" border="0"/></label>
         </button>
 
 
-        <button data-skin-part="pervBtn" data-enabled-class="enabled" data-disabled-class="disabled">
+        <button data-skin-part="pervBtn" data-enabled-class="enabled" data-disabled-class="disabled" >
             <label style="pointer-events:none;"><img src="assets/i_previous.png" border="0"/></label>
         </button>
 
-        <button data-skin-part="nextBtn" data-enabled-class="enabled" data-disabled-class="disabled">
+        <button data-skin-part="nextBtn" data-enabled-class="enabled" data-disabled-class="disabled" >
             <label style="pointer-events:none;"><img src="assets/i_next.png" border="0"/></label>
         </button>
 
-        <button data-skin-part="lastBtn" data-enabled-class="enabled" data-disabled-class="disabled">
+        <button data-skin-part="lastBtn" data-enabled-class="enabled" data-disabled-class="disabled" >
             <label style="pointer-events:none;"><img src="assets/i_last.png" border="0"/></label>
         </button>
     </div>
@@ -51,9 +171,11 @@
         <div data-skin-part="itemTemplate" class="itemRenderer" data-attribute-thumb-width="96" data-attribute-thumb-height="96">
             <div class="thumbnailContainer someClass" data-skin-part="thumbnailContainer" selected-class="selectedThumbContainer">
                 <img data-skin-part="thumbnail" selected-class="thumbSelected" draggable="true"/>
-                <!-- example of a nested component that is a skin part-->
-                <x-lotus-gallery-detail data-skin-part="itemDetail" data-template-url="templates/galleryItemDetail.html" data-component-root='div'></x-lotus-gallery-detail>
             </div>
+			
+			<!-- example of a nested component that is a skin part-->
+            <x-lotus-gallery-detail data-skin-part="itemDetail" data-template-url="templates/galleryItemDetail.html" data-component-root='div'></x-lotus-gallery-detail>
+ 
         </div>
 
     </div>
