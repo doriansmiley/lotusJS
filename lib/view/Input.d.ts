@@ -6,7 +6,6 @@ export declare class Input extends AbstractItemView {
     private _inputSkinPart;
     private _type;
     private _value;
-    format: (value: string) => string;
     constructor(type?: string);
     inputSkinPart: HTMLInputElement;
     type: string;
