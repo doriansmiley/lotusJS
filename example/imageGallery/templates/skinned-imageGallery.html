@@ -45,12 +45,12 @@
         /* ***************************************************************************************************** */
         /* Default interaction css */
         /* ***************************************************************************************************** */
-        .enabled {
+        div[class="panel"]  .enabled {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .disabled {
+        div[class="panel"]  .disabled {
             opacity: 0.5;
             pointer-events: none;
         }
@@ -60,7 +60,7 @@
 		
 		/* Button CSS */
 		
-		div[data-skin-part="navButtonContainer"] {
+		div[class="panel"] div[data-skin-part="navButtonContainer"] {
 			width:100%;
 			display: -webkit-flex;
 			display: flex;
@@ -73,12 +73,12 @@
 			align-items: center;
 		}
 		
-		div[data-skin-part="navButtonContainer"]>*:not(first-child) {
+		div[class="panel"] div[data-skin-part="navButtonContainer"]>*:not(first-child) {
 			margin-left:10px;
 		}
 		
-		button[data-skin-part="firstBtn"], button[data-skin-part="pervBtn"],
-		button[data-skin-part="nextBtn"], button[data-skin-part="lastBtn"]		{
+		div[class="panel"] button[data-skin-part="firstBtn"], div[class="panel"] button[data-skin-part="pervBtn"],
+		div[class="panel"] button[data-skin-part="nextBtn"], div[class="panel"] button[data-skin-part="lastBtn"]		{
 			cursor:pointer;
 			color:#333;
 			border: 1px solid #333;
@@ -95,8 +95,8 @@
 			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f4eb', endColorstr='#d6d6d6',GradientType=0 ); /* IE6-9 */	
 		}
 		
-		button[data-skin-part="firstBtn"]:hover, button[data-skin-part="pervBtn"]:hover,
-		button[data-skin-part="nextBtn"]:hover, button[data-skin-part="lastBtn"]:hover		{
+		div[class="panel"] button[data-skin-part="firstBtn"]:hover, div[class="panel"] button[data-skin-part="pervBtn"]:hover,
+		div[class="panel"] button[data-skin-part="nextBtn"]:hover, div[class="panel"] button[data-skin-part="lastBtn"]:hover		{
 					/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f1f4eb+0,d6d6d6+100 */
 			background: #f1f4eb; /* Old browsers */
 			background: -moz-linear-gradient(top, #f1f4eb 0%, #d6d6d6 100%); /* FF3.6-15 */
@@ -106,13 +106,13 @@
 			
 		}
 		
-		button[data-skin-part="firstBtn"] *, button[data-skin-part="pervBtn"] *,
-		button[data-skin-part="nextBtn"] *,button[data-skin-part="lastBtn"] * {
+		div[class="panel"] button[data-skin-part="firstBtn"] *, div[class="panel"] button[data-skin-part="pervBtn"] *,
+		div[class="panel"] button[data-skin-part="nextBtn"] *,div[class="panel"] button[data-skin-part="lastBtn"] * {
 			cursor:pointer;
 		}
 		
-		button[data-skin-part="firstBtn"]:focus, button[data-skin-part="pervBtn"]:focus,
-		button[data-skin-part="nextBtn"]:focus,button[data-skin-part="lastBtn"]:focus {
+		div[class="panel"] button[data-skin-part="firstBtn"]:focus, div[class="panel"] button[data-skin-part="pervBtn"]:focus,
+		div[class="panel"] button[data-skin-part="nextBtn"]:focus,div[class="panel"] button[data-skin-part="lastBtn"]:focus {
 			outline: none;
 		}		
 		
@@ -130,7 +130,7 @@
 		}
 		
 		/* Item Renderer */ 
-		div[data-skin-part="itemTemplate"] {
+		div[class="panel"]  div[data-skin-part="itemTemplate"] {
 			border:1px solid #fff;
 			background:#fff;
 			border-radius:6px;
@@ -138,7 +138,7 @@
 			padding:10px;
 		}	
 		
-		div[data-skin-part="itemTemplate"]:hover {
+		div[class="panel"]  div[data-skin-part="itemTemplate"]:hover {
 			border:1px dashed #222;
 		}	
 

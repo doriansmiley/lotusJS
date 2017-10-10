@@ -24,23 +24,23 @@
             font-style: italic;
         }
 		
-		input[type=radio] {
+		fieldset[class="radio2"] input[type=radio] {
 			cursor:pointer;
 		}
 		
-		input[type=radio]:focus {
+		fieldset[class="radio2"] input[type=radio]:focus {
 			outline: none;
 		}
 
-        input[type=radio]:checked{
+        fieldset[class="radio2"] input[type=radio]:checked{
             border: 5px solid #1e5799;
         }
 
-        input[type=radio]:checked::before{
+        fieldset[class="radio2"] input[type=radio]:checked::before{
             background: #1e5799;
         }
 
-        input[type=radio]:checked ~ label[data-skin-part="label"]{
+        fieldset[class="radio2"] input[type=radio]:checked ~ label[data-skin-part="label"]{
           /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1c1c1c+0,727272+100 */
 			background: #1c1c1c; /* Old browsers */
 			background: -moz-linear-gradient(top, #1c1c1c 0%, #727272 100%); /* FF3.6-15 */
@@ -51,7 +51,7 @@
 		    text-shadow: 0px -1px 0px rgba(0,0,0,0.5);
         }
 		
-		div[data-skin-part="itemTemplate"] {
+		fieldset[class="radio2"] div[data-skin-part="itemTemplate"] {
 		   	display: -webkit-flex;
 			display: flex;
 			-webkit-flex-flow: row;
@@ -65,16 +65,16 @@
 				border-top:1px solid rgba(255,255,255,0.4);
 		}
 		
-		div[data-skin-part="itemTemplate"]:last-child {
+		fieldset[class="radio2"] div[data-skin-part="itemTemplate"]:last-child {
 			border-bottom:1px solid rgba(0,0,0,0); /* use invisible border to prevent size issues */
 		}	
 
-		div[data-skin-part="itemTemplate"]:first-child {
+		fieldset[class="radio2"] div[data-skin-part="itemTemplate"]:first-child {
 			border-top:1px solid rgba(255,255,255,0.0);		
 		}
 	
 		
-		fieldset[data-skin-part="collectionContainer"] {
+		fieldset[class="radio2"] {
 			border:none;
 			border:1px solid #888;
 			border-radius:6px;
@@ -93,7 +93,7 @@
 		}
 		
 		
-		label[data-skin-part="label"] {
+		fieldset[class="radio2"] label[data-skin-part="label"] {
 			 font-family: 'SegoeUI';
 			 font-size:14px;
 			 margin:5px;
@@ -108,7 +108,7 @@
 		
 		
     </style>
-    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+    <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer" class="radio2">
         <div data-skin-part="itemTemplate">
 			
             <input type="radio" data-skin-part="radio" />

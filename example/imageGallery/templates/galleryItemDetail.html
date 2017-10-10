@@ -24,34 +24,36 @@
 			font-style: italic;
 		}
 		
-		span[class="label"] {
+		div[class="gallery-info"]  {
 			font-weight:bold;
 		}		
-		span[class="label"] > .info {
+		div[class="gallery-info"] .info {
 			font-weight:normal;
 		}
 		
-		div[data-source="sampleAPI"] {
-			display: -webkit-flex;
-			display: flex;
-			-webkit-flex-flow: columnd;
-			flex-flow: column;
-			flex-direction: column;
-			-webkit-justify-content: center;
-			justify-content: center;
-			-webkit-align-items: flex-start;
-			align-items: flex-start;
+		div[class="gallery-info"] {
+	
 			margin-left:10px;
 			font-family: 'SegoeUI';
 			font-size:12.5px;
-
+			
+			
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: column !important;
+			flex-flow: column !important;
+			flex-direction: column !important;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items: center;
+			align-items: center;
 		}
 		
     </style>
-    <div data-source="sampleAPI">
-            <span class="label">Image Name: <span class="info" data-skin-part="nameLabel"></span></span>
-            <span class="label">Created On: <span class="info"data-skin-part="dateCreatedLabel"></span></span>
-            <span class="label">URL: <span class="info"data-skin-part="urlLabel"></span></span>
+    <div data-source="sampleAPI" class="gallery-info">
+           <span> Image Name: <span class="info" data-skin-part="nameLabel"></span></span> 
+            <span> Created On: <span class="info"data-skin-part="dateCreatedLabel"></span></span> 
+            <span> URL: <span class="info"data-skin-part="urlLabel"></span></span> 
  
     </div>
 
