@@ -5,6 +5,6 @@ export declare class ListCollectionView extends AbstractCollectionView {
     addEventListeners(): void;
     removeEventListeners(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
-    setSelectedItem(model: Object): void;
+    protected refreshView(value: any): void;
     destroy(): void;
 }

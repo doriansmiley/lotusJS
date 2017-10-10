@@ -6,4 +6,5 @@ import { AbstractCollectionView } from "./AbstractCollectionView";
 export declare class RadioCollectionView extends AbstractCollectionView {
     constructor();
     protected onItemSelectedDeselect(event: ItemViewEvent): void;
+    protected refreshView(value: any): void;
 }

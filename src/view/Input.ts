@@ -8,6 +8,7 @@ import {InputEvent} from "../control/events/InputEvent";
 export class Input extends AbstractComponent{
     private _inputSkinPart:HTMLInputElement;
     private _type:string;
+    private _value:string;
 
     constructor(type?:string){
         super();
@@ -32,6 +33,18 @@ export class Input extends AbstractComponent{
         this.notify( value, 'type' );
     }
 
+    get value():string {
+        return this._value;
+    }
+
+    set value(value:string) {
+        this._value = value;
+        this.notify( value, 'value' );
+        if(this.inputSkinPart && this.inputSkinPart.value != value){
+            this.inputSkinPart.value = value;
+        }
+    }
+
     public defineSkinParts():void{
         super.defineSkinParts();
         //set up skin parts
@@ -54,6 +67,7 @@ export class Input extends AbstractComponent{
     public onChange(event:Event):void{
         console.log('Lotus.Input.prototype.onChange: input value is ' + (event.target as HTMLInputElement).value);
         console.log('Lotus.Input.prototype.onChange: my id is ' + this.id);
+        this.value = this.inputSkinPart.value;
         this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.inputSkinPart, originalEvent:event}))
     }
 

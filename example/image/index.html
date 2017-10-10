@@ -144,8 +144,8 @@
     <p>
         We also implement two way data binding in this example as a means to keep all the selected list items in sync with each other. See the code below for a complete explination of data binding in LotusJS.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
-    <x-lotus-image data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
+    <x-lotus-select data-template-url="templates/skinned-select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
+    <x-lotus-image data-template-url="templates/skinned-image.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
 </div>
 
 <div class="content-panel">
@@ -156,8 +156,8 @@
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
         with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
-    <x-lotus-image data-template-url="templates/image2.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
+    <x-lotus-select data-template-url="templates/skinned-select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
+    <x-lotus-image data-template-url="templates/skinned-image2.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
 </div>
 
 <div class="content-panel">
@@ -167,8 +167,8 @@
         tag. In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
-    <x-lotus-image2 data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]' data-attribute-type="text"></x-lotus-image2>
+    <x-lotus-select data-template-url="templates/skinned-select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
+    <x-lotus-image2 data-template-url="templates/skinned-image.html" data-component-root='[data-skin-part="thumbnailContainer"]' data-attribute-type="text"></x-lotus-image2>
 </div>
 
 <div class="content-panel">

@@ -16,26 +16,79 @@
             context.componentMap.mapComponent('x-lotus-input2', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
             return context;
         }(xtag));
+        //start binding source set up. This is a crude example. Most application should use a MVW framework like lotusjs-mwv set create data models and apply bindings using mediators.
+        //below we create a source for data binding. Components should always effect an application model instead of acting on the view directly
+        //you can then use two way data bindings on the model to keep your components in sync with model. Changes in the model are then resolved by the component.
+        var BindingSource = function(){
+            Lavender.Subject.prototype.constructor.call(this);
+            var _value;
+            this.addProperties({
+                value: {
+                    get: function () {
+                        return _value;
+                    },
+                    set: function (val) {
+                        _value = val;
+                        document.getElementById('bindingInput').value = val;
+                        this.notify(val, "value");
+                    }
+                }
+            });
+
+            BindingSource.prototype.onInputChange = function(event){
+                //while the Lotus binder automatically prevents recurssion for accessors, functions need a manual check
+                if(this.value != event.target.value){
+                    this.value = event.target.value;
+                }
+            }
+        };
+        //Lavender.ObjectUtils has some handy utility methods including extend which enbales prototypal inheritance between objects
+        //Lavender.Subject exposes several useful methods including addProperties and notify which is part of an implmentation of the observable pattern
+        Lavender.ObjectUtils.extend(Lavender.Subject, BindingSource);
+        //end binding source set up
+        //create an instance of our source
+        var bindingSource = new BindingSource();
         //the following is an example of how you can mediate the component events that are dispatched.
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
             hljs.initHighlighting();
             var list = document.getElementsByTagName('x-lotus-input');
+            //add event listener to capture changes in our sample input box
+            document.getElementById('bindingInput').addEventListener('change', bindingSource.onInputChange.bind(bindingSource))
             var handler = {
+                onReady:function(event){
+                    handler.setUpBindings(event.payload.target);
+                },
                 onChange: function (event) {
                     console.log('My callback function received value: ' + event.payload.target.value);
+                },
+                setUpBindings:function(component){
+                    //the lotus syntax for addEventListener is slightly different than that of DOM elements,
+                    //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
+                    component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
+                    //set up two way binding for text inputs
+                    if(component.type == 'text'){
+                        //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
+                        bindingSource.binder.bind(component, 'value', bindingSource, 'value');
+                        bindingSource.binder.bind(bindingSource, 'value', component, 'value');
+                    }
+                },
+                addEventListeners:function (component) {
+                    //Do not set up data providers until the component is ready!
+                    //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                    if(!component.ready){
+                        component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                    }else{
+                        handler.setUpBindings(component);
+                    }
                 }
             }
             for (var i = 0; i < list.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                list[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange')
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
             list = document.getElementsByTagName('x-lotus-input2');
             for (var i = 0; i < list.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                list[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange')
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
         };
     </script>
@@ -47,7 +100,8 @@
 <div class="content-panel">
     <h3>HTML Input Element</h3>
     <p>
-        <label>Here's a plain old HTML input. Blah!</label><input type="text"/>
+        <label>Here's a plain old HTML input. Blah!</label><input type="text" id="bindingInput"/>. However, we have enabled two way data binding on all text inputs.
+        Type into this input, or any of the other text inputs below (the first input below in each panel is a text input) and the bindings will resolve changes.
     </p>
 </div>
 
@@ -182,26 +236,79 @@
             context.componentMap.mapComponent('x-lotus-input2', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
             return context;
         }(xtag));
+        //start binding source set up. This is a crude example. Most application should use a MVW framework like lotusjs-mwv set create data models and apply bindings using mediators.
+        //below we create a source for data binding. Components should always effect an application model instead of acting on the view directly
+        //you can then use two way data bindings on the model to keep your components in sync with model. Changes in the model are then resolved by the component.
+        var BindingSource = function(){
+            Lavender.Subject.prototype.constructor.call(this);
+            var _value;
+            this.addProperties({
+                value: {
+                    get: function () {
+                        return _value;
+                    },
+                    set: function (val) {
+                        _value = val;
+                        document.getElementById('bindingInput').value = val;
+                        this.notify(val, "value");
+                    }
+                }
+            });
+
+            BindingSource.prototype.onInputChange = function(event){
+                //while the Lotus binder automatically prevents recurssion for accessors, functions need a manual check
+                if(this.value != event.target.value){
+                    this.value = event.target.value;
+                }
+            }
+        };
+        //Lavender.ObjectUtils has some handy utility methods including extend which enbales prototypal inheritance between objects
+        //Lavender.Subject exposes several useful methods including addProperties and notify which is part of an implmentation of the observable pattern
+        Lavender.ObjectUtils.extend(Lavender.Subject, BindingSource);
+        //end binding source set up
+        //create an instance of our source
+        var bindingSource = new BindingSource();
         //the following is an example of how you can mediate the component events that are dispatched.
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
             hljs.initHighlighting();
             var list = document.getElementsByTagName('x-lotus-input');
+            //add event listener to capture changes in our sample input box
+            document.getElementById('bindingInput').addEventListener('change', bindingSource.onInputChange.bind(bindingSource))
             var handler = {
+                onReady:function(event){
+                    handler.setUpBindings(event.payload.target);
+                },
                 onChange: function (event) {
                     console.log('My callback function received value: ' + event.payload.target.value);
+                },
+                setUpBindings:function(component){
+                    //the lotus syntax for addEventListener is slightly different than that of DOM elements,
+                    //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
+                    component.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
+                    //set up two way binding for text inputs
+                    if(component.type == 'text'){
+                        //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
+                        bindingSource.binder.bind(component, 'value', bindingSource, 'value');
+                        bindingSource.binder.bind(bindingSource, 'value', component, 'value');
+                    }
+                },
+                addEventListeners:function (component) {
+                    //Do not set up data providers until the component is ready!
+                    //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                    if(!component.ready){
+                        component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                    }else{
+                        handler.setUpBindings(component);
+                    }
                 }
             }
             for (var i = 0; i < list.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                list[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange')
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
             list = document.getElementsByTagName('x-lotus-input2');
             for (var i = 0; i < list.length; i++) {
-                //the lotus syntax for addEventListener is slightly different than that of DOM elements,
-                //but it ensures the scope of this within a callback is always relative the the second parameter which is the object instance
-                list[i].lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange')
+                handler.addEventListeners(list[i].lotusComponentInstance);
             }
         };
 		</code>

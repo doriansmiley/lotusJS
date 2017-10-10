@@ -1,0 +1,82 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+
+
+        select[class="dropdown-button"]{
+			width:35%;
+			max-width:400px;
+			border-radius:4px;
+			min-height:30px;
+			padding:6px;
+			font-size:14px;
+            cursor:pointer;
+            color:#444;
+			font-family: 'SegoeUI';
+            box-shadow:-2px 2px 5px rgba(0,0,0,0.3);
+            border: 1px solid #888;
+			/*
+			-webkit-appearance: none;
+			appearance: none;
+			*/
+			
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+1,cecece+100 */
+			background: #ededed; /* Old browsers */
+			background: -moz-linear-gradient(top, #ededed 1%, #cecece 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #ededed 1%,#cecece 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #ededed 1%,#cecece 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#cecece',GradientType=0 ); /* IE6-9 */      }
+
+        select[class="dropdown-button"] * {
+            cursor:pointer;
+        }
+
+        select[class="dropdown-button"]:focus {
+            outline: none;
+        }
+
+        select[class="dropdown-button"]:hover {
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+0,e5e5e5+100 */
+			background: #ededed; /* Old browsers */
+			background: -moz-linear-gradient(top, #ededed 0%, #e5e5e5 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #ededed 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #ededed 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */     
+		}			
+		select[class="dropdown-button"] > option[class="list-item"] {
+			background:#eee;
+			font-size:14px;
+			font-family: 'SegoeUI';
+		}
+	
+		/* No overrides for option items - OS handles this component */
+		select[class="dropdown-button"] > option[class="list-item"]:hover {
+			background:#400 !important;
+		}
+    </style>
+    <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer" class="dropdown-button">
+        <option data-skin-part="itemTemplate" class="list-item"></option>
+    </select>
+</template>

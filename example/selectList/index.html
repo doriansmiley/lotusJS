@@ -85,7 +85,7 @@
         Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);</code>.A new instance of <code class="JavaScript">Lotus.ListCollectionView</code>
         is attached to each tag instance. Open your console to observe the change in values.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select data-template-url="templates/skinned-select.html" data-component-root='[data-skin-part="collectionContainer"]'
                     data-attribute-type="text"></x-lotus-select>
 </div>
 
@@ -97,7 +97,7 @@
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
         with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
-    <x-lotus-select data-template-url="templates/select2.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select data-template-url="templates/skinned-select2.html" data-component-root='[data-skin-part="collectionContainer"]'
                     data-attribute-type="text"></x-lotus-select>
 </div>
 
@@ -108,7 +108,7 @@
         In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-select2', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
-    <x-lotus-select2 data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]'
+    <x-lotus-select2 data-template-url="templates/skinned-select.html" data-component-root='[data-skin-part="collectionContainer"]'
                      data-attribute-type="text"></x-lotus-select2>
 </div>
 

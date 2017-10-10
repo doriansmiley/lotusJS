@@ -19,4 +19,8 @@ export class RadioCollectionView extends AbstractCollectionView{
             this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.selectedItem, originalEvent:event}));
         }
     }
+
+    protected refreshView(value:any):void{
+        this.selectedItem.element['checked'] = true;
+    }
 }
