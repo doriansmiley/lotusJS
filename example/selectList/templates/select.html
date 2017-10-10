@@ -25,41 +25,58 @@
         }
 
 
-        select{
+        select[class="dropdown-button"]{
+			width:35%;
+			max-width:400px;
+			border-radius:4px;
+			min-height:30px;
+			padding:6px;
+			font-size:14px;
             cursor:pointer;
-            color:#fff;
-            border-radius:26px;
-            box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
-            border: 1px solid #4099ff;
+            color:#444;
+			font-family: 'SegoeUI';
+            box-shadow:-2px 2px 5px rgba(0,0,0,0.3);
+            border: 1px solid #888;
+			/*
+			-webkit-appearance: none;
+			appearance: none;
+			*/
+			
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+1,cecece+100 */
+			background: #ededed; /* Old browsers */
+			background: -moz-linear-gradient(top, #ededed 1%, #cecece 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #ededed 1%,#cecece 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #ededed 1%,#cecece 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#cecece',GradientType=0 ); /* IE6-9 */      }
 
-            padding:10px;
-            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+44,1e5799+89,1f6b8e+100 */
-            background: #5bb0d8; /* Old browsers */
-            background: -moz-linear-gradient(top, #5bb0d8 0%, #1e5799 44%, #1e5799 89%, #1f6b8e 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, #5bb0d8 0%,#1e5799 44%,#1e5799 89%,#1f6b8e 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, #5bb0d8 0%,#1e5799 44%,#1e5799 89%,#1f6b8e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
+        select[class="dropdown-button"] * {
+            cursor:pointer;
         }
 
-        select * {
-            cursor:pointer;
-        }
-
-        select:focus {
+        select[class="dropdown-button"]:focus {
             outline: none;
         }
 
-        select:hover {
-            border:1px solid #f00;
-            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
-            background: #f9c67a; /* Old browsers */
-            background: -moz-linear-gradient(top, #f9c67a 1%, #fc7e1e 49%, #f9af02 87%, #ffcc68 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
-        }
+        select[class="dropdown-button"]:hover {
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+0,e5e5e5+100 */
+			background: #ededed; /* Old browsers */
+			background: -moz-linear-gradient(top, #ededed 0%, #e5e5e5 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #ededed 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #ededed 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */     
+		}			
+		select[class="dropdown-button"] > option[class="list-item"] {
+			background:#eee;
+			font-size:14px;
+			font-family: 'SegoeUI';
+		}
+	
+		/* No overrides for option items - OS handles this component */
+		select[class="dropdown-button"] > option[class="list-item"]:hover {
+			background:#400 !important;
+		}
     </style>
-    <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer">
-        <option data-skin-part="itemTemplate"></option>
+    <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer" class="dropdown-button">
+        <option data-skin-part="itemTemplate" class="list-item"></option>
     </select>
 </template>
