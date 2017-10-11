@@ -3,6 +3,7 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 import {InputModel} from "./InputModel";
+import {IValidator} from "./validation/IValidator";
 
 export class InputCollectionModel extends Lavender.Subject{
     public static TYPE_INPUT:number = 0;
@@ -10,9 +11,38 @@ export class InputCollectionModel extends Lavender.Subject{
     public static TYPE_RADIO_GROUP:number = 2;
     public static TYPE_FILE:number =3;
 
+    public selectionRequired:boolean = false;
 
     private _type:number;
     private _collection:Lavender.ArrayList;
+    private _isValid:boolean = false;
+    private _validators:Lavender.ArrayList;
+
+    constructor(type:String, collection:Lavender.ArrayList, selectionRequired:boolean = false){
+        super();
+        this.collection = collection;
+        this.selectionRequired = selectionRequired;
+    }
+
+
+    get validators():Lavender.ArrayList {
+        return this._validators;
+    }
+
+    set validators(value:Lavender.ArrayList) {
+        this._validators = value;
+        this.notify(value, 'validators');
+        this.setUpBindings();
+    }
+
+    get isValid():boolean {
+        return this._isValid;
+    }
+
+    set isValid(value:boolean) {
+        this._isValid = value;
+        this.notify(value, "isValid");
+    }
 
     get type():number {
         return this._type;
@@ -32,15 +62,21 @@ export class InputCollectionModel extends Lavender.Subject{
         this.notify(value, 'collection');
     }
 
-    public validate():Array<InputModel>{
-        let results:Array<InputModel> = [];
-        for(var i=0; i<this.collection.length; i++){
-            let item:InputModel = (this.collection.getItemAt(i) as InputModel);
-            if(item.validate && !item.validate()){
-                //model is invalid, add to invalid results
-                results.push(item);
+    public setUpBindings():void{
+        for(var i=0; i<this.validators.length; i++){
+            this.binder.bind(this.validators.getItemAt(i), 'isValid', this, 'validate');
+        }
+    }
+
+    public validate(value?:boolean):Lavender.ArrayList{
+        let results:Lavender.ArrayList = new Lavender.ArrayList();
+        for(var i=0; i<this.validators.length; i++){
+            let validator:IValidator = (this.validators.getItemAt(i) as IValidator);
+            if(!validator.validate()){
+                results.addAll(validator.errors.source());
             }
         }
+        this.isValid = results.length == 0;
         //return the failed results
         return results;
     }
@@ -62,5 +98,12 @@ export class InputCollectionModel extends Lavender.Subject{
                     break;
             }
         }
+    }
+
+    public destroy():void{
+        this.binder.unbindAll();
+        this.binder = null;
+        this.collection = null;
+
     }
 }

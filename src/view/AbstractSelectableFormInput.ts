@@ -2,7 +2,7 @@
  * Created by dsmiley on 10/5/17.
  */
 import {AbstractItemView} from "./AbstractItemView";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 
 export abstract class AbstractSelectableFormInput extends AbstractItemView{

@@ -2,7 +2,7 @@ import {AbstractCollectionView} from "./AbstractCollectionView";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {InputEvent} from "../control/events/InputEvent";
 import {AbstractItemView} from "./AbstractItemView";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 /**
  * Created by dsmiley on 10/5/17.
  */

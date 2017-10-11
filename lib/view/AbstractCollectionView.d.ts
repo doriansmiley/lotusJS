@@ -26,6 +26,7 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected onCollectionChange(event: Lavender.CollectionEvent): void;
     protected createChildView(model: Object): AbstractItemView;
     protected cloneItemTemplate(model: any): LotusHTMLElement;
+    protected getModel(model: any): Object;
     protected addChildView(model: Object): void;
     protected addViewEventListeners(view: AbstractItemView): void;
     protected removeViewEventListeners(view: AbstractItemView): void;

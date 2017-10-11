@@ -8,13 +8,13 @@ export declare class InputModel extends Lavender.Subject {
     private _name;
     private _selected;
     private _required;
+    private _nonFormattedValue;
     format: (value: string) => string;
-    isValid: (value: string) => boolean;
     constructor(label?: string, value?: string, name?: string, selected?: boolean, required?: boolean);
+    readonly nonFormattedValue: string;
     label: string;
     value: string;
     name: string;
     selected: boolean;
     required: boolean;
-    validate(): boolean;
 }

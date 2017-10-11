@@ -9,8 +9,8 @@ import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
 import {Input} from "./Input";
 import {SkinPart} from "./SkinPart";
-import {InputModel} from "../model/InputModel";
-import {InputCollectionModel} from "../model/InputCollectionModel";
+import {InputModel} from "../model/form/InputModel";
+import {InputCollectionModel} from "../model/form/InputCollectionModel";
 import {RadioCollectionView} from "./RadioCollectionView";
 import {FileCollectionView} from "./FileCollectionView";
 
@@ -34,7 +34,6 @@ export class FormCollectionView extends AbstractCollectionView{
     private _list:HTMLElement;
     private _radioGroup:HTMLElement;
     private _file:HTMLElement;
-    private _errorMessage:string;//error message to display when in error state
     private _error:HTMLElement;//HTML element used to display error message
     private _submit:HTMLElement;
     private _clear:HTMLElement;
@@ -44,8 +43,6 @@ export class FormCollectionView extends AbstractCollectionView{
     public listItemView:string;
     public radioGroupItemView:string;
     public fileItemView:string;
-    public invalidClass:string;//class to assign to invalid form fields
-    public validClass:string;//class to assign to valid form fields
 
     constructor(){
         super();
@@ -86,15 +83,6 @@ export class FormCollectionView extends AbstractCollectionView{
     set error(value:HTMLElement) {
         this._error = value;
         this.notify(value, 'error');
-    }
-
-    get errorMessage():string {
-        return this._errorMessage;
-    }
-
-    set errorMessage(value:string) {
-        this._errorMessage = value;
-        this.notify(value, 'errorMessage');
     }
 
     get state():number {
@@ -180,7 +168,23 @@ export class FormCollectionView extends AbstractCollectionView{
         this.notify(value, 'file');
     }
 
-//grab the appropriate function based on the model object type and skin part definitions
+    protected getModel(model):Object{
+        //TODO: switch case on type and send back either model.collection.getItemAt(o) or model.collection
+        let value:Object = model;
+        switch(model.type){
+            case InputCollectionModel.TYPE_INPUT:
+            case InputCollectionModel.TYPE_FILE:
+                value = model.collection.getItemAt(0);
+                break;
+            case InputCollectionModel.TYPE_LIST:
+            case InputCollectionModel.TYPE_RADIO_GROUP:
+                value = model.collection;
+                break;
+        }
+        return value;
+    }
+
+    //grab the appropriate function based on the model object type and skin part definitions
     protected createChildView(model:Object):AbstractItemView{
         //TODO: switch case on type and add the appropriate corresponding Lotus input control.
         let evalClass = eval(this.itemView);
@@ -216,6 +220,9 @@ export class FormCollectionView extends AbstractCollectionView{
     //stubs for override in subclasses. If you require notifications when a form element has focus etc you can dispatch them in your callbacks assigned here
     protected addViewEventListeners(view:AbstractItemView):void{
         super.addViewEventListeners(view);
+        //TODO:add bindings for view.model.isValid to view.isValid
+        //This requires a form base class that defines valid and invalid styles and the isValid accessors
+        //When view.isValid is false the invalid styles are applied, when view.invalid is true the invalid style is removed and the valid style applied
     }
 
     //stub for override, remove your custom view cllbacks here

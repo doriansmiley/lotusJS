@@ -7,7 +7,7 @@ import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 
 export class AbstractCollectionView extends AbstractComponent{
     private _collectionContainer:HTMLElement;
@@ -130,11 +130,16 @@ export class AbstractCollectionView extends AbstractComponent{
         return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
     }
 
+    //override point for objects that require manipulation of the model
+    protected getModel(model):Object{
+        return model;
+    }
+
     protected addChildView(model:Object):void{
         let view:AbstractItemView = this.createChildView( model );
         //clone the view
         let clone:LotusHTMLElement = this.cloneItemTemplate(model);
-        view.model = model;
+        view.model = this.getModel(model);
         view.element = clone;
         view.init();
         this.childViews.addItem( view );

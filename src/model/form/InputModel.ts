@@ -10,17 +10,22 @@ export class InputModel extends Lavender.Subject{
     private _name:string;
     private _selected:boolean = false;
     private _required:boolean = false;
+    private _nonFormattedValue:string;
 
     public format:(value:string) => string;
-    public isValid:(value:string) => boolean;
 
-    constructor(label?:string, value?:string, name?:string, selected?:boolean, required?:boolean){
+    constructor(label?:string, value?:string, name?:string, selected:boolean = false, required:boolean=false){
         super();
         this.label = label;
         this.value = value;
         this.name = name;
         this.selected = selected;
         this.required = required;
+    }
+
+
+    get nonFormattedValue():string {
+        return this._nonFormattedValue;
     }
 
     get label():string {
@@ -37,6 +42,7 @@ export class InputModel extends Lavender.Subject{
     }
 
     set value(value:string) {
+        this._nonFormattedValue = value;
         if(this.format){
             value = this.format(value);
         }
@@ -69,14 +75,6 @@ export class InputModel extends Lavender.Subject{
     set required(value:boolean) {
         this._required = value;
         this.notify(value, 'required');
-    }
-
-    //TODO: implement validator interface and default validator class instead of this function. Iterate all validators. this is exactly like the SDK core
-    public validate():boolean{
-        if(this.isValid){
-            return this.isValid(this.value);
-        }
-        return (this.required) ? this.value && this.value.length > 0 : true;
     }
 
 }

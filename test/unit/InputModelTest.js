@@ -32,16 +32,6 @@ describe('FileTest', function() {
         expect(model.name).toBe('someName');
         expect(model.selected).toBe(true);
         expect(model.required).toBe(true);
-        expect(model.validate()).toBe(true);
-        model.value = '';
-        expect(model.validate()).toBe(false);
-        model.value = null;
-        expect(model.validate()).toBe(false);
-        model.required = false;
-        model.value = '';
-        expect(model.validate()).toBe(true);
-        model.value = null;
-        expect(model.validate()).toBe(true);
     });
 
   });

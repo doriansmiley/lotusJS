@@ -4,7 +4,7 @@
 import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {InputEvent} from "../control/events/InputEvent";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 
 export class Input extends AbstractItemView{
     private _inputSkinPart:HTMLInputElement;
@@ -46,7 +46,7 @@ export class Input extends AbstractItemView{
         }
         this.notify( value, 'value' );
     }
-
+    //TODO: add invalid classes and bindings to trigger attachment of invlaid styles when model's isValid state changes
     public onModelChange(value:Object):void{
         super.onModelChange(value);
         if(value instanceof InputModel){

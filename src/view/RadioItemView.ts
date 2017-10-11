@@ -4,7 +4,7 @@
 import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 
 export class RadioItemView extends AbstractSelectableFormInput{
 

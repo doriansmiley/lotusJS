@@ -19,7 +19,6 @@ export declare class FormCollectionView extends AbstractCollectionView {
     private _list;
     private _radioGroup;
     private _file;
-    private _errorMessage;
     private _error;
     private _submit;
     private _clear;
@@ -28,14 +27,11 @@ export declare class FormCollectionView extends AbstractCollectionView {
     listItemView: string;
     radioGroupItemView: string;
     fileItemView: string;
-    invalidClass: string;
-    validClass: string;
     constructor();
     submit: HTMLElement;
     clear: HTMLElement;
     back: HTMLElement;
     error: HTMLElement;
-    errorMessage: string;
     state: number;
     validationWarning: HTMLElement;
     inputState: HTMLElement;
@@ -45,6 +41,7 @@ export declare class FormCollectionView extends AbstractCollectionView {
     list: HTMLElement;
     radioGroup: HTMLElement;
     file: HTMLElement;
+    protected getModel(model: any): Object;
     protected createChildView(model: Object): AbstractItemView;
     protected cloneItemTemplate(model: any): LotusHTMLElement;
     protected onSubmit(event: Event): void;

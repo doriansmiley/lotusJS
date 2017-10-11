@@ -3,7 +3,7 @@
  */
 import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
-import {InputModel} from "../model/InputModel";
+import {InputModel} from "../model/form/InputModel";
 
 export class ListItemView extends AbstractSelectableFormInput{
 
