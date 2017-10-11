@@ -47,7 +47,13 @@ describe('ListCollectionView Test', function() {
         expect( component.collectionContainer.options[3].innerHTML ).toBe( 'some label 4' );
         expect( component.childViews.getItemAt(3).selected ).toBe( true );
         expect( component.collectionContainer.options[3].selected ).toBe( true );
-
+        expect(component.invalidClass).toBe(null);
+        expect(component.validClass).toBe(null);
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = false;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
         component.addEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("click", false, true);
@@ -70,6 +76,8 @@ describe('ListCollectionView Test', function() {
         var element = document.createElement('select');
         element.setAttribute('data-attribute-item-view', 'Lotus.ListItemView');
         element.setAttribute('data-skin-part', 'collectionContainer');
+        element.setAttribute('data-attribute-valid-class', 'myValidClass');
+        element.setAttribute('data-attribute-invalid-class', 'myInvalidClass');
         document.body.appendChild(element);
         element.innerHTML = '<option data-skin-part="itemTemplate"></option>';
         var collectionContainer = element;
@@ -107,6 +115,16 @@ describe('ListCollectionView Test', function() {
         expect( component.childViews.getItemAt(2).selected).toBe(true);
         expect( component.childViews.getItemAt(3).model.selected).toBe(false);
         expect( component.childViews.getItemAt(3).selected).toBe(false);
+        expect(component.invalidClass).toBe('myInvalidClass');
+        expect(component.validClass).toBe('myValidClass');
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = false;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(true);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = true;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(true);
         component.addEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("click", false, true);

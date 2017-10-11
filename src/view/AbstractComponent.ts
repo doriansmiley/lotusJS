@@ -13,6 +13,11 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     private _ready:boolean = false;
     private _id:number = Math.random();
     private _skinParts:SkinPartList = new SkinPartList();
+    private _isValid:boolean = false;
+
+    //IMPORTANT: you have to initialize instance attributes that are not defined using accessor methods or they will dropped by the compiler.
+    public validClass:string = null;
+    public invalidClass:string = null;
 
     //placeholders for mixins, required for the compiler
     handlersByEventName:Object;
@@ -73,6 +78,25 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     set skinParts(val:SkinPartList) {
         this._skinParts = val;
         this.notify( val, 'skinParts' );
+    }
+
+    get isValid():boolean {
+        return this._isValid;
+    }
+
+    set isValid(value:boolean) {
+        this._isValid = value;
+        this.notify(value, 'isValid');
+        if(this.isValid && this.validClass){
+            this.attachValidationClass(this.validClass, this.invalidClass);
+        }else if(!this.isValid && this.invalidClass){
+            this.attachValidationClass(this.invalidClass, this.validClass);
+        }
+    }
+
+    //stub for override
+    public attachValidationClass(classToAdd:string, classToRemove:string):void{
+
     }
 
     public init():void{

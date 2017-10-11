@@ -9,6 +9,14 @@ import {InputModel} from "../model/form/InputModel";
 
 export abstract class AbstractInputCollectionView extends AbstractCollectionView{
 
+    //add the invalid/valid class after validation. This method id typically called as part of a data binding on this.isValid
+    public attachValidationClass(classToAdd:string, classToRemove:string):void{
+        if(this.collectionContainer){
+            this.collectionContainer.classList.remove(classToRemove);
+            this.collectionContainer.classList.add(classToAdd);
+        }
+    }
+
     protected onItemSelectedDeselect(event:ItemViewEvent):void{
         let dispatchChange:boolean =  (this.selectedItem != event.payload['item']);
         super.onItemSelectedDeselect(event);

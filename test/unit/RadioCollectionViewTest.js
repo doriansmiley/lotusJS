@@ -16,6 +16,8 @@ describe('RadioCollectionView Test', function () {
         var element = document.createElement('fieldset');
         element.setAttribute('data-attribute-item-view', 'Lotus.RadioItemView');
         element.setAttribute('data-skin-part', 'collectionContainer');
+        element.setAttribute('data-attribute-valid-class', 'myValidClass');
+        element.setAttribute('data-attribute-invalid-class', 'myInvalidClass');
         document.body.appendChild(element);
         element.innerHTML = '<div data-skin-part="itemTemplate">' +
             '<input data-skin-part="radio" type="radio"/>' +
@@ -53,6 +55,16 @@ describe('RadioCollectionView Test', function () {
         expect(component.childViews.getItemAt(1).label.innerHTML).toBe('some label 2');
         expect(component.childViews.getItemAt(2).label.innerHTML).toBe('some label 3');
         expect(component.childViews.getItemAt(3).label.innerHTML).toBe('some label 4');
+        expect(component.invalidClass).toBe('myInvalidClass');
+        expect(component.validClass).toBe('myValidClass');
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = false;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(true);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = true;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(true);
         //TODO: add tests to set selected item
         component.addEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
         component.childViews.getItemAt(0).radio.checked = true;
@@ -115,6 +127,13 @@ describe('RadioCollectionView Test', function () {
         expect( component.childViews.getItemAt(0).selected).toBe(true);
         expect( component.childViews.getItemAt(3).model.selected).toBe(false);
         expect( component.childViews.getItemAt(3).selected).toBe(false);
+        expect(component.invalidClass).toBe(null);
+        expect(component.validClass).toBe(null);
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
+        component.isValid = false;
+        expect(component.collectionContainer.classList.contains(component.invalidClass)).toBe(false);
+        expect(component.collectionContainer.classList.contains(component.validClass)).toBe(false);
         component.addEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
         component.childViews.getItemAt(3).radio.click();
     });

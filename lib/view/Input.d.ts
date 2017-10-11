@@ -10,6 +10,7 @@ export declare class Input extends AbstractItemView {
     inputSkinPart: HTMLInputElement;
     type: string;
     value: string;
+    attachValidationClass(classToAdd: string, classToRemove: string): void;
     onModelChange(value: Object): void;
     defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;

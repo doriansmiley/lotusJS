@@ -8,6 +8,8 @@ describe('Input', function () {
 
     it('check Input function and values', function (done) {
         var element = document.createElement('div');
+        element.setAttribute('data-attribute-valid-class', 'myValidClass');
+        element.setAttribute('data-attribute-invalid-class', 'myInvalidClass');
         var skinBart = document.createElement('input');
         var context = new Lotus.Context(new Lavender.Config());
         var input = new Lotus.Input('text');
@@ -25,6 +27,16 @@ describe('Input', function () {
         input.created(element, context);
         input.addSkinPart('input', skinBart);
         expect(input.inputSkinPart === skinBart).toBe(true);
+        expect(input.invalidClass).toBe('myInvalidClass');
+        expect(input.validClass).toBe('myValidClass');
+        expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(false);
+        expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(false);
+        input.isValid = false;
+        expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(true);
+        expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(false);
+        input.isValid = true;
+        expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(false);
+        expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(true);
         input.inputSkinPart.value = 'test value';
         input.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
         //note setting the inputs value in javascript will not trigger an on change event by itself
@@ -81,6 +93,13 @@ describe('Input', function () {
         model.value = 'test value';//triggers formatting
         input.model = model;
         expect(input.inputSkinPart === skinBart).toBe(true);
+        expect(input.invalidClass).toBe(null);
+        expect(input.validClass).toBe(null);
+        expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(false);
+        expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(false);
+        input.isValid = true;
+        expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(false);
+        expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(false);
         input.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
         //note setting the inputs value in javascript will not trigger an on change event by itself
         //we have to manually dispatch and the change event is triggered after the element is interacted with by the end user

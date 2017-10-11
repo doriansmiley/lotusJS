@@ -46,6 +46,15 @@ export class Input extends AbstractItemView{
         }
         this.notify( value, 'value' );
     }
+
+    //add the invalid/valid class after validation. This method id typically called as part of a data binding on this.isValid
+    public attachValidationClass(classToAdd:string, classToRemove:string):void{
+        if(this.inputSkinPart){
+            this.inputSkinPart.classList.remove(classToRemove);
+            this.inputSkinPart.classList.add(classToAdd);
+        }
+    }
+
     //TODO: add invalid classes and bindings to trigger attachment of invlaid styles when model's isValid state changes
     public onModelChange(value:Object):void{
         super.onModelChange(value);
