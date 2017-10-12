@@ -15,7 +15,7 @@ describe('TextInputValidator ', function () {
         expect( validator.getValidationErrors() instanceof Lavender.ArrayList ).toBe(true);
         expect( validator.getValidationErrors().getItemAt(0).property ).toBe('required');
         expect( validator.getValidationErrors().getItemAt(0).errorCode ).toBe('form.required');
-        expect( validator.getValidationErrors().getItemAt(0).errorMessage ).toBe('Field is required');
+        expect( validator.getValidationErrors().getItemAt(0).errorMessage ).toBe('some label is required');
         //bindings on value will automatically trigger validate
         validator.source.collection.getItemAt(0).value = 'some value';
         expect( validator.errors.length ).toBe(0);

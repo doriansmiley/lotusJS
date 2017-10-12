@@ -26,9 +26,9 @@ export class SelectableInputValidator extends AbstractValidator{
             let itemSelected:boolean = false;
             let groupName:string;
             for(let i=0;i<this.source.collection.length;i++){
+                groupName = this.source.collection.getItemAt(i).name;//group name is the same for all items
                 if(this.source.collection.getItemAt(i).selected){
                     itemSelected = true;
-                    groupName = this.source.collection.getItemAt(i).name;
                     break
                 }
             }

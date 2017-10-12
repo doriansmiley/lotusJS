@@ -12,10 +12,10 @@ describe('SelectableInputValidator ', function () {
         var items = new Lotus.InputCollectionModel(
             Lotus.InputCollectionModel.TYPE_LIST,
             new Lavender.ArrayList([
-                new Lotus.InputModel('some label1', 'some value1', 'some name1'),
-                new Lotus.InputModel('some label2', 'some value2', 'some name2'),
-                new Lotus.InputModel('some label3', 'some value3', 'some name3'),
-                new Lotus.InputModel('some label4', 'some value4', 'some name4'),
+                new Lotus.InputModel('some label1', 'some value1', 'some name'),
+                new Lotus.InputModel('some label2', 'some value2', 'some name'),
+                new Lotus.InputModel('some label3', 'some value3', 'some name'),
+                new Lotus.InputModel('some label4', 'some value4', 'some name'),
             ]),
             true);
         validator.source = items;
@@ -24,7 +24,7 @@ describe('SelectableInputValidator ', function () {
         expect( validator.getValidationErrors().length ).toBe(1);
         expect( validator.getValidationErrors().getItemAt(0).property ).toBe('selected');
         expect( validator.getValidationErrors().getItemAt(0).errorCode ).toBe('form.selectionRequired');
-        expect( validator.getValidationErrors().getItemAt(0).errorMessage ).toBe('You must select one of the available options.');
+        expect( validator.getValidationErrors().getItemAt(0).errorMessage ).toBe('some name must have a selection.');
         //bindings on selected will automatically trigger validate
         validator.source.collection.getItemAt(0).selected = true;
         expect( validator.errors.length ).toBe(0);
