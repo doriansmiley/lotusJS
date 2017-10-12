@@ -17,6 +17,7 @@ export class InputCollectionModel extends Lavender.Subject{
     private _collection:Lavender.ArrayList;
     private _isValid:boolean = false;
     private _validators:Lavender.ArrayList;
+    private _errors:Lavender.ArrayList;
 
     constructor(type:String, collection:Lavender.ArrayList, selectionRequired:boolean = false){
         super();
@@ -24,6 +25,15 @@ export class InputCollectionModel extends Lavender.Subject{
         this.selectionRequired = selectionRequired;
     }
 
+
+    get errors():Lavender.ArrayList {
+        return this._errors;
+    }
+
+    set errors(value:Lavender.ArrayList) {
+        this._errors = value;
+        this.notify(value, 'errors');
+    }
 
     get validators():Lavender.ArrayList {
         return this._validators;
@@ -63,27 +73,27 @@ export class InputCollectionModel extends Lavender.Subject{
     }
 
     public setUpBindings():void{
-        for(var i=0; i<this.validators.length; i++){
+        for(let i=0; i<this.validators.length; i++){
             this.binder.bind(this.validators.getItemAt(i), 'isValid', this, 'validate');
         }
     }
 
     public validate(value?:boolean):Lavender.ArrayList{
-        let results:Lavender.ArrayList = new Lavender.ArrayList();
-        for(var i=0; i<this.validators.length; i++){
+        this.errors = new Lavender.ArrayList();
+        for(let i=0; i<this.validators.length; i++){
             let validator:IValidator = (this.validators.getItemAt(i) as IValidator);
             if(!validator.validate()){
-                results.addAll(validator.errors.source());
+                this.errors.addAll(validator.errors.source());
             }
         }
-        this.isValid = results.length == 0;
+        this.isValid = this.errors.length == 0;
         //return the failed results
-        return results;
+        return this.errors;
     }
 
     public clear():void{
         //reset all form fields by clearing InputModel values
-        for(var i=0; i<this.collection.length; i++){
+        for(let i=0; i<this.collection.length; i++){
             let item:InputModel = this.collection.getItemAt(i) as InputModel;
             switch(this.type){
                 case InputCollectionModel.TYPE_INPUT:

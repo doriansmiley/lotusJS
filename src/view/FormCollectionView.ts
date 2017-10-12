@@ -13,6 +13,8 @@ import {InputModel} from "../model/form/InputModel";
 import {InputCollectionModel} from "../model/form/InputCollectionModel";
 import {RadioCollectionView} from "./RadioCollectionView";
 import {FileCollectionView} from "./FileCollectionView";
+import * as Lavender from 'lavenderjs/lib';
+import {ValidationError} from "../model/form/validation/ValidationError";
 
 export class FormCollectionView extends AbstractCollectionView{
 
@@ -21,28 +23,30 @@ export class FormCollectionView extends AbstractCollectionView{
     public static SUBMIT:number = 2;
     public static ERROR:number = 2;
 
-    private _state:number = 0;//determines what state the form shows
-    private _validationWarning:HTMLElement;
-    private _validationWarningDisplay:string;
-    private _inputState:HTMLElement;
-    private _inputStateDisplay:string;
-    private _submitState:HTMLElement;
-    private _submitStateDisplay:string;
-    private _errorState:HTMLElement;
-    private _errorStateDisplay:string;
-    private _input:HTMLElement;
-    private _list:HTMLElement;
-    private _radioGroup:HTMLElement;
-    private _file:HTMLElement;
-    private _error:HTMLElement;//HTML element used to display error message
-    private _submit:HTMLElement;
-    private _clear:HTMLElement;
-    private _back:HTMLElement;
+    protected _state:number = 0;//determines what state the form shows
+    protected _validationWarning:HTMLElement;
+    protected _validationWarningDisplay:string;
+    protected _inputState:HTMLElement;
+    protected _inputStateDisplay:string;
+    protected _submitState:HTMLElement;
+    protected _submitStateDisplay:string;
+    protected _errorState:HTMLElement;
+    protected _errorStateDisplay:string;
+    protected _input:HTMLElement;
+    protected _list:HTMLElement;
+    protected _radioGroup:HTMLElement;
+    protected _file:HTMLElement;
+    protected _error:HTMLElement;//HTML element used to display error message
+    protected _errorDisplay:string;
+    protected _submit:HTMLElement;
+    protected _clear:HTMLElement;
+    protected _back:HTMLElement;
 
-    public inputItemView:string;
-    public listItemView:string;
-    public radioGroupItemView:string;
-    public fileItemView:string;
+    //IMPORTANT: you have to initialize instance attributes that are not defined using accessor methods or they will dropped by the compiler.
+    public inputView:string = null;
+    public listView:string = null;
+    public radioGroupView:string = null;
+    public fileView:string = null;
 
     constructor(){
         super();
@@ -171,94 +175,171 @@ export class FormCollectionView extends AbstractCollectionView{
     protected getModel(model):Object{
         //TODO: switch case on type and send back either model.collection.getItemAt(o) or model.collection
         let value:Object = model;
-        switch(model.type){
+        switch((model as InputCollectionModel).type){
             case InputCollectionModel.TYPE_INPUT:
             case InputCollectionModel.TYPE_FILE:
-                value = model.collection.getItemAt(0);
+                value = (model as InputCollectionModel).collection.getItemAt(0);
                 break;
             case InputCollectionModel.TYPE_LIST:
             case InputCollectionModel.TYPE_RADIO_GROUP:
-                value = model.collection;
+                value = (model as InputCollectionModel).collection;
                 break;
         }
         return value;
     }
 
-    //grab the appropriate function based on the model object type and skin part definitions
+    //grab the appropriate function based on the model object type
     protected createChildView(model:Object):AbstractItemView{
-        //TODO: switch case on type and add the appropriate corresponding Lotus input control.
-        let evalClass = eval(this.itemView);
+        let evalClass;
+        switch((model as InputCollectionModel).type){
+            case InputCollectionModel.TYPE_INPUT:
+                evalClass = eval(this.inputView);
+                break
+            case InputCollectionModel.TYPE_FILE:
+                evalClass = eval(this.fileView);
+                break;
+            case InputCollectionModel.TYPE_LIST:
+                evalClass = eval(this.listView);
+                break;
+            case InputCollectionModel.TYPE_RADIO_GROUP:
+                evalClass = eval(this.radioGroupView);
+                break;
+        }
         return new evalClass();
     }
 
-    //create the appropriate item template based on model type and skin part deinitions
+    //create the appropriate item template based on model type and skin part definitions
     protected cloneItemTemplate(model):LotusHTMLElement{
+        let node:LotusHTMLElement;
+        switch((model as InputCollectionModel).type){
+            case InputCollectionModel.TYPE_INPUT:
+                node = this.input.cloneNode(true) as LotusHTMLElement;
+                break
+            case InputCollectionModel.TYPE_FILE:
+                node = this.file.cloneNode(true) as LotusHTMLElement;
+                break;
+            case InputCollectionModel.TYPE_LIST:
+                node = this.list.cloneNode(true) as LotusHTMLElement;
+                break;
+            case InputCollectionModel.TYPE_RADIO_GROUP:
+                node = this.radioGroup.cloneNode(true) as LotusHTMLElement;
+                break;
+        }
         // clone the appropriate item template (input, radio group, list, file) based on model.type. there is a skins part corresponding to each type
-        return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
+        return node;
+    }
+
+    protected clearErrors():void{
+        if(this.error){
+            while (this.error.firstChild) {
+                this.error.removeChild(this.error.firstChild);
+            }
+        }
+    }
+
+    protected addErrors(errors:Lavender.ArrayList):void{
+        if(this.error){
+            for(let i=0; i<errors.length; i++){
+                let error:ValidationError = errors.getItemAt(i) as ValidationError;
+                let message:HTMLElement = document.createElement('p');
+                let node:Node = document.createTextNode(error.errorMessage);
+                message.appendChild(node);
+                this.error.appendChild(message)
+            }
+        }
     }
 
     protected onSubmit(event:Event):void{
-        //TODO: onSubmit bindings trigger validation by iterating each item in this.collection, then each item in this.collection[i].collection calling this.collection[i].collection[y].validate.
-        //TODO: Once you create the InputCollectionModel we could probably store references to each item in this.collection[i].collection so we don't need to two loops here
-        // If all fields valid then set state=submit, else submit=validation errors.
-        //only the external application can trigger state error which results from a service error
-        //if all items in the model are
+        //check that all instances of InputCollectionModel are valid
+        let errors:Lavender.ArrayList = new Lavender.ArrayList();
+        for(let i=0; i<this.collection.length; i++){
+            if(!(this.collection.getItemAt(i) as InputCollectionModel).isValid){
+                errors.addAll((this.collection.getItemAt(i) as InputCollectionModel).errors.source());
+            }
+        }
+        //display any validation errors
+        if(errors.length > 0){
+            this.resolveState(FormCollectionView.VALIDATION_ERROR, this.state, errors);
+        }else{
+            this.resolveState(FormCollectionView.SUBMIT, this.state);
+        }
     }
 
     protected onClear(event:Event):void{
         //clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
-        for(var i=0; i<this.collection.length; i++){
+        for(let i=0; i<this.collection.length; i++){
             (this.collection.getItemAt(i) as InputCollectionModel).clear();
         }
+        this.resolveState(FormCollectionView.INPUT, this.state);
     }
 
     protected onBack(event:Event):void{
-        //reset state to input
-        this.state = FormCollectionView.INPUT;
+        this.resolveState(FormCollectionView.INPUT, this.state);
     }
 
-    //stubs for override in subclasses. If you require notifications when a form element has focus etc you can dispatch them in your callbacks assigned here
-    protected addViewEventListeners(view:AbstractItemView):void{
-        super.addViewEventListeners(view);
+    //override point for objects that require bindings on the model and view. the model param is not always equal to view.model, so we need this method
+    protected setUpViewBindings(model:Object, view:AbstractItemView):void{
         //TODO:add bindings for view.model.isValid to view.isValid
-        //This requires a form base class that defines valid and invalid styles and the isValid accessors
-        //When view.isValid is false the invalid styles are applied, when view.invalid is true the invalid style is removed and the valid style applied
+        this.binder.bind(model as InputCollectionModel, 'isValid', view, 'isValid');
     }
 
-    //stub for override, remove your custom view cllbacks here
-    protected removeViewEventListeners(view:AbstractItemView):void{
-        super.removeViewEventListeners(view);
-    }
-
-    protected resolveState(state:number, oldState):void{
+    protected resolveState(state:number, oldState, errors?:Lavender.ArrayList):void{
         switch(oldState){
             case FormCollectionView.INPUT:
-                this.inputState.style.display = 'none';
+                if(this.inputState){
+                    this.inputState.style.display = 'none';
+                }
                 break;
             case FormCollectionView.VALIDATION_ERROR:
-                this.validationWarning.style.display = 'none';
+                if(this.validationWarning){
+                    this.validationWarning.style.display = 'none';
+                }
+                if(this.error){
+                    this.error.style.display = 'none';
+                }
+                this.clearErrors();
                 break;
             case FormCollectionView.SUBMIT:
-                this.submitState.style.display = 'none';
+                if(this.submitState){
+                    this.submitState.style.display = 'none';
+                }
                 break;
             case FormCollectionView.ERROR:
-                this.errorState.style.display = 'none';
+                if(this.errorState){
+                    this.errorState.style.display = 'none';
+                }
                 break;
         }
         switch(state){
             case FormCollectionView.INPUT:
-                this.inputState.style.display = this._inputStateDisplay;
+                if(this.inputState){
+                    this.inputState.style.display = this._inputStateDisplay;
+                }
                 break;
             case FormCollectionView.VALIDATION_ERROR:
-                this.validationWarning.style.display = this._validationWarningDisplay;
+                this.addErrors(errors);
+                if(this.validationWarning){
+                    this.validationWarning.style.display = this._validationWarningDisplay;
+                }
+                if(this.error){
+                    this.error.style.display = this._errorDisplay;
+                }
                 break;
             case FormCollectionView.SUBMIT:
-                this.submitState.style.display = this._submitStateDisplay;
+                if(this.submitState){
+                    this.submitState.style.display = this._submitStateDisplay;
+                }
                 break;
             case FormCollectionView.ERROR:
-                this.errorState.style.display = this._errorStateDisplay;
+                if(this.errorState){
+                    this.errorState.style.display = this._errorStateDisplay;
+                }
                 break;
         }
+    }
+
+    public onError(error:Error):void{
+        //only the external application can trigger state error which results from a service error
     }
 
     public onReady():void{
@@ -313,6 +394,10 @@ export class FormCollectionView extends AbstractCollectionView{
             case 'errorState':
                 this._errorStateDisplay = this.errorState.style.display;
                 this.errorState.style.display = 'none';
+                break;
+            case 'error':
+                this._errorDisplay = this.error.style.display;
+                this.error.style.display = 'none';
                 break;
 
         }

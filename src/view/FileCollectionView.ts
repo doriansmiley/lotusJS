@@ -37,12 +37,12 @@ export class FileCollectionView extends AbstractCollectionView{
     }
     
     protected uploadFiles(files:FileList):void{
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             if(files[i].type.indexOf('image') < 0 ){
                 continue;//skip file types that are not images
             }
             //iterate over the files and create a new file object and append to the collection
-            var file = new File();
+            let file = new File();
             file.type = files[i].type;
             file.name = files[i].name;
             file.size = files[i].size;
