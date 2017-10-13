@@ -8,13 +8,29 @@ describe('FormItemView Test', function() {
 
     it('Test FormItemView Input view', function(done) {
         var handler = {
-            onChange:function(event){
-                component.input.lotusComponentInstance.removeEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                expect(event.type === Lotus.InputEvent.CHANGE).toBe(true);
-                expect(inputModel.value === 'xxx-test value').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value === 'xxx-test value').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value === 'xxx-test value').toBe(true);
-                expect(event.payload.target.getAttribute('type') === 'text').toBe(true);
+            onInputReady:function(event){
+                component.input.lotusComponentInstance.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
+                //test intital value
+                expect(component.input.lotusComponentInstance.inputSkinPart.value).toBe( 'xxx-test value' );
+                expect(component.input.lotusComponentInstance.value).toBe( 'xxx-test value' );
+                expect(component.input.lotusComponentInstance.model.value).toBe( 'xxx-test value' );
+                expect(component.input.lotusComponentInstance.model.required).toBe( true );
+                //test validation
+                expect(component.isValid).toBe( true );
+                expect(validator.isValid).toBe( true );
+                expect(model.isValid).toBe( true );
+                expect(component.input.lotusComponentInstance.invalidClass).toBe('myInvalidClass');
+                expect(component.input.lotusComponentInstance.validClass).toBe('myValidClass');
+                expect(component.input.lotusComponentInstance.isValid).toBe(true);
+                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.invalidClass)).toBe(false);
+                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.validClass)).toBe(true);
+                inputModel.value = '';
+                expect(component.isValid).toBe( false );
+                expect(validator.isValid).toBe( false );
+                expect(model.isValid).toBe( false );
+                expect(component.input.lotusComponentInstance.isValid).toBe(false);
+                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.invalidClass)).toBe(true);
+                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.validClass)).toBe(false);
                 //test two way binding
                 inputModel.value = 'another value';
                 expect(inputModel.value === 'xxx-another value').toBe(true);
@@ -40,16 +56,6 @@ describe('FormItemView Test', function() {
                 expect(component.input === null).toBe(true);
                 done();
             },
-            onInputReady:function(event){
-                component.input.lotusComponentInstance.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
-                expect( component.input.lotusComponentInstance.inputSkinPart.value).toBe( 'xxx-test value' );
-                //note setting the inputs value in javascript will not trigger an on change event by itself
-                //we have to manually dispatch and the change event is triggered after the element is interacted with by the end user
-                component.input.lotusComponentInstance.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
-                var evt = document.createEvent("HTMLEvents");
-                evt.initEvent("change", false, true);
-                component.input.lotusComponentInstance.inputSkinPart.dispatchEvent(evt);
-            },
             onReady:function(event){
                 handler.initComponent(event.payload.target);
             },
@@ -60,6 +66,9 @@ describe('FormItemView Test', function() {
                 }
                 inputModel.value = 'test value';//triggers formatting
                 model = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_INPUT, new Lavender.ArrayList([ inputModel ]));
+                validator = new Lotus.TextInputValidator();
+                validator.source = model;
+                model.validators = new Lavender.ArrayList([validator]);//add the text input validator to the
                 //IMPORTANT: the model is always set before  created is called
                 component.model = model;
                 expect( component.element === element ).toBe( true );
@@ -87,12 +96,13 @@ describe('FormItemView Test', function() {
         var inputModel
         var component;
         var element = document.createElement('x-lotus-form-view');
+        var validator = new Lotus.TextInputValidator();
         element.setAttribute('data-attribute-id', '1234');
         element.setAttribute('data-component-root', '[data-skin-part="collectionContainer"]');
         element.innerHTML = '<div data-skin-part="collectionContainer">' +
             '<x-lotus-radio data-skin-part="radioGroup" data-template-url="base/unit/templates/radio.html" data-component-root="[data-skin-part=\'collectionContainer\']"></x-lotus-radio>' +
             '<x-lotus-select data-skin-part="list" data-template-url="base/unit/templates/select.html" data-component-root=\'[data-skin-part="collectionContainer"]\' data-attribute-type="text"></x-lotus-select>' +
-            '<x-lotus-input data-skin-part="input" data-template-url="base/unit/templates/input.html" data-component-root=\'[data-skin-part="input"]\' data-attribute-type="text"></x-lotus-input>' +
+            '<x-lotus-input data-attribute-valid-class="myValidClass" data-attribute-invalid-class="myInvalidClass" data-skin-part="input" data-template-url="base/unit/templates/input.html" data-component-root=\'[data-skin-part="input"]\' data-attribute-type="text"></x-lotus-input>' +
             '<x-lotus-upload data-skin-part="file" data-template-url="base/unit/templates/fileUpload.html" data-component-root="[data-attribute-item-view=\'Lotus.FileView\']" data-attribute-type="text"></x-lotus-upload>';
         '</div>';
         //set up context to define tag mappings

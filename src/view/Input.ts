@@ -59,11 +59,11 @@ export class Input extends AbstractItemView{
     public onModelChange(value:Object):void{
         super.onModelChange(value);
         if(value instanceof InputModel){
-            //set initial value
-            this.value = value.value;
             //set up two way bindings on model
             this.binder.bind(value, 'value', this, 'value');
             this.binder.bind(this, 'value', value, 'value');
+            //set the intital value, IMORTANT: do this after bindings are set up to trigger validation
+            this.value = value.value;
         }
     }
 
@@ -77,11 +77,18 @@ export class Input extends AbstractItemView{
         super.onSkinPartAdded(part, element);
         switch( part ){
             case 'input':
-                //add event listener or whatever else yo want to do when this skin part is added
+                //add event listener or whatever else you want to do when this skin part is added
                 //you could hold until all skin parts are added and then call addEventListeners
                 console.log('Lotus.Input.prototype.onSkinPartAdded: part: ' + part);
                 this.inputSkinPart.setAttribute('type', this.type)
                 this.addEventListeners();
+                if(this.model){
+                    this.inputSkinPart.value = this.model['value'];
+                    //trigger change event to update bidings and trigger validation
+                    var evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", false, true);
+                    this.inputSkinPart.dispatchEvent(evt);
+                }
                 break;
         }
     }

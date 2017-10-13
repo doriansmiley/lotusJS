@@ -77,13 +77,14 @@ export class InputCollectionModel extends Lavender.Subject{
         for(let i=0; i<this.validators.length; i++){
             this.binder.bind(this.validators.getItemAt(i), 'isValid', this, 'validate');
         }
+        this.validate();
     }
 
     public validate(value?:boolean):Lavender.ArrayList{
         this.errors = new Lavender.ArrayList();
         for(let i=0; i<this.validators.length; i++){
             let validator:IValidator = (this.validators.getItemAt(i) as IValidator);
-            if(!validator.validate()){
+            if(!validator.isValid){
                 this.errors.addAll(validator.errors.source());
             }
         }

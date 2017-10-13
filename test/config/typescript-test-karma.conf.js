@@ -17,7 +17,7 @@ module.exports = function (config) {
             "/local": "http://localhost"
         },
 
-        exclude: ['lib/angular/angular-scenario.js', 'unit/FormCollectionViewTest.js'],
+        exclude: ['lib/angular/angular-scenario.js'],
 
         autoWatch: true,
 

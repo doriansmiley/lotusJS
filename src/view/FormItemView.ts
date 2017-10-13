@@ -140,6 +140,8 @@ export class FormItemView extends AbstractItemView{
             }
             //bind validation
             this.binder.bind(value, 'isValid', component, 'isValid');
+            //set intital isValid value for component
+            component.isValid = value.isValid;
         }
     }
 
@@ -172,6 +174,8 @@ export class FormItemView extends AbstractItemView{
             return;
         }
         this.binder.bind(value as InputCollectionModel, 'isValid', this, 'isValid');
+        //set initial valid value
+        this.isValid = (value as InputCollectionModel).isValid;
         this.setUpSkinParts();
     }
 
