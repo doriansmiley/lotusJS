@@ -50,6 +50,7 @@ module.exports = function(config) {
         '../lib/lotusJS-UMD.min.js',
         '../global/Globals.js',
         {pattern: 'unit/assets/**', watched: false, included: false, served: true},
+        {pattern: 'unit/templates/**', watched: false, included: false, served: true},
         'unit/**/*.js'
     ],
 
@@ -57,7 +58,7 @@ module.exports = function(config) {
           "/local": "http://localhost"
       },
 
-      exclude: ['lib/angular/angular-scenario.js'],
+      exclude: ['lib/angular/angular-scenario.js', 'unit/FormCollectionViewTest.js'],
 
       autoWatch: true,
 

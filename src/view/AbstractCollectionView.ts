@@ -121,23 +121,20 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
+    //override point
     protected createChildView(model:Object):AbstractItemView{
         let evalClass = eval(this.itemView);
         return new evalClass();
     }
 
+    //override point
     protected cloneItemTemplate(model:Object):LotusHTMLElement{
         return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
     }
 
-    //override point for objects that require manipulation of the model
+    //override point for objects that require manipulation of the model such as implementation of adapter pattern
     protected getModel(model:Object):Object{
         return model;
-    }
-
-    //override point for objects that require bindings on the model and view. the model param is not always equal to view.model as views sometimes require adapters
-    protected setUpViewBindings(model:Object, view:AbstractItemView):void{
-
     }
 
     protected addChildView(model:Object):void{
@@ -154,7 +151,6 @@ export class AbstractCollectionView extends AbstractComponent{
             this.element.appendChild(view.element);
         }
         this.addViewEventListeners( view );
-        this.setUpViewBindings(model, view);
         //set the selected item from the model
         //this allows data models to drive the selected item when they are assigned, or a new item added
         if(view.model['selected']){
@@ -240,6 +236,13 @@ export class AbstractCollectionView extends AbstractComponent{
         //stub for override
     }
 
+    //override point
+    protected validateViewsFunctions():void{
+        if( this.itemView === null || this.itemView == undefined ){
+            throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
+        }
+    }
+
     public setSelectedItem(model:Object):void{
         //since this can be used as a bindable end point make sure recursion does not occur
         if(this.selectedItem && this.selectedItem.model == model){
@@ -265,9 +268,7 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     public render():void{
-        if( this.itemView === null || this.itemView == undefined ){
-            throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
-        }
+        this.validateViewsFunctions();
         this.removeAllChildViews();
         for( let i=0; i < this.collection.length; i++ ){
             this.addChildView( this.collection.getItemAt(i) );

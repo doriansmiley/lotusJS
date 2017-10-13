@@ -1,18 +1,11 @@
 /**
  * Created by dsmiley on 10/9/17.
  */
-import {ItemViewEvent} from "../control/events/ItemViewEvent";
-import {InputEvent} from "../control/events/InputEvent";
 import {AbstractCollectionView} from "./AbstractCollectionView";
 import {AbstractItemView} from "./AbstractItemView";
-import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {Input} from "./Input";
 import {SkinPart} from "./SkinPart";
-import {InputModel} from "../model/form/InputModel";
 import {InputCollectionModel} from "../model/form/InputCollectionModel";
-import {RadioCollectionView} from "./RadioCollectionView";
-import {FileCollectionView} from "./FileCollectionView";
 import * as Lavender from 'lavenderjs/lib';
 import {ValidationError} from "../model/form/validation/ValidationError";
 
@@ -32,10 +25,6 @@ export class FormCollectionView extends AbstractCollectionView{
     protected _submitStateDisplay:string;
     protected _errorState:HTMLElement;
     protected _errorStateDisplay:string;
-    protected _input:HTMLElement;
-    protected _list:HTMLElement;
-    protected _radioGroup:HTMLElement;
-    protected _file:HTMLElement;
     protected _error:HTMLElement;//HTML element used to display error message
     protected _errorDisplay:string;
     protected _submit:HTMLElement;
@@ -136,99 +125,6 @@ export class FormCollectionView extends AbstractCollectionView{
         this.notify(value, 'errorState');
     }
 
-    get input():HTMLElement {
-        return this._input;
-    }
-
-    set input(value:HTMLElement) {
-        this._input = value;
-        this.notify(value, 'input');
-    }
-
-    get list():HTMLElement {
-        return this._list;
-    }
-
-    set list(value:HTMLElement) {
-        this._list = value;
-        this.notify(value, 'list');
-    }
-
-    get radioGroup():HTMLElement {
-        return this._radioGroup;
-    }
-
-    set radioGroup(value:HTMLElement) {
-        this._radioGroup = value;
-        this.notify(value, 'radioGroup');
-    }
-
-    get file():HTMLElement {
-        return this._file;
-    }
-
-    set file(value:HTMLElement) {
-        this._file = value;
-        this.notify(value, 'file');
-    }
-
-    protected getModel(model):Object{
-        //TODO: switch case on type and send back either model.collection.getItemAt(o) or model.collection
-        let value:Object = model;
-        switch((model as InputCollectionModel).type){
-            case InputCollectionModel.TYPE_INPUT:
-            case InputCollectionModel.TYPE_FILE:
-                value = (model as InputCollectionModel).collection.getItemAt(0);
-                break;
-            case InputCollectionModel.TYPE_LIST:
-            case InputCollectionModel.TYPE_RADIO_GROUP:
-                value = (model as InputCollectionModel).collection;
-                break;
-        }
-        return value;
-    }
-
-    //grab the appropriate function based on the model object type
-    protected createChildView(model:Object):AbstractItemView{
-        let evalClass;
-        switch((model as InputCollectionModel).type){
-            case InputCollectionModel.TYPE_INPUT:
-                evalClass = eval(this.inputView);
-                break
-            case InputCollectionModel.TYPE_FILE:
-                evalClass = eval(this.fileView);
-                break;
-            case InputCollectionModel.TYPE_LIST:
-                evalClass = eval(this.listView);
-                break;
-            case InputCollectionModel.TYPE_RADIO_GROUP:
-                evalClass = eval(this.radioGroupView);
-                break;
-        }
-        return new evalClass();
-    }
-
-    //create the appropriate item template based on model type and skin part definitions
-    protected cloneItemTemplate(model):LotusHTMLElement{
-        let node:LotusHTMLElement;
-        switch((model as InputCollectionModel).type){
-            case InputCollectionModel.TYPE_INPUT:
-                node = this.input.cloneNode(true) as LotusHTMLElement;
-                break
-            case InputCollectionModel.TYPE_FILE:
-                node = this.file.cloneNode(true) as LotusHTMLElement;
-                break;
-            case InputCollectionModel.TYPE_LIST:
-                node = this.list.cloneNode(true) as LotusHTMLElement;
-                break;
-            case InputCollectionModel.TYPE_RADIO_GROUP:
-                node = this.radioGroup.cloneNode(true) as LotusHTMLElement;
-                break;
-        }
-        // clone the appropriate item template (input, radio group, list, file) based on model.type. there is a skins part corresponding to each type
-        return node;
-    }
-
     protected clearErrors():void{
         if(this.error){
             while (this.error.firstChild) {
@@ -275,12 +171,6 @@ export class FormCollectionView extends AbstractCollectionView{
 
     protected onBack(event:Event):void{
         this.resolveState(FormCollectionView.INPUT, this.state);
-    }
-
-    //override point for objects that require bindings on the model and view. the model param is not always equal to view.model, so we need this method
-    protected setUpViewBindings(model:Object, view:AbstractItemView):void{
-        //TODO:add bindings for view.model.isValid to view.isValid
-        this.binder.bind(model as InputCollectionModel, 'isValid', view, 'isValid');
     }
 
     protected resolveState(state:number, oldState, errors?:Lavender.ArrayList):void{
@@ -345,7 +235,7 @@ export class FormCollectionView extends AbstractCollectionView{
     public onReady():void{
         super.onReady()
         //set the default state
-        this.resolveState(this.state, null);
+        this.resolveState(FormCollectionView.INPUT, null);
     }
 
     //define required skin parts
@@ -355,10 +245,6 @@ export class FormCollectionView extends AbstractCollectionView{
         this.skinParts.addItem(new SkinPart('inputState', this, 'inputState'));
         this.skinParts.addItem(new SkinPart('submitState', this, 'submitState'));
         this.skinParts.addItem(new SkinPart('errorState', this, 'errorState'));
-        this.skinParts.addItem(new SkinPart('input', this, 'input'));
-        this.skinParts.addItem(new SkinPart('list', this, 'list'));
-        this.skinParts.addItem(new SkinPart('radioGroup', this, 'radioGroup'));
-        this.skinParts.addItem(new SkinPart('file', this, 'file'));
         this.skinParts.addItem(new SkinPart('error', this, 'error'));
         this.skinParts.addItem(new SkinPart('submit', this, 'submit'));
         this.skinParts.addItem(new SkinPart('clear', this, 'clear'));

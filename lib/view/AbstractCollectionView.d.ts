@@ -27,7 +27,6 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected createChildView(model: Object): AbstractItemView;
     protected cloneItemTemplate(model: Object): LotusHTMLElement;
     protected getModel(model: Object): Object;
-    protected setUpViewBindings(model: Object, view: AbstractItemView): void;
     protected addChildView(model: Object): void;
     protected addViewEventListeners(view: AbstractItemView): void;
     protected removeViewEventListeners(view: AbstractItemView): void;
@@ -40,6 +39,7 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeChildViewFromModel(model: Object): void;
     protected initCollection(): void;
     protected refreshView(value: any): void;
+    protected validateViewsFunctions(): void;
     setSelectedItem(model: Object): void;
     init(): void;
     render(): void;

@@ -37,6 +37,8 @@ export * from './view/FileView';
 export * from './view/FileCollectionView';
 export * from './view/DragDropFileCollectionView';
 export * from './view/Image';
+export * from './view/FormItemView';
+export * from './view/FormCollectionView';
 export * from './model/form/InputModel';
 export * from './model/form/InputCollectionModel';
 export * from './model/form/validation/IValidator';

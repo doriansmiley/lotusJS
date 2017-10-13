@@ -13,7 +13,7 @@ export declare class InputCollectionModel extends Lavender.Subject {
     private _isValid;
     private _validators;
     private _errors;
-    constructor(type: String, collection: Lavender.ArrayList, selectionRequired?: boolean);
+    constructor(type: number, collection: Lavender.ArrayList, selectionRequired?: boolean);
     errors: Lavender.ArrayList;
     validators: Lavender.ArrayList;
     isValid: boolean;

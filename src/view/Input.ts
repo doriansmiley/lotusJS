@@ -41,7 +41,7 @@ export class Input extends AbstractItemView{
     set value(value:string) {
         this._value = value;
         //manually this.inputSkinPart.value if there are no two way bindings
-        if(this.inputSkinPart && ( !this.model || !(this.model instanceof InputModel) )){
+        if(this.inputSkinPart){
             this.inputSkinPart.value = value;
         }
         this.notify( value, 'value' );
@@ -64,11 +64,6 @@ export class Input extends AbstractItemView{
             //set up two way bindings on model
             this.binder.bind(value, 'value', this, 'value');
             this.binder.bind(this, 'value', value, 'value');
-            //set up one way binding for text input
-            if(this.inputSkinPart){
-                this.inputSkinPart.value = value.value;
-                this.binder.bind(this, 'value', this.inputSkinPart, 'value');
-            }
         }
     }
 

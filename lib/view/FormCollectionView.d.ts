@@ -1,6 +1,7 @@
+/**
+ * Created by dsmiley on 10/9/17.
+ */
 import { AbstractCollectionView } from "./AbstractCollectionView";
-import { AbstractItemView } from "./AbstractItemView";
-import { LotusHTMLElement } from "../context/LotusHTMLElement";
 import * as Lavender from 'lavenderjs/lib';
 export declare class FormCollectionView extends AbstractCollectionView {
     static INPUT: number;
@@ -16,10 +17,6 @@ export declare class FormCollectionView extends AbstractCollectionView {
     protected _submitStateDisplay: string;
     protected _errorState: HTMLElement;
     protected _errorStateDisplay: string;
-    protected _input: HTMLElement;
-    protected _list: HTMLElement;
-    protected _radioGroup: HTMLElement;
-    protected _file: HTMLElement;
     protected _error: HTMLElement;
     protected _errorDisplay: string;
     protected _submit: HTMLElement;
@@ -39,19 +36,11 @@ export declare class FormCollectionView extends AbstractCollectionView {
     inputState: HTMLElement;
     submitState: HTMLElement;
     errorState: HTMLElement;
-    input: HTMLElement;
-    list: HTMLElement;
-    radioGroup: HTMLElement;
-    file: HTMLElement;
-    protected getModel(model: any): Object;
-    protected createChildView(model: Object): AbstractItemView;
-    protected cloneItemTemplate(model: any): LotusHTMLElement;
     protected clearErrors(): void;
     protected addErrors(errors: Lavender.ArrayList): void;
     protected onSubmit(event: Event): void;
     protected onClear(event: Event): void;
     protected onBack(event: Event): void;
-    protected setUpViewBindings(model: Object, view: AbstractItemView): void;
     protected resolveState(state: number, oldState: any, errors?: Lavender.ArrayList): void;
     onError(error: Error): void;
     onReady(): void;

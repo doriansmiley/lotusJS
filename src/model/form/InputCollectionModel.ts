@@ -19,8 +19,9 @@ export class InputCollectionModel extends Lavender.Subject{
     private _validators:Lavender.ArrayList;
     private _errors:Lavender.ArrayList;
 
-    constructor(type:String, collection:Lavender.ArrayList, selectionRequired:boolean = false){
+    constructor(type:number, collection:Lavender.ArrayList, selectionRequired:boolean = false){
         super();
+        this.type = type;
         this.collection = collection;
         this.selectionRequired = selectionRequired;
     }
