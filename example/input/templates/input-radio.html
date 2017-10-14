@@ -1,0 +1,96 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+		div[class="input-skin1-radio"] {
+			width:30px;
+			height:30px;
+			padding:0px;
+			margin:0px;
+		}
+
+		div[class="input-skin1-radio"] .sprite-container {
+			width:30px;
+			height:30px;
+			border:2px solid #f00;
+			position:relative;
+			left:-1px;
+			top:-35px;
+			  border-radius:56px;
+            box-shadow:-1px 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid #777;
+			background:#eee;
+		}
+
+        div[class="input-skin1-radio"] input {
+			width:30px;
+			height:30px;
+			opacity:0;
+			z-index:1;
+			position:relative;
+			cursor:pointer;
+        }
+
+		
+		
+        div[class="input-skin1-radio"] input * {
+            cursor:pointer;
+        }
+
+        div[class="input-skin1-radio"] input:focus {
+            outline: none;
+        }
+
+        div[class="input-skin1-radio"] input:hover {
+
+        }
+		
+		div[class="input-skin1-radio"] input:hover~.sprite-container {
+			border: 2px solid #1f6b8e;
+			width:28px;
+			height:28px;
+		}	
+		
+		div[class="input-skin1-radio"] input:checked~.sprite-container {
+			width:28px;
+			height:28px;
+			border: 2px solid #1f6b8e;
+		
+		}
+		div[class="input-skin1-radio"] input:checked~.sprite-container>.sprite {
+			width:calc(100% - 6px);
+			height:calc(100% - 6px);
+			background:#1f6b8e;
+			margin:3px;
+			border-radius:50px;
+		}
+
+    </style>
+	<div class="input-skin1-radio">
+		<input data-skin-part="input" />
+		<div class="sprite-container"><!-- empty div that is the actual sprite but positioned behind the radio/checkbox -->
+			<div class="sprite"></div>
+		</div>
+	</div>
+</template>

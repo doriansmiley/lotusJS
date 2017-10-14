@@ -25,7 +25,7 @@
         }
 
 
-        input[class="input-skin1"]{
+        div[class="input-skin1-silder"]{
             cursor:pointer;
             color:#333;
             border-radius:6px;
@@ -33,27 +33,28 @@
             border: 1px solid #777;
 			font-family:'SegoeUI';
 			font-size:12px;
-			padding:8px;
+			padding:4px;
 			background:#eee;
-			min-width:40px;
 			
         }
+		
+		div[class="input-skin1-silder"]:hover {
+			border: 2px solid #1f6b8e;
+			padding:3px;
+		}
 
-        input[class="input-skin1"] * {
+        div[class="input-skin1-silder"] input * {
             cursor:pointer;
         }
 
-        input[class="input-skin1"]:focus {
+        div[class="input-skin1-silder"] input:focus {
             outline: none;
-			color:#1f6b8e;
-			 border: 2px solid #1f6b8e;
-			 padding:7px;
         }
 
-        input[class="input-skin1"]:hover {
-            border: 2px solid #1f6b8e;
-			padding:7px;
+        div[class="input-skin1-silder"] input:hover {
         }
     </style>
-    <input data-skin-part="input" class="input-skin1"/>
+	<div class="input-skin1-silder">
+		<input data-skin-part="input" />
+	</div>
 </template>
