@@ -30,13 +30,7 @@ export class FormCollectionView extends AbstractCollectionView{
     protected _submit:HTMLElement;
     protected _clear:HTMLElement;
     protected _back:HTMLElement;
-
-    //IMPORTANT: you have to initialize instance attributes that are not defined using accessor methods or they will dropped by the compiler.
-    public inputView:string = null;
-    public listView:string = null;
-    public radioGroupView:string = null;
-    public fileView:string = null;
-
+    
     constructor(){
         super();
     }
