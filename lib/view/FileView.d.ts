@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 9/26/17.
  */
-import { AbstractItemView } from "./AbstractItemView";
+import { AbstractThumbnailView } from "./AbstractThumbnailView";
 import * as Lavender from 'lavenderjs/lib';
 export declare class File extends Lavender.Subject {
     static PENDING: string;
@@ -27,7 +27,7 @@ export declare class File extends Lavender.Subject {
     type: string;
     name: string;
 }
-export declare class FileView extends AbstractItemView {
+export declare class FileView extends AbstractThumbnailView {
     constructor();
     private _fileLabel;
     private _fileTypeLabel;
@@ -40,7 +40,6 @@ export declare class FileView extends AbstractItemView {
     private _abortIndicator;
     private _cancelBtn;
     private _clearBtn;
-    private _thumbnail;
     private _cancelBtnDisplay;
     private _clearBtnDisplay;
     fileLabel: HTMLLabelElement;
@@ -54,7 +53,6 @@ export declare class FileView extends AbstractItemView {
     abortIndicator: HTMLElement;
     cancelBtn: HTMLButtonElement;
     clearBtn: HTMLButtonElement;
-    thumbnail: HTMLImageElement;
     cancelBtnDisplay: string;
     clearBtnDisplay: string;
     protected setUpBindings(): void;

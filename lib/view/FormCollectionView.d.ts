@@ -22,10 +22,6 @@ export declare class FormCollectionView extends AbstractCollectionView {
     protected _submit: HTMLElement;
     protected _clear: HTMLElement;
     protected _back: HTMLElement;
-    inputView: string;
-    listView: string;
-    radioGroupView: string;
-    fileView: string;
     constructor();
     submit: HTMLElement;
     clear: HTMLElement;

@@ -24,6 +24,13 @@
 			font-style: italic;
 		}
 
+		.fileInfo{
+			padding: 10px;
+		}
+
+		div[data-skin-part="collectionContainer"]{
+			max-width:500px;
+		}
 
 		div[class="file-upload1"] button{
 			cursor:pointer;
@@ -72,12 +79,16 @@
 			min-width:95px;
 			max-height: 95px;
 			max-width: 95px;
-					border:1px dashed #444;
-		}
-		div[class="file-upload1"] div[class=thumbnailContainer] img{
-			width: 100%;
-			height: auto;
-	
+			border:1px dashed #444;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items: center;
+			align-items: center;
 		}
 
 
@@ -146,7 +157,6 @@
 			background:#ddd;
 			border:1px solid #999;
 			border-radius:8px;
-			max-width:400px;
 			margin-top:5px;
 		}
 		
@@ -185,7 +195,7 @@
 		<div data-skin-part="itemTemplate">
 
 			<!-- Thumbnail -->
-			<div class="thumbnailContainer" >
+			<div data-skin-part="thumbnailContainer" class="thumbnailContainer">
 				<img data-skin-part="thumbnail"/>
 			</div>
 

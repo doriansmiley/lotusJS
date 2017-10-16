@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 9/26/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractThumbnailView} from "./AbstractThumbnailView";
 import {SkinPart} from "./SkinPart";
 import {FileEvent} from "../control/events/FileEvent";
 import * as Lavender from 'lavenderjs/lib';
@@ -94,7 +94,7 @@ export class File extends Lavender.Subject{
 
 }
 
-export class FileView extends AbstractItemView{
+export class FileView extends AbstractThumbnailView{
 
     constructor(){
         super();
@@ -111,7 +111,6 @@ export class FileView extends AbstractItemView{
     private _abortIndicator:HTMLElement;
     private _cancelBtn:HTMLButtonElement;
     private _clearBtn:HTMLButtonElement;
-    private _thumbnail:HTMLImageElement;
     private _cancelBtnDisplay:string;//css style for active button state
     private _clearBtnDisplay:string;//css style for active button state
 
@@ -202,14 +201,6 @@ export class FileView extends AbstractItemView{
 
     set clearBtn(value:HTMLButtonElement) {
         this._clearBtn = value;
-    }
-
-    get thumbnail():HTMLImageElement {
-        return this._thumbnail;
-    }
-
-    set thumbnail(value:HTMLImageElement) {
-        this._thumbnail = value;
     }
 
     get cancelBtnDisplay():string {
