@@ -79,9 +79,7 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     protected destroyChildViews():void{
-        for( let i=0; i < this.childViews.length; i++){
-            this.removeChildView( this.childViews.getItemAt(i) );
-        }
+        this.removeAllChildViews();
         if( this.collectionContainer !== null && this.collectionContainer !== undefined ){
             while (this.collectionContainer.firstChild) {
                 this.collectionContainer.removeChild(this.collectionContainer.firstChild);

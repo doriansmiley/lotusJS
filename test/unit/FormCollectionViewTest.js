@@ -50,10 +50,66 @@ describe('FormCollectionView Test', function() {
                 expect(inputInput.value === 'xxx-hello world').toBe(true);
                 expect(inputInput.value === 'xxx-hello world').toBe(true);
                 expect(input.inputSkinPart.value  === 'xxx-hello world').toBe(true);
-                //end binding tests
+                //strat the list
+                if(!list.ready){
+                    list.addEventListener(Lotus.ComponentEvent.READY, handler, 'onListReady');
+                }else{
+                    list.onListReady();
+                }
+            },
+            onListReady:function(event){
+                list.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onListReady');
+                //test initial value
+                expect( list.itemView === 'Lotus.ListItemView' ).toBe( true );
+                expect( list.createChildView() instanceof Lotus.ListItemView ).toBe( true );
+                expect( list.collection.length ).toBe( 4 );
+                expect( list.prompt.innerHTML ).toBe( 'Please select one...' );
+                expect( list.collectionContainer.options.length ).toBe( 5 );
+                expect( list.collectionContainer.options[0].value ).toBe( 'default' );
+                expect( list.collectionContainer.options[1].value ).toBe( 'test value1' );
+                expect( list.collectionContainer.options[2].value ).toBe( 'test value2' );
+                expect( list.collectionContainer.options[3].value ).toBe( 'test value3' );
+                expect( list.collectionContainer.options[4].value ).toBe( 'test value4' );
+                expect( list.collectionContainer.options[0].innerHTML ).toBe( 'Please select one...' );
+                expect( list.collectionContainer.options[1].innerHTML ).toBe( 'some label1' );
+                expect( list.collectionContainer.options[2].innerHTML ).toBe( 'some label2' );
+                expect( list.collectionContainer.options[3].innerHTML ).toBe( 'some label3' );
+                expect( list.collectionContainer.options[4].innerHTML ).toBe( 'some label4' );
+                //test validation
+                expect(list.invalidClass).toBe('myInvalidClass');
+                expect(list.validClass).toBe('myValidClass');
+                expect(list.collectionContainer.classList.contains(list.invalidClass)).toBe(true);
+                expect(list.collectionContainer.classList.contains(list.validClass)).toBe(false);
+                expect(list.model.isValid).toBe(false);
+                expect(list.isValid).toBe(false);
+                expect(listValidator.isValid).toBe(false);
+                //set the selected item to trigger validation
+                var evt = document.createEvent("HTMLEvents");
+                evt.initEvent("click", false, true);
+                list.childViews.getItemAt(2).onClick(evt);
+                expect( list.selectedItem == list.childViews.getItemAt(2)).toBe(true);
+                expect( list.childViews.getItemAt(2).model.selected).toBe(true);
+                expect( list.childViews.getItemAt(2).selected).toBe(true);
+                expect(list.collectionContainer.classList.contains(list.invalidClass)).toBe(false);
+                expect(list.collectionContainer.classList.contains(list.validClass)).toBe(true);
+                expect(list.model.isValid).toBe(true);
+                expect(list.isValid).toBe(true);
+                expect(listValidator.isValid).toBe(true);
+                //test bindings
+                list.childViews.getItemAt(3).model.selected = false;
+                list.childViews.getItemAt(2).model.selected = true;
+                expect( list.selectedItem == list.childViews.getItemAt(2)).toBe(true);
+                expect( list.childViews.getItemAt(2).selected).toBe(true);
+                expect( list.childViews.getItemAt(3).model.selected).toBe(false);
+                expect( list.childViews.getItemAt(3).selected).toBe(false);
+                handler.onDone();
+            },
+            onDone:function(){
                 component.destroy();
                 expect(input.inputSkinPart === null).toBe(true);
                 expect(input.model === null).toBe(true);
+                expect(list.prompt === null).toBe(true);
+                expect(list.model === null).toBe(true);
                 document.body.removeChild(element);
                 done();
             },
@@ -194,8 +250,8 @@ describe('FormCollectionView Test', function() {
                     '</div>' +
                     '<div data-skin-part="collectionContainer">' +
                         '<div data-skin-part="itemTemplate">' +
-                            '<x-lotus-radio2 data-skin-part="radioGroup" data-template-url="base/unit/templates/radio.html" data-component-root="[data-skin-part=\'collectionContainer\']"></x-lotus-radio2>' +
-                            '<x-lotus-select2 data-skin-part="list" data-template-url="base/unit/templates/select.html" data-component-root=\'[data-skin-part="collectionContainer"]\' data-attribute-type="text"></x-lotus-select2>' +
+                            '<x-lotus-radio2 data-attribute-valid-class="myValidClass" data-attribute-invalid-class="myInvalidClass" data-skin-part="radioGroup" data-template-url="base/unit/templates/radio.html" data-component-root="[data-skin-part=\'collectionContainer\']"></x-lotus-radio2>' +
+                            '<x-lotus-select2 data-attribute-valid-class="myValidClass" data-attribute-invalid-class="myInvalidClass" data-skin-part="list" data-template-url="base/unit/templates/select.html" data-component-root=\'[data-skin-part="collectionContainer"]\' data-attribute-type="text"></x-lotus-select2>' +
                             '<x-lotus-input2 data-attribute-valid-class="myValidClass" data-attribute-invalid-class="myInvalidClass" data-skin-part="input" data-template-url="base/unit/templates/input.html" data-component-root=\'[data-skin-part="input"]\' data-attribute-type="text"></x-lotus-input2>' +
                             '<x-lotus-upload2 data-skin-part="file" data-template-url="base/unit/templates/fileUpload.html" data-component-root="[data-attribute-item-view=\'Lotus.FileView\']" data-attribute-type="text"></x-lotus-upload2>' +
                         '</div>' +

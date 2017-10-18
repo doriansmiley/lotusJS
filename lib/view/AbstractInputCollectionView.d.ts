@@ -9,4 +9,5 @@ export declare abstract class AbstractInputCollectionView extends AbstractCollec
     model: InputCollectionModel;
     attachValidationClass(classToAdd: string, classToRemove: string): void;
     protected onItemSelectedDeselect(event: ItemViewEvent): void;
+    destroy(): void;
 }

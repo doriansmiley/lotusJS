@@ -5,6 +5,7 @@ import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
 import {AbstractItemView} from "./AbstractItemView";
 import {ListItemView} from "./ListItemView";
 import {InputCollectionModel} from "../model/form/InputCollectionModel";
+import {SkinPart} from "./SkinPart";
 
 export class ListCollectionView extends AbstractInputCollectionView{
 
@@ -51,6 +52,12 @@ export class ListCollectionView extends AbstractInputCollectionView{
     protected addCollectionEventListeners():void{
         super.addCollectionEventListeners();
         this.addPrompt();
+    }
+
+    public defineSkinParts():void{
+        super.defineSkinParts();
+        //set up skin parts
+        this.skinParts.addItem(new SkinPart('prompt', this, 'prompt'));
     }
 
     public onSkinPartAdded(part:string, element:HTMLElement):void{

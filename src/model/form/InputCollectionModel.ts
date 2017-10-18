@@ -123,7 +123,9 @@ export class InputCollectionModel extends Lavender.Subject{
     }
 
     public destroy():void{
-        this.binder.unbindAll();
+       if(this.binder){
+           this.binder.unbindAll();
+       }
         this.binder = null;
         this.collection = null;
 

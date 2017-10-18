@@ -11,6 +11,7 @@ export declare class ListCollectionView extends AbstractInputCollectionView {
     removeEventListeners(): void;
     protected addPrompt(): void;
     protected addCollectionEventListeners(): void;
+    defineSkinParts(): void;
     onSkinPartAdded(part: string, element: HTMLElement): void;
     protected refreshView(value: any): void;
     destroy(): void;

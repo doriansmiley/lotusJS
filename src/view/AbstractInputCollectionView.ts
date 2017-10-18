@@ -41,5 +41,13 @@ export abstract class AbstractInputCollectionView extends AbstractCollectionView
             this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.selectedItem, originalEvent:event}));
         }
     }
+
+    public destroy():void{
+        super.destroy();
+        if(this.model){
+            this.model.destroy();
+        }
+        this.model = null;
+    }
     
 }
