@@ -102,6 +102,49 @@ describe('FormCollectionView Test', function() {
                 expect( list.childViews.getItemAt(2).selected).toBe(true);
                 expect( list.childViews.getItemAt(3).model.selected).toBe(false);
                 expect( list.childViews.getItemAt(3).selected).toBe(false);
+                //strat the radio tests
+                if(!radioGroup.ready){
+                    radioGroup.addEventListener(Lotus.ComponentEvent.READY, handler, 'onRadioReady');
+                }else{
+                    radioGroup.onRadioReady();
+                }
+            },
+            onRadioReady:function(event){
+                radioGroup.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onListReady');
+                //test initial value
+                expect(radioGroup.itemView === 'Lotus.RadioItemView').toBe(true);
+                expect(radioGroup.createChildView() instanceof Lotus.RadioItemView).toBe(true);
+                expect(radioGroup.collection.length).toBe(4);
+                expect(radioGroup.childViews.getItemAt(0).radio.value).toBe('test value1');
+                expect(radioGroup.childViews.getItemAt(1).radio.value).toBe('test value2');
+                expect(radioGroup.childViews.getItemAt(2).radio.value).toBe('test value3');
+                expect(radioGroup.childViews.getItemAt(3).radio.value).toBe('test value4');
+                expect(radioGroup.childViews.getItemAt(0).radio.name).toBe('some group');
+                expect(radioGroup.childViews.getItemAt(1).radio.name).toBe('some group');
+                expect(radioGroup.childViews.getItemAt(2).radio.name).toBe('some group');
+                expect(radioGroup.childViews.getItemAt(3).radio.name).toBe('some group');
+                expect(radioGroup.childViews.getItemAt(3).radio.checked).toBe(true);
+                expect(radioGroup.childViews.getItemAt(0).label.innerHTML).toBe('some label1');
+                expect(radioGroup.childViews.getItemAt(1).label.innerHTML).toBe('some label2');
+                expect(radioGroup.childViews.getItemAt(2).label.innerHTML).toBe('some label3');
+                expect(radioGroup.childViews.getItemAt(3).label.innerHTML).toBe('some label4');
+                //test validation
+                expect(radioGroup.invalidClass).toBe('myInvalidClass');
+                expect(radioGroup.validClass).toBe('myValidClass');
+                expect(radioGroup.collectionContainer.classList.contains(radioGroup.invalidClass)).toBe(false);
+                expect(radioGroup.collectionContainer.classList.contains(radioGroup.validClass)).toBe(true);
+                expect(radioGroup.model.isValid).toBe(true);
+                expect(radioGroup.isValid).toBe(true);
+                expect(radioGroupValidator.isValid).toBe(true);
+                //test bindings
+                radioGroup.childViews.getItemAt(2).radio.click();
+                expect( radioGroup.selectedItem == radioGroup.childViews.getItemAt(2)).toBe(true);
+                expect(radioGroup.childViews.getItemAt(2).radio.checked).toBe(true);
+                expect(radioGroup.collectionContainer.classList.contains(radioGroup.invalidClass)).toBe(false);
+                expect(radioGroup.collectionContainer.classList.contains(radioGroup.validClass)).toBe(true);
+                expect(radioGroup.model.isValid).toBe(true);
+                expect(radioGroup.isValid).toBe(true);
+                expect(radioGroupValidator.isValid).toBe(true);
                 handler.onDone();
             },
             onDone:function(){
