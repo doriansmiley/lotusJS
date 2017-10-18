@@ -2,6 +2,7 @@ import {AbstractValidator} from "./AbstractValidator";
 import * as Lavender from 'lavenderjs/lib';
 import {InputModel} from "../InputModel";
 import {ValidationError} from "./ValidationError";
+import {InputCollectionModel} from "../InputCollectionModel";
 /**
  * Created by dsmiley on 10/10/17.
  */
@@ -12,6 +13,8 @@ export class SelectableInputValidator extends AbstractValidator{
     }
 
     protected setUpBindings():void{
+        this.binder.bind(this, 'isValid', this.source, 'isValid');
+        (this.source as InputCollectionModel).isValid = this.isValid;
         for(let i=0;i<this.source.collection.length;i++){
             //ensure changes in the value trigger validation
             this.binder.bind(this.source.collection.getItemAt(i), 'selected', this, 'validateOnChange');

@@ -83,8 +83,9 @@
 		}
     </style>
     <fieldset data-attribute-item-view="Lotus.RadioItemView" data-skin-part="collectionContainer">
+        <!-- if you define a value for label on your model it will overwrite the default innerHTML for the legend below -->
+        <legend data-skin-part="legend">Select One</legend>
         <div data-skin-part="itemTemplate">
-			
             <input type="radio" data-skin-part="radio" />
             <label data-skin-part="label"></label>
         </div>

@@ -15,7 +15,12 @@ export class FormItemView extends AbstractItemView{
     protected _list:LotusHTMLElement;
     protected _radioGroup:LotusHTMLElement;
     protected _file:LotusHTMLElement;
-    protected _activeSkinPart:AbstractItemView;
+    private _activeSkinPart:AbstractItemView;
+
+    //read only!
+    get activeSkinPart():AbstractItemView {
+        return this._activeSkinPart;
+    }
 
     get input():LotusHTMLElement {
         return this._input;
@@ -73,7 +78,7 @@ export class FormItemView extends AbstractItemView{
 
     protected setUpSkinParts():void{
         if(!this.ready || !this.model){
-            return
+            return;
         }
         let skinPartsToRemove:Array<LotusHTMLElement> = [
             this.input,
@@ -131,10 +136,10 @@ export class FormItemView extends AbstractItemView{
                     component.model = value.collection.getItemAt(0);
                     break
                 case InputCollectionModel.TYPE_LIST:
-                    component.model = value.collection;
+                    component.model = value;
                     break
                 case InputCollectionModel.TYPE_RADIO_GROUP:
-                    component.model = value.collection;
+                    component.model = value;
                     break
 
             }
@@ -156,6 +161,10 @@ export class FormItemView extends AbstractItemView{
 
     public onSkinPartAdded(part:string, element:HTMLElement):void{
         super.onSkinPartAdded(part, element );
+        if(this.input && this.radioGroup && this.file && this.list && this.model ){
+            //we have to call this here because only the component map calls onReady, but item views are not mapped to tags, so the map will never call it
+            this.onReady();
+        }
     }
 
     public onItemDetailReady(event:ComponentEvent):void{
@@ -180,19 +189,8 @@ export class FormItemView extends AbstractItemView{
     }
 
     public destroy():void{
-        if(this.input){
-            this.input.lotusComponentInstance.destroy();
-        }
-        if(this.file){
-            this.file.lotusComponentInstance.destroy();
-        }
-        if(this.list){
-            this.list.lotusComponentInstance.destroy();
-        }
-        if(this.radioGroup){
-            this.list.lotusComponentInstance.destroy();
-        }
         super.destroy();
+        this.activeSkinPart.destroy();
         this._activeSkinPart = null;
         this.input = null;
         this.file = null;

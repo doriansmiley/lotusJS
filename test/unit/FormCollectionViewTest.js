@@ -9,55 +9,79 @@ describe('FormCollectionView Test', function() {
     it('Test FormCollectionView functions', function(done) {
         var handler = {
             onInputReady:function(event){
-                component.input.lotusComponentInstance.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
+                input.removeEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
                 //test intital value
-                expect(component.input.lotusComponentInstance.inputSkinPart.value).toBe( 'xxx-test value' );
-                expect(component.input.lotusComponentInstance.value).toBe( 'xxx-test value' );
-                expect(component.input.lotusComponentInstance.model.value).toBe( 'xxx-test value' );
-                expect(component.input.lotusComponentInstance.model.required).toBe( true );
+                expect(input.inputSkinPart.value).toBe( 'xxx-test value' );
+                expect(input.value).toBe( 'xxx-test value' );
+                expect(input.model.value).toBe( 'xxx-test value' );
+                expect(input.model.required).toBe( true );
                 //test validation
-                expect(component.isValid).toBe( true );
+                expect(input.isValid).toBe( true );
                 expect(inputValidator.isValid).toBe( true );
-                expect(model.isValid).toBe( true );
-                expect(component.input.lotusComponentInstance.invalidClass).toBe('myInvalidClass');
-                expect(component.input.lotusComponentInstance.validClass).toBe('myValidClass');
-                expect(component.input.lotusComponentInstance.isValid).toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.invalidClass)).toBe(false);
-                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.validClass)).toBe(true);
+                expect(inputModel.isValid).toBe( true );
+                expect(input.invalidClass).toBe('myInvalidClass');
+                expect(input.validClass).toBe('myValidClass');
+                expect(input.isValid).toBe(true);
+                expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(false);
+                expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(true);
                 inputInput.value = '';
-                expect(component.isValid).toBe( false );
+                expect(input.isValid).toBe( false );
                 expect(inputValidator.isValid).toBe( false );
-                expect(model.isValid).toBe( false );
-                expect(component.input.lotusComponentInstance.isValid).toBe(false);
-                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.invalidClass)).toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.classList.contains(component.input.lotusComponentInstance.validClass)).toBe(false);
+                expect(inputModel.isValid).toBe( false );
+                expect(input.isValid).toBe(false);
+                expect(input.inputSkinPart.classList.contains(input.invalidClass)).toBe(true);
+                expect(input.inputSkinPart.classList.contains(input.validClass)).toBe(false);
                 //test two way binding
                 inputInput.value = 'another value';
                 expect(inputInput.value === 'xxx-another value').toBe(true);
                 expect(inputInput.value === 'xxx-another value').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value  === 'xxx-another value').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value  === 'xxx-another value').toBe(true);
-                component.input.lotusComponentInstance.inputSkinPart.value = 'new value';
+                expect(input.inputSkinPart.value  === 'xxx-another value').toBe(true);
+                expect(input.inputSkinPart.value  === 'xxx-another value').toBe(true);
+                input.inputSkinPart.value = 'new value';
                 var evt = document.createEvent("HTMLEvents");
                 evt.initEvent("change", false, true);
                 //event callbacks and bindings are executes synchronously
-                component.input.lotusComponentInstance.inputSkinPart.dispatchEvent(evt);
+                input.inputSkinPart.dispatchEvent(evt);
                 expect(inputInput.value === 'xxx-new value').toBe(true);
                 expect(inputInput.value === 'xxx-new value').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value  === 'xxx-new value').toBe(true);
-                component.input.lotusComponentInstance.inputSkinPart.value = 'hello world';
-                component.input.lotusComponentInstance.inputSkinPart.dispatchEvent(evt);
+                expect(input.inputSkinPart.value  === 'xxx-new value').toBe(true);
+                input.inputSkinPart.value = 'hello world';
+                input.inputSkinPart.dispatchEvent(evt);
                 expect(inputInput.value === 'xxx-hello world').toBe(true);
                 expect(inputInput.value === 'xxx-hello world').toBe(true);
-                expect(component.input.lotusComponentInstance.inputSkinPart.value  === 'xxx-hello world').toBe(true);
+                expect(input.inputSkinPart.value  === 'xxx-hello world').toBe(true);
                 //end binding tests
                 component.destroy();
+                expect(input.inputSkinPart === null).toBe(true);
+                expect(input.model === null).toBe(true);
                 document.body.removeChild(element);
-                expect(component.input === null).toBe(true);
                 done();
             },
             onReady:function(event){
                 handler.initComponent(event.payload.target);
+            },
+            onChildViewReady:function(event){
+                var component = event.payload.target
+                if(component.activeSkinPart instanceof Lotus.Input){
+                    input = component.activeSkinPart;
+                }else if(component.activeSkinPart instanceof Lotus.ListCollectionView){
+                    list = component.activeSkinPart;
+                }else if(component.activeSkinPart instanceof Lotus.RadioCollectionView){
+                    radioGroup = component.activeSkinPart;
+                }else if(component.activeSkinPart instanceof Lotus.FileCollectionView){
+                    file  = component.activeSkinPart;
+                }
+                if(input && list && radioGroup && file){
+                    expect( input instanceof Lotus.Input ).toBe( true );
+                    expect( list instanceof Lotus.ListCollectionView ).toBe( true );
+                    expect( radioGroup instanceof Lotus.RadioCollectionView ).toBe( true );
+                    //start skin part tests
+                    if(!input.ready){
+                        input.addEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
+                    }else{
+                        handler.onInputReady();
+                    }
+                }
             },
             initComponent:function(component){
                 //set up input models cor each component type
@@ -79,6 +103,7 @@ describe('FormCollectionView Test', function() {
                 ]);
                 //last param ensures a selection is required, be sure to test that there is no selection on load and that the model is invalid
                 listModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_LIST, listInputs, true);
+                listModel.label = "Please select one..."
                 listValidator = new Lotus.SelectableInputValidator();
                 listValidator.source = listModel;
                 //set up radio model
@@ -90,6 +115,7 @@ describe('FormCollectionView Test', function() {
                 ]);
                 //last param ensures a selection is required
                 radioGroupModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_RADIO_GROUP, radioGroupInputs, true);
+                radioGroupModel.label = 'Chose one of the following';
                 radioGroupValidator = new Lotus.SelectableInputValidator();
                 radioGroupValidator.source = radioGroupModel;
                 //set up file model, file does not require input model instances or a validator at this point in time
@@ -120,16 +146,14 @@ describe('FormCollectionView Test', function() {
                 expect( component.errorState === errorState ).toBe( true );
                 expect( component.itemView === 'Lotus.FormItemView' ).toBe( true );
                 expect( component.createChildView() instanceof Lotus.FormItemView ).toBe( true );
-                done();
                 //TODO: iterate all vies and assign event listerner for ready event. when all are ready move to testing individual form parts
-                //ensure that the view is set up correct after all the components are set up. Currently none of the unesed skin parts are removed, but I think this is due to the test not getting to a point where all component instances are ready
-                /*
-                if(!component.input.lotusComponentInstance.ready){
-                    component.input.lotusComponentInstance.addEventListener(Lotus.ComponentEvent.READY, handler, 'onInputReady');
-                }else{
-                    handler.onInputReady();
+                for(var i=0; i < component.childViews.length; i++){
+                    if(!component.childViews.getItemAt(i).ready){
+                        component.childViews.getItemAt(i).addEventListener(Lotus.ComponentEvent.READY, handler, 'onChildViewReady');
+                    }else{
+                        handler.onChildViewReady({payload:{target:component.childViews.getItemAt(i)}});
+                    }
                 }
-                */
             },
             addEventListeners:function (component) {
                 //Do not set up data providers until the component is ready!
@@ -154,6 +178,11 @@ describe('FormCollectionView Test', function() {
         var inputValidator;
         var listValidator;
         var radioGroupValidator;
+        //instances of form elements
+        var input;
+        var radioGroup;
+        var list;
+        var file;
         element.setAttribute('data-attribute-id', '1234');
         element.setAttribute('data-attribute-item-view', 'Lotus.FormItemView');
         element.setAttribute('data-component-root', '[data-root="this"]');

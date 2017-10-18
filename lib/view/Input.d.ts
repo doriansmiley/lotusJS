@@ -4,9 +4,11 @@
 import { AbstractItemView } from "./AbstractItemView";
 export declare class Input extends AbstractItemView {
     private _inputSkinPart;
+    private _label;
     private _type;
     private _value;
     constructor(type?: string);
+    label: HTMLInputElement;
     inputSkinPart: HTMLInputElement;
     type: string;
     value: string;

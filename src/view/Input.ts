@@ -8,12 +8,23 @@ import {InputModel} from "../model/form/InputModel";
 
 export class Input extends AbstractItemView{
     private _inputSkinPart:HTMLInputElement;
+    private _label:HTMLInputElement;
     private _type:string;
     private _value:string;
 
     constructor(type?:string){
         super();
         this.type = type;
+    }
+
+
+    get label():HTMLInputElement {
+        return this._label;
+    }
+
+    set label(value:HTMLInputElement) {
+        this._label = value;
+        this.notify( value, 'label' );
     }
 
     get inputSkinPart():HTMLInputElement {
@@ -65,12 +76,16 @@ export class Input extends AbstractItemView{
             //set the intital value, IMORTANT: do this after bindings are set up to trigger validation
             this.value = value.value;
         }
+        if(this.label && value['label']){
+            this.label.innerHTML = value['label']
+        }
     }
 
     public defineSkinParts():void{
         super.defineSkinParts();
         //set up skin parts
         this.skinParts.addItem(new SkinPart('input', this, 'inputSkinPart'));
+        this.skinParts.addItem(new SkinPart('label', this, 'label'));
     }
 
     public onSkinPartAdded(part:string, element:HTMLElement):void{
@@ -90,6 +105,12 @@ export class Input extends AbstractItemView{
                     this.inputSkinPart.dispatchEvent(evt);
                 }
                 break;
+            case 'label':{
+                if(this.model && this.model['label']){
+                    this.label.innerHTML = this.model['label'];
+                }
+                break;
+            }
         }
     }
 

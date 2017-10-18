@@ -10,7 +10,8 @@ export declare class FormItemView extends AbstractItemView {
     protected _list: LotusHTMLElement;
     protected _radioGroup: LotusHTMLElement;
     protected _file: LotusHTMLElement;
-    protected _activeSkinPart: AbstractItemView;
+    private _activeSkinPart;
+    readonly activeSkinPart: AbstractItemView;
     input: LotusHTMLElement;
     list: LotusHTMLElement;
     radioGroup: LotusHTMLElement;

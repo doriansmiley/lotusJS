@@ -86,7 +86,7 @@ export class AbstractCollectionView extends AbstractComponent{
             while (this.collectionContainer.firstChild) {
                 this.collectionContainer.removeChild(this.collectionContainer.firstChild);
             }
-        }else{
+        }else if(this.element){
             //remove child nodes
             while (this.element.firstChild) {
                 this.element.removeChild(this.element.firstChild);

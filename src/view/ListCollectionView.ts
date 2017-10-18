@@ -4,11 +4,24 @@
 import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
 import {AbstractItemView} from "./AbstractItemView";
 import {ListItemView} from "./ListItemView";
+import {InputCollectionModel} from "../model/form/InputCollectionModel";
 
 export class ListCollectionView extends AbstractInputCollectionView{
 
+    private _prompt:HTMLOptionElement;
+
     constructor() {
         super();
+    }
+
+
+    get prompt():HTMLOptionElement {
+        return this._prompt;
+    }
+
+    set prompt(value:HTMLOptionElement) {
+        this._prompt = value;
+        this.notify(value, 'prompt');
     }
 
     public onChange(event:Event):void{
@@ -29,12 +42,26 @@ export class ListCollectionView extends AbstractInputCollectionView{
         this.collectionContainer.removeEventListener('change', this.onChange);
     }
 
+    protected addPrompt():void{
+        if(this.prompt && this.model && this.model.label){
+            this.prompt.innerHTML = this.model.label;
+        }
+    }
+
+    protected addCollectionEventListeners():void{
+        super.addCollectionEventListeners();
+        this.addPrompt();
+    }
+
     public onSkinPartAdded(part:string, element:HTMLElement):void{
         super.onSkinPartAdded(part, element );
         switch(part){
             //required, defines the layout for child views
             case 'collectionContainer':
                 this.addEventListeners();
+                break;
+            case 'prompt':
+                this.addPrompt();
                 break;
 
         }
@@ -52,5 +79,6 @@ export class ListCollectionView extends AbstractInputCollectionView{
     public destroy():void{
         this.removeEventListeners();
         super.destroy();
+        this.prompt = null;
     }
 }

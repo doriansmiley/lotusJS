@@ -18,6 +18,7 @@ export class InputCollectionModel extends Lavender.Subject{
     private _isValid:boolean = false;
     private _validators:Lavender.ArrayList;
     private _errors:Lavender.ArrayList;
+    private _label:string;
 
     constructor(type:number, collection:Lavender.ArrayList, selectionRequired:boolean = false){
         super();
@@ -26,6 +27,15 @@ export class InputCollectionModel extends Lavender.Subject{
         this.selectionRequired = selectionRequired;
     }
 
+
+    get label():string {
+        return this._label;
+    }
+
+    set label(value:string) {
+        this._label = value;
+        this.notify(value, 'label');
+    }
 
     get errors():Lavender.ArrayList {
         return this._errors;
