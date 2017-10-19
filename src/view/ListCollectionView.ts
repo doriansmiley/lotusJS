@@ -27,8 +27,8 @@ export class ListCollectionView extends AbstractInputCollectionView{
 
     public onChange(event:Event):void{
         //get the associated item view for the selected list item
-        let itemView:ListItemView = this.childViews.getItemAt((event.target as HTMLSelectElement).selectedIndex);
-        //html option elements appear to not dispatch,orat leastnot bubblethe click event on list items
+        let itemView:ListItemView = this.childViews.getItemAt((event.target as HTMLSelectElement).selectedIndex-1);
+        //html option elements appear to not dispatch,or at least not bubble the click event on list items
         //so we force it here
         itemView.onClick();
     }
