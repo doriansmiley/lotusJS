@@ -1,6 +1,8 @@
 lotusJS
 =============
 
+[![Join the chat at https://gitter.im/lotusJS/Lobby](https://badges.gitter.im/lotusJS/Lobby.svg)](https://gitter.im/lotusJS/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 LotusJS is a framework based on xTag and lavenderJS for developing HTML5 applications using web components.
 
 # A web component framework that separates presentation from code!
