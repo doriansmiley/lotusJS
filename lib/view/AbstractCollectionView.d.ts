@@ -5,6 +5,7 @@ import * as Lavender from 'lavenderjs/lib';
 import { AbstractComponent } from "./AbstractComponent";
 import { AbstractItemView } from "./AbstractItemView";
 import { ItemViewEvent } from "../control/events/ItemViewEvent";
+import { LotusHTMLElement } from "../context/LotusHTMLElement";
 export declare class AbstractCollectionView extends AbstractComponent {
     private _collectionContainer;
     private _itemTemplate;
@@ -24,6 +25,8 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeCollectionEventListeners(): void;
     protected onCollectionChange(event: Lavender.CollectionEvent): void;
     protected createChildView(model: Object): AbstractItemView;
+    protected cloneItemTemplate(model: Object): LotusHTMLElement;
+    protected getModel(model: Object): Object;
     protected addChildView(model: Object): void;
     protected addViewEventListeners(view: AbstractItemView): void;
     protected removeViewEventListeners(view: AbstractItemView): void;
@@ -35,6 +38,9 @@ export declare class AbstractCollectionView extends AbstractComponent {
     protected removeElement(element: HTMLElement): void;
     protected removeChildViewFromModel(model: Object): void;
     protected initCollection(): void;
+    protected refreshView(value: any): void;
+    protected validateViewsFunctions(): void;
+    setSelectedItem(model: Object): void;
     init(): void;
     render(): void;
     defineSkinParts(): void;

@@ -9,12 +9,15 @@ module.exports = function (config) {
             '../lib/lotusJS-UMD.min.js',
             '../global/Globals.js',
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},
+            {pattern: 'unit/templates/**', watched: false, included: false, served: true},
             'unit/**/*.js'
         ],
 
         proxies: {
             "/local": "http://localhost"
         },
+
+        exclude: ['lib/angular/angular-scenario.js'],
 
         autoWatch: true,
 

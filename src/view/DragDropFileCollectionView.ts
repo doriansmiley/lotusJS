@@ -43,7 +43,6 @@ export class DragDropFileCollectionView extends FileCollectionView{
         super.onSkinPartAdded(part, element);
         switch(part){
             case 'dropTarget':
-                this.dropTarget = element;
                 this.dropTarget.addEventListener("drop", this.onDrop.bind(this), false);
                 window.addEventListener("drop", this.onPreventDrop.bind(this), false);
                 window.addEventListener("dragover", this.onPreventDrop.bind(this), false);
@@ -65,7 +64,7 @@ export class DragDropFileCollectionView extends FileCollectionView{
         if( this.dragOverClass !== null && this.dragOverClass !== undefined ){
             this.dropTarget.classList.remove(this.dragOverClass);
         }
-        var files = ( event.dataTransfer !== null && event.dataTransfer !== undefined ) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
+        let files = ( event.dataTransfer !== null && event.dataTransfer !== undefined ) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
         //note: files.hasOwnProperty('length') does not work
         if (files === null || files === undefined || !files.length) {
             return;

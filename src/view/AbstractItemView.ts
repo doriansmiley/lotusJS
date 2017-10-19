@@ -39,6 +39,9 @@ export abstract class AbstractItemView extends AbstractComponent{
 
     public destroy():void{
         super.destroy();
+        if(this.model && this.model['destroy']){
+            this.model['destroy']();
+        }
         this.model = null;
     }
 }

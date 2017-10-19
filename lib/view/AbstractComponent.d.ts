@@ -12,6 +12,9 @@ export declare abstract class AbstractComponent extends Lavender.Subject impleme
     private _ready;
     private _id;
     private _skinParts;
+    private _isValid;
+    validClass: string;
+    invalidClass: string;
     handlersByEventName: Object;
     addEventListener: (event: string, instance: Object, handler: string) => void;
     canListen: (eventType: string, instance: Object, handler: string) => boolean;
@@ -24,6 +27,8 @@ export declare abstract class AbstractComponent extends Lavender.Subject impleme
     ready: boolean;
     id: number;
     skinParts: SkinPartList;
+    isValid: boolean;
+    attachValidationClass(classToAdd: string, classToRemove: string): void;
     init(): void;
     addAttributes(): void;
     getAllPropertyNames(obj: Object, iterateSelfBool?: boolean, iteratePrototypeBool?: boolean): Array<string>;

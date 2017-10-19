@@ -1,7 +1,7 @@
 /**
  * Created by dsmiley on 9/26/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractThumbnailView} from "./AbstractThumbnailView";
 import {SkinPart} from "./SkinPart";
 import {FileEvent} from "../control/events/FileEvent";
 import * as Lavender from 'lavenderjs/lib';
@@ -94,7 +94,7 @@ export class File extends Lavender.Subject{
 
 }
 
-export class FileView extends AbstractItemView{
+export class FileView extends AbstractThumbnailView{
 
     constructor(){
         super();
@@ -111,7 +111,6 @@ export class FileView extends AbstractItemView{
     private _abortIndicator:HTMLElement;
     private _cancelBtn:HTMLButtonElement;
     private _clearBtn:HTMLButtonElement;
-    private _thumbnail:HTMLImageElement;
     private _cancelBtnDisplay:string;//css style for active button state
     private _clearBtnDisplay:string;//css style for active button state
 
@@ -202,14 +201,6 @@ export class FileView extends AbstractItemView{
 
     set clearBtn(value:HTMLButtonElement) {
         this._clearBtn = value;
-    }
-
-    get thumbnail():HTMLImageElement {
-        return this._thumbnail;
-    }
-
-    set thumbnail(value:HTMLImageElement) {
-        this._thumbnail = value;
     }
 
     get cancelBtnDisplay():string {
@@ -329,45 +320,13 @@ export class FileView extends AbstractItemView{
     public onSkinPartAdded(part:string, element:HTMLElement):void{
         super.onSkinPartAdded(part, element);
         switch( part ){
-            case 'fileLabel':
-                this.fileLabel = element as HTMLLabelElement;
-                break;
-            case 'fileTypeLabel':
-                this.fileTypeLabel = element as HTMLLabelElement;
-                break;
-            case 'progressBar':
-                this.progressBar = element;
-                break;
             case 'cancelBtn':
-                this.cancelBtn = element as HTMLButtonElement;
                 this.cancelBtnDisplay = this.cancelBtn.style.display;//capture the original display state of the button
                 this.cancelBtn.addEventListener('click', this.onCancelBtnClick.bind(this));
                 break;
             case 'clearBtn':
-                this.clearBtn = element as HTMLButtonElement;
                 this.clearBtnDisplay = this.clearBtn.style.display;//capture the original display state of the button
                 this.clearBtn.addEventListener('click', this.onClearBtnClick.bind(this));
-                break;
-            case 'statusIndicator':
-                this.statusIndicator = element;
-                break;
-            case 'loadIndicator':
-                this.loadIndicator = element;
-                break;
-            case 'errorIndicator':
-                this.errorIndicator = element;
-                break;
-            case 'progressIndicator':
-                this.progressIndicator = element;
-                break;
-            case 'pendingIndicator':
-                this.pendingIndicator = element;
-                break;
-            case 'abortIndicator':
-                this.abortIndicator = element;
-                break;
-            case 'thumbnail':
-                this.thumbnail = element as HTMLImageElement;
                 break;
         }
     }

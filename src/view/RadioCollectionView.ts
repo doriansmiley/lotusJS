@@ -1,22 +1,63 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {ItemViewEvent} from "../control/events/ItemViewEvent";
-import {InputEvent} from "../control/events/InputEvent";
-import {AbstractCollectionView} from "./AbstractCollectionView";
+import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
+import {SkinPart} from "./SkinPart";
+import {InputCollectionModel} from "../model/form/InputCollectionModel";
 
-export class RadioCollectionView extends AbstractCollectionView{
+export class RadioCollectionView extends AbstractInputCollectionView{
+
+    private _legend:HTMLLegendElement;
 
     constructor(){
         super();
     }
 
-    protected onItemSelectedDeselect(event:ItemViewEvent):void{
-        let dispatchChange:boolean =  (this.selectedItem != event.payload['item']);
-        super.onItemSelectedDeselect(event);
-        //if the selected item has changed dispatch input change event
-        if( dispatchChange ){
-            this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.selectedItem, originalEvent:event}));
+
+    get legend():HTMLLegendElement {
+        return this._legend;
+    }
+
+    set legend(value:HTMLLegendElement) {
+        this._legend = value;
+        this.notify(value, 'legend');
+    }
+
+    protected refreshView(value:any):void{
+        if(this.selectedItem){
+            this.selectedItem.element['checked'] = true;
         }
+    }
+
+    protected addCollectionEventListeners():void{
+        super.addCollectionEventListeners();
+        this.setLegend();
+    }
+
+    protected setLegend():void{
+        if(this.legend && this.model && this.model.label){
+            this.legend.innerHTML = this.model.label;
+        }
+    }
+
+    public defineSkinParts():void{
+        super.defineSkinParts();
+        //set up skin parts
+        this.skinParts.addItem(new SkinPart('legend', this, 'legend'));
+    }
+
+    public onSkinPartAdded(part:string, element:HTMLElement):void{
+        super.onSkinPartAdded(part, element);
+        switch( part ){
+            case 'label':{
+                this.setLegend();
+                break;
+            }
+        }
+    }
+
+    public destroy():void{
+        super.destroy();
+        this.legend = null;
     }
 }

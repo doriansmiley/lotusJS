@@ -58,7 +58,7 @@ To map a component to a custom tag you simply create a context and call the `map
 and the constructor function of your view component. For example:
 ````
 var context = new Lotus.Context(Lavender.ModelLocator.getInstance().config);
-context.componentMap.mapComponent('x-lotus-button', HTMLButtonElement.prototype, Lotus.Button);
+context.componentMap.mapComponent('x-lotus-button', Lotus.LotusHTMLElement.prototype, Lotus.Button);
 ````
 Once the component is mapped you can add the custom tag to HTML DOM:
 ````

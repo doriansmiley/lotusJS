@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LotusJS Form Components Example</title>
+    <link rel="stylesheet" href="../css/highlight/styles/default.css">
+    <script src="../css/highlight/highlight.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/main.css"/>
+    <script type="text/javascript" src="../../node_modules/x-tag/lib/webcomponents.js"></script>
+    <script type="text/javascript" src="../../node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js"></script>
+    <script type="text/javascript" src="../../node_modules/lavenderjs/lib/lavenderJS-UMD.min.js"></script>
+    <script type="text/javascript" src="../../lib/lotusJS-UMD.min.js"></script>
+    <script language="JavaScript">
+        var context = (function (xtag) {
+            var context = new Lotus.Context(new Lavender.Config);
+            context.componentMap.mapComponent('x-lotus-radio', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-radio2', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-select', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-select2', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-input', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
+            context.componentMap.mapComponent('x-lotus-input2', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-form-collection-view', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-form-collection-view2', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
+            return context;
+        }(xtag));
+        //instances of form elements
+        var input;
+        var radioGroup;
+        var list;
+        var file;
+        //define our handler to set up the component when it loads.
+        //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        //TODO refactor event listeners by replacing with data bindings on the models
+        var handler={
+            onReady:function(event){
+                handler.initComponent(event.payload.target);
+            },
+            onPhoneChange:function(event){
+                console.log('inputModel.value: ' + event.payload.target.value);
+                console.log('inputModel.isValid: ' + event.payload.target.isValid);
+            },
+            onStateChange:function(event){
+                console.log('radioGroupModel.value: ' + event.payload.target.selectedItem.model.value);
+                console.log('radioGroupModel.isValid: ' + event.payload.target.model.isValid);
+            },
+            onCompanyChange:function(event){
+                console.log('listModel.value: ' + event.payload.target.selectedItem.model.value);
+                console.log('listModel.isValid: ' + event.payload.target.model.isValid);
+            },
+            onChildViewReady:function(event){
+                var component = event.payload.target
+                if(component.activeSkinPart instanceof Lotus.Input){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onPhoneChange');
+                }else if(component.activeSkinPart instanceof Lotus.ListCollectionView){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onStateChange');
+                }else if(component.activeSkinPart instanceof Lotus.RadioCollectionView){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onCompanyChange');
+                }
+            },
+            initComponent:function(component){
+                var inputInput = new Lotus.InputModel('Phone Number', null, null, false, true);
+                inputInput.format = function(s){
+                    var s2 = (""+s).replace(/\D/g, '');
+                    var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+                    return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+                }
+                var inputModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_INPUT, new Lavender.ArrayList([ inputInput ]));
+                var inputValidator = new Lotus.PhoneNumberValidator();
+                inputValidator.source = inputModel;
+                inputModel.validators.addItem(inputValidator);
+                //set up list model
+                var listInputs = new Lavender.ArrayList();
+                listInputs.addAll([
+                    new Lotus.InputModel('CA', 'CA', 'State'),
+                    new Lotus.InputModel('HI', 'HI', 'State'),
+                    new Lotus.InputModel('NY', 'NY', 'State'),
+                    new Lotus.InputModel('TX', 'TX', 'State')
+                ]);
+                //last param ensures a selection is required, be sure to test that there is no selection on load and that the model is invalid
+                var listModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_LIST, listInputs, true);
+                listModel.label = "Select State..."
+                var listValidator = new Lotus.SelectableInputValidator();
+                listValidator.source = listModel;
+                listModel.validators.addItem(listValidator);
+                var radioGroupInputs = new Lavender.ArrayList();
+                var id = Math.round(Math.random()*10).toString();
+                //set up radio model
+                radioGroupInputs.addAll([
+                    new Lotus.InputModel('1-25', '1-25', 'Company Size' + id),
+                    new Lotus.InputModel('26-50', '26-50', 'Company Size' + id),
+                    new Lotus.InputModel('51-100', '51-100', 'Company Size' + id),
+                    new Lotus.InputModel('100+', '100+', 'Company Size' + id, true)//be sure to test that the model is valid on load and this item is selected
+                ]);
+                //last param ensures a selection is required
+                var radioGroupModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_RADIO_GROUP, radioGroupInputs, true);
+                radioGroupModel.label = 'Company Size';
+                var radioGroupValidator = new Lotus.SelectableInputValidator();
+                radioGroupValidator.source = radioGroupModel;
+                radioGroupModel.validators.addItem(radioGroupValidator);
+                //set up file model, file does not require input model instances or a validator at this point in time
+                var fileModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_FILE, new Lavender.ArrayList(), true);
+                //set up component model
+                var model = new Lavender.ArrayList([inputModel, listModel, radioGroupModel, fileModel]);
+                //assign the collection, this will trigger the component to render
+                component.collection = model;
+                for(var i=0; i < component.childViews.length; i++){
+                    if(!component.childViews.getItemAt(i).ready){
+                        component.childViews.getItemAt(i).addEventListener(Lotus.ComponentEvent.READY, handler, 'onChildViewReady');
+                    }else{
+                        handler.onChildViewReady({payload:{target:component.childViews.getItemAt(i)}});
+                    }
+                }
+            },
+            onChange: function (event) {
+                console.log('My callback function received value: ' + event.payload.target.model.value);
+            },
+            addEventListeners:function (component) {
+                //Do not set up data providers until the component is ready!
+                //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                if(!component.ready){
+                    component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                }else{
+                    handler.initComponent(component)
+                }
+            }
+        };
+        //the following is an example of how you can mediate the component events that are dispatched.
+        //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        window.onload = function () {
+            hljs.initHighlighting();
+            var list = document.getElementsByTagName('x-lotus-form-collection-view');
+            for (var i = 0; i < list.length; i++) {
+                handler.addEventListeners(list[i].lotusComponentInstance);
+            }
+            list = document.getElementsByTagName('x-lotus-form-collection-view2');
+            for (var i = 0; i < list.length; i++) {
+                handler.addEventListeners(list[i].lotusComponentInstance);
+            }
+        };
+    </script>
+</head>
+<body>
+
+<h3 class="page-header">Lotus Web Components Form Control</h3>
+<div class="content-panel">
+    <h3>HTML Form</h3>
+    <p>
+        <label>Here's a plain old HTML form. Blah!</label>
+        <form>
+            <label>Name</label>
+            <input type="text" name="name"/>
+            <select>
+                <option value="default" selected="selected">Select State</option>
+                <option value="CA">CA</option>
+                <option value="HI">HI</option>
+            </select>
+            <input type="submit" label="submit"/>
+        </form>
+    </p>
+</div>
+
+<div class="content-panel">
+    <h3>Lotus Form Control</h3>
+    <p>
+        Here's an example of lotus <code class="JavaScript">FormCollectionView</code> component. The <code class="JavaScript">x-lotus-form-collection-view</code> tag extends the <code class="JavaScript">Lotus.LotusHTMLElement</code>
+        tag. Our <code class="JavaScript">x-lotus-form-collection-view</code> is also mapped to a Lotus component in the call to <code class="JavaScript">context.componentMap.mapComponent('x-lotus-form-collection-view',
+        Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);</code>.A new instance of <code class="JavaScript">Lotus.FormCollectionView</code>
+        is attached to each tag instance. Open your console to observe the change in values.
+    </p>
+    <x-lotus-form-collection-view data-attribute-item-view="Lotus.FormItemView" data-template-url="templates/form.html" data-component-root='[data-root="this"]'></x-lotus-form-collection-view>
+</div>
+
+<div class="content-panel">
+    <h3>Dynamically Change Skin</h3>
+    <h5>If your browser does not natively support web components (Safari) you will not see any change. See the xTag polyfill workaround below.</h5>
+    <p>
+        Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/form2.html"</code>. Below is the
+        exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
+        with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
+    </p>
+    <x-lotus-form-collection-view data-attribute-item-view="Lotus.FormItemView" data-template-url="templates/form2.html" data-component-root='[data-root="this"]'></x-lotus-form-collection-view>
+</div>
+
+<div class="content-panel">
+    <h3>xTag Pollyfill Workaround</h3>
+    <p>
+        Note: If your browser does not natively support web components you have to attach the new skin using a different tag.
+        In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-form-collection-view2', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);</code>.
+        This is an issue with the xTag core and how it encapsulates styles using the tag name.
+    </p>
+    <x-lotus-form-collection-view2 data-attribute-item-view="Lotus.FormItemView" data-template-url="templates/form.html" data-component-root='[data-root="this"]'></x-lotus-form-collection-view2>
+</div>
+
+<div class="content-panel">
+    <h3>Mediating Components</h3>
+    <p>
+        TODO: add description of code.
+        <!--The <code class="JavaScript">x-lotus-form-collection-view</code> tag exposes a single change event by default. In order to listen for that event
+        you have to assign an event handler after the document loads. An example is below. However if you are serious
+        about event mediation of we encourage you to check out <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a>.
+        This is a full blown MVW framework which comes with a mediator map for your components (and much more). This
+        allows you to build application mediators that are mapped to your custom tags. Mediators can do all sorts of
+        useful things like triggering business logic, dispatching application events to trigger commands, and setting up
+        data binding within your surrounding application.-->
+		<pre>
+		<code class="JavaScript">
+        var context = (function (xtag) {
+            var context = new Lotus.Context(new Lavender.Config);
+            context.componentMap.mapComponent('x-lotus-radio', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-radio2', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-select', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-select2', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-input', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
+            context.componentMap.mapComponent('x-lotus-input2', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
+            context.componentMap.mapComponent('x-lotus-upload', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-form-collection-view', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-form-collection-view2', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
+            return context;
+        }(xtag));
+        //instances of form elements
+        var input;
+        var radioGroup;
+        var list;
+        var file;
+        //define our handler to set up the component when it loads.
+        //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        //TODO refactor event listeners by replacing with data bindings on the models
+        var handler={
+            onReady:function(event){
+                handler.initComponent(event.payload.target);
+            },
+            onPhoneChange:function(event){
+                console.log('inputModel.value: ' + event.payload.target.value);
+                console.log('inputModel.isValid: ' + event.payload.target.isValid);
+            },
+            onStateChange:function(event){
+                console.log('radioGroupModel.value: ' + event.payload.target.selectedItem.model.value);
+                console.log('radioGroupModel.isValid: ' + event.payload.target.model.isValid);
+            },
+            onCompanyChange:function(event){
+                console.log('listModel.value: ' + event.payload.target.selectedItem.model.value);
+                console.log('listModel.isValid: ' + event.payload.target.model.isValid);
+            },
+            onChildViewReady:function(event){
+                var component = event.payload.target
+                if(component.activeSkinPart instanceof Lotus.Input){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onPhoneChange');
+                }else if(component.activeSkinPart instanceof Lotus.ListCollectionView){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onStateChange');
+                }else if(component.activeSkinPart instanceof Lotus.RadioCollectionView){
+                    component.activeSkinPart.addEventListener(Lotus.InputEvent.CHANGE, handler, 'onCompanyChange');
+                }
+            },
+            initComponent:function(component){
+                var inputInput = new Lotus.InputModel('Phone Number', null, null, false, true);
+                inputInput.format = function(s){
+                    var s2 = (""+s).replace(/\D/g, '');
+                    var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+                    return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+                }
+                var inputModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_INPUT, new Lavender.ArrayList([ inputInput ]));
+                var inputValidator = new Lotus.PhoneNumberValidator();
+                inputValidator.source = inputModel;
+                inputModel.validators.addItem(inputValidator);
+                //set up list model
+                var listInputs = new Lavender.ArrayList();
+                listInputs.addAll([
+                    new Lotus.InputModel('CA', 'CA', 'State'),
+                    new Lotus.InputModel('HI', 'HI', 'State'),
+                    new Lotus.InputModel('NY', 'NY', 'State'),
+                    new Lotus.InputModel('TX', 'TX', 'State')
+                ]);
+                //last param ensures a selection is required, be sure to test that there is no selection on load and that the model is invalid
+                var listModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_LIST, listInputs, true);
+                listModel.label = "Select State..."
+                var listValidator = new Lotus.SelectableInputValidator();
+                listValidator.source = listModel;
+                listModel.validators.addItem(listValidator);
+                var radioGroupInputs = new Lavender.ArrayList();
+                var id = Math.round(Math.random()*10).toString();
+                //set up radio model
+                radioGroupInputs.addAll([
+                    new Lotus.InputModel('1-25', '1-25', 'Company Size' + id),
+                    new Lotus.InputModel('26-50', '26-50', 'Company Size' + id),
+                    new Lotus.InputModel('51-100', '51-100', 'Company Size' + id),
+                    new Lotus.InputModel('100+', '100+', 'Company Size' + id, true)//be sure to test that the model is valid on load and this item is selected
+                ]);
+                //last param ensures a selection is required
+                var radioGroupModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_RADIO_GROUP, radioGroupInputs, true);
+                radioGroupModel.label = 'Company Size';
+                var radioGroupValidator = new Lotus.SelectableInputValidator();
+                radioGroupValidator.source = radioGroupModel;
+                radioGroupModel.validators.addItem(radioGroupValidator);
+                //set up file model, file does not require input model instances or a validator at this point in time
+                var fileModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_FILE, new Lavender.ArrayList(), true);
+                //set up component model
+                var model = new Lavender.ArrayList([inputModel, listModel, radioGroupModel, fileModel]);
+                //assign the collection, this will trigger the component to render
+                component.collection = model;
+                for(var i=0; i < component.childViews.length; i++){
+                    if(!component.childViews.getItemAt(i).ready){
+                        component.childViews.getItemAt(i).addEventListener(Lotus.ComponentEvent.READY, handler, 'onChildViewReady');
+                    }else{
+                        handler.onChildViewReady({payload:{target:component.childViews.getItemAt(i)}});
+                    }
+                }
+            },
+            onChange: function (event) {
+                console.log('My callback function received value: ' + event.payload.target.model.value);
+            },
+            addEventListeners:function (component) {
+                //Do not set up data providers until the component is ready!
+                //if you use lotusjs-mvw you can take advantage of component mediators that have built in onReady callbacks
+                if(!component.ready){
+                    component.addEventListener(Lotus.ComponentEvent.READY, handler, 'onReady')
+                }else{
+                    handler.initComponent(component)
+                }
+            }
+        };
+        //the following is an example of how you can mediate the component events that are dispatched.
+        //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
+        window.onload = function () {
+            hljs.initHighlighting();
+            var list = document.getElementsByTagName('x-lotus-form-collection-view');
+            for (var i = 0; i < list.length; i++) {
+                handler.addEventListeners(list[i].lotusComponentInstance);
+            }
+            list = document.getElementsByTagName('x-lotus-form-collection-view2');
+            for (var i = 0; i < list.length; i++) {
+                handler.addEventListeners(list[i].lotusComponentInstance);
+            }
+        };
+		</code>
+		</pre>
+    </p>
+</div>
+
+</body>
+</html>

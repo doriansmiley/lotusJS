@@ -7,6 +7,7 @@ import {AbstractItemView} from "./AbstractItemView";
 import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {LotusHTMLElement} from "../context/LotusHTMLElement";
+import {InputModel} from "../model/form/InputModel";
 
 export class AbstractCollectionView extends AbstractComponent{
     private _collectionContainer:HTMLElement;
@@ -68,24 +69,22 @@ export class AbstractCollectionView extends AbstractComponent{
         return this._childViews;
     }
 
-    get itemView() {
+    get itemView():string {
         return this._itemView;
     }
 
-    set itemView(value) {
+    set itemView(value:string) {
         this._itemView = value;
         this.notify(value, 'itemView');
     }
 
     protected destroyChildViews():void{
-        for( let i=0; i < this.childViews.length; i++){
-            this.removeChildView( this.childViews.getItemAt(i) );
-        }
+        this.removeAllChildViews();
         if( this.collectionContainer !== null && this.collectionContainer !== undefined ){
             while (this.collectionContainer.firstChild) {
                 this.collectionContainer.removeChild(this.collectionContainer.firstChild);
             }
-        }else{
+        }else if(this.element){
             //remove child nodes
             while (this.element.firstChild) {
                 this.element.removeChild(this.element.firstChild);
@@ -120,17 +119,28 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
+    //override point
     protected createChildView(model:Object):AbstractItemView{
         let evalClass = eval(this.itemView);
         return new evalClass();
     }
 
+    //override point
+    protected cloneItemTemplate(model:Object):LotusHTMLElement{
+        return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
+    }
+
+    //override point for objects that require manipulation of the model such as implementation of adapter pattern
+    protected getModel(model:Object):Object{
+        return model;
+    }
+
     protected addChildView(model:Object):void{
         let view:AbstractItemView = this.createChildView( model );
         //clone the view
-        let clone = this.itemTemplate.cloneNode(true);
-        view.model = model;
-        view.element = clone as LotusHTMLElement;
+        let clone:LotusHTMLElement = this.cloneItemTemplate(model);
+        view.model = this.getModel(model);
+        view.element = clone;
         view.init();
         this.childViews.addItem( view );
         if( this.collectionContainer !== null && this.collectionContainer !== undefined ){
@@ -139,6 +149,11 @@ export class AbstractCollectionView extends AbstractComponent{
             this.element.appendChild(view.element);
         }
         this.addViewEventListeners( view );
+        //set the selected item from the model
+        //this allows data models to drive the selected item when they are assigned, or a new item added
+        if(view.model['selected']){
+            this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:view}));
+        }
     }
 
     protected addViewEventListeners(view:AbstractItemView):void{
@@ -215,6 +230,35 @@ export class AbstractCollectionView extends AbstractComponent{
         }
     }
 
+    protected refreshView(value:any):void{
+        //stub for override
+    }
+
+    //override point
+    protected validateViewsFunctions():void{
+        if( this.itemView === null || this.itemView == undefined ){
+            throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
+        }
+    }
+
+    public setSelectedItem(model:Object):void{
+        //since this can be used as a bindable end point make sure recursion does not occur
+        if(this.selectedItem && this.selectedItem.model == model){
+            return;
+        }
+        for( let i=0; i < this.childViews.length; i++){
+            if( this.childViews.getItemAt(i).model == model){
+                //set the selected item
+                this.onItemSelectedDeselect( new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}) );
+                //refresh the view
+                if(this.selectedItem){
+                    this.refreshView(model['value']);
+                }
+                break;
+            }
+        }
+    }
+
     public init():void{
         super.init();
         this.initCollection();
@@ -222,9 +266,7 @@ export class AbstractCollectionView extends AbstractComponent{
     }
 
     public render():void{
-        if( this.itemView === null || this.itemView == undefined ){
-            throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
-        }
+        this.validateViewsFunctions();
         this.removeAllChildViews();
         for( let i=0; i < this.collection.length; i++ ){
             this.addChildView( this.collection.getItemAt(i) );

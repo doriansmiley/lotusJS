@@ -1,12 +1,11 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
 import {SkinPart} from "./SkinPart";
+import {InputModel} from "../model/form/InputModel";
 
-export type ListItemValue = {label:string, value:any};
-
-export class ListItemView extends AbstractItemView{
+export class ListItemView extends AbstractSelectableFormInput{
 
     private _option:HTMLOptionElement;
 
@@ -22,6 +21,28 @@ export class ListItemView extends AbstractItemView{
         this._option = value;
     }
 
+    protected refreshView(selected:boolean):void{
+        if(this.option){
+            this.option.selected = selected;
+        }
+    }
+
+    public onClick(event?:Event):void{
+        this.selected = true;
+    }
+
+    public addEventListeners():void{
+        super.addEventListeners();
+        this.option.addEventListener('click', this.onClick.bind(this));
+    }
+
+    public removeEventListeners():void{
+        super.removeEventListeners();
+        if(this.option){
+            this.option.removeEventListener('click', this.onClick);
+        }
+    }
+
     public defineSkinParts():void{
         super.defineSkinParts();
         //set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
@@ -34,8 +55,12 @@ export class ListItemView extends AbstractItemView{
         switch( part ){
             case 'itemTemplate':
                 //set up listitem value and label
-                this.option.value = (typeof (this.model as ListItemValue).value == 'object') ? JSON.stringify((this.model as ListItemValue).value) : (this.model as ListItemValue).value;
-                this.option.innerHTML = (this.model as ListItemValue).label;
+                this.option.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
+                this.option.innerHTML = (this.model as InputModel).label;
+                this.option.selected = this.selected;
+                if(this.selected){
+                    this.onClick();
+                }
                 break;
         }
     }

@@ -45,10 +45,10 @@
                 }
             });
             //set up pour collection
-            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg', selected:true});
+            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg'});
             this.collection.addItem({label: 'Sunset 2', value: 'assets/photos/Sunset-socialphy.com_.jpg', src: 'assets/photos/Sunset-socialphy.com_.jpg'});
             this.collection.addItem({label: 'Sunset 3', value: 'assets/photos/sunset-birds1.jpg', src: 'assets/photos/sunset-birds1.jpg'});
-            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg'});
+            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg', selected:true});
             //set the selected item
             this.selectedItem = this.collection.getItemAt(0);
 
@@ -85,6 +85,7 @@
                     //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
                     bindingSource.binder.bind(component, 'selectedItem', bindingSource, 'setSelectedItemFromCollectionView');
                     bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItem');
+                    bindingSource.setSelectedItemFromCollectionView(component.selectedItem);
                 }
             },
             addEventListeners:function (component) {
@@ -97,7 +98,7 @@
                 }
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             }
         }
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -144,7 +145,7 @@
     <p>
         We also implement two way data binding in this example as a means to keep all the selected list items in sync with each other. See the code below for a complete explination of data binding in LotusJS.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
+    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
     <x-lotus-image data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
 </div>
 
@@ -156,7 +157,7 @@
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
         with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
+    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
     <x-lotus-image data-template-url="templates/image2.html" data-component-root='[data-skin-part="thumbnailContainer"]'></x-lotus-image>
 </div>
 
@@ -167,7 +168,7 @@
         tag. In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
-    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select>
+    <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
     <x-lotus-image2 data-template-url="templates/image.html" data-component-root='[data-skin-part="thumbnailContainer"]' data-attribute-type="text"></x-lotus-image2>
 </div>
 
@@ -218,10 +219,10 @@
                 }
             });
             //set up pour collection
-            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg', selected:true});
+            this.collection.addItem({label: 'Sunset 1', value: 'assets/photos/Sunset_2007-1.jpg', src: 'assets/photos/Sunset_2007-1.jpg'});
             this.collection.addItem({label: 'Sunset 2', value: 'assets/photos/Sunset-socialphy.com_.jpg', src: 'assets/photos/Sunset-socialphy.com_.jpg'});
             this.collection.addItem({label: 'Sunset 3', value: 'assets/photos/sunset-birds1.jpg', src: 'assets/photos/sunset-birds1.jpg'});
-            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg'});
+            this.collection.addItem({label: 'Full Moon', value: 'assets/photos/FullMoon2010.jpg', src: 'assets/photos/FullMoon2010.jpg', selected:true});
             //set the selected item
             this.selectedItem = this.collection.getItemAt(0);
 
@@ -258,6 +259,7 @@
                     //set up a two way boindiong between the lists selected item and our binding source. This ensures all the lists stay in sync with the selected image
                     bindingSource.binder.bind(component, 'selectedItem', bindingSource, 'setSelectedItemFromCollectionView');
                     bindingSource.binder.bind(bindingSource, 'selectedItem', component, 'setSelectedItem');
+                    bindingSource.setSelectedItemFromCollectionView(component.selectedItem);
                 }
             },
             addEventListeners:function (component) {
@@ -270,7 +272,7 @@
                 }
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             }
         }
         //the following is an example of how you can mediate the component events that are dispatched.

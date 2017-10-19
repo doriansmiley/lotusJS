@@ -25,38 +25,35 @@
         }
 
 
-        input{
+        input[class="input-skin2"]{
             cursor:pointer;
-            color:#fff;
-            box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
-            border: 1px solid #000000;
-            border-radius:0px;
-            padding:10px;
-            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+44,1e5799+89,1f6b8e+100 */
-            background: #5bb0d8; /* Old browsers */
-            background: -moz-linear-gradient(top, #5bb0d8 0%, #1e5799 44%, #1e5799 89%, #1f6b8e 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, #5bb0d8 0%,#1e5799 44%,#1e5799 89%,#1f6b8e 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, #5bb0d8 0%,#1e5799 44%,#1e5799 89%,#1f6b8e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
+            color:#ffa025;
+            border-radius:36px;
+            box-shadow:-1px 1px 3px rgba(0,0,0,0.2);
+			font-family:'SegoeUI';
+			font-size:12px;
+			padding:8px;
+			background:#333;
+			 border: 2px solid #ffa025;
+			min-width:30px;
+			
         }
 
-        input * {
+        input[class="input-skin2"] * {
             cursor:pointer;
         }
 
-        input:focus {
+        input[class="input-skin2"]:focus {
             outline: none;
+			color:#fff;
+			 border: 2px solid #ffa025;
+		
         }
 
-        input:hover {
-            border:1px solid #f00;
-            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
-            background: #f9c67a; /* Old browsers */
-            background: -moz-linear-gradient(top, #f9c67a 1%, #fc7e1e 49%, #f9af02 87%, #ffcc68 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
+        input[class="input-skin2"]:hover {
+            border: 2px solid #fff;
+		color:#fff;
         }
     </style>
-    <input data-skin-part="input"/>
+    <input data-skin-part="input" class="input-skin2"/>
 </template>
