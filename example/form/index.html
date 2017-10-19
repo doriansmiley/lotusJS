@@ -13,9 +13,13 @@
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-radio', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-radio2', Lotus.LotusHTMLElement.prototype, Lotus.RadioCollectionView, xtag);
             context.componentMap.mapComponent('x-lotus-select', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-select2', Lotus.LotusHTMLElement.prototype, Lotus.ListCollectionView, xtag);
             context.componentMap.mapComponent('x-lotus-input', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
+            context.componentMap.mapComponent('x-lotus-input2', Lotus.LotusHTMLElement.prototype, Lotus.Input, xtag);
             context.componentMap.mapComponent('x-lotus-upload', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
+            context.componentMap.mapComponent('x-lotus-upload2', Lotus.LotusHTMLElement.prototype, Lotus.FileCollectionView, xtag);
             context.componentMap.mapComponent('x-lotus-form-collection-view', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
             context.componentMap.mapComponent('x-lotus-form-collection-view2', Lotus.LotusHTMLElement.prototype, Lotus.FormCollectionView, xtag);
             return context;
