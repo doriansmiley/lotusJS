@@ -26,7 +26,7 @@
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
     "lavenderjs": "^1.0.15",
-    "lotusjs-components": "^1.3.14",
+    "lotusjs-components": "^1.3.15",
     "x-tag": "^1.5.11"
   }
 }
