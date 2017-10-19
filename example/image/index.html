@@ -98,7 +98,7 @@
                 }
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.model.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             }
         }
         //the following is an example of how you can mediate the component events that are dispatched.
@@ -272,7 +272,7 @@
                 }
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.model.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             }
         }
         //the following is an example of how you can mediate the component events that are dispatched.

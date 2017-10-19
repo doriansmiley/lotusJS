@@ -32,6 +32,7 @@
         //define our handler to set up the component when it loads.
         //Note you can avoid this if you use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         //mediators are attached to component instances at the moment of creation and receive callbacks for the ready evet automatially
+        //TODO refactor event listeners by replacing with data bindings on the models
         var handler={
             onReady:function(event){
                 handler.initComponent(event.payload.target);

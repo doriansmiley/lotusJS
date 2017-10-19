@@ -26,8 +26,13 @@ export class ListCollectionView extends AbstractInputCollectionView{
     }
 
     public onChange(event:Event):void{
+        //account for the existence of the prompt which adds an additional list item! this offset the index in this.childViews which does not include the prompt.
+        let index = (this.prompt) ? (event.target as HTMLSelectElement).selectedIndex - 1 : (event.target as HTMLSelectElement).selectedIndex;
+        if(index < 0){
+            return;//prompt is selected
+        }
         //get the associated item view for the selected list item
-        let itemView:ListItemView = this.childViews.getItemAt((event.target as HTMLSelectElement).selectedIndex-1);
+        let itemView:ListItemView = this.childViews.getItemAt(index);
         //html option elements appear to not dispatch,or at least not bubble the click event on list items
         //so we force it here
         itemView.onClick();

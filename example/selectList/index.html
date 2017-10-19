@@ -33,7 +33,7 @@
                 component.collection = collection;
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.model.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             },
             addEventListeners:function (component) {
                 //the lotus syntax for addEventListener is slightly different than that of DOM elements,
@@ -147,7 +147,7 @@
                 component.collection = collection;
             },
             onChange: function (event) {
-                console.log('My callback function received value: ' + event.payload.target.model.value);
+                console.log('My callback function received value: ' + event.payload.target.selectedItem.model.value);
             },
             addEventListeners:function (component) {
                 //the lotus syntax for addEventListener is slightly different than that of DOM elements,
