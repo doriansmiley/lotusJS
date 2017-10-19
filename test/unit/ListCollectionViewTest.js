@@ -9,7 +9,7 @@ describe('ListCollectionView Test', function() {
                 component.removeEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
                 expect( component.collectionContainer.options[component.collectionContainer.selectedIndex] === component.collectionContainer.options[2] ).toBe( true );
                 expect( component.selectedItem == component.childViews.getItemAt(2) ).toBe( true );
-                expect( event.payload.target === component.childViews.getItemAt(2) ).toBe( true );
+                expect( event.payload.target.selectedItem === component.childViews.getItemAt(2) ).toBe( true );
                 done();
             }
         }
@@ -66,7 +66,7 @@ describe('ListCollectionView Test', function() {
                 component.removeEventListener(Lotus.InputEvent.CHANGE, responder, 'onChange');
                 expect( component.collectionContainer.options[component.collectionContainer.selectedIndex] === component.collectionContainer.options[3] ).toBe( true );
                 expect( component.selectedItem == component.childViews.getItemAt(3) ).toBe( true );
-                expect( event.payload.target === component.childViews.getItemAt(3) ).toBe( true );
+                expect( event.payload.target.selectedItem === component.childViews.getItemAt(3) ).toBe( true );
                 expect( component.childViews.getItemAt(2).model.selected).toBe(false);
                 expect( component.childViews.getItemAt(2).selected).toBe(false);
                 done();

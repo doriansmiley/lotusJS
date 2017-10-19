@@ -8,7 +8,7 @@ describe('RadioCollectionView Test', function () {
             onChange: function (event) {
                 expect(component.childViews.getItemAt(0).radio.checked).toBe(true);
                 expect(component.selectedItem == component.childViews.getItemAt(0)).toBe(true);
-                expect(event.payload.target === component.selectedItem).toBe(true);
+                expect(event.payload.target.selectedItem === component.selectedItem).toBe(true);
                 done();
             }
         }
@@ -76,7 +76,7 @@ describe('RadioCollectionView Test', function () {
             onChange: function (event) {
                 expect(component.childViews.getItemAt(3).radio.checked).toBe(true);
                 expect(component.selectedItem == component.childViews.getItemAt(3)).toBe(true);
-                expect(event.payload.target === component.selectedItem).toBe(true);
+                expect(event.payload.target.selectedItem === component.selectedItem).toBe(true);
                 done();
             }
         }

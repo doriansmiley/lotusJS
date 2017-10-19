@@ -17,7 +17,7 @@ describe('Input', function () {
             onChange:function(event){
                 expect(event.type === Lotus.InputEvent.CHANGE).toBe(true);
                 expect(event.payload.target.value === 'test value').toBe(true);
-                expect(event.payload.target.getAttribute('type') === 'text').toBe(true);
+                expect(event.payload.target.inputSkinPart.getAttribute('type') === 'text').toBe(true);
                 input.removeEventListener(Lotus.InputEvent.CHANGE, handler, 'onChange');
                 input.destroy();
                 expect(input.inputSkinPart === null).toBe(true);
@@ -58,7 +58,7 @@ describe('Input', function () {
                 expect(model.value === 'xxx-test value').toBe(true);
                 expect(input.value === 'xxx-test value').toBe(true);
                 expect(input.inputSkinPart.value === 'xxx-test value').toBe(true);
-                expect(event.payload.target.getAttribute('type') === 'text').toBe(true);
+                expect(event.payload.target.inputSkinPart.getAttribute('type') === 'text').toBe(true);
                 //test two way binding
                 model.value = 'another value';
                 expect(model.value === 'xxx-another value').toBe(true);
