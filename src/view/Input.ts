@@ -118,7 +118,7 @@ export class Input extends AbstractItemView{
         console.log('Lotus.Input.prototype.onChange: input value is ' + (event.target as HTMLInputElement).value);
         console.log('Lotus.Input.prototype.onChange: my id is ' + this.id);
         this.value = this.inputSkinPart.value;
-        this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this.inputSkinPart, originalEvent:event}))
+        this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this, originalEvent:event}))
     }
 
     public addEventListeners():void{
