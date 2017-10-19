@@ -80,10 +80,18 @@
 		select[class="dropdown-button2"] > option[class="list-item"]:hover {
 			background:#400 !important;
 		}
+
+        .myValidClass{
+            border-color: #459866;
+        }
+
+        .myInvalidClass{
+            border-color: #ff0000;
+        }
     </style>
     <select data-attribute-item-view="Lotus.ListItemView" data-skin-part="collectionContainer" class="dropdown-button2">
         <!-- if you define a value for label on your model it will overwrite the default innerHTML below -->
-        <option value="default" selected="selected">Select one</option>
+        <option data-skin-part="prompt" value="default" selected="selected">Select one</option>
         <option data-skin-part="itemTemplate" class="list-item"></option>
     </select>
 </template>

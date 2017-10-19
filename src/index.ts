@@ -45,4 +45,5 @@ export * from './model/form/validation/IValidator';
 export * from './model/form/validation/AbstractValidator';
 export * from './model/form/validation/ValidationError';
 export * from './model/form/validation/TextInputValidator';
+export * from './model/form/validation/PhoneNumberValidator';
 export * from './model/form/validation/SelectableInputValidator';

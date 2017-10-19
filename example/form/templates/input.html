@@ -1,0 +1,75 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+
+
+        input[class="input-skin1"]{
+            cursor:pointer;
+            color:#333;
+            border-radius:6px;
+            box-shadow:-1px 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid #777;
+			font-family:'SegoeUI';
+			font-size:12px;
+			padding:8px;
+			background:#eee;
+			min-width:40px;
+			
+        }
+
+        input[class="input-skin1"] * {
+            cursor:pointer;
+        }
+
+        input[class="input-skin1"]:focus {
+            outline: none;
+			color:#1f6b8e;
+			 border: 2px solid #1f6b8e;
+			 padding:7px;
+        }
+
+        input[class="input-skin1"]:hover {
+            border: 2px solid #1f6b8e;
+			padding:7px;
+        }
+
+        .myValidClass{
+            border-color: #777;
+        }
+
+        .myInvalidClass{
+            border-color: #ff0000;
+        }
+
+        div{
+            display: inline;
+        }
+    </style>
+    <!-- if you define a value for label on your model it will set  default innerHTML for the label below -->
+    <div data-root="this">
+        <label data-skin-part="label"></label>
+        <input data-skin-part="input" class="input-skin1"/>
+    </div>
+</template>

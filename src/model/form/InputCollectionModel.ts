@@ -20,11 +20,13 @@ export class InputCollectionModel extends Lavender.Subject{
     private _errors:Lavender.ArrayList;
     private _label:string;
 
-    constructor(type:number, collection:Lavender.ArrayList, selectionRequired:boolean = false){
+    constructor(type:number, collection:Lavender.ArrayList, selectionRequired:boolean = false, validators:Lavender.ArrayList = new Lavender.ArrayList()){
         super();
         this.type = type;
         this.collection = collection;
         this.selectionRequired = selectionRequired;
+        this.validators = validators;
+        this.setUpBindings();
     }
 
 
@@ -54,6 +56,7 @@ export class InputCollectionModel extends Lavender.Subject{
         this._validators = value;
         this.notify(value, 'validators');
         this.setUpBindings();
+        this.addEventListeners();
     }
 
     get isValid():boolean {
@@ -83,7 +86,27 @@ export class InputCollectionModel extends Lavender.Subject{
         this.notify(value, 'collection');
     }
 
+    protected addEventListeners():void{
+        if(!this.validators){
+            return;
+        }
+        this.validators.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'setUpBindings');
+    }
+
+    protected removeEventListeners():void{
+        if(!this.validators){
+            return;
+        }
+        if(this.validators){
+            this.validators.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'setUpBindings');
+        }
+    }
+
     public setUpBindings():void{
+        if(!this.binder || !this.validators){
+            return;
+        }
+        this.binder.unbindAll();
         for(let i=0; i<this.validators.length; i++){
             this.binder.bind(this.validators.getItemAt(i), 'isValid', this, 'validate');
         }
@@ -126,8 +149,11 @@ export class InputCollectionModel extends Lavender.Subject{
        if(this.binder){
            this.binder.unbindAll();
        }
+        this.removeEventListeners();
         this.binder = null;
         this.collection = null;
+        this.validators = null;
+        this.errors = null;
 
     }
 }

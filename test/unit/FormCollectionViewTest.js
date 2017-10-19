@@ -245,7 +245,6 @@ describe('FormCollectionView Test', function() {
                 expect( component.errorState === errorState ).toBe( true );
                 expect( component.itemView === 'Lotus.FormItemView' ).toBe( true );
                 expect( component.createChildView() instanceof Lotus.FormItemView ).toBe( true );
-                //TODO: iterate all vies and assign event listerner for ready event. when all are ready move to testing individual form parts
                 for(var i=0; i < component.childViews.length; i++){
                     if(!component.childViews.getItemAt(i).ready){
                         component.childViews.getItemAt(i).addEventListener(Lotus.ComponentEvent.READY, handler, 'onChildViewReady');

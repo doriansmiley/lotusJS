@@ -1,0 +1,64 @@
+<template>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeui.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuib.ttf') format('truetype');
+
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url('../css/fonts/segoeuii.ttf') format('truetype');
+
+            font-weight: normal;
+            font-style: italic;
+        }
+    </style>
+    <div data-root="this">
+        <div data-skin-part="inputState">
+            <div data-skin-part="validationWarning">
+                <div data-skin-part="error"></div>
+            </div>
+            <div data-skin-part="collectionContainer">
+                <div data-skin-part="itemTemplate">
+                    <x-lotus-radio data-attribute-valid-class="myValidClass"
+                                   data-attribute-invalid-class="myInvalidClass" data-skin-part="radioGroup"
+                                   data-template-url="../radioGroup/templates/radio2.html"
+                                   data-component-root="[data-skin-part='collectionContainer']"></x-lotus-radio>
+                    <x-lotus-select data-attribute-valid-class="myValidClass"
+                                    data-attribute-invalid-class="myInvalidClass" data-skin-part="list"
+                                    data-template-url="../selectList/templates/select2.html"
+                                    data-component-root='[data-skin-part="collectionContainer"]'
+                                    data-attribute-type="text"></x-lotus-select>
+                    <x-lotus-input data-attribute-valid-class="myValidClass"
+                                   data-attribute-invalid-class="myInvalidClass" data-skin-part="input"
+                                   data-template-url="templates/input2.html"
+                                   data-component-root='[data-root="this"]'
+                                   data-attribute-type="text"></x-lotus-input>
+                    <x-lotus-upload data-skin-part="file" data-template-url="../fileUpload/templates/fileUpload2.html"
+                                    data-component-root="[data-attribute-item-view='Lotus.FileView']"
+                                    data-attribute-type="text"></x-lotus-upload>
+                </div>
+            </div>
+            <button data-skin-part="submit"><label>Submit</label></button>
+            <button data-skin-part="clear"><label>Clear</label></button>
+        </div>
+        <div data-skin-part="submitState">
+            <label>We are processing your request</label>
+            <button data-skin-part="back"><label>Back</label></button>
+        </div>
+        <div data-skin-part="errorState">
+            <label>An internal server error occured and we could not process your request.</label>
+        </div>
+    </div>
+</template>

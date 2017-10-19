@@ -140,6 +140,8 @@ export class FormCollectionView extends AbstractCollectionView{
     }
 
     protected onSubmit(event:Event):void{
+        //clear old errors
+        this.clearErrors();
         //check that all instances of InputCollectionModel are valid
         let errors:Lavender.ArrayList = new Lavender.ArrayList();
         for(let i=0; i<this.collection.length; i++){
@@ -149,9 +151,21 @@ export class FormCollectionView extends AbstractCollectionView{
         }
         //display any validation errors
         if(errors.length > 0){
-            this.resolveState(FormCollectionView.VALIDATION_ERROR, this.state, errors);
+            this.addErrors(errors);
+            if(this.validationWarning){
+                this.validationWarning.style.display = this._validationWarningDisplay;
+            }
+            if(this.error){
+                this.error.style.display = this._errorDisplay;
+            }
         }else{
-            this.resolveState(FormCollectionView.SUBMIT, this.state);
+            this.state = FormCollectionView.SUBMIT;
+            if(this.validationWarning){
+                this.validationWarning.style.display = 'none';
+            }
+            if(this.error){
+                this.error.style.display = 'none';
+            }
         }
     }
 
@@ -160,28 +174,19 @@ export class FormCollectionView extends AbstractCollectionView{
         for(let i=0; i<this.collection.length; i++){
             (this.collection.getItemAt(i) as InputCollectionModel).clear();
         }
-        this.resolveState(FormCollectionView.INPUT, this.state);
+        this.state = FormCollectionView.INPUT;
     }
 
     protected onBack(event:Event):void{
-        this.resolveState(FormCollectionView.INPUT, this.state);
+        this.state = FormCollectionView.INPUT;
     }
 
     protected resolveState(state:number, oldState, errors?:Lavender.ArrayList):void{
         switch(oldState){
             case FormCollectionView.INPUT:
-                if(this.inputState){
+                if(this.inputState && state != FormCollectionView.VALIDATION_ERROR){
                     this.inputState.style.display = 'none';
                 }
-                break;
-            case FormCollectionView.VALIDATION_ERROR:
-                if(this.validationWarning){
-                    this.validationWarning.style.display = 'none';
-                }
-                if(this.error){
-                    this.error.style.display = 'none';
-                }
-                this.clearErrors();
                 break;
             case FormCollectionView.SUBMIT:
                 if(this.submitState){
@@ -198,15 +203,6 @@ export class FormCollectionView extends AbstractCollectionView{
             case FormCollectionView.INPUT:
                 if(this.inputState){
                     this.inputState.style.display = this._inputStateDisplay;
-                }
-                break;
-            case FormCollectionView.VALIDATION_ERROR:
-                this.addErrors(errors);
-                if(this.validationWarning){
-                    this.validationWarning.style.display = this._validationWarningDisplay;
-                }
-                if(this.error){
-                    this.error.style.display = this._errorDisplay;
                 }
                 break;
             case FormCollectionView.SUBMIT:
