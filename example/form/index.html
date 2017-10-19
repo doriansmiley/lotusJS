@@ -77,12 +77,13 @@
                 listValidator.source = listModel;
                 listModel.validators.addItem(listValidator);
                 var radioGroupInputs = new Lavender.ArrayList();
+                var id = Math.round(Math.random()*10).toString();
                 //set up radio model
                 radioGroupInputs.addAll([
-                    new Lotus.InputModel('1-25', '1-25', 'Company Size'),
-                    new Lotus.InputModel('26-50', '26-50', 'Company Size'),
-                    new Lotus.InputModel('51-100', '51-100', 'Company Size'),
-                    new Lotus.InputModel('100+', '100+', 'Company Size', true)//be sure to test that the model is valid on load and this item is selected
+                    new Lotus.InputModel('1-25', '1-25', 'Company Size' + id),
+                    new Lotus.InputModel('26-50', '26-50', 'Company Size' + id),
+                    new Lotus.InputModel('51-100', '51-100', 'Company Size' + id),
+                    new Lotus.InputModel('100+', '100+', 'Company Size' + id, true)//be sure to test that the model is valid on load and this item is selected
                 ]);
                 //last param ensures a selection is required
                 var radioGroupModel = new Lotus.InputCollectionModel(Lotus.InputCollectionModel.TYPE_RADIO_GROUP, radioGroupInputs, true);
