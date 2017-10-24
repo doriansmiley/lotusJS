@@ -3,6 +3,7 @@ lotusJS
 
 [![Join the chat at https://gitter.im/lotusJS/Lobby](https://badges.gitter.im/lotusJS/Lobby.svg)](https://gitter.im/lotusJS/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![](https://data.jsdelivr.com/v1/package/npm/lotusjs-components/badge)](https://www.jsdelivr.com/package/npm/lotusjs-components)
+[![npm version](https://badge.fury.io/js/lotusjs-components.svg)](https://badge.fury.io/js/lotusjs-components)
 
 LotusJS is a framework based on xTag and lavenderJS for developing HTML5 applications using web components.
 
