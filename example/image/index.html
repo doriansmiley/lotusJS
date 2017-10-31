@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>LotusJS Form Components Example</title>
-    <link rel="stylesheet" href="../css/highlight/styles/default.css">
-    <script src="../css/highlight/highlight.pack.js"></script>
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/main.css"/>
     <script type="text/javascript" src="../../node_modules/x-tag/lib/webcomponents.js"></script>
     <script type="text/javascript" src="../../node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js"></script>
@@ -104,7 +104,7 @@
         //the following is an example of how you can mediate the component events that are dispatched.
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
-            hljs.initHighlighting();
+
             var list = document.getElementsByTagName('x-lotus-image');
             for (var i = 0; i < list.length; i++) {
                 handler.addEventListeners(list[i].lotusComponentInstance);
@@ -135,11 +135,11 @@
 <div class="content-panel">
     <h3>Lotus Image Element</h3>
     <p>
-        Here are examples of lotus image component. The <code>x-lotus-image</code> tag extends the <code>Lotus.LotusHTMLElement</code>
-        tag. Our <code>x-lotus-image</code> is also mapped to a Lotus component in the call to <code>context.componentMap.mapComponent('x-lotus-image',
-        Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.A new instance of <code>Lotus.Image</code> is attached to
+        Here are examples of lotus image component. The <code class="prettyprint lang-js">x-lotus-image</code> tag extends the <code class="prettyprint lang-js">Lotus.LotusHTMLElement</code>
+        tag. Our <code class="prettyprint lang-js">x-lotus-image</code> is also mapped to a Lotus component in the call to <code class="prettyprint lang-js">context.componentMap.mapComponent('x-lotus-image',
+        Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.A new instance of <code class="prettyprint lang-js">Lotus.Image</code> is attached to
         each tag instance. Use the select list to change the image source. Observe the loading icon that is displayed. If images become cached or loads too quickly open your dev tools and turn on throttling.
-        Images will be sized according the skin's <code>data-attribute-thumb-width</code> and <code>data-attribute-thumb-height</code> attributes.
+        Images will be sized according the skin's <code class="prettyprint lang-js">data-attribute-thumb-width</code> and <code class="prettyprint lang-js">data-attribute-thumb-height</code> attributes.
         The control will set the max width and height of the image based on a scaling algorithm that preserves aspect ratio.
     </p>
     <p>
@@ -153,7 +153,7 @@
     <h3>Dynamically Change Skin</h3>
     <h5>If your browser does not natively support web component (Safari) you will not see any change. See the xTag polyfill workaround below.</h5>
     <p>
-        Changing the appearance of any image control instance is as simple as attaching a different skin using <code>data-template-url="templates/image2.html"</code>. Below is the
+        Changing the appearance of any image control instance is as simple as attaching a different skin using <code class="prettyprint lang-js">data-template-url="templates/image2.html"</code>. Below is the
         exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
         with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
     </p>
@@ -165,7 +165,7 @@
     <h3>xTag Pollyfill Workaround</h3>
     <p>
         Note: If your browser does not natively support web components you have to attach the new skin using a different
-        tag. In this example we do the following: <code>context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.
+        tag. In this example we do the following: <code class="prettyprint lang-js">context.componentMap.mapComponent('x-lotus-image2', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);</code>.
         This is an issue with the xTag core and how it encapsulates styles using the tag name.
     </p>
     <x-lotus-select data-template-url="templates/select.html" data-component-root='[data-skin-part="collectionContainer"]' data-attribute-type="text"></x-lotus-select><br />
@@ -175,15 +175,15 @@
 <div class="content-panel">
     <h3>Mediating Components</h3>
     <p>
-        The <code>x-lotus-image</code> tag exposes a single ready event by default. In order to listen for that event
+        The <code class="prettyprint lang-js">x-lotus-image</code> tag exposes a single ready event by default. In order to listen for that event
         you have to assign an event handler after the document loads. An example is below. After the component is ready we can set it's model to change the image source.
         However if you are serious about event mediation of we encourage you to check out <a href="https://www.npmjs.com/package/lotusjs-mvw">lotusjs-mvw</a>.
         This is a full blown MVW framework which comes with a mediator map for your components (and much more). This
         allows you to build application mediators that are mapped to your custom tags. Mediators can do all sorts of
         useful things like triggering business logic, dispatching application events to trigger commands, and setting up
         data binding within your surrounding application.
-		<pre>
-		<code>
+		<pre class="prettyprint lang-js">
+		<code class="prettyprint lang-js">
         var context = (function (xtag) {
             var context = new Lotus.Context(new Lavender.Config);
             context.componentMap.mapComponent('x-lotus-image', Lotus.LotusHTMLElement.prototype, Lotus.Image, xtag);
@@ -278,7 +278,7 @@
         //the following is an example of how you can mediate the component events that are dispatched.
         //A better alternative is to use https://www.npmjs.com/package/lotusjs-mvw and take advantage of component mediators
         window.onload = function () {
-            hljs.initHighlighting();
+
             var list = document.getElementsByTagName('x-lotus-image');
             for (var i = 0; i < list.length; i++) {
                 handler.addEventListeners(list[i].lotusComponentInstance);
