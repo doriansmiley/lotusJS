@@ -21,7 +21,5 @@ after `npm install` adjust to
 ````
 Also, make sure you deploy the css and fonts folders found in the root of the example directory and adjust paths as needed. Those files are referenced in `index.html` as follows:
 ````
-<link rel="stylesheet" href="../css/highlight/styles/default.css">
-<script src="../css/highlight/highlight.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/main.css"/>
 ````
