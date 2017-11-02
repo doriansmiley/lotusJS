@@ -18,34 +18,3 @@ export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
 cd $LOTUS_HOME
 ./node_modules/.bin/webpack --config webpack.config.js
 
-export LOTUS_HOME=/Users/dsmiley/workspace/lotusJS
-
-uglifyjs $LOTUS_HOME/global/Globals.js \
-$LOTUS_HOME/context/Context.js \
-$LOTUS_HOME/context/CommandMap.js \
-$LOTUS_HOME/context/ComponentList.js \
-$LOTUS_HOME/context/ComponentMap.js \
-$LOTUS_HOME/context/MediatorMap.js \
-$LOTUS_HOME/context/Injector.js \
-$LOTUS_HOME/events/ItemViewEvent.js \
-$LOTUS_HOME/events/ComponentEvent.js \
-$LOTUS_HOME/command/AbstractCommand.js \
-$LOTUS_HOME/factory/EventDispatcherFactory.js \
-$LOTUS_HOME/factory/HttpServiceFactory.js \
-$LOTUS_HOME/factory/SerializeFactory.js \
-$LOTUS_HOME/factory/ServiceFactory.js \
-$LOTUS_HOME/mediators/AbstractMediator.js \
-$LOTUS_HOME/mediators/ButtonMediator.js \
-$LOTUS_HOME/mediators/ListMediator.js \
-$LOTUS_HOME/view/SkinPart.js \
-$LOTUS_HOME/view/SkinPartList.js \
-$LOTUS_HOME/view/AbstractComponent.js \
-$LOTUS_HOME/view/AbstractCollectionView.js \
-$LOTUS_HOME/view/AbstractRecordSetCollectionView.js \
-$LOTUS_HOME/view/ImageGalleryCollectionView.js \
-$LOTUS_HOME/view/AbstractItemView.js \
-$LOTUS_HOME/view/AbstractThumbnailView.js \
-$LOTUS_HOME/view/ImageGalleryView.js \
-$LOTUS_HOME/view/Button.js \
--b -o $LOTUS_HOME/minify/lotus.min.js \
---source-map $LOTUS_HOME/minify/lotus.min.js.map
