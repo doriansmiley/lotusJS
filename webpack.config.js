@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -22,7 +23,16 @@ module.exports = {
             minimize: true,
             sourceMap: true,
             include: /\.min\.js$/,
-        })
+        }),
+        new TypedocWebpackPlugin({
+            name: 'LotusJS',
+            mode: 'file',
+            //theme: './typedoc-theme/',
+            ignoreCompilerErrors: true,
+            excludePrivate:true,
+            includeDeclarations:true,
+            excludeExternals:true
+        }, './src')
     ],
     externals: {
         "lavenderjs/lib": "Lavender"
