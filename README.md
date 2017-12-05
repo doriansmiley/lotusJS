@@ -1,6 +1,7 @@
 lotusJS
 =============
 
+[![Build Status](https://travis-ci.org/doriansmiley/lotusJS.svg?branch=master)](https://travis-ci.org/doriansmiley/lotusJS)
 [![Join the chat at https://gitter.im/lotusJS/Lobby](https://badges.gitter.im/lotusJS/Lobby.svg)](https://gitter.im/lotusJS/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![](https://data.jsdelivr.com/v1/package/npm/lotusjs-components/badge)](https://www.jsdelivr.com/package/npm/lotusjs-components)
 [![npm version](https://badge.fury.io/js/lotusjs-components.svg)](https://badge.fury.io/js/lotusjs-components)
