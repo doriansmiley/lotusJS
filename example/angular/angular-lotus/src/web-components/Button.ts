@@ -23,5 +23,15 @@ export class AngularButton extends Button implements AfterViewInit{
     this.element = this.button.nativeElement;
     this.init();
   }
+
+  public ngOnDestroy():void{
+    this.destroy();
+  }
+
+  //TODO: implement a data binding example. The Angular component acts as a mediator
+  //TODO: we want to create a lotus model that implements Lavender's Observable interface.
+  //TODO: we then want the component to enable bindings using this.binder. Then when the callback function
+  //TODO: in the component is triggered, be sure to trigger $scope.notify to update the view in angular if required.
+  //TODO: Be sure to note that Lotus advocates for two way data bindings on objects only, not views
 }
 

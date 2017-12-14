@@ -170,6 +170,10 @@ export class FormCollectionView extends AbstractCollectionView{
     }
 
     protected onClear(event:Event):void{
+        this.reset();
+    }
+
+    public reset():void{
         //clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
         for(let i=0; i<this.collection.length; i++){
             (this.collection.getItemAt(i) as InputCollectionModel).clear();

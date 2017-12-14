@@ -36,6 +36,7 @@ export declare class FormCollectionView extends AbstractCollectionView {
     protected addErrors(errors: Lavender.ArrayList): void;
     protected onSubmit(event: Event): void;
     protected onClear(event: Event): void;
+    reset(): void;
     protected onBack(event: Event): void;
     protected resolveState(state: number, oldState: any, errors?: Lavender.ArrayList): void;
     onError(error: Error): void;
