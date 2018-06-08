@@ -1,0 +1,236 @@
+<template>
+	<style>
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeui.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuib.ttf') format('truetype');
+
+			font-weight: 500;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'SegoeUI';
+			src: url('fonts/segoeuii.ttf') format('truetype');
+
+			font-weight: normal;
+			font-style: italic;
+		}
+
+		.fileInfo{
+			padding: 10px;
+		}
+
+		div[data-skin-part="collectionContainer"]{
+			max-width:500px;
+		}
+
+		div[class="file-upload1"] button{
+			cursor:pointer;
+			color:#444;
+			width:190px;
+			height:35px;
+			border-radius:6px;
+			box-shadow:-1px 1px 3px rgba(0,0,0,0.3);
+			border: 1px solid #777;
+			max-width:200px;
+
+			padding:5px;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f1f4eb+0,d6d6d6+100 */
+			background: #f1f4eb; /* Old browsers */
+			background: -moz-linear-gradient(top, #f1f4eb 0%, #d6d6d6 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #f1f4eb 0%,#d6d6d6 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #f1f4eb 0%,#d6d6d6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f4eb', endColorstr='#d6d6d6',GradientType=0 ); /* IE6-9 */	
+		}
+
+		div[class="file-upload1"] button * {
+			cursor:pointer;
+		}
+
+		div[class="file-upload1"] button:focus {
+			outline: none;
+		}
+
+		div[class="file-upload1"] button:hover {
+			border:1px solid #0048a2;
+		
+		}
+
+		div[class="file-upload1"] button:hover label {
+			color:#0048a2;
+		}
+
+		div[class="file-upload1"] button label {
+			font-family: 'SegoeUI';
+			font-size:14px;
+		}
+		div[class="file-upload1"] .thumbnailContainer {
+			width: 95px;
+			height: 95px;
+			min-height:95px;
+			min-width:95px;
+			max-height: 95px;
+			max-width: 95px;
+			border:1px dashed #444;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items: center;
+			align-items: center;
+		}
+
+
+		div[class="file-upload1"] label[data-skin-part=fileTypeLabel]{
+			margin: 5px;
+		}
+
+		div[class="file-upload1"] button[data-skin-part=cancelBtn]{
+			margin: 5px;
+			margin-left:0px;
+		}
+
+		div[class="file-upload1"] label[data-skin-part=fileLabel]{
+			font-size: 12px;
+			font-weight: bold;
+			margin: 5px;
+		}
+		div[class="file-upload1"] .noScrolling {
+			overflow: hidden;
+		}
+		div[class="file-upload1"] .progressBar {
+			width: 100%;
+			background: #f2f2f2;
+			background: -moz-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -webkit-gradient(linear,left top,left bottom,color-stop(0%, #f2f2f2),color-stop(100%, #b5b5b5));
+			background: -webkit-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -o-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: -ms-linear-gradient(top,#f2f2f2 0%,#b5b5b5 100%);
+			background: linear-gradient(to bottom,#f2f2f2 0%,#b5b5b5 100%);
+			border-radius:10px;
+			margin-top:5px;
+			border:1px solid #777;
+		}
+		div[class="file-upload1"] div[data-skin-part=progressBar]{
+			min-width: 10px;
+			width: 10px;
+			height: 10px;
+			background: #49fc20;
+			background: -moz-linear-gradient(top,#49fc20 0%,#327739 100%);
+			background: -webkit-gradient(linear,left top,left bottom,color-stop(0%, #49fc20),color-stop(100%, #327739));
+			background: -webkit-linear-gradient(top,#49fc20 0%,#327739 100%);
+			background: -o-linear-gradient(top,#49fc20 0%,#327739 100%);
+			background: -ms-linear-gradient(top,#49fc20 0%,#327739 100%);
+			background: linear-gradient(to bottom,#49fc20 0%,#327739 100%);
+			border-radius:10px;
+		
+		}
+		
+		div[class="file-upload1"] .fileinfo {
+			width: 100%;
+		    margin-left:10px;
+		}
+		
+		div[class="file-upload1"] div[data-skin-part=itemTemplate] {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start;
+			-webkit-align-items: flex-start;
+			align-items: flex-start;
+			width: 100%;
+			padding: 8px;
+			background:#ddd;
+			border:1px solid #999;
+			border-radius:8px;
+			margin-top:5px;
+		}
+		
+		div[class="file-upload1"] div[class="info-container"] {
+			width:100%;
+		}
+		
+		div[class="file-upload1"] button[data-skin-part="cancelBtn"],  div[class="file-upload1"] button[data-skin-part="clearBtn"] {
+			min-width:45px;
+			width:45px;
+			font-family:"SegoeUI";
+			font-size:11.5px;
+			height:25px;
+			padding:2px;
+		}
+		
+		div[class="file-upload1"] label[data-skin-part="fileLabel"],
+		div[class="file-upload1"] label[data-skin-part="fileTypeLabel"] {
+			font-family:"SegoeUI";
+			font-size:11px;
+		}
+	</style>
+<div data-attribute-item-view="Lotus.FileView" class="file-upload1">
+	<input type="file" multiple accept="image/*" style="display:none" data-skin-part="fileInput"/>
+	<!-- selectBtn can be any element that dispatches a click event-->
+
+	<!-- Upload file button -->
+	<button data-skin-part="selectBtn" id="replaceImageButton" style="width:100%;">
+		<label >Upload Photos</label>
+	</button>
+
+
+	<div data-skin-part="collectionContainer">
+
+		<!-- Itemrenderer skin -->
+		<div data-skin-part="itemTemplate">
+
+			<!-- Thumbnail -->
+			<div data-skin-part="thumbnailContainer" class="thumbnailContainer">
+				<img data-skin-part="thumbnail"/>
+			</div>
+
+			<!-- Filename and type -->
+			<div class="fileInfo">
+			
+			
+					<label data-skin-part="fileLabel" class="noScrolling" >File Label</label>
+					
+					<br />
+					
+					<label data-skin-part="fileTypeLabel">File Type</label>
+
+					<!-- Progress Bar -->
+					<div class="progressBar">
+						<div data-skin-part="progressBar"></div>
+					</div>
+			
+					
+				<!-- Cancel/Clear Buttons -->
+				<div >
+					<button data-skin-part="cancelBtn">Cancel</button>
+					<button data-skin-part="clearBtn">Clear</button>
+				</div>
+
+				<!-- Status Indicators, add images or svg content as needed -->
+				<div data-skin-part="statusIndicator">
+					<img data-skin-part="loadIndicator"/>
+					<img data-skin-part="errorIndicator"/>
+					<img data-skin-part="progressIndicator"/>
+					<img data-skin-part="pendingIndicator"/>
+					<img data-skin-part="abortIndicator"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</template>
