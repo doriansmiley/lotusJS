@@ -1,12 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
 var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
         'lotusJS-UMD': './src/index.ts',
         'lotusJS-UMD.min': './src/index.ts'
     },
+    mode:"production",
     output: {
         path: path.resolve(__dirname, 'lib'),
         filename: '[name].js',
@@ -17,13 +20,13 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
+    optimization: {
+        minimizer: [new TerserPlugin({
+            sourceMap: true,
+        })],
+    },
     devtool: 'source-map',
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            minimize: true,
-            sourceMap: true,
-            include: /\.min\.js$/,
-        }),
         new TypedocWebpackPlugin({
             name: 'LotusJS',
             mode: 'file',
@@ -34,17 +37,13 @@ module.exports = {
             excludeExternals:true
         }, './src')
     ],
-    externals: {
-        "lavenderjs/lib": "Lavender"
-    },
     module: {
-        loaders: [{
-            test: /\.tsx?$/,
-            loader: 'awesome-typescript-loader',
-            exclude: /node_modules/,
-            query: {
-                declaration: false,
+        rules: [
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                loader: 'awesome-typescript-loader'
             }
-        }]
+        ]
     }
 };

@@ -1,17 +1,17 @@
-export interface ILifecycle {
+export declare interface ILifecycle {
     created?: Function;
     inserted?: Function;
     removed?: Function;
     attributeChanged?: (attrName: string, oldValue: any, newValue: any) => void;
 }
-export interface IAccessors {
+export declare interface IAccessors {
     attribute?: {
         name?: string;
     };
     set?: (value: any) => void;
     get?: () => any;
 }
-export interface IDefinition {
+export declare interface IDefinition {
     content?: string;
     lifecycle?: ILifecycle;
     prototype?: any;
@@ -25,7 +25,7 @@ export interface IDefinition {
         [name: string]: (...args: any[]) => void;
     };
 }
-export interface IXtag {
+export declare interface IXtag {
     register: (name: string, definition: IDefinition) => void;
     query: (element: Element, selector: string) => any[];
     toArray: (element: Element) => Element[];

@@ -19,7 +19,7 @@ module.exports = function (config) {
 
         exclude: ['lib/angular/angular-scenario.js'],
 
-        autoWatch: true,
+        singleRun: true,
 
         frameworks: ['jasmine'],
 

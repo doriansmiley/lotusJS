@@ -1,1 +1,1 @@
-{"version":3,"file":"ImageGalleryCollectionView.js","sourceRoot":"","sources":["../../src/view/ImageGalleryCollectionView.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA;;GAEG;AACH,qFAAkF;AAElF;IAAgD,8CAA+B;IAC3E;eACI,iBAAO;IACX,CAAC;IACL,iCAAC;AAAD,CAAC,AAJD,CAAgD,iEAA+B,GAI9E;AAJY,gEAA0B"}
+{"version":3,"file":"ImageGalleryCollectionView.js","sourceRoot":"","sources":["../../src/view/ImageGalleryCollectionView.ts"],"names":[],"mappings":";;AAAA;;GAEG;AACH,uFAAkF;AAElF,MAAa,0BAA2B,SAAQ,iEAA+B;IAC3E;QACI,KAAK,EAAE,CAAC;IACZ,CAAC;CACJ;AAJD,gEAIC"}
