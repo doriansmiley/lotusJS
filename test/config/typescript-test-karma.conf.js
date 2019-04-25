@@ -17,6 +17,8 @@ module.exports = function (config) {
             "/local": "http://localhost"
         },
 
+        reporters: ['spec'],
+
         exclude: ['lib/angular/angular-scenario.js'],
 
         singleRun: true,
@@ -29,6 +31,7 @@ module.exports = function (config) {
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-spec-reporter',
             'karma-jasmine'
         ],
 
