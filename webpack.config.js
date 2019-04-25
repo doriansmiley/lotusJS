@@ -20,6 +20,9 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
+    externals: {
+        "lavenderjs/lib": "Lavender"
+    },
     optimization: {
         minimizer: [new TerserPlugin({
             sourceMap: true,
