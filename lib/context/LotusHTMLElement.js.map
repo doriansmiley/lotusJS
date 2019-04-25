@@ -1,1 +1,0 @@
-{"version":3,"file":"LotusHTMLElement.js","sourceRoot":"","sources":["../../src/context/LotusHTMLElement.ts"],"names":[],"mappings":";;AACA;;GAEG;AACH,MAAa,gBAAiB,SAAQ,cAAc;IAGhD;QACI,KAAK,EAAE,CAAC;IACZ,CAAC;IAEM,gBAAgB;QACnB,OAAO,KAAK,CAAC,kBAAkB,CAAC,EAAE,CAAC;IACvC,CAAC;IAEM,oBAAoB;QACvB,OAAO,IAAI,CAAC,sBAAsB,CAAC;IACvC,CAAC;CACJ;AAdD,4CAcC"}
