@@ -12,7 +12,8 @@
     "clean-dist": "rimraf ./lib/*",
     "prebuild": "npm run clean-dist",
     "build": "tsc && webpack",
-    "test": "sh ./scripts/testSauce.sh"
+    "test": "sh ./scripts/testSauce.sh",
+    "test-local": "npm run build && sh ./scripts/typescript.sh"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
   },
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
-    "js-yaml": "^3.13.0",
+    "js-yaml": "^3.13.1",
     "lavenderjs": "^1.0.16",
     "x-tag": "^1.5.11"
   },
@@ -55,10 +56,10 @@
     "karma-junit-reporter": "^1.2.0",
     "karma-sauce-launcher": "^2.0.2",
     "karma-spec-reporter": "0.0.32",
-    "mocha": "^6.0.2",
+    "mocha": "^6.2.1",
     "rimraf": "^2.6.1",
     "terser-webpack-plugin": "^1.2.3",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.15.0",
     "typedoc-webpack-plugin": "^1.1.4",
     "typescript": "^3.4.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
