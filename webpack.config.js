@@ -1,7 +1,5 @@
 var path = require('path');
-var webpack = require('webpack');
 var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {

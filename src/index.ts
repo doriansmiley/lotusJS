@@ -5,7 +5,7 @@ export * from './context/IContext';
 export * from './context/Context';
 export * from './context/IComponentList';
 export * from './context/ComponentList';
-export * from './context/IComponentMap';
+export * from './context/ComponentMapInterface';
 export * from './context/ComponentMap';
 export * from './context/xtag';
 export * from './context/LotusHTMLElement';

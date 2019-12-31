@@ -1,5 +1,5 @@
 import * as Lavender from 'lavenderjs/lib';
-import {IComponentMap} from "./IComponentMap";
+import {ComponentMapInterface} from "./ComponentMapInterface";
 import {IContext} from "./IContext";
 import {ComponentMap} from "./ComponentMap";
 
@@ -9,7 +9,7 @@ import {ComponentMap} from "./ComponentMap";
 export class Context implements IContext{
     public config:Object;
     public eventDispatcher:Lavender.IEventDispatcher;
-    public componentMap:IComponentMap;
+    public componentMap:ComponentMapInterface;
     
     constructor(config:Object, params:Object){
         this.config = config;
