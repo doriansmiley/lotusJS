@@ -11,7 +11,7 @@
   "scripts": {
     "clean-dist": "rimraf ./lib/*",
     "prebuild": "npm run clean-dist",
-    "build": "eslint \"src/**\" --quiet && tsc && webpack",
+    "build": "npm audit && eslint \"src/**\" --quiet && tsc && webpack",
     "test": "npm run build && sh ./scripts/testSauce.sh",
     "test-local": "npm run build && sh ./scripts/typescript.sh"
   },
