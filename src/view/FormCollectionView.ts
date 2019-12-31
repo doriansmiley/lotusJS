@@ -16,7 +16,7 @@ export class FormCollectionView extends AbstractCollectionView {
     public static SUBMIT = 2;
     public static ERROR = 2;
 
-    protected _state = 0;//determines what state the form shows
+    protected _state = 0;// determines what state the form shows
     protected _validationWarning: HTMLElement;
     protected _validationWarningDisplay: string;
     protected _inputState: HTMLElement;
@@ -25,7 +25,7 @@ export class FormCollectionView extends AbstractCollectionView {
     protected _submitStateDisplay: string;
     protected _errorState: HTMLElement;
     protected _errorStateDisplay: string;
-    protected _error: HTMLElement;//HTML element used to display error message
+    protected _error: HTMLElement;// HTML element used to display error message
     protected _errorDisplay: string;
     protected _submit: HTMLElement;
     protected _clear: HTMLElement;
@@ -77,7 +77,7 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     set state(value: number) {
-        //set new state, this must occure first
+        // set new state, this must occure first
         this.resolveState(value, this.state);
         this._state = value;
         this.notify(value, 'state');
@@ -140,16 +140,16 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     protected onSubmit(event: Event): void{
-        //clear old errors
+        // clear old errors
         this.clearErrors();
-        //check that all instances of InputCollectionModel are valid
+        // check that all instances of InputCollectionModel are valid
         const errors: Lavender.ArrayList = new Lavender.ArrayList();
         for (let i=0; i<this.collection.length; i++) {
             if (!(this.collection.getItemAt(i) as InputCollectionModel).isValid) {
                 errors.addAll((this.collection.getItemAt(i) as InputCollectionModel).errors.source());
             }
         }
-        //display any validation errors
+        // display any validation errors
         if (errors.length > 0) {
             this.addErrors(errors);
             if (this.validationWarning) {
@@ -174,7 +174,7 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     public reset(): void{
-        //clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
+        // clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
         for (let i=0; i<this.collection.length; i++) {
             (this.collection.getItemAt(i) as InputCollectionModel).clear();
         }
@@ -223,16 +223,16 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     public onError(error: Error): void{
-        //only the external application can trigger state error which results from a service error
+        // only the external application can trigger state error which results from a service error
     }
 
     public onReady(): void{
         super.onReady()
-        //set the default state
+        // set the default state
         this.resolveState(FormCollectionView.INPUT, null);
     }
 
-    //define required skin parts
+    // define required skin parts
     public defineSkinParts(): void{
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('validationWarning', this, 'validationWarning'));
@@ -245,9 +245,9 @@ export class FormCollectionView extends AbstractCollectionView {
         this.skinParts.addItem(new SkinPart('back', this, 'back'));
     }
 
-    //set up event handlers and bindings
+    // set up event handlers and bindings
     public onSkinPartAdded(part: string, element: HTMLElement): void{
-        //attach event listeners for submit and clear buttons
+        // attach event listeners for submit and clear buttons
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'back':
@@ -285,6 +285,6 @@ export class FormCollectionView extends AbstractCollectionView {
 
     public destroy(): void{
         super.destroy();
-        //TODO clear all references
+        // TODO clear all references
     }
 }

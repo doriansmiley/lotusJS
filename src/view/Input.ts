@@ -51,14 +51,14 @@ export class Input extends AbstractItemView {
 
     set value(value: string) {
         this._value = value;
-        //manually this.inputSkinPart.value if there are no two way bindings
+        // manually this.inputSkinPart.value if there are no two way bindings
         if (this.inputSkinPart) {
             this.inputSkinPart.value = value;
         }
         this.notify(value, 'value');
     }
 
-    //add the invalid/valid class after validation. This method id typically called as part of a data binding on this.isValid
+    // add the invalid/valid class after validation. This method id typically called as part of a data binding on this.isValid
     public attachValidationClass(classToAdd: string, classToRemove: string): void{
         if (this.inputSkinPart) {
             this.inputSkinPart.classList.remove(classToRemove);
@@ -66,14 +66,14 @@ export class Input extends AbstractItemView {
         }
     }
 
-    //TODO: add invalid classes and bindings to trigger attachment of invlaid styles when model's isValid state changes
+    // TODO: add invalid classes and bindings to trigger attachment of invlaid styles when model's isValid state changes
     public onModelChange(value: Record<string, any>): void{
         super.onModelChange(value);
         if (value instanceof InputModel) {
-            //set up two way bindings on model
+            // set up two way bindings on model
             this.binder.bind(value, 'value', this, 'value');
             this.binder.bind(this, 'value', value, 'value');
-            //set the intital value, IMORTANT: do this after bindings are set up to trigger validation
+            // set the intital value, IMORTANT: do this after bindings are set up to trigger validation
             this.value = value.value;
         }
         if (this.label && value['label']) {
@@ -83,7 +83,7 @@ export class Input extends AbstractItemView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('input', this, 'inputSkinPart'));
         this.skinParts.addItem(new SkinPart('label', this, 'label'));
     }
@@ -92,14 +92,14 @@ export class Input extends AbstractItemView {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'input':
-                //add event listener or whatever else you want to do when this skin part is added
-                //you could hold until all skin parts are added and then call addEventListeners
+                // add event listener or whatever else you want to do when this skin part is added
+                // you could hold until all skin parts are added and then call addEventListeners
                 console.log(`Lotus.Input.prototype.onSkinPartAdded: part: ${part}`);
                 this.inputSkinPart.setAttribute('type', this.type)
                 this.addEventListeners();
                 if (this.model) {
                     this.inputSkinPart.value = this.model['value'];
-                    //trigger change event to update bidings and trigger validation
+                    // trigger change event to update bidings and trigger validation
                     const evt = document.createEvent('HTMLEvents');
                     evt.initEvent('change', false, true);
                     this.inputSkinPart.dispatchEvent(evt);

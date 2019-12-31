@@ -45,8 +45,8 @@ export class ListItemView extends AbstractSelectableFormInput {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
-        //Choosing another name would require it be wrapped in a itemTemplate skin part
+        // set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
+        // Choosing another name would require it be wrapped in a itemTemplate skin part
         this.skinParts.addItem(new SkinPart('itemTemplate', this, 'option'));
     }
 
@@ -54,7 +54,7 @@ export class ListItemView extends AbstractSelectableFormInput {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'itemTemplate':
-                //set up listitem value and label
+                // set up listitem value and label
                 this.option.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
                 this.option.innerHTML = (this.model as InputModel).label;
                 this.option.selected = this.selected;

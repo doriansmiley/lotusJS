@@ -42,7 +42,7 @@ export class RadioCollectionView extends AbstractInputCollectionView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('legend', this, 'legend'));
     }
 

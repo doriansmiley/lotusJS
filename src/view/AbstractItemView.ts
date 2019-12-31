@@ -22,7 +22,7 @@ export abstract class AbstractItemView extends AbstractComponent {
     }
 
     public setElementDisplay(element: HTMLElement, display: string): void {
-        //at some points in the items lifecycle element could be null, se we require this check
+        // at some points in the items lifecycle element could be null, se we require this check
         if (element !== null && element !== undefined) {
             element.style.display = display;
         }

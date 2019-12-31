@@ -63,7 +63,7 @@ export class RadioItemView extends AbstractSelectableFormInput {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'radio':
-                //set up listitem value and label
+                // set up listitem value and label
                 this.radio.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
                 this.radio.name = (this.model as InputModel).name;
                 this.radio.checked = this.selected;

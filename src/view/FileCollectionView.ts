@@ -39,18 +39,18 @@ export class FileCollectionView extends AbstractCollectionView {
     protected uploadFiles(files: FileList): void{
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.indexOf('image') < 0) {
-                continue;//skip file types that are not images
+                continue;// skip file types that are not images
             }
-            //iterate over the files and create a new file object and append to the collection
+            // iterate over the files and create a new file object and append to the collection
             const file = new File();
             file.type = files[i].type;
             file.name = files[i].name;
             file.size = files[i].size;
             file.fileObj = files[i];
             file.thumbnail = window.URL.createObjectURL(files[i]);
-            //add the item to the collection
+            // add the item to the collection
             this.collection.addItem(file);
-            //dispatch event to load the file
+            // dispatch event to load the file
             this.dispatch(this.getUploadEvent(file));
         }
     }
@@ -74,8 +74,8 @@ export class FileCollectionView extends AbstractCollectionView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
-        //Choosing another name would require it be wrapped in a itemTemplate skin part
+        // set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
+        // Choosing another name would require it be wrapped in a itemTemplate skin part
         this.skinParts.addItem(new SkinPart('fileInput', this, 'fileInput'));
         this.skinParts.addItem(new SkinPart('selectBtn', this, 'selectBtn'));
     }
@@ -103,7 +103,7 @@ export class FileCollectionView extends AbstractCollectionView {
 
     public onFileBtnClick(event: Event): void{
         if (this.fileInput) {
-            this.fileInput.click();//trigger the open of the file input
+            this.fileInput.click();// trigger the open of the file input
         }
         if (this.selectBtn.getAttribute('href') !== null && this.selectBtn.getAttribute('href') !== undefined) {
             event.preventDefault();

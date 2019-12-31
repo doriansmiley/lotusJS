@@ -19,9 +19,9 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     set recordSet(value: Lavender.RecordSet) {
-        this.removeCollectionEventListeners();//must occur first
+        this.removeCollectionEventListeners();// must occur first
         this._recordSet = value;
-        this.addCollectionEventListeners();//must occur after line above
+        this.addCollectionEventListeners();// must occur after line above
         this.notify(value, 'recordSet');
     }
 
@@ -88,7 +88,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     protected addCollectionEventListeners(): void{
-        //IMPORTANT, do not call super, we don't want to listen for collection change events but instead the events below
+        // IMPORTANT, do not call super, we don't want to listen for collection change events but instead the events below
         if (this.recordSet !== null && this.recordSet !== undefined) {
             this.recordSet.addEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
             this.binder.bind(this.recordSet, 'pageList', this, 'onPageListChange', null, null, 'pageListChaneHandler');
@@ -96,10 +96,10 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     protected removeCollectionEventListeners(): void{
-        //IMPORTANT, do not call super
-        //This method can be called as part of a destroy sequence where the collection is nulled out, so we check for NPE
+        // IMPORTANT, do not call super
+        // This method can be called as part of a destroy sequence where the collection is nulled out, so we check for NPE
         if (this.recordSet !== null && this.recordSet !== undefined) {
-            //remove old event listeners
+            // remove old event listeners
             this.recordSet.removeEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
         }
         if (this.binder !== null && this.binder !== undefined) {
@@ -108,7 +108,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     protected onClickHandler(event: Event): void{
-        //event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
+        // event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
         switch ((event.currentTarget as HTMLElement).getAttribute('data-skin-part')) {
             case 'nextBtn':
                 if (this.recordSet.selectedPage + 1 > this.recordSet.totalPages) {
@@ -168,7 +168,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     protected initCollection(): void{
-        //assign a default collection if it has not already been set
+        // assign a default collection if it has not already been set
         if (this.recordSet === null || this.recordSet === undefined) {
             this.recordSet = new Lavender.RecordSet();
         }
@@ -176,7 +176,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('nextBtn', this, 'nextBtn'));
         this.skinParts.addItem(new SkinPart('pervBtn', this, 'pervBtn'));
         this.skinParts.addItem(new SkinPart('firstBtn', this, 'firstBtn'));
@@ -186,7 +186,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
-            //optional container for displaying collection elements
+            // optional container for displaying collection elements
             case 'nextBtn':
                 this.nextBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
@@ -200,7 +200,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
                 this.lastBtn.addEventListener('click', this.onClickHandler.bind(this));
                 break;
         }
-        //IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
+        // IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
         if (element.getAttribute('data-enabledClass') !== null && element.getAttribute('data-enabledClass') !== undefined) {
             this.navBtnEnabledClass = element.getAttribute('data-enabledClass');
         }
@@ -210,11 +210,11 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     }
 
     public render(): void{
-        //IMPORTANT: do not call super!
+        // IMPORTANT: do not call super!
         if (this.itemView === null || this.itemView == undefined) {
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
         }
-        //clear the current view
+        // clear the current view
         this.removeAllChildViews();
         if (this.nextBtn) {
             this.refreshNavButtonDisplay(this.nextBtn, 'next');
@@ -231,12 +231,12 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         if (this.recordSet.pageList === null || this.recordSet.pageList === undefined) {
             return;
         }
-        //populate the new view using the record set's current page
+        // populate the new view using the record set's current page
         for (let i = 0; i < this.recordSet.pageList.length; i++) {
             const model = this.recordSet.pageList.getItemAt(i);
             this.addChildView(model);
         }
-        this.selectedItem = null;//reset the selected item state
+        this.selectedItem = null;// reset the selected item state
     }
 
     public destroy(): void{

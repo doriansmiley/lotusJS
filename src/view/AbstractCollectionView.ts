@@ -13,7 +13,7 @@ export class AbstractCollectionView extends AbstractComponent {
     private _itemTemplate: HTMLElement;
     private _selectedItem: AbstractItemView;
     private _collection: Lavender.IList;
-    private _itemView: string;//IMPORTANT: this value must be defined on the tag
+    private _itemView: string;// IMPORTANT: this value must be defined on the tag
     private _childViews: Lavender.ArrayList = new Lavender.ArrayList();
 
     constructor() {
@@ -52,13 +52,13 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     set collection(value) {
-        this.removeCollectionEventListeners();//must occur first
+        this.removeCollectionEventListeners();// must occur first
         this._collection = value;
         if (value) {
             this.addCollectionEventListeners();
-        }//must occur after line above
+        }// must occur after line above
         this.notify(value, 'collection');
-        //render the view as long as there are items in the collection
+        // render the view as long as there are items in the collection
         if (value && this.ready) {
             this.render();
         }
@@ -84,7 +84,7 @@ export class AbstractCollectionView extends AbstractComponent {
                 this.collectionContainer.removeChild(this.collectionContainer.firstChild);
             }
         } else if (this.element) {
-            //remove child nodes
+            // remove child nodes
             while (this.element.firstChild) {
                 this.element.removeChild(this.element.firstChild);
             }
@@ -118,25 +118,25 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    //override point
+    // override point
     protected createChildView(model: Record<string, any>): AbstractItemView {
         const evalClass = eval(this.itemView);
         return new evalClass();
     }
 
-    //override point
+    // override point
     protected cloneItemTemplate(model: Record<string, any>): LotusHTMLElement {
         return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
     }
 
-    //override point for objects that require manipulation of the model such as implementation of adapter pattern
+    // override point for objects that require manipulation of the model such as implementation of adapter pattern
     protected getModel(model: Record<string, any>): Record<string, any> {
         return model;
     }
 
     protected addChildView(model: Record<string, any>): void{
         const view: AbstractItemView = this.createChildView(model);
-        //clone the view
+        // clone the view
         const clone: LotusHTMLElement = this.cloneItemTemplate(model);
         view.model = this.getModel(model);
         view.element = clone;
@@ -148,8 +148,8 @@ export class AbstractCollectionView extends AbstractComponent {
             this.element.appendChild(view.element);
         }
         this.addViewEventListeners(view);
-        //set the selected item from the model
-        //this allows data models to drive the selected item when they are assigned, or a new item added
+        // set the selected item from the model
+        // this allows data models to drive the selected item when they are assigned, or a new item added
         if (view.model['selected']) {
             this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:view}));
         }
@@ -181,7 +181,7 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    //IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
+    // IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
     protected addAllChildViews(models: Lavender.IList): void{
         for (let i=0; i < models.length; i++) {
             this.addChildView(models[i]);
@@ -213,7 +213,7 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     protected removeChildViewFromModel(model: Record<string, any>): void{
-        //get the view associated with the model
+        // get the view associated with the model
         for (let i=0; i < this.childViews.length; i++) {
             if (this.childViews.getItemAt(i).model == model) {
                 this.removeChildView(this.childViews.getItemAt(i));
@@ -223,17 +223,17 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     protected initCollection(): void{
-        //assign a default collection if it has not already been set
+        // assign a default collection if it has not already been set
         if (this.collection === null || this.collection === undefined) {
             this.collection = this.getCollection();
         }
     }
 
     protected refreshView(value: any): void{
-        //stub for override
+        // stub for override
     }
 
-    //override point
+    // override point
     protected validateViewsFunctions(): void{
         if (this.itemView === null || this.itemView == undefined) {
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
@@ -241,15 +241,15 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     public setSelectedItem(model: Record<string, any>): void{
-        //since this can be used as a bindable end point make sure recursion does not occur
+        // since this can be used as a bindable end point make sure recursion does not occur
         if (this.selectedItem && this.selectedItem.model == model) {
             return;
         }
         for (let i=0; i < this.childViews.length; i++) {
             if (this.childViews.getItemAt(i).model == model) {
-                //set the selected item
+                // set the selected item
                 this.onItemSelectedDeselect(new ItemViewEvent(ItemViewEvent.ITEM_SELECTED, {item:this.childViews.getItemAt(i)}));
-                //refresh the view
+                // refresh the view
                 if (this.selectedItem) {
                     this.refreshView(model['value']);
                 }
@@ -274,7 +274,7 @@ export class AbstractCollectionView extends AbstractComponent {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('collectionContainer', this, 'collectionContainer'));
         this.skinParts.addItem(new SkinPart('itemTemplate', this, 'itemTemplate'));
     }
@@ -282,9 +282,9 @@ export class AbstractCollectionView extends AbstractComponent {
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
-            //required, defines the layout for child views
+            // required, defines the layout for child views
             case 'itemTemplate':
-                element.parentNode.removeChild(element);//remove from the view
+                element.parentNode.removeChild(element);// remove from the view
                 break;
 
         }

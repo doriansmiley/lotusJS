@@ -73,7 +73,7 @@ export class AbstractThumbnailView extends AbstractItemView {
         const scale = Lavender.ResizeUtils.getScaleToFit(defaultSize, containerSize);
         const width = defaultSize['width'] * scale;
         const height = defaultSize['height'] * scale;
-        //console.log("width/height "+width+"/"+height)
+        // console.log("width/height "+width+"/"+height)
         this.thumbnail.setAttribute('width', `${width}px`);
         this.thumbnail.setAttribute('height', `${height}px`);
         this.thumbnail.style.maxWidth = `${containerSize.width}px`;
@@ -101,7 +101,7 @@ export class AbstractThumbnailView extends AbstractItemView {
 
     protected getContainerSize(): Lavender.widthHeightObject {
         let returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
-        //if the container has a defined width and height set in the tempalte use that instead of our defaults
+        // if the container has a defined width and height set in the tempalte use that instead of our defaults
         if (!isNaN(parseInt(this.thumbWidth)) && !isNaN(parseInt(this.thumbWidth))) {
             returnObj = {width:parseInt(this.thumbWidth), height:parseInt(this.thumbHeight)} as Lavender.widthHeightObject;
         }
@@ -147,7 +147,7 @@ export class AbstractThumbnailView extends AbstractItemView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('thumbnail', this, 'thumbnail'));
         this.skinParts.addItem(new SkinPart('thumbnailContainer', this, 'thumbnailContainer'));
     }
@@ -176,7 +176,7 @@ export class AbstractThumbnailView extends AbstractItemView {
     public resetState(): void{
         this.thumbnailContainer.classList.toggle(this._thumbnailSelectedClass);
         const eventType = (this.thumbnailContainer.classList.contains(this._thumbnailSelectedClass)) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
-        //dispatch event to notify view that the layout was selected/or deselected
+        // dispatch event to notify view that the layout was selected/or deselected
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
 

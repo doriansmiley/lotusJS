@@ -65,7 +65,7 @@ export class DragDropFileCollectionView extends FileCollectionView {
             this.dropTarget.classList.remove(this.dragOverClass);
         }
         const files = (event.dataTransfer !== null && event.dataTransfer !== undefined) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
-        //note: files.hasOwnProperty('length') does not work
+        // note: files.hasOwnProperty('length') does not work
         if (files === null || files === undefined || !files.length) {
             return;
         } else {

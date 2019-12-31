@@ -16,12 +16,12 @@ export class TextInputValidator extends AbstractValidator {
         this.binder.bind(this, 'isValid', this.source, 'isValid');
         (this.source as InputCollectionModel).isValid = this.isValid;
         for (let i=0;i<this.source.collection.length;i++) {
-            //ensure changes in the value trigger validation
+            // ensure changes in the value trigger validation
             this.binder.bind(this.source.collection.getItemAt(i), 'value', this, 'validateOnChange');
         }
     }
 
-    //iterate over model objects and ensure all required objects have some text
+    // iterate over model objects and ensure all required objects have some text
     protected getValidationErrors(): Lavender.ArrayList {
         const returnList = new Lavender.ArrayList();
         for (let i=0;i<this.source.collection.length;i++) {
@@ -30,7 +30,7 @@ export class TextInputValidator extends AbstractValidator {
                 returnList.addItem(new ValidationError('required', 'form.required', `${item.label} is required`))
             }
         }
-        return returnList;//returns ArrayList of SpiSdk.ValidationError instances
+        return returnList;// returns ArrayList of SpiSdk.ValidationError instances
     }
     
 }

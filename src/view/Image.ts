@@ -32,7 +32,7 @@ export class Image extends AbstractThumbnailView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('loadingSVG', this, 'loadingSVG'));
     }
 

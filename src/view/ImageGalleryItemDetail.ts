@@ -71,7 +71,7 @@ export class ImageGalleryItemDetail extends AbstractComponent {
     }
 
     public defineSkinParts(): void{
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('nameLabel', this, 'nameLabel'));
         this.skinParts.addItem(new SkinPart('dateCreatedLabel', this, 'dateCreatedLabel'));
         this.skinParts.addItem(new SkinPart('urlLabel', this, 'urlLabel'));

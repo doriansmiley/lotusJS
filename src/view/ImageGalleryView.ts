@@ -25,18 +25,18 @@ export class ImageGalleryView extends AbstractThumbnailView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('itemDetail', this, 'itemDetail'));
     }
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
-            //optional container for displaying collection elements
+            // optional container for displaying collection elements
             case 'itemDetail':
                 if (this.model) {
-                    //this is an example of working with nested components which are skin parts and require a reference to and item view model
-                    //nested components in your skins (template files) work natively, but if you have a skin part that requires a model reference you have to wait until ComponentEvent.READY is dispatched
+                    // this is an example of working with nested components which are skin parts and require a reference to and item view model
+                    // nested components in your skins (template files) work natively, but if you have a skin part that requires a model reference you have to wait until ComponentEvent.READY is dispatched
                     (this.itemDetail.lotusComponentInstance as ImageGalleryItemDetail).asset = this.model as asset;
                     (this.itemDetail.lotusComponentInstance as ImageGalleryItemDetail).addEventListener(ComponentEvent.READY, this, 'onItemDetailReady')
                 }
@@ -63,14 +63,14 @@ export class ImageGalleryView extends AbstractThumbnailView {
             try {
                 event['dataTransfer'].setData('galleryImage', this.model['source']);
             } catch (e) {
-                event['dataTransfer'].setData('text', this.model['source']);//IE only allows two possible key values, text is the nest options
+                event['dataTransfer'].setData('text', this.model['source']);// IE only allows two possible key values, text is the nest options
             }
         } else {
             event['originalEvent'].dataTransfer.effectAllowed = 'all';
             try {
                 event['originalEvent'].dataTransfer.setData('galleryImage', this.model['source']);
             } catch (e) {
-                event['originalEvent'].dataTransfer.setData('text', this.model['source']);//IE only allows two possible key values, text is the nest options
+                event['originalEvent'].dataTransfer.setData('text', this.model['source']);// IE only allows two possible key values, text is the nest options
             }
         }
     }

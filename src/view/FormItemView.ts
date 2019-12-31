@@ -17,7 +17,7 @@ export class FormItemView extends AbstractItemView {
     protected _file: LotusHTMLElement;
     private _activeSkinPart: AbstractItemView;
 
-    //read only!
+    // read only!
     get activeSkinPart(): AbstractItemView {
         return this._activeSkinPart;
     }
@@ -86,12 +86,12 @@ export class FormItemView extends AbstractItemView {
             this.radioGroup,
             this.file
         ];
-        //set up the required skin part and remove it from the list of skin parts to remove
-        //only one of these skin parts can stay
+        // set up the required skin part and remove it from the list of skin parts to remove
+        // only one of these skin parts can stay
         let head;
         let tail;
         switch ((this.model as InputCollectionModel).type) {
-            //remove unused skin parts and set up used skin part
+            // remove unused skin parts and set up used skin part
             case InputCollectionModel.TYPE_INPUT:
                 this.setUpSkinPart((this.input.lotusComponentInstance as AbstractItemView));
                 skinPartsToRemove.shift();
@@ -143,16 +143,16 @@ export class FormItemView extends AbstractItemView {
                     break
 
             }
-            //bind validation
+            // bind validation
             this.binder.bind(value, 'isValid', component, 'isValid');
-            //set intital isValid value for component
+            // set intital isValid value for component
             component.isValid = value.isValid;
         }
     }
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('input', this, 'input'));
         this.skinParts.addItem(new SkinPart('list', this, 'list'));
         this.skinParts.addItem(new SkinPart('radioGroup', this, 'radioGroup'));
@@ -162,7 +162,7 @@ export class FormItemView extends AbstractItemView {
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         if (this.input && this.radioGroup && this.file && this.list && this.model) {
-            //we have to call this here because only the component map calls onReady, but item views are not mapped to tags, so the map will never call it
+            // we have to call this here because only the component map calls onReady, but item views are not mapped to tags, so the map will never call it
             this.onReady();
         }
     }
@@ -183,7 +183,7 @@ export class FormItemView extends AbstractItemView {
             return;
         }
         this.binder.bind(value as InputCollectionModel, 'isValid', this, 'isValid');
-        //set initial valid value
+        // set initial valid value
         this.isValid = (value as InputCollectionModel).isValid;
         this.setUpSkinParts();
     }

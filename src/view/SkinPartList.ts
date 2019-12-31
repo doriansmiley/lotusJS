@@ -12,9 +12,9 @@ export class SkinPartList extends Lavender.ArrayList {
     }
     
     public addItem(object: SkinPart, hash?: Record<string, any>, key?: string): number {
-        //ensure the object is valid before proceeding
+        // ensure the object is valid before proceeding
         const index = super.addItem(object, hash, key);
-        //populate hash
+        // populate hash
         this.skinPartsByLabel[ object.label ] = object;
         return index;
     }
@@ -31,9 +31,9 @@ export class SkinPartList extends Lavender.ArrayList {
     }
 
     public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false): number {
-        //ensure the object is valid before proceeding
+        // ensure the object is valid before proceeding
         const returnValue = super.insert(object, index,suppressChangeEvent,hash,key,replaceIndex);
-        //populate hash
+        // populate hash
         this.skinPartsByLabel[ object.label ] = object;
         return returnValue;
     }

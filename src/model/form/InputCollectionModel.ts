@@ -122,12 +122,12 @@ export class InputCollectionModel extends Lavender.Subject {
             }
         }
         this.isValid = this.errors.length == 0;
-        //return the failed results
+        // return the failed results
         return this.errors;
     }
 
     public clear(): void{
-        //reset all form fields by clearing InputModel values
+        // reset all form fields by clearing InputModel values
         for (let i=0; i<this.collection.length; i++) {
             const item: InputModel = this.collection.getItemAt(i) as InputModel;
             switch (this.type) {
@@ -135,7 +135,7 @@ export class InputCollectionModel extends Lavender.Subject {
                     item.value = '';
                     break;
                 case InputCollectionModel.TYPE_FILE:
-                    //TODO: fogure out how to reset file collection view using model. Probably need a ne wmodel attribute
+                    // TODO: fogure out how to reset file collection view using model. Probably need a ne wmodel attribute
                     break;
                 case InputCollectionModel.TYPE_RADIO_GROUP:
                 case InputCollectionModel.TYPE_LIST:

@@ -13,8 +13,8 @@ export class Context implements ContextInterface {
 
     constructor(config: Record<string, any>, params: Record<string, any>) {
         this.config = config;
-        //IMPORTANT: must occur first so application event bus is configured
-        this.componentMap = new ComponentMap(this);//create factory if we require sub classes one day
+        // IMPORTANT: must occur first so application event bus is configured
+        this.componentMap = new ComponentMap(this);// create factory if we require sub classes one day
         this.startUp();
     }
 

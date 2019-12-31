@@ -43,7 +43,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
     set source(value: InputCollectionModel) {
         this._source = value;
         if (this.source !== null && this.source !== undefined) {
-            this.init();//set up initial state
+            this.init();// set up initial state
         }
         this.notify(value, 'source');
     }
@@ -83,14 +83,14 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
         return this.warnings.length > 0;
     }
 
-    //stub for override
+    // stub for override
     protected getValidationErrors(): Lavender.ArrayList {
-        return new Lavender.ArrayList();//returns ArrayList of SpiSdk.ValidationError instances
+        return new Lavender.ArrayList();// returns ArrayList of SpiSdk.ValidationError instances
     }
 
-    //stub for override
+    // stub for override
     protected getValidationWarnings(): Lavender.ArrayList {
-        return new Lavender.ArrayList();//returns ArrayList of SpiSdk.ValidationError instances
+        return new Lavender.ArrayList();// returns ArrayList of SpiSdk.ValidationError instances
     }
 
     protected validateOnChange(value: string): void{
@@ -106,11 +106,11 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
     }
 
     public validate(): boolean {
-        this.errors = this.getValidationErrors();//get all errors and store
+        this.errors = this.getValidationErrors();// get all errors and store
         this.warnings = this.getValidationWarnings();
         this.isValid = this.getValidationResult();
         this.hasWarnings = this.getValidationWarningsResult();
-        return this.isValid;//returns true or false, to obtain specific errors use this.errors
+        return this.isValid;// returns true or false, to obtain specific errors use this.errors
     }
 
     public init(): void {

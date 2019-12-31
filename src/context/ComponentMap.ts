@@ -26,25 +26,25 @@ export class ComponentMap implements ComponentMapInterface {
         const tagInstance: LotusHTMLElement = this.tagInstanceToRequestId[result.requestId];
         const div: HTMLDivElement = document.createElement('div');
         div.innerHTML = result.resultObj as string;
-        //clone the contents
+        // clone the contents
         const clone: DocumentFragment = document.importNode((div.childNodes[0] as HTMLTemplateElement).content, true) as DocumentFragment;
-        //select the root component node
+        // select the root component node
         const component: LotusHTMLElement = clone.querySelector(tagInstance.getAttribute('data-component-root')) as LotusHTMLElement;
         component.lotusComponentInstance = tagInstance.lotusComponentInstance;
-        //create a shadow host from the tag instance and append the clone to it
+        // create a shadow host from the tag instance and append the clone to it
         const host: Element = tagInstance.createShadowRoot();
         host.appendChild(clone);
-        //transfer data-attribute instance onto the component
+        // transfer data-attribute instance onto the component
         for (let i = 0; i < tagInstance.attributes.length; i++) {
             const attribute = tagInstance.attributes[i];
             if (attribute.name.indexOf('attribute') >= 0) {
                 component.setAttribute(attribute.name, attribute.value)
             }
         }
-        //pass along the root component node to the view component
+        // pass along the root component node to the view component
         this.createComponent(component);
-        //Scope styles to the tag. This appends the tag's nodeName to all styles to simulate DOM encapsulation, however it will not shield the shadowDOM from selectors in the lightDOM. This is not possible with pollyfills at this time.
-        //Note window.WebComponents is added by bower web components core. shimStyling is used by polyfills
+        // Scope styles to the tag. This appends the tag's nodeName to all styles to simulate DOM encapsulation, however it will not shield the shadowDOM from selectors in the lightDOM. This is not possible with pollyfills at this time.
+        // Note window.WebComponents is added by bower web components core. shimStyling is used by polyfills
         if (window['WebComponents'] && window['WebComponents'].ShadowCSS) {
             window['WebComponents'].ShadowCSS.shimStyling(host, tagInstance.nodeName);
         }
@@ -59,7 +59,7 @@ export class ComponentMap implements ComponentMapInterface {
         // stub to fulfill interface requirements
     }
 
-    //stub for override in LotusJS-MVW
+    // stub for override in LotusJS-MVW
     protected mapMediators(tagInstance: LotusHTMLElement): void {
         // stub for override
     }
@@ -71,9 +71,9 @@ export class ComponentMap implements ComponentMapInterface {
             tagInstance.lotusComponentInstance = new functionConstructor();
             this.componentInstances.addItem(tagInstance.lotusComponentInstance);
         }
-        //trigger mediator assignment if any
+        // trigger mediator assignment if any
         this.mapMediators(tagInstance)
-        //if the tag instance defines a scr attribute load the template and set up the shadow DOM
+        // if the tag instance defines a scr attribute load the template and set up the shadow DOM
         const src: string = tagInstance.getAttribute('data-template-url');
         if (src !== null && src !== undefined) {
             const httpService = new Lavender.XhrHttpService();
@@ -103,7 +103,7 @@ export class ComponentMap implements ComponentMapInterface {
         const componentMap: ComponentMapInterface = this;
         const lifecycle: LifecycleHooks = {
             created: function () {
-                //IMPORTANT:, use builder patter here and create an add component function
+                // IMPORTANT:, use builder patter here and create an add component function
                 componentMap.addComponent(this as LotusHTMLElement, functionConstructor);
             },
             inserted: function () {

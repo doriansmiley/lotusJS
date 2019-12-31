@@ -39,7 +39,7 @@ export class Button extends AbstractComponent {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('button', this, 'buttonSkinPart'));
     }
 
@@ -47,8 +47,8 @@ export class Button extends AbstractComponent {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'button':
-                //add button event listener or whatever else yo want to do when this skin part is added
-                //you could hold until all skin parts are added and then call addEventListeners
+                // add button event listener or whatever else yo want to do when this skin part is added
+                // you could hold until all skin parts are added and then call addEventListeners
                 console.log(`Lotus.Button.prototype.onSkinPartAdded: part: ${part}`);
                 console.log(`Lotus.Button.prototype.onSkinPartAdded: skinPart: ${part}`);
                 this.addEventListeners();

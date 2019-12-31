@@ -25,7 +25,7 @@ export class ComponentList extends Lavender.ArrayList implements ComponentListIn
         }
         for (let i = 0; i < objects.length; i++) {
             if (objects[i] == object) {
-                //remove the item from the array
+                // remove the item from the array
                 switch (i) {
                     case 0:
                         objects.shift();
@@ -46,7 +46,7 @@ export class ComponentList extends Lavender.ArrayList implements ComponentListIn
 
     public addItem(object: Record<string, any>, hash?: Record<string, any>, key?: string): number {
         const index: number = super.addItem(object,hash,key);
-        //populate hash
+        // populate hash
         this.addToHash(object);
         return index;
     }

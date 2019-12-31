@@ -24,5 +24,16 @@ module.exports = {
         "space-in-parens": ["error", "never"],
         "quotes": ["error", "single", {"allowTemplateLiterals": true}],
         "prefer-template": "error",
+        "spaced-comment": ["error", "always", {
+            "line": {
+                "markers": ["/"],
+                "exceptions": ["-", "+"]
+            },
+            "block": {
+                "markers": ["!"],
+                "exceptions": ["*"],
+                "balanced": true
+            }
+        }]
     },
 };

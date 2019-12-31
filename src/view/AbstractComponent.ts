@@ -16,11 +16,11 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
     private _skinParts: SkinPartList = new SkinPartList();
     private _isValid = false;
 
-    //IMPORTANT: you have to initialize instance attributes that are not defined using accessor methods or they will dropped by the compiler.
+    // IMPORTANT: you have to initialize instance attributes that are not defined using accessor methods or they will dropped by the compiler.
     public validClass: string = null;
     public invalidClass: string = null;
 
-    //placeholders for mixins, required for the compiler
+    // placeholders for mixins, required for the compiler
     handlersByEventName: Record<string, any>;
     addEventListener: (event: string, instance: Record<string, any>, handler: string) => void;
     canListen: (eventType: string, instance: Record<string, any>, handler: string) => boolean;
@@ -110,9 +110,9 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
             const attribute = this.element.attributes[i];
             if (attribute.name.indexOf('attribute') >= 0) {
                 const index = attribute.name.indexOf('attribute') + 10;
-                const newProp = attribute.name.substring(index);//remove prefix
-                //convert dashes to camel case
-                //LEGACY: using the data- prefix should trigger camel case on dash automagically
+                const newProp = attribute.name.substring(index);// remove prefix
+                // convert dashes to camel case
+                // LEGACY: using the data- prefix should trigger camel case on dash automagically
                 const camelCased = newProp.replace(/-([a-z])/g, function (g) {
                     return g[1].toUpperCase();
                 });
@@ -151,19 +151,19 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         const skinPartsNodeList = this.element.querySelectorAll('[data-skin-part]');
         for (let i = 0; i < skinPartsNodeList.length; i++) {
             // iterate over matches
-            //call addSkinPart on the component passing skin part attribute value and the element
+            // call addSkinPart on the component passing skin part attribute value and the element
             this.addSkinPart(skinPartsNodeList[i].getAttribute('data-skin-part'), skinPartsNodeList[i]);
         }
     }
 
     public addSkinPart(part: string, element: Element): void {
-        //skip undefined skin parts
+        // skip undefined skin parts
         if (this.skinParts.skinPartsByLabel[part] === null || this.skinParts.skinPartsByLabel[part] === undefined) {
             return null;
         }
-        //assign the skin part
+        // assign the skin part
         this.skinParts.skinPartsByLabel[part].element = element;
-        //notify
+        // notify
         this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part].element);
     }
 
@@ -191,7 +191,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         this.id = null;
     }
 
-    //stub methods below
+    // stub methods below
 
     public defineSkinParts(): void {
         // stub for override

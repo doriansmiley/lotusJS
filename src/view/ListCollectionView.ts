@@ -26,15 +26,15 @@ export class ListCollectionView extends AbstractInputCollectionView {
     }
 
     public onChange(event: Event): void{
-        //account for the existence of the prompt which adds an additional list item! this offset the index in this.childViews which does not include the prompt.
+        // account for the existence of the prompt which adds an additional list item! this offset the index in this.childViews which does not include the prompt.
         const index = (this.prompt) ? (event.target as HTMLSelectElement).selectedIndex - 1 : (event.target as HTMLSelectElement).selectedIndex;
         if (index < 0) {
-            return;//prompt is selected
+            return;// prompt is selected
         }
-        //get the associated item view for the selected list item
+        // get the associated item view for the selected list item
         const itemView: ListItemView = this.childViews.getItemAt(index);
-        //html option elements appear to not dispatch,or at least not bubble the click event on list items
-        //so we force it here
+        // html option elements appear to not dispatch,or at least not bubble the click event on list items
+        // so we force it here
         itemView.onClick();
     }
 
@@ -61,14 +61,14 @@ export class ListCollectionView extends AbstractInputCollectionView {
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts
+        // set up skin parts
         this.skinParts.addItem(new SkinPart('prompt', this, 'prompt'));
     }
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
-            //required, defines the layout for child views
+            // required, defines the layout for child views
             case 'collectionContainer':
                 this.addEventListeners();
                 break;

@@ -8,7 +8,7 @@ import * as Lavender from 'lavenderjs/lib';
 
 export class File extends Lavender.Subject {
 
-    public static  PENDING = 'pending';//unstarted
+    public static  PENDING = 'pending';// unstarted
     public static PROGRESS = 'progress';
     public static LOAD = 'load';
     public static ERROR = 'error';
@@ -111,8 +111,8 @@ export class FileView extends AbstractThumbnailView {
     private _abortIndicator: HTMLElement;
     private _cancelBtn: HTMLButtonElement;
     private _clearBtn: HTMLButtonElement;
-    private _cancelBtnDisplay: string;//css style for active button state
-    private _clearBtnDisplay: string;//css style for active button state
+    private _cancelBtnDisplay: string;// css style for active button state
+    private _clearBtnDisplay: string;// css style for active button state
 
 
     get fileLabel(): HTMLLabelElement {
@@ -229,15 +229,15 @@ export class FileView extends AbstractThumbnailView {
         if (this.thumbnail !== null && this.thumbnail !== undefined) {
             this.thumbnail.src = (this.model as File).thumbnail;
         }
-        this.onStateChange((this.model as File).state);//set initial state
-        this.onPercentChange((this.model as File).percentLoaded);//set initial percent
+        this.onStateChange((this.model as File).state);// set initial state
+        this.onPercentChange((this.model as File).percentLoaded);// set initial percent
         this.binder.bind((this.model as File), 'state', this, 'onStateChange');
         this.binder.bind((this.model as File), 'percentLoaded', this, 'onPercentChange');
     }
 
     protected setStatusIndicator(node: HTMLElement): void{
         if (this.statusIndicator !== null && this.statusIndicator !== undefined) {
-            //remove child nodes
+            // remove child nodes
             while (this.statusIndicator.firstChild) {
                 this.statusIndicator.removeChild(this.statusIndicator.firstChild);
             }
@@ -247,9 +247,9 @@ export class FileView extends AbstractThumbnailView {
 
     protected onPercentChange(value: number): void{
         if (this.progressBar !== null && this.progressBar !== undefined) {
-            //get the max width
+            // get the max width
             const maxWidth: number = (this.progressBar.style.hasOwnProperty('maxWidth') && this.progressBar.style.maxWidth.length > 0) ? parseInt(this.progressBar.style.maxWidth) : null;
-            //set width based on % value of parent width
+            // set width based on % value of parent width
             const parentWidth = parseFloat(window.getComputedStyle(this.progressBar.parentNode as HTMLElement).width);
             const newWidth: number = (value/1) * parentWidth;
             this.progressBar.style.width = (maxWidth !== null && newWidth > maxWidth) ? `${maxWidth}px` : `${newWidth}px`;
@@ -262,8 +262,8 @@ export class FileView extends AbstractThumbnailView {
     }
 
     public onStateChange(value: string): void{
-        this.setElementDisplay(this.cancelBtn, this.cancelBtnDisplay);//reset display state so button is visible
-        this.setElementDisplay(this.clearBtn, 'none');//hide the clear button during upload
+        this.setElementDisplay(this.cancelBtn, this.cancelBtnDisplay);// reset display state so button is visible
+        this.setElementDisplay(this.clearBtn, 'none');// hide the clear button during upload
         switch (value) {
             case File.PENDING:
                 if (this.pendingIndicator !== null && this.pendingIndicator !== undefined) {
@@ -279,30 +279,30 @@ export class FileView extends AbstractThumbnailView {
                 if (this.loadIndicator !== null && this.loadIndicator !== undefined) {
                     this.setStatusIndicator(this.loadIndicator);
                 }
-                this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
-                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
+                this.setElementDisplay(this.cancelBtn, 'none');// not visible by default, stops the upload but does not clear the file from the list
+                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);// visible by default, clears the file from the list
                 break;
             case File.ERROR:
                 if (this.errorIndicator !== null && this.errorIndicator !== undefined) {
                     this.setStatusIndicator(this.errorIndicator);
                 }
-                this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
-                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
+                this.setElementDisplay(this.cancelBtn, 'none');// not visible by default, stops the upload but does not clear the file from the list
+                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);// visible by default, clears the file from the list
                 break;
             case File.ABORT:
                 if (this.abortIndicator !== null && this.abortIndicator !== undefined) {
                     this.setStatusIndicator(this.abortIndicator);
                 }
-                this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
-                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
+                this.setElementDisplay(this.cancelBtn, 'none');// not visible by default, stops the upload but does not clear the file from the list
+                this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);// visible by default, clears the file from the list
                 break;
         }
     }
 
     public defineSkinParts(): void{
         super.defineSkinParts();
-        //set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
-        //Choosing another name would require it be wrapped in a itemTemplate skin part
+        // set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
+        // Choosing another name would require it be wrapped in a itemTemplate skin part
         this.skinParts.addItem(new SkinPart('thumbnail', this, 'thumbnail'));
         this.skinParts.addItem(new SkinPart('clearBtn', this, 'clearBtn'));
         this.skinParts.addItem(new SkinPart('cancelBtn', this, 'cancelBtn'));
@@ -321,11 +321,11 @@ export class FileView extends AbstractThumbnailView {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'cancelBtn':
-                this.cancelBtnDisplay = this.cancelBtn.style.display;//capture the original display state of the button
+                this.cancelBtnDisplay = this.cancelBtn.style.display;// capture the original display state of the button
                 this.cancelBtn.addEventListener('click', this.onCancelBtnClick.bind(this));
                 break;
             case 'clearBtn':
-                this.clearBtnDisplay = this.clearBtn.style.display;//capture the original display state of the button
+                this.clearBtnDisplay = this.clearBtn.style.display;// capture the original display state of the button
                 this.clearBtn.addEventListener('click', this.onClearBtnClick.bind(this));
                 break;
         }
