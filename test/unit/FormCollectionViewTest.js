@@ -106,7 +106,7 @@ describe('FormCollectionView Test', function() {
                 if(!radioGroup.ready){
                     radioGroup.addEventListener(Lotus.ComponentEvent.READY, handler, 'onRadioReady');
                 }else{
-                    radioGroup.onRadioReady();
+                    handler.onRadioReady();
                 }
             },
             onRadioReady:function(event){
