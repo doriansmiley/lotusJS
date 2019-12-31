@@ -31,9 +31,9 @@ export class Button extends AbstractComponent {
     }
 
     public onClick(event: Event): void{
-        console.log('Lotus.Button.prototype.onClick: event is ' + event);
-        console.log('Lotus.Button.prototype.onClick: my id is ' + this.id);
-        console.log('Lotus.Button.prototype.onClick: this ' + this);
+        console.log(`Lotus.Button.prototype.onClick: event is ${event}`);
+        console.log(`Lotus.Button.prototype.onClick: my id is ${this.id}`);
+        console.log(`Lotus.Button.prototype.onClick: this ${this}`);
         this.dispatch(new ComponentEvent(ComponentEvent.CLICK, {target:this.buttonSkinPart, originalEvent:event}))
     }
 
@@ -49,8 +49,8 @@ export class Button extends AbstractComponent {
             case 'button':
                 //add button event listener or whatever else yo want to do when this skin part is added
                 //you could hold until all skin parts are added and then call addEventListeners
-                console.log('Lotus.Button.prototype.onSkinPartAdded: part: ' + part);
-                console.log('Lotus.Button.prototype.onSkinPartAdded: skinPart: ' + part);
+                console.log(`Lotus.Button.prototype.onSkinPartAdded: part: ${part}`);
+                console.log(`Lotus.Button.prototype.onSkinPartAdded: skinPart: ${part}`);
                 this.addEventListeners();
                 break;
         }

@@ -3,8 +3,8 @@
  */
 import {AbstractItemView} from './AbstractItemView';
 import {SkinPart} from './SkinPart';
-import {InputEvent} from '../control/events/InputEvent';
-import {InputModel} from '../model/form/InputModel';
+import {InputEvent} from '..';
+import {InputModel} from '..';
 
 export class Input extends AbstractItemView {
     private _inputSkinPart: HTMLInputElement;
@@ -94,7 +94,7 @@ export class Input extends AbstractItemView {
             case 'input':
                 //add event listener or whatever else you want to do when this skin part is added
                 //you could hold until all skin parts are added and then call addEventListeners
-                console.log('Lotus.Input.prototype.onSkinPartAdded: part: ' + part);
+                console.log(`Lotus.Input.prototype.onSkinPartAdded: part: ${part}`);
                 this.inputSkinPart.setAttribute('type', this.type)
                 this.addEventListeners();
                 if (this.model) {
@@ -115,8 +115,8 @@ export class Input extends AbstractItemView {
     }
 
     public onChange(event: Event): void{
-        console.log('Lotus.Input.prototype.onChange: input value is ' + (event.target as HTMLInputElement).value);
-        console.log('Lotus.Input.prototype.onChange: my id is ' + this.id);
+        console.log(`Lotus.Input.prototype.onChange: input value is ${(event.target as HTMLInputElement).value}`);
+        console.log(`Lotus.Input.prototype.onChange: my id is ${this.id}`);
         this.value = this.inputSkinPart.value;
         this.dispatch(new InputEvent(InputEvent.CHANGE, {target:this, originalEvent:event}))
     }

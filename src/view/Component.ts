@@ -3,7 +3,7 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 
-export interface IComponent extends Lavender.IEventDispatcher{
+export interface Component extends Lavender.IEventDispatcher{
     ready: boolean;
     destroy(): void;
     created(element: HTMLElement): void;

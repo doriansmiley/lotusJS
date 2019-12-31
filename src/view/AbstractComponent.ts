@@ -1,4 +1,4 @@
-import {IComponent} from './IComponent';
+import {Component} from './Component';
 import * as Lavender from 'lavenderjs/lib';
 import {ContextInterface} from '..';
 import {SkinPartList} from './SkinPartList';
@@ -8,7 +8,7 @@ import {ComponentEvent} from '..';
 /**
  * Created by dsmiley on 7/26/17.
  */
-export abstract class AbstractComponent extends Lavender.Subject implements IComponent {
+export abstract class AbstractComponent extends Lavender.Subject implements Component {
     private _element: LotusHTMLElement;
     private _context: ContextInterface;
     private _ready = false;
@@ -172,7 +172,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
         this.dispatch(new ComponentEvent(ComponentEvent.READY, {target: this}));
     }
 
-    public getComponentInstance(): IComponent {
+    public getComponentInstance(): Component {
         return this;
     }
 

@@ -16,7 +16,7 @@ export * from './control/events/FileEvent';
 export * from './view/SkinPart';
 export * from './view/SkinPartList';
 export * from './view/AbstractComponent';
-export * from './view/IComponent';
+export * from './view/Component';
 export * from './view/AbstractComponent';
 export * from './view/AbstractItemView';
 export * from './view/AbstractCollectionView';

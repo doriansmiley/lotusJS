@@ -1,9 +1,9 @@
-import {IComponent} from '../view/IComponent';
+import {Component} from '../view/Component';
 /**
  * Created by dsmiley on 7/26/17.
  */
 export class LotusHTMLElement extends HTMLDivElement {
-    public lotusComponentInstance: IComponent;
+    public lotusComponentInstance: Component;
 
     constructor() {
         super();
@@ -13,7 +13,7 @@ export class LotusHTMLElement extends HTMLDivElement {
         return super['createShadowRoot']();
     }
 
-    public getComponentInstance(): IComponent {
+    public getComponentInstance(): Component {
         return this.lotusComponentInstance;
     }
 }

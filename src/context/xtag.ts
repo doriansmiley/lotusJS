@@ -17,7 +17,7 @@ export declare interface TagDefinition {
 	accessors?: { [name: string]: Accessors };
 	methods?: { [name: string]: (...args: any[]) => void };
 }
-export declare interface IXtag{
+export declare interface XtagInterface{
 	register: (name: string, definition: TagDefinition) => void;
 	query: (element: Element, selector: string) => any[];
 	toArray: (element: Element) => Element[];

@@ -18,7 +18,7 @@ export class PhoneNumberValidator extends TextInputValidator {
             const item: InputModel = this.source.collection.getItemAt(i);
             //new String('(555) 555-5555').replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/)
             if (item.required && (!item.nonFormattedValue || item.nonFormattedValue.length <=0 || !item.nonFormattedValue.replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/))) {
-                returnList.addItem(new ValidationError('required', 'form.invalidPhone', item.label + ' is not a valid phone number'))
+                returnList.addItem(new ValidationError('required', 'form.invalidPhone', `${item.label} is not a valid phone number`))
             }
         }
         return returnList;//returns ArrayList of SpiSdk.ValidationError instances

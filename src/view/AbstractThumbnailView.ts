@@ -74,19 +74,18 @@ export class AbstractThumbnailView extends AbstractItemView {
         const width = defaultSize['width'] * scale;
         const height = defaultSize['height'] * scale;
         //console.log("width/height "+width+"/"+height)
-        this.thumbnail.setAttribute('width', width + 'px');
-        this.thumbnail.setAttribute('height', height + 'px');
-        this.thumbnail.style.maxWidth = containerSize.width + 'px';
-        this.thumbnail.style.maxHeight = containerSize.height + 'px';
+        this.thumbnail.setAttribute('width', `${width}px`);
+        this.thumbnail.setAttribute('height', `${height}px`);
+        this.thumbnail.style.maxWidth = `${containerSize.width}px`;
+        this.thumbnail.style.maxHeight = `${containerSize.height}px`;
     }
 
     protected onThumbClick(event: Event): void{
         this.resetState();
     }
 
-    //stub for override
     protected onDragStart(event: Event): void{
-
+        // stub for override
     }
 
     protected getImageURL(model?: Record<string, any>): string {

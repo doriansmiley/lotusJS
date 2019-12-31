@@ -22,6 +22,7 @@ module.exports = {
         "space-before-blocks": "error",
         "keyword-spacing": "error",
         "space-in-parens": ["error", "never"],
-        "quotes": ["error", "single"],
+        "quotes": ["error", "single", {"allowTemplateLiterals": true}],
+        "prefer-template": "error",
     },
 };

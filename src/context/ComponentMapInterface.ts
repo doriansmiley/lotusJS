@@ -1,7 +1,7 @@
 import {ContextInterface} from './ContextInterface';
 import {ComponentListInterface} from './ComponentListInterface';
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag} from './xtag';
+import {XtagInterface} from './xtag';
 import {LotusHTMLElement} from './LotusHTMLElement';
 
 /**
@@ -16,5 +16,5 @@ export interface ComponentMapInterface extends Lavender.IResponder {
 
     createComponent(tagInstance: LotusHTMLElement): void;
 
-    mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: IXtag): void;
+    mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface): void;
 }

@@ -27,7 +27,7 @@ export class TextInputValidator extends AbstractValidator {
         for (let i=0;i<this.source.collection.length;i++) {
             const item: InputModel = this.source.collection.getItemAt(i);
             if (item.required && (!item.nonFormattedValue || item.nonFormattedValue.length <=0)) {
-                returnList.addItem(new ValidationError('required', 'form.required', item.label + ' is required'))
+                returnList.addItem(new ValidationError('required', 'form.required', `${item.label} is required`))
             }
         }
         return returnList;//returns ArrayList of SpiSdk.ValidationError instances

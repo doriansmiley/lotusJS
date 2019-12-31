@@ -26,9 +26,8 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView {
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
 
-    //stub for override
     protected refreshView(selected: boolean): void{
-
+        // stub for override
     }
 
     //called when anewitemis clickedbythe end user in a collection view

@@ -1,12 +1,12 @@
 import {ContextInterface} from './ContextInterface';
 import {ComponentListInterface} from './ComponentListInterface';
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag, TagDefinition, LifecycleHooks} from './xtag';
+import {XtagInterface, TagDefinition, LifecycleHooks} from './xtag';
 import {ComponentMapInterface} from './ComponentMapInterface';
 import {ComponentList} from './ComponentList';
 import {LotusHTMLElement} from './LotusHTMLElement';
 
-declare let xtag: IXtag;
+declare let xtag: XtagInterface;
 
 /**
  * Created by dsmiley on 7/25/17.
@@ -95,7 +95,7 @@ export class ComponentMap implements ComponentMapInterface {
         tagInstance.lotusComponentInstance.created(tagInstance);
     }
 
-    public mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: IXtag): void {
+    public mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface): void {
         if (!framework) {
             framework = xtag;
         }

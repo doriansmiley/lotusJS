@@ -37,7 +37,7 @@ export class SelectableInputValidator extends AbstractValidator {
             }
             //at least one item must be selected
             if (!itemSelected) {
-                returnList.addItem(new ValidationError('selected', 'form.selectionRequired', groupName + ' must have a selection.'))
+                returnList.addItem(new ValidationError('selected', 'form.selectionRequired', `${groupName} must have a selection.`))
             }
         }
         return returnList;//returns ArrayList of SpiSdk.ValidationError instances

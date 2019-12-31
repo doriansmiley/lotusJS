@@ -252,7 +252,7 @@ export class FileView extends AbstractThumbnailView {
             //set width based on % value of parent width
             const parentWidth = parseFloat(window.getComputedStyle(this.progressBar.parentNode as HTMLElement).width);
             const newWidth: number = (value/1) * parentWidth;
-            this.progressBar.style.width = (maxWidth !== null && newWidth > maxWidth) ? maxWidth + 'px' : newWidth + 'px';
+            this.progressBar.style.width = (maxWidth !== null && newWidth > maxWidth) ? `${maxWidth}px` : `${newWidth}px`;
         }
     }
 
