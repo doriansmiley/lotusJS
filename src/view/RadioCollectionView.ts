@@ -24,7 +24,7 @@ export class RadioCollectionView extends AbstractInputCollectionView {
     }
 
     protected refreshView(value: any): void{
-        if(this.selectedItem) {
+        if (this.selectedItem) {
             this.selectedItem.element['checked'] = true;
         }
     }
@@ -35,7 +35,7 @@ export class RadioCollectionView extends AbstractInputCollectionView {
     }
 
     protected setLegend(): void{
-        if(this.legend && this.model && this.model.label) {
+        if (this.legend && this.model && this.model.label) {
             this.legend.innerHTML = this.model.label;
         }
     }
@@ -48,7 +48,7 @@ export class RadioCollectionView extends AbstractInputCollectionView {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ) {
+        switch (part) {
             case 'label': {
                 this.setLegend();
                 break;

@@ -21,7 +21,7 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView {
         this._selected = value;
         this.refreshView(value);
         this.notify(value, 'selected');
-        const eventType = ( this.selected ) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
+        const eventType = (this.selected) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
         //dispatch event to notify view that the layout was selected/or deselected
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
@@ -39,13 +39,13 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView {
 
     public onModelChange(value: Record<string, any>): void{
         super.onModelChange(value);
-        if(value && value instanceof InputModel) {
+        if (value && value instanceof InputModel) {
             //set initial value
             this.selected = (value as InputModel).selected;
             //set up two way bindings
             this.binder.bind(value, 'selected', this, 'selected');
             this.binder.bind(this, 'selected', value, 'selected');
-        }else if(value && value['selected']) {
+        } else if (value && value['selected']) {
             this.selected = value['selected'];
         }
     }

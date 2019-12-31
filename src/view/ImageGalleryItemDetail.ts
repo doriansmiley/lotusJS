@@ -58,13 +58,13 @@ export class ImageGalleryItemDetail extends AbstractComponent {
 
     protected render(): void{
         if (this.asset && this.ready) {
-            if(this.nameLabel) {
+            if (this.nameLabel) {
                 this.nameLabel.innerHTML = this.asset.objectName;
             }
-            if(this.dateCreatedLabel) {
+            if (this.dateCreatedLabel) {
                 this.dateCreatedLabel.innerHTML = this.asset.createdDate.toDateString();
             }
-            if(this.urlLabel) {
+            if (this.urlLabel) {
                 this.urlLabel.innerHTML = this.asset.url;
             }
         }

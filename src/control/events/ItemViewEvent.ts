@@ -7,7 +7,7 @@ export class ItemViewEvent extends Lavender.AbstractEvent {
     constructor(type: string, payload?: Record<string, any>) {
         super(type, payload);
 
-        if( type == ItemViewEvent.ITEM_SELECTED && ( !payload.hasOwnProperty('item') || payload['item'] === null || payload['item'] === undefined ) ) {
+        if (type == ItemViewEvent.ITEM_SELECTED && (!payload.hasOwnProperty('item') || payload['item'] === null || payload['item'] === undefined)) {
             throw  new Error('Lotus.ItemViewEvent payload.item is required');
         }
     }

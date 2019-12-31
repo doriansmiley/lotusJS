@@ -220,13 +220,13 @@ export class FileView extends AbstractThumbnailView {
     }
 
     protected setUpBindings(): void{
-        if( this.fileLabel !== null && this.fileLabel !== undefined ) {
+        if (this.fileLabel !== null && this.fileLabel !== undefined) {
             this.fileLabel.innerHTML = (this.model as File).name;
         }
-        if( this.fileTypeLabel !== null && this.fileTypeLabel !== undefined ) {
+        if (this.fileTypeLabel !== null && this.fileTypeLabel !== undefined) {
             this.fileTypeLabel.innerHTML = (this.model as File).type;
         }
-        if( this.thumbnail !== null && this.thumbnail !== undefined ) {
+        if (this.thumbnail !== null && this.thumbnail !== undefined) {
             this.thumbnail.src = (this.model as File).thumbnail;
         }
         this.onStateChange((this.model as File).state);//set initial state
@@ -236,7 +236,7 @@ export class FileView extends AbstractThumbnailView {
     }
 
     protected setStatusIndicator(node: HTMLElement): void{
-        if( this.statusIndicator !== null && this.statusIndicator !== undefined ) {
+        if (this.statusIndicator !== null && this.statusIndicator !== undefined) {
             //remove child nodes
             while (this.statusIndicator.firstChild) {
                 this.statusIndicator.removeChild(this.statusIndicator.firstChild);
@@ -246,13 +246,13 @@ export class FileView extends AbstractThumbnailView {
     }
 
     protected onPercentChange(value: number): void{
-        if( this.progressBar !== null && this.progressBar !== undefined ) {
+        if (this.progressBar !== null && this.progressBar !== undefined) {
             //get the max width
-            const maxWidth: number = ( this.progressBar.style.hasOwnProperty('maxWidth') && this.progressBar.style.maxWidth.length > 0 ) ? parseInt(this.progressBar.style.maxWidth) : null;
+            const maxWidth: number = (this.progressBar.style.hasOwnProperty('maxWidth') && this.progressBar.style.maxWidth.length > 0) ? parseInt(this.progressBar.style.maxWidth) : null;
             //set width based on % value of parent width
             const parentWidth = parseFloat(window.getComputedStyle(this.progressBar.parentNode as HTMLElement).width);
-            const newWidth: number = ( value/1 ) * parentWidth;
-            this.progressBar.style.width = ( maxWidth !== null && newWidth > maxWidth ) ? maxWidth + 'px' : newWidth + 'px';
+            const newWidth: number = (value/1) * parentWidth;
+            this.progressBar.style.width = (maxWidth !== null && newWidth > maxWidth) ? maxWidth + 'px' : newWidth + 'px';
         }
     }
 
@@ -264,34 +264,34 @@ export class FileView extends AbstractThumbnailView {
     public onStateChange(value: string): void{
         this.setElementDisplay(this.cancelBtn, this.cancelBtnDisplay);//reset display state so button is visible
         this.setElementDisplay(this.clearBtn, 'none');//hide the clear button during upload
-        switch( value ) {
+        switch (value) {
             case File.PENDING:
-                if( this.pendingIndicator !== null && this.pendingIndicator !== undefined ) {
-                    this.setStatusIndicator( this.pendingIndicator );
+                if (this.pendingIndicator !== null && this.pendingIndicator !== undefined) {
+                    this.setStatusIndicator(this.pendingIndicator);
                 }
                 break;
             case File.PROGRESS:
-                if( this.progressIndicator !== null && this.progressIndicator !== undefined ) {
-                    this.setStatusIndicator( this.progressIndicator );
+                if (this.progressIndicator !== null && this.progressIndicator !== undefined) {
+                    this.setStatusIndicator(this.progressIndicator);
                 }
                 break;
             case File.LOAD:
-                if( this.loadIndicator !== null && this.loadIndicator !== undefined ) {
-                    this.setStatusIndicator( this.loadIndicator );
+                if (this.loadIndicator !== null && this.loadIndicator !== undefined) {
+                    this.setStatusIndicator(this.loadIndicator);
                 }
                 this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
                 this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
                 break;
             case File.ERROR:
-                if( this.errorIndicator !== null && this.errorIndicator !== undefined ) {
-                    this.setStatusIndicator( this.errorIndicator );
+                if (this.errorIndicator !== null && this.errorIndicator !== undefined) {
+                    this.setStatusIndicator(this.errorIndicator);
                 }
                 this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
                 this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
                 break;
             case File.ABORT:
-                if( this.abortIndicator !== null && this.abortIndicator !== undefined ) {
-                    this.setStatusIndicator( this.abortIndicator );
+                if (this.abortIndicator !== null && this.abortIndicator !== undefined) {
+                    this.setStatusIndicator(this.abortIndicator);
                 }
                 this.setElementDisplay(this.cancelBtn, 'none');//not visible by default, stops the upload but does not clear the file from the list
                 this.setElementDisplay(this.clearBtn, this.clearBtnDisplay);//visible by default, clears the file from the list
@@ -319,7 +319,7 @@ export class FileView extends AbstractThumbnailView {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ) {
+        switch (part) {
             case 'cancelBtn':
                 this.cancelBtnDisplay = this.cancelBtn.style.display;//capture the original display state of the button
                 this.cancelBtn.addEventListener('click', this.onCancelBtnClick.bind(this));
@@ -341,10 +341,10 @@ export class FileView extends AbstractThumbnailView {
 
     public destroy(): void{
         super.destroy();
-        if( this.clearBtn !== null && this.clearBtn !== undefined ) {
+        if (this.clearBtn !== null && this.clearBtn !== undefined) {
             this.clearBtn.removeEventListener('click', this.onClearBtnClick);
         }
-        if( this.cancelBtn !== null && this.cancelBtn !== undefined ) {
+        if (this.cancelBtn !== null && this.cancelBtn !== undefined) {
             this.cancelBtn.removeEventListener('click', this.onCancelBtnClick);
         }
         this.fileLabel = null;

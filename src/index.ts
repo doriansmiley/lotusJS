@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 7/24/17.
  */
-export * from './context/IContext';
+export * from './context/ContextInterface';
 export * from './context/Context';
-export * from './context/IComponentList';
+export * from './context/ComponentListInterface';
 export * from './context/ComponentList';
 export * from './context/ComponentMapInterface';
 export * from './context/ComponentMap';
@@ -41,7 +41,7 @@ export * from './view/FormItemView';
 export * from './view/FormCollectionView';
 export * from './model/form/InputModel';
 export * from './model/form/InputCollectionModel';
-export * from './model/form/validation/IValidator';
+export * from './model/form/validation/Validator';
 export * from './model/form/validation/AbstractValidator';
 export * from './model/form/validation/ValidationError';
 export * from './model/form/validation/TextInputValidator';

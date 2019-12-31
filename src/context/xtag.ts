@@ -1,26 +1,26 @@
-export declare interface ILifecycle {
+export declare interface LifecycleHooks {
 	created?: Function;
 	inserted?: Function;
 	removed?: Function;
 	attributeChanged?: (attrName: string, oldValue: any, newValue: any) => void;
 }
-export declare interface IAccessors {
+export declare interface Accessors {
 	attribute?: { name?: string };
 	set?: (value: any) => void;
 	get?: () => any;
 }
-export declare interface IDefinition {
+export declare interface TagDefinition {
 	content?: string;
-	lifecycle?: ILifecycle;
+	lifecycle?: LifecycleHooks;
 	prototype?: any;
 	events?: { [name: string]: (event: Event) => void };
-	accessors?: { [name: string]: IAccessors };
+	accessors?: { [name: string]: Accessors };
 	methods?: { [name: string]: (...args: any[]) => void };
 }
 export declare interface IXtag{
-	register: (name: string, definition: IDefinition) => void;
+	register: (name: string, definition: TagDefinition) => void;
 	query: (element: Element, selector: string) => any[];
-	toArray: (element: Element ) => Element[];
+	toArray: (element: Element) => Element[];
 	typeOf: (object: Record<string, any>) => string;
 	wrap: (object1: Function, object2: Function) => Record<string, any>;
 	merge: (object1: Record<string, any>, object2: Record<string, any>) => Record<string, any>;

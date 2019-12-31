@@ -18,7 +18,7 @@ export class Button extends AbstractComponent {
 
     set buttonSkinPart(value: HTMLElement) {
         this._buttonSkinPart = value;
-        this.notify( value, 'buttonSkinPart' );
+        this.notify(value, 'buttonSkinPart');
     }
 
     get type(): string {
@@ -27,7 +27,7 @@ export class Button extends AbstractComponent {
 
     set type(value: string) {
         this._type = value;
-        this.notify( value, 'type' );
+        this.notify(value, 'type');
     }
 
     public onClick(event: Event): void{
@@ -45,7 +45,7 @@ export class Button extends AbstractComponent {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ) {
+        switch (part) {
             case 'button':
                 //add button event listener or whatever else yo want to do when this skin part is added
                 //you could hold until all skin parts are added and then call addEventListeners

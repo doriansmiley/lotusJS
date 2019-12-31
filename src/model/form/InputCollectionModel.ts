@@ -3,7 +3,7 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 import {InputModel} from "./InputModel";
-import {IValidator} from "./validation/IValidator";
+import {Validator} from "./validation/Validator";
 
 export class InputCollectionModel extends Lavender.Subject {
     public static TYPE_INPUT = 0;
@@ -87,27 +87,27 @@ export class InputCollectionModel extends Lavender.Subject {
     }
 
     protected addEventListeners(): void{
-        if(!this.validators) {
+        if (!this.validators) {
             return;
         }
         this.validators.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'setUpBindings');
     }
 
     protected removeEventListeners(): void{
-        if(!this.validators) {
+        if (!this.validators) {
             return;
         }
-        if(this.validators) {
+        if (this.validators) {
             this.validators.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'setUpBindings');
         }
     }
 
     public setUpBindings(): void{
-        if(!this.binder || !this.validators) {
+        if (!this.binder || !this.validators) {
             return;
         }
         this.binder.unbindAll();
-        for(let i=0; i<this.validators.length; i++) {
+        for (let i=0; i<this.validators.length; i++) {
             this.binder.bind(this.validators.getItemAt(i), 'isValid', this, 'validate');
         }
         this.validate();
@@ -115,9 +115,9 @@ export class InputCollectionModel extends Lavender.Subject {
 
     public validate(value?: boolean): Lavender.ArrayList {
         this.errors = new Lavender.ArrayList();
-        for(let i=0; i<this.validators.length; i++) {
-            const validator: IValidator = (this.validators.getItemAt(i) as IValidator);
-            if(!validator.isValid) {
+        for (let i=0; i<this.validators.length; i++) {
+            const validator: Validator = (this.validators.getItemAt(i) as Validator);
+            if (!validator.isValid) {
                 this.errors.addAll(validator.errors.source());
             }
         }
@@ -128,9 +128,9 @@ export class InputCollectionModel extends Lavender.Subject {
 
     public clear(): void{
         //reset all form fields by clearing InputModel values
-        for(let i=0; i<this.collection.length; i++) {
+        for (let i=0; i<this.collection.length; i++) {
             const item: InputModel = this.collection.getItemAt(i) as InputModel;
-            switch(this.type) {
+            switch (this.type) {
                 case InputCollectionModel.TYPE_INPUT:
                     item.value = '';
                     break;
@@ -146,7 +146,7 @@ export class InputCollectionModel extends Lavender.Subject {
     }
 
     public destroy(): void{
-        if(this.binder) {
+        if (this.binder) {
             this.binder.unbindAll();
         }
         this.removeEventListeners();

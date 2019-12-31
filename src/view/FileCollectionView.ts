@@ -38,7 +38,7 @@ export class FileCollectionView extends AbstractCollectionView {
     
     protected uploadFiles(files: FileList): void{
         for (let i = 0; i < files.length; i++) {
-            if(files[i].type.indexOf('image') < 0 ) {
+            if (files[i].type.indexOf('image') < 0) {
                 continue;//skip file types that are not images
             }
             //iterate over the files and create a new file object and append to the collection
@@ -82,7 +82,7 @@ export class FileCollectionView extends AbstractCollectionView {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch(part) {
+        switch (part) {
             case 'fileInput':
                 this.fileInput.addEventListener("change", this.onFileInputChange.bind(this));
                 break;
@@ -105,18 +105,18 @@ export class FileCollectionView extends AbstractCollectionView {
         if (this.fileInput) {
             this.fileInput.click();//trigger the open of the file input
         }
-        if( this.selectBtn.getAttribute('href') !== null && this.selectBtn.getAttribute('href') !== undefined ) {
+        if (this.selectBtn.getAttribute('href') !== null && this.selectBtn.getAttribute('href') !== undefined) {
             event.preventDefault();
         } // prevent navigation to "#" or any other link
     }
 
     public destroy(): void{
         super.destroy();
-        if( this.fileInput ) {
+        if (this.fileInput) {
             this.fileInput.removeEventListener("change", this.onFileInputChange);
             this.fileInput = null;
         }
-        if( this.selectBtn ) {
+        if (this.selectBtn) {
             this.selectBtn.removeEventListener("click", this.onFileBtnClick);
             this.selectBtn = null;
         }

@@ -41,7 +41,7 @@ export class DragDropFileCollectionView extends FileCollectionView {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch(part) {
+        switch (part) {
             case 'dropTarget':
                 this.dropTarget.addEventListener("drop", this.onDrop.bind(this), false);
                 window.addEventListener("drop", this.onPreventDrop.bind(this), false);
@@ -61,10 +61,10 @@ export class DragDropFileCollectionView extends FileCollectionView {
     public onDrop(event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
-        if( this.dragOverClass !== null && this.dragOverClass !== undefined ) {
+        if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
             this.dropTarget.classList.remove(this.dragOverClass);
         }
-        const files = ( event.dataTransfer !== null && event.dataTransfer !== undefined ) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
+        const files = (event.dataTransfer !== null && event.dataTransfer !== undefined) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
         //note: files.hasOwnProperty('length') does not work
         if (files === null || files === undefined || !files.length) {
             return;
@@ -76,25 +76,25 @@ export class DragDropFileCollectionView extends FileCollectionView {
     public onDragOver(event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
-        if( this.dragOverClass !== null && this.dragOverClass !== undefined ) {
+        if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
             this.dropTarget.classList.add(this.dragOverClass);
         }
-        if( event.dataTransfer !== null && event.dataTransfer !== undefined && event.dataTransfer.files !== null && event.dataTransfer.files !== undefined) {
+        if (event.dataTransfer !== null && event.dataTransfer !== undefined && event.dataTransfer.files !== null && event.dataTransfer.files !== undefined) {
             event.dataTransfer.dropEffect = 'copy';
-        }else if( event['originalEvent'].dataTransfer.files !== null && event['originalEvent'].dataTransfer.files !== undefined ) {
+        } else if (event['originalEvent'].dataTransfer.files !== null && event['originalEvent'].dataTransfer.files !== undefined) {
             event['originalEvent'].dataTransfer.dropEffect = 'copy';
         }
     }
 
     public onDragLeave(event: DragEvent): void{
-        if( this.dragOverClass !== null && this.dragOverClass !== undefined ) {
+        if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
             this.dropTarget.classList.remove(this.dragOverClass);
         }
     }
 
     public destroy(): void{
         super.destroy();
-        if( this.dropTarget ) {
+        if (this.dropTarget) {
             this.dropTarget.removeEventListener("drop", this.onDrop);
             this.dropTarget.removeEventListener("dragover", this.onDragOver);
             this.dropTarget.removeEventListener("dragenter", this.onDragOver);

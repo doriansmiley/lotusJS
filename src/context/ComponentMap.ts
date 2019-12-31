@@ -1,7 +1,7 @@
-import {IContext} from "./IContext";
-import {IComponentList} from "./IComponentList";
+import {ContextInterface} from "./ContextInterface";
+import {ComponentListInterface} from "./ComponentListInterface";
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag, IDefinition, ILifecycle} from "./xtag";
+import {IXtag, TagDefinition, LifecycleHooks} from "./xtag";
 import {ComponentMapInterface} from "./ComponentMapInterface";
 import {ComponentList} from "./ComponentList";
 import {LotusHTMLElement} from "./LotusHTMLElement";
@@ -12,11 +12,11 @@ declare let xtag: IXtag;
  * Created by dsmiley on 7/25/17.
  */
 export class ComponentMap implements ComponentMapInterface {
-    public context: IContext;
-    public componentInstances: IComponentList;
+    public context: ContextInterface;
+    public componentInstances: ComponentListInterface;
     public tagInstanceToRequestId: Record<string, LotusHTMLElement>;
 
-    constructor(context: IContext) {
+    constructor(context: ContextInterface) {
         this.context = context;
         this.componentInstances = new ComponentList();
         this.tagInstanceToRequestId = {};
@@ -55,14 +55,13 @@ export class ComponentMap implements ComponentMapInterface {
         throw new Error('Could not load template. Please check you defined the correct path.');
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public onProgress(progress: number): void {
+        // stub to fulfill interface requirements
     }
 
     //stub for override in LotusJS-MVW
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected mapMediators(tagInstance: LotusHTMLElement): void {
-
+        // stub for override
     }
 
     public addComponent(tagInstance: LotusHTMLElement, functionConstructor): void {
@@ -102,7 +101,7 @@ export class ComponentMap implements ComponentMapInterface {
         }
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const componentMap: ComponentMapInterface = this;
-        const lifecycle: ILifecycle = {
+        const lifecycle: LifecycleHooks = {
             created: function () {
                 //IMPORTANT:, use builder patter here and create an add component function
                 componentMap.addComponent(this as LotusHTMLElement, functionConstructor);
@@ -121,12 +120,12 @@ export class ComponentMap implements ComponentMapInterface {
                 // fired when attributes are set
                 (this as LotusHTMLElement).lotusComponentInstance.attributeChanged(this as LotusHTMLElement);
             }
-        } as ILifecycle;
-        const definition: IDefinition = {
+        } as LifecycleHooks;
+        const definition: TagDefinition = {
             // extend existing elements
             prototype: prototype,
             lifecycle: lifecycle
-        } as IDefinition;
+        } as TagDefinition;
         framework.register(tagName, definition);
     }
 }

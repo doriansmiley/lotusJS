@@ -20,5 +20,7 @@ module.exports = {
         "indent": ["error", 4, {"SwitchCase": 1}],
         "lines-between-class-members": "off",
         "space-before-blocks": "error",
+        "keyword-spacing": "error",
+        "space-in-parens": ["error", "never"],
     },
 };

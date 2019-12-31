@@ -21,10 +21,10 @@ export class Image extends AbstractThumbnailView {
     }
 
     protected getImageURL(model?: Record<string, any>): string {
-        if(model) {
+        if (model) {
             return model['src'];
         }
-        if(!this.model) {
+        if (!this.model) {
             return '';
         }
         return this.model['src'];
@@ -48,7 +48,7 @@ export class Image extends AbstractThumbnailView {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ) {
+        switch (part) {
             case 'loadingSVG':
                 this._loadingSVGStyle = this.loadingSVG.style.display;
                 break;

@@ -43,7 +43,7 @@ export class InputModel extends Lavender.Subject {
 
     set value(value: string) {
         this._nonFormattedValue = value;
-        if(this.format) {
+        if (this.format) {
             value = this.format(value);
         }
         this._value = value;

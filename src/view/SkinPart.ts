@@ -26,6 +26,6 @@ export class SkinPart extends Lavender.Subject {
     }
     set element(val: HTMLElement) {
         this._instance[this._attribute] = val;
-        this.notify( val, 'element' );
+        this.notify(val, 'element');
     }
 }

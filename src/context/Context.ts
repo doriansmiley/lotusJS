@@ -1,12 +1,12 @@
 import * as Lavender from 'lavenderjs/lib';
 import {ComponentMapInterface} from "./ComponentMapInterface";
-import {IContext} from "./IContext";
+import {ContextInterface} from "./ContextInterface";
 import {ComponentMap} from "./ComponentMap";
 
 /**
  * Created by dsmiley on 7/24/17.
  */
-export class Context implements IContext {
+export class Context implements ContextInterface {
     public config: Record<string, any>;
     public eventDispatcher: Lavender.IEventDispatcher;
     public componentMap: ComponentMapInterface;
@@ -22,9 +22,8 @@ export class Context implements IContext {
         this.mapComponents();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public mapComponents() {
-
+        // stub for override
     }
 
 }

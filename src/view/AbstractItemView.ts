@@ -1,4 +1,5 @@
 import {AbstractComponent} from "./AbstractComponent";
+
 /**
  * Created by dsmiley on 8/4/17.
  */
@@ -20,26 +21,24 @@ export abstract class AbstractItemView extends AbstractComponent {
         this.notify(val, 'model');
     }
 
-    public setElementDisplay(element: HTMLElement, display: string): void{
+    public setElementDisplay(element: HTMLElement, display: string): void {
         //at some points in the items lifecycle element could be null, se we require this check
-        if( element !== null && element !== undefined ) {
+        if (element !== null && element !== undefined) {
             element.style.display = display;
         }
     }
 
-    //stub for override
-    public onModelChange(value: Record<string, any>): void{
-
+    public onModelChange(value: Record<string, any>): void {
+        // stub for override
     }
 
-    //stub for override
-    public resetState(): void{
-
+    public resetState(): void {
+        // stub for override
     }
 
-    public destroy(): void{
+    public destroy(): void {
         super.destroy();
-        if(this.model && this.model['destroy']) {
+        if (this.model && this.model['destroy']) {
             this.model['destroy']();
         }
         this.model = null;

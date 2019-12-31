@@ -3,7 +3,7 @@ import {InputCollectionModel} from "../InputCollectionModel";
 /**
  * Created by dsmiley on 10/10/17.
  */
-export interface IValidator{
+export interface Validator {
     errors: Lavender.ArrayList;
     warnings: Lavender.ArrayList;
     source: InputCollectionModel;

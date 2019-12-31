@@ -1,10 +1,10 @@
 /**
  * Created by dsmiley on 7/25/17.
  */
-import {IComponentList} from './IComponentList';
+import {ComponentListInterface} from './ComponentListInterface';
 import * as Lavender from 'lavenderjs/lib';
 
-export class ComponentList extends Lavender.ArrayList implements IComponentList {
+export class ComponentList extends Lavender.ArrayList implements ComponentListInterface {
     public instancesByConstructor: Record<string, any> = {};
     
     constructor() {
@@ -12,19 +12,19 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList 
     }
     
     protected addToHash(object: any): void{
-        if( this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined ) {
+        if (this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined) {
             this.instancesByConstructor[ object.constructor ] = [];
         }
-        this.instancesByConstructor[ object.constructor ].push( object );
+        this.instancesByConstructor[ object.constructor ].push(object);
     }
     
     protected removeItemFromHash(hash: Record<string, any>, object: any): void{
         let objects = hash[ object.constructor ];
-        if( objects === null || objects === undefined ||  objects.length < 1 ) {
+        if (objects === null || objects === undefined ||  objects.length < 1) {
             return;
         }
-        for(let i = 0; i < objects.length; i++ ) {
-            if( objects[i] == object ) {
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i] == object) {
                 //remove the item from the array
                 switch (i) {
                     case 0:
@@ -57,12 +57,12 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList 
     }
 
     public removeItemAt(index: number): void{
-        const object: Record<string, any> = this.getItemAt( index );
+        const object: Record<string, any> = this.getItemAt(index);
         this.removeItemFromHash(this.instancesByConstructor, object);
         super.removeItemAt(index);
     }
 
-    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number {
+    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false): number {
         const returnValue: number = super.insert(object,index,suppressChangeEvent,hash,key,replaceIndex);
         this.addToHash(object);
         return returnValue;

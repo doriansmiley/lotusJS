@@ -120,7 +120,7 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     protected clearErrors(): void{
-        if(this.error) {
+        if (this.error) {
             while (this.error.firstChild) {
                 this.error.removeChild(this.error.firstChild);
             }
@@ -128,8 +128,8 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     protected addErrors(errors: Lavender.ArrayList): void{
-        if(this.error) {
-            for(let i=0; i<errors.length; i++) {
+        if (this.error) {
+            for (let i=0; i<errors.length; i++) {
                 const error: ValidationError = errors.getItemAt(i) as ValidationError;
                 const message: HTMLElement = document.createElement('p');
                 const node: Node = document.createTextNode(error.errorMessage);
@@ -144,26 +144,26 @@ export class FormCollectionView extends AbstractCollectionView {
         this.clearErrors();
         //check that all instances of InputCollectionModel are valid
         const errors: Lavender.ArrayList = new Lavender.ArrayList();
-        for(let i=0; i<this.collection.length; i++) {
-            if(!(this.collection.getItemAt(i) as InputCollectionModel).isValid) {
+        for (let i=0; i<this.collection.length; i++) {
+            if (!(this.collection.getItemAt(i) as InputCollectionModel).isValid) {
                 errors.addAll((this.collection.getItemAt(i) as InputCollectionModel).errors.source());
             }
         }
         //display any validation errors
-        if(errors.length > 0) {
+        if (errors.length > 0) {
             this.addErrors(errors);
-            if(this.validationWarning) {
+            if (this.validationWarning) {
                 this.validationWarning.style.display = this._validationWarningDisplay;
             }
-            if(this.error) {
+            if (this.error) {
                 this.error.style.display = this._errorDisplay;
             }
-        }else{
+        } else {
             this.state = FormCollectionView.SUBMIT;
-            if(this.validationWarning) {
+            if (this.validationWarning) {
                 this.validationWarning.style.display = 'none';
             }
-            if(this.error) {
+            if (this.error) {
                 this.error.style.display = 'none';
             }
         }
@@ -175,7 +175,7 @@ export class FormCollectionView extends AbstractCollectionView {
 
     public reset(): void{
         //clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
-        for(let i=0; i<this.collection.length; i++) {
+        for (let i=0; i<this.collection.length; i++) {
             (this.collection.getItemAt(i) as InputCollectionModel).clear();
         }
         this.state = FormCollectionView.INPUT;
@@ -186,36 +186,36 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     protected resolveState(state: number, oldState, errors?: Lavender.ArrayList): void{
-        switch(oldState) {
+        switch (oldState) {
             case FormCollectionView.INPUT:
-                if(this.inputState && state != FormCollectionView.VALIDATION_ERROR) {
+                if (this.inputState && state != FormCollectionView.VALIDATION_ERROR) {
                     this.inputState.style.display = 'none';
                 }
                 break;
             case FormCollectionView.SUBMIT:
-                if(this.submitState) {
+                if (this.submitState) {
                     this.submitState.style.display = 'none';
                 }
                 break;
             case FormCollectionView.ERROR:
-                if(this.errorState) {
+                if (this.errorState) {
                     this.errorState.style.display = 'none';
                 }
                 break;
         }
-        switch(state) {
+        switch (state) {
             case FormCollectionView.INPUT:
-                if(this.inputState) {
+                if (this.inputState) {
                     this.inputState.style.display = this._inputStateDisplay;
                 }
                 break;
             case FormCollectionView.SUBMIT:
-                if(this.submitState) {
+                if (this.submitState) {
                     this.submitState.style.display = this._submitStateDisplay;
                 }
                 break;
             case FormCollectionView.ERROR:
-                if(this.errorState) {
+                if (this.errorState) {
                     this.errorState.style.display = this._errorStateDisplay;
                 }
                 break;
@@ -248,8 +248,8 @@ export class FormCollectionView extends AbstractCollectionView {
     //set up event handlers and bindings
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         //attach event listeners for submit and clear buttons
-        super.onSkinPartAdded(part, element );
-        switch(part) {
+        super.onSkinPartAdded(part, element);
+        switch (part) {
             case 'back':
                 this.back.addEventListener('click', this.onBack.bind(this));
                 break;

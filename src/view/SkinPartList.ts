@@ -25,12 +25,12 @@ export class SkinPartList extends Lavender.ArrayList {
     }
     
     public removeItemAt(index: number): void{
-        const skinPart: SkinPart = this.getItemAt( index );
+        const skinPart: SkinPart = this.getItemAt(index);
         super.removeItemFromHash(this.skinPartsByLabel, skinPart.label);
         super.removeItemAt(index);
     }
 
-    public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number {
+    public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false): number {
         //ensure the object is valid before proceeding
         const returnValue = super.insert(object, index,suppressChangeEvent,hash,key,replaceIndex);
         //populate hash

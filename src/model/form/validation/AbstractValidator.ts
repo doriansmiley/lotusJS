@@ -1,11 +1,11 @@
-import {IValidator} from "./IValidator";
+import {Validator} from "./Validator";
 import * as Lavender from 'lavenderjs/lib';
 import {InputCollectionModel} from "../InputCollectionModel";
 /**
  * Created by dsmiley on 10/10/17.
  */
 
-export class AbstractValidator extends Lavender.Subject implements IValidator {
+export class AbstractValidator extends Lavender.Subject implements Validator {
 
     private _errors: Lavender.ArrayList;
     private _warnings: Lavender.ArrayList;
@@ -42,7 +42,7 @@ export class AbstractValidator extends Lavender.Subject implements IValidator {
 
     set source(value: InputCollectionModel) {
         this._source = value;
-        if( this.source !== null && this.source !== undefined ) {
+        if (this.source !== null && this.source !== undefined) {
             this.init();//set up initial state
         }
         this.notify(value, "source");
@@ -98,11 +98,11 @@ export class AbstractValidator extends Lavender.Subject implements IValidator {
     }
 
     protected setUpBindings(): void{
-
+        // stub for override
     }
 
     protected addEventListeners(): void{
-
+        // stub for override
     }
 
     public validate(): boolean {

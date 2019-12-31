@@ -22,7 +22,7 @@ export class ListItemView extends AbstractSelectableFormInput {
     }
 
     protected refreshView(selected: boolean): void{
-        if(this.option) {
+        if (this.option) {
             this.option.selected = selected;
         }
     }
@@ -38,7 +38,7 @@ export class ListItemView extends AbstractSelectableFormInput {
 
     public removeEventListeners(): void{
         super.removeEventListeners();
-        if(this.option) {
+        if (this.option) {
             this.option.removeEventListener('click', this.onClick);
         }
     }
@@ -52,13 +52,13 @@ export class ListItemView extends AbstractSelectableFormInput {
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ) {
+        switch (part) {
             case 'itemTemplate':
                 //set up listitem value and label
                 this.option.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
                 this.option.innerHTML = (this.model as InputModel).label;
                 this.option.selected = this.selected;
-                if(this.selected) {
+                if (this.selected) {
                     this.onClick();
                 }
                 break;
