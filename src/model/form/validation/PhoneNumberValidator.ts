@@ -5,19 +5,19 @@ import {ValidationError} from "./ValidationError";
 /**
  * Created by dsmiley on 10/10/17.
  */
-export class PhoneNumberValidator extends TextInputValidator{
+export class PhoneNumberValidator extends TextInputValidator {
 
-    constructor(){
+    constructor() {
         super();
     }
 
     //iterate over model objects and ensure all required objects have some text
-    protected getValidationErrors(): Lavender.ArrayList{
+    protected getValidationErrors(): Lavender.ArrayList {
         const returnList = new Lavender.ArrayList();
-        for(let i=0;i<this.source.collection.length;i++){
+        for(let i=0;i<this.source.collection.length;i++) {
             const item: InputModel = this.source.collection.getItemAt(i);
             //new String('(555) 555-5555').replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/)
-            if(item.required && (!item.nonFormattedValue || item.nonFormattedValue.length <=0 || !item.nonFormattedValue.replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/) ) ){
+            if(item.required && (!item.nonFormattedValue || item.nonFormattedValue.length <=0 || !item.nonFormattedValue.replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/) ) ) {
                 returnList.addItem(new ValidationError('required', 'form.invalidPhone', item.label + ' is not a valid phone number'))
             }
         }

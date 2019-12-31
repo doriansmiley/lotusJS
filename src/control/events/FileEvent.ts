@@ -3,8 +3,8 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 
-export class FileEvent extends Lavender.AbstractEvent{
-    constructor(type: string, payload?: Record<string, any>){
+export class FileEvent extends Lavender.AbstractEvent {
+    constructor(type: string, payload?: Record<string, any>) {
         super(type, payload);
     }
 
@@ -12,7 +12,7 @@ export class FileEvent extends Lavender.AbstractEvent{
     public static ABORT_FILE_UPLOAD = 'abortFileUpload';
     public static UPLOAD_FILE = 'uploadFile';
 
-    clone(type: string, payload: Record<string, any>): Lavender.IEvent{
+    clone(type: string, payload: Record<string, any>): Lavender.IEvent {
         return new FileEvent(this.type, this.payload)
     }
 }

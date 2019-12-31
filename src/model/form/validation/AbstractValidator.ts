@@ -5,7 +5,7 @@ import {InputCollectionModel} from "../InputCollectionModel";
  * Created by dsmiley on 10/10/17.
  */
 
-export class AbstractValidator extends Lavender.Subject implements IValidator{
+export class AbstractValidator extends Lavender.Subject implements IValidator {
 
     private _errors: Lavender.ArrayList;
     private _warnings: Lavender.ArrayList;
@@ -14,7 +14,7 @@ export class AbstractValidator extends Lavender.Subject implements IValidator{
     private _hasWarnings = false;
     private _id: string;
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -42,7 +42,7 @@ export class AbstractValidator extends Lavender.Subject implements IValidator{
 
     set source(value: InputCollectionModel) {
         this._source = value;
-        if( this.source !== null && this.source !== undefined ){
+        if( this.source !== null && this.source !== undefined ) {
             this.init();//set up initial state
         }
         this.notify(value, "source");
@@ -75,21 +75,21 @@ export class AbstractValidator extends Lavender.Subject implements IValidator{
         this.notify(value, "id");
     }
 
-    protected getValidationResult(): boolean{
+    protected getValidationResult(): boolean {
         return this.errors.length <= 0;
     }
 
-    protected getValidationWarningsResult(): boolean{
+    protected getValidationWarningsResult(): boolean {
         return this.warnings.length > 0;
     }
 
     //stub for override
-    protected getValidationErrors(): Lavender.ArrayList{
+    protected getValidationErrors(): Lavender.ArrayList {
         return new Lavender.ArrayList();//returns ArrayList of SpiSdk.ValidationError instances
     }
 
     //stub for override
-    protected getValidationWarnings(): Lavender.ArrayList{
+    protected getValidationWarnings(): Lavender.ArrayList {
         return new Lavender.ArrayList();//returns ArrayList of SpiSdk.ValidationError instances
     }
 

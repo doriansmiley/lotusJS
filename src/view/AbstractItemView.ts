@@ -2,11 +2,11 @@ import {AbstractComponent} from "./AbstractComponent";
 /**
  * Created by dsmiley on 8/4/17.
  */
-export abstract class AbstractItemView extends AbstractComponent{
+export abstract class AbstractItemView extends AbstractComponent {
 
     private _model: Record<string, any>;
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -22,7 +22,7 @@ export abstract class AbstractItemView extends AbstractComponent{
 
     public setElementDisplay(element: HTMLElement, display: string): void{
         //at some points in the items lifecycle element could be null, se we require this check
-        if( element !== null && element !== undefined ){
+        if( element !== null && element !== undefined ) {
             element.style.display = display;
         }
     }
@@ -39,7 +39,7 @@ export abstract class AbstractItemView extends AbstractComponent{
 
     public destroy(): void{
         super.destroy();
-        if(this.model && this.model['destroy']){
+        if(this.model && this.model['destroy']) {
             this.model['destroy']();
         }
         this.model = null;

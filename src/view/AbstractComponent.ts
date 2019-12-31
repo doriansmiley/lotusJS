@@ -7,7 +7,7 @@ import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export abstract class AbstractComponent extends Lavender.Subject implements IComponent{
+export abstract class AbstractComponent extends Lavender.Subject implements IComponent {
     private _element: LotusHTMLElement;
     private _context: IContext;
     private _ready = false;
@@ -27,7 +27,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     removeAllEventListeners: ( instance: Record<string, any> )  =>  void;
     dispatch: ( event: Lavender.IEvent )  =>  void;
 
-    constructor(){
+    constructor() {
         super();
         Lavender.ObjectUtils.mixin(Lavender.EventDispatcher, AbstractComponent, this);
     }
@@ -38,7 +38,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
 
     set element(val: LotusHTMLElement) {
         this._element = val;
-        if( this._element !== null && this._element !== undefined ){
+        if( this._element !== null && this._element !== undefined ) {
             this._element.getComponentInstance = this.getComponentInstance.bind(this);
         }
         this.notify( val, 'element' );
@@ -87,9 +87,9 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     set isValid(value: boolean) {
         this._isValid = value;
         this.notify(value, 'isValid');
-        if(this.isValid && this.validClass){
+        if(this.isValid && this.validClass) {
             this.attachValidationClass(this.validClass, this.invalidClass);
-        }else if(!this.isValid && this.invalidClass){
+        }else if(!this.isValid && this.invalidClass) {
             this.attachValidationClass(this.invalidClass, this.validClass);
         }
     }
@@ -106,23 +106,23 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     }
 
     public addAttributes(): void{
-        for( let i=0; i < this.element.attributes.length; i++ ){
+        for( let i=0; i < this.element.attributes.length; i++ ) {
             const attribute = this.element.attributes[i];
-            if( attribute.name.indexOf('attribute') >= 0 ){
+            if( attribute.name.indexOf('attribute') >= 0 ) {
                 const index = attribute.name.indexOf('attribute') + 10;
                 const newProp = attribute.name.substring(index);//remove prefix
                 //convert dashes to camel case
                 //LEGACY: using the data- prefix should trigger camel case on dash automagically
                 const camelCased = newProp.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
                 const properties: Array<string> = this.getAllPropertyNames(this);
-                if( properties.indexOf(camelCased) >= 0 ){
+                if( properties.indexOf(camelCased) >= 0 ) {
                     this[camelCased] = attribute.value;
                 }
             }
         }
     }
 
-    public getAllPropertyNames(obj: Record<string, any>, iterateSelfBool=true, iteratePrototypeBool=true): Array<string>{
+    public getAllPropertyNames(obj: Record<string, any>, iterateSelfBool=true, iteratePrototypeBool=true): Array<string> {
         const props: Array<string> = [];
 
         do {
@@ -143,7 +143,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
     }
 
     public addSkinParts(): void{
-        if( this.element.getAttribute('data-skin-part') !== null && this.element.getAttribute('data-skin-part') !== undefined ){
+        if( this.element.getAttribute('data-skin-part') !== null && this.element.getAttribute('data-skin-part') !== undefined ) {
             this.addSkinPart(this.element.getAttribute('data-skin-part'), this.element);
         }
         const skinPartsNodeList = this.element.querySelectorAll('[data-skin-part]');
@@ -156,7 +156,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
 
     public addSkinPart(part: string, element: Element): void{
         //skip undefined skin parts
-        if( this.skinParts.skinPartsByLabel[part] === null || this.skinParts.skinPartsByLabel[part] === undefined ){
+        if( this.skinParts.skinPartsByLabel[part] === null || this.skinParts.skinPartsByLabel[part] === undefined ) {
             return null;
         }
         //assign the skin part
@@ -170,7 +170,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements ICom
         this.dispatch(new ComponentEvent(ComponentEvent.READY, {target:this}));
     }
 
-    public getComponentInstance(): IComponent{
+    public getComponentInstance(): IComponent {
         return this;
     }
 

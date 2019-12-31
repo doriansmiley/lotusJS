@@ -4,14 +4,14 @@
 import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 
-export class SkinPartList extends Lavender.ArrayList{
+export class SkinPartList extends Lavender.ArrayList {
     public skinPartsByLabel: Record<string, any> = {};
     
-    constructor(source?: Array<any>, allowDuplicates = true){
+    constructor(source?: Array<any>, allowDuplicates = true) {
         super(source,allowDuplicates);
     }
     
-    public addItem(object: SkinPart, hash?: Record<string, any>, key?: string): number{
+    public addItem(object: SkinPart, hash?: Record<string, any>, key?: string): number {
         //ensure the object is valid before proceeding
         const index = super.addItem(object, hash, key);
         //populate hash
@@ -30,7 +30,7 @@ export class SkinPartList extends Lavender.ArrayList{
         super.removeItemAt(index);
     }
 
-    public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number{
+    public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number {
         //ensure the object is valid before proceeding
         const returnValue = super.insert(object, index,suppressChangeEvent,hash,key,replaceIndex);
         //populate hash

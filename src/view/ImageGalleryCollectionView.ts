@@ -3,8 +3,8 @@
  */
 import {AbstractRecordSetCollectionView} from "./AbstractRecordSetCollectionView";
 
-export class ImageGalleryCollectionView extends AbstractRecordSetCollectionView{
-    constructor(){
+export class ImageGalleryCollectionView extends AbstractRecordSetCollectionView {
+    constructor() {
         super();
     }
 }

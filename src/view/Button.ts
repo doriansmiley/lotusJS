@@ -4,11 +4,11 @@ import {ComponentEvent} from "../control/events/ComponentEvent";
 /**
  * Created by dsmiley on 7/26/17.
  */
-export class Button extends AbstractComponent{
+export class Button extends AbstractComponent {
     private _buttonSkinPart: HTMLElement;
     private _type: string;
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -45,7 +45,7 @@ export class Button extends AbstractComponent{
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ){
+        switch( part ) {
             case 'button':
                 //add button event listener or whatever else yo want to do when this skin part is added
                 //you could hold until all skin parts are added and then call addEventListeners

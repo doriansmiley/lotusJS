@@ -9,7 +9,7 @@ import {AbstractComponent} from "./AbstractComponent";
  * Created by dsmiley on 10/12/17.
  */
 
-export class FormItemView extends AbstractItemView{
+export class FormItemView extends AbstractItemView {
 
     protected _input: LotusHTMLElement;
     protected _list: LotusHTMLElement;
@@ -58,26 +58,26 @@ export class FormItemView extends AbstractItemView{
         this.notify(value, 'file');
     }
 
-    protected removeSkinPart(element: LotusHTMLElement, parent: HTMLElement){
-        if(element.lotusComponentInstance.ready){
+    protected removeSkinPart(element: LotusHTMLElement, parent: HTMLElement) {
+        if(element.lotusComponentInstance.ready) {
             element.lotusComponentInstance.destroy();
         }
-        if(parent){
+        if(parent) {
             parent.removeChild(element);
         }
-        if(this.input == element){
+        if(this.input == element) {
             this.input = null;
-        }else if(this.list == element){
+        }else if(this.list == element) {
             this.list = null;
-        }else if(this.radioGroup == element){
+        }else if(this.radioGroup == element) {
             this.radioGroup = null;
-        }else if(this.file == element){
+        }else if(this.file == element) {
             this.file = null;
         }
     }
 
     protected setUpSkinParts(): void{
-        if(!this.ready || !this.model){
+        if(!this.ready || !this.model) {
             return;
         }
         let skinPartsToRemove: Array<LotusHTMLElement> = [
@@ -90,7 +90,7 @@ export class FormItemView extends AbstractItemView{
         //only one of these skin parts can stay
         let head;
         let tail;
-        switch((this.model as InputCollectionModel).type){
+        switch((this.model as InputCollectionModel).type) {
             //remove unused skin parts and set up used skin part
             case InputCollectionModel.TYPE_INPUT:
                 this.setUpSkinPart((this.input.lotusComponentInstance as AbstractItemView));
@@ -112,14 +112,14 @@ export class FormItemView extends AbstractItemView{
                 this.setUpSkinPart((this.file.lotusComponentInstance as AbstractItemView));
                 skinPartsToRemove.pop();
         }
-        for(let i=0; i<skinPartsToRemove.length; i++){
+        for(let i=0; i<skinPartsToRemove.length; i++) {
             this.removeSkinPart(skinPartsToRemove[i], skinPartsToRemove[i].parentElement);
         }
     }
 
     protected setUpSkinPart(part: AbstractItemView): void{
         this._activeSkinPart = part;
-        if(part.ready){
+        if(part.ready) {
             this.setComponentModel(this.model as InputCollectionModel, part);
         }else{
             part.addEventListener(ComponentEvent.READY, this, 'onItemDetailReady');
@@ -127,8 +127,8 @@ export class FormItemView extends AbstractItemView{
     }
 
     protected setComponentModel(value: InputCollectionModel, component: AbstractItemView): void{
-        if(value){
-            switch(value.type){
+        if(value) {
+            switch(value.type) {
                 case InputCollectionModel.TYPE_INPUT:
                     component.model = value.collection.getItemAt(0);
                     break
@@ -161,7 +161,7 @@ export class FormItemView extends AbstractItemView{
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element );
-        if(this.input && this.radioGroup && this.file && this.list && this.model ){
+        if(this.input && this.radioGroup && this.file && this.list && this.model ) {
             //we have to call this here because only the component map calls onReady, but item views are not mapped to tags, so the map will never call it
             this.onReady();
         }
@@ -179,7 +179,7 @@ export class FormItemView extends AbstractItemView{
 
     public onModelChange(value): void{
         super.onModelChange(value);
-        if(!value){
+        if(!value) {
             return;
         }
         this.binder.bind(value as InputCollectionModel, 'isValid', this, 'isValid');

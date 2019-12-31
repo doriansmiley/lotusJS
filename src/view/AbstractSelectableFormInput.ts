@@ -5,11 +5,11 @@ import {AbstractItemView} from "./AbstractItemView";
 import {InputModel} from "../model/form/InputModel";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 
-export abstract class AbstractSelectableFormInput extends AbstractItemView{
+export abstract class AbstractSelectableFormInput extends AbstractItemView {
 
     private _selected: boolean;
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -39,13 +39,13 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView{
 
     public onModelChange(value: Record<string, any>): void{
         super.onModelChange(value);
-        if(value && value instanceof InputModel){
+        if(value && value instanceof InputModel) {
             //set initial value
             this.selected = (value as InputModel).selected;
             //set up two way bindings
             this.binder.bind(value, 'selected', this, 'selected');
             this.binder.bind(this, 'selected', value, 'selected');
-        }else if(value && value['selected']){
+        }else if(value && value['selected']) {
             this.selected = value['selected'];
         }
     }

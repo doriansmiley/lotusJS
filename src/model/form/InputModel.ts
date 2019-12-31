@@ -3,7 +3,7 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 
-export class InputModel extends Lavender.Subject{
+export class InputModel extends Lavender.Subject {
 
     private _label: string;
     private _value: string;
@@ -14,7 +14,7 @@ export class InputModel extends Lavender.Subject{
 
     public format: (value: string) => string;
 
-    constructor(label?: string, value?: string, name?: string, selected = false, required=false){
+    constructor(label?: string, value?: string, name?: string, selected = false, required=false) {
         super();
         this.label = label;
         this.value = value;
@@ -43,7 +43,7 @@ export class InputModel extends Lavender.Subject{
 
     set value(value: string) {
         this._nonFormattedValue = value;
-        if(this.format){
+        if(this.format) {
             value = this.format(value);
         }
         this._value = value;

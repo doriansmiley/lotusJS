@@ -3,13 +3,13 @@
  */
 import * as Lavender from 'lavenderjs/lib';
 import {InputModel} from "../InputModel";
-export class ValidationError extends Lavender.Subject{
+export class ValidationError extends Lavender.Subject {
 
     private _property: string;
     private _errorCode: string;
     private _errorMessage: string;
 
-    constructor(property: string, errorCode: string, errorMessage: string){
+    constructor(property: string, errorCode: string, errorMessage: string) {
         super();
         this.property = property;
         this.errorCode = errorCode;

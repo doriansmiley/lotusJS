@@ -5,7 +5,7 @@ import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 import {AbstractCollectionView} from "./AbstractCollectionView";
 
-export class AbstractRecordSetCollectionView extends AbstractCollectionView{
+export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     private _navBtnEnabledClass: string;
     private _navBtnDisabledClass: string;
     private _nextBtn: HTMLElement;
@@ -79,7 +79,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
         this.notify(value, 'lastBtn');
     }
 
-    constructor(){
+    constructor() {
         super();
         this.nextBtn = null;
         this.pervBtn = null;
@@ -89,7 +89,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
 
     protected addCollectionEventListeners(): void{
         //IMPORTANT, do not call super, we don't want to listen for collection change events but instead the events below
-        if( this.recordSet !== null && this.recordSet !== undefined ){
+        if( this.recordSet !== null && this.recordSet !== undefined ) {
             this.recordSet.addEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
             this.binder.bind(this.recordSet, 'pageList', this, 'onPageListChange', null, null, 'pageListChaneHandler');
         }
@@ -98,26 +98,26 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
     protected removeCollectionEventListeners(): void{
         //IMPORTANT, do not call super
         //This method can be called as part of a destroy sequence where the collection is nulled out, so we check for NPE
-        if( this.recordSet !== null && this.recordSet !== undefined ){
+        if( this.recordSet !== null && this.recordSet !== undefined ) {
             //remove old event listeners
             this.recordSet.removeEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
         }
-        if( this.binder !== null && this.binder !== undefined ){
+        if( this.binder !== null && this.binder !== undefined ) {
             this.binder.unbind('pageListChaneHandler');
         }
     }
 
     protected onClickHandler(event: Event): void{
         //event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
-        switch( (event.currentTarget as HTMLElement).getAttribute('data-skin-part') ){
+        switch( (event.currentTarget as HTMLElement).getAttribute('data-skin-part') ) {
             case 'nextBtn':
-                if( this.recordSet.selectedPage + 1 > this.recordSet.totalPages ){
+                if( this.recordSet.selectedPage + 1 > this.recordSet.totalPages ) {
                     return;
                 }
                 this.recordSet.selectedPage += 1;
                 break;
             case 'pervBtn':
-                if( this.recordSet.selectedPage - 1 < 1 ){
+                if( this.recordSet.selectedPage - 1 < 1 ) {
                     return;
                 }
                 this.recordSet.selectedPage -= 1;
@@ -129,29 +129,29 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
                 this.recordSet.selectedPage = this.recordSet.totalPages;
                 break;
         }
-        if( this.nextBtn ){
+        if( this.nextBtn ) {
             this.refreshNavButtonDisplay( this.nextBtn, 'next');
         }
-        if( this.pervBtn ){
+        if( this.pervBtn ) {
             this.refreshNavButtonDisplay( this.pervBtn, 'prev');
         }
-        if( this.firstBtn ){
+        if( this.firstBtn ) {
             this.refreshNavButtonDisplay( this.firstBtn, 'prev');
         }
-        if( this.lastBtn ){
+        if( this.lastBtn ) {
             this.refreshNavButtonDisplay( this.lastBtn, 'next');
         }
     }
 
     protected refreshNavButtonDisplay(button: HTMLElement, type: string): void{
-        if(button.classList.contains(this.navBtnDisabledClass)){
+        if(button.classList.contains(this.navBtnDisabledClass)) {
             button.classList.remove(this.navBtnDisabledClass)
         }
-        if(button.classList.contains(this.navBtnEnabledClass)){
+        if(button.classList.contains(this.navBtnEnabledClass)) {
             button.classList.remove(this.navBtnEnabledClass)
         }
         let classToAdd;
-        if( type === 'next' ){
+        if( type === 'next' ) {
             classToAdd = ( this.recordSet.selectedPage + 1 > this.recordSet.totalPages ) ? this.navBtnDisabledClass : this.navBtnEnabledClass;
         }else{
             classToAdd =  ( this.recordSet.selectedPage - 1 < 1 ) ? this.navBtnDisabledClass : this.navBtnEnabledClass;
@@ -169,7 +169,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
 
     protected initCollection(): void{
         //assign a default collection if it has not already been set
-        if( this.recordSet === null || this.recordSet === undefined ){
+        if( this.recordSet === null || this.recordSet === undefined ) {
             this.recordSet = new Lavender.RecordSet();
         }
     }
@@ -185,7 +185,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element );
-        switch(part){
+        switch(part) {
             //optional container for displaying collection elements
             case 'nextBtn':
                 this.nextBtn.addEventListener('click', this.onClickHandler.bind(this));
@@ -201,31 +201,31 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
                 break;
         }
         //IMPORTANT: you could defined these classes on a sort of dummy skin part defined within the component, or on one of the buttons
-        if( element.getAttribute('data-enabledClass') !== null && element.getAttribute('data-enabledClass') !== undefined ){
+        if( element.getAttribute('data-enabledClass') !== null && element.getAttribute('data-enabledClass') !== undefined ) {
             this.navBtnEnabledClass = element.getAttribute('data-enabledClass');
         }
-        if( element.getAttribute('data-disabled-class') !== null && element.getAttribute('data-disabled-class') !== undefined ){
+        if( element.getAttribute('data-disabled-class') !== null && element.getAttribute('data-disabled-class') !== undefined ) {
             this.navBtnDisabledClass = element.getAttribute('data-disabled-class');
         }
     }
 
     public render(): void{
         //IMPORTANT: do not call super!
-        if( this.itemView === null || this.itemView == undefined ){
+        if( this.itemView === null || this.itemView == undefined ) {
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
         }
         //clear the current view
         this.removeAllChildViews();
-        if( this.nextBtn ){
+        if( this.nextBtn ) {
             this.refreshNavButtonDisplay( this.nextBtn, 'next');
         }
-        if( this.pervBtn ){
+        if( this.pervBtn ) {
             this.refreshNavButtonDisplay( this.pervBtn, 'prev');
         }
-        if( this.firstBtn ){
+        if( this.firstBtn ) {
             this.refreshNavButtonDisplay( this.firstBtn, 'prev');
         }
-        if( this.lastBtn ){
+        if( this.lastBtn ) {
             this.refreshNavButtonDisplay( this.lastBtn, 'next');
         }
         if (this.recordSet.pageList === null || this.recordSet.pageList === undefined) {
@@ -241,16 +241,16 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView{
 
     public destroy(): void{
         super.destroy();
-        if( this.nextBtn ){
+        if( this.nextBtn ) {
             this.nextBtn.removeEventListener('click', this.onClickHandler);
         }
-        if( this.pervBtn ){
+        if( this.pervBtn ) {
             this.pervBtn.removeEventListener('click', this.onClickHandler);
         }
-        if( this.firstBtn ){
+        if( this.firstBtn ) {
             this.firstBtn.removeEventListener('click', this.onClickHandler);
         }
-        if( this.lastBtn ){
+        if( this.lastBtn ) {
             this.lastBtn.removeEventListener('click', this.onClickHandler);
         }
         this.recordSet.destroy();

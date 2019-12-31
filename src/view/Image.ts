@@ -7,7 +7,7 @@ import {SkinPart} from "./SkinPart";
 import {ImageGalleryItemDetail, asset} from "./ImageGalleryItemDetail";
 import {ComponentEvent} from "../control/events/ComponentEvent";
 
-export class Image extends AbstractThumbnailView{
+export class Image extends AbstractThumbnailView {
 
     private _loadingSVG: HTMLElement;
     private _loadingSVGStyle: string;
@@ -20,11 +20,11 @@ export class Image extends AbstractThumbnailView{
         this._loadingSVG = value;
     }
 
-    protected getImageURL(model?: Record<string, any>): string{
-        if(model){
+    protected getImageURL(model?: Record<string, any>): string {
+        if(model) {
             return model['src'];
         }
-        if(!this.model){
+        if(!this.model) {
             return '';
         }
         return this.model['src'];
@@ -48,7 +48,7 @@ export class Image extends AbstractThumbnailView{
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
-        switch( part ){
+        switch( part ) {
             case 'loadingSVG':
                 this._loadingSVGStyle = this.loadingSVG.style.display;
                 break;

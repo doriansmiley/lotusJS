@@ -7,7 +7,7 @@ import {ListItemView} from "./ListItemView";
 import {InputCollectionModel} from "../model/form/InputCollectionModel";
 import {SkinPart} from "./SkinPart";
 
-export class ListCollectionView extends AbstractInputCollectionView{
+export class ListCollectionView extends AbstractInputCollectionView {
 
     private _prompt: HTMLOptionElement;
 
@@ -28,7 +28,7 @@ export class ListCollectionView extends AbstractInputCollectionView{
     public onChange(event: Event): void{
         //account for the existence of the prompt which adds an additional list item! this offset the index in this.childViews which does not include the prompt.
         const index = (this.prompt) ? (event.target as HTMLSelectElement).selectedIndex - 1 : (event.target as HTMLSelectElement).selectedIndex;
-        if(index < 0){
+        if(index < 0) {
             return;//prompt is selected
         }
         //get the associated item view for the selected list item
@@ -49,7 +49,7 @@ export class ListCollectionView extends AbstractInputCollectionView{
     }
 
     protected addPrompt(): void{
-        if(this.prompt && this.model && this.model.label){
+        if(this.prompt && this.model && this.model.label) {
             this.prompt.innerHTML = this.model.label;
         }
     }
@@ -67,7 +67,7 @@ export class ListCollectionView extends AbstractInputCollectionView{
 
     public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element );
-        switch(part){
+        switch(part) {
             //required, defines the layout for child views
             case 'collectionContainer':
                 this.addEventListeners();
@@ -80,10 +80,10 @@ export class ListCollectionView extends AbstractInputCollectionView{
     }
 
     protected refreshView(value: any): void{
-        if(this.collectionContainer){
+        if(this.collectionContainer) {
             (this.collectionContainer as HTMLSelectElement).value = value;
         }
-        if(this.selectedItem && !this.selectedItem.element['selected']){
+        if(this.selectedItem && !this.selectedItem.element['selected']) {
             this.selectedItem.element['selected'] = true;
         }
     }

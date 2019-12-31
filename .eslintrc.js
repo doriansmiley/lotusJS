@@ -19,5 +19,6 @@ module.exports = {
     rules: {
         "indent": ["error", 4, {"SwitchCase": 1}],
         "lines-between-class-members": "off",
+        "space-before-blocks": "error",
     },
 };

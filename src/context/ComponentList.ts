@@ -4,15 +4,15 @@
 import {IComponentList} from './IComponentList';
 import * as Lavender from 'lavenderjs/lib';
 
-export class ComponentList extends Lavender.ArrayList implements IComponentList{
+export class ComponentList extends Lavender.ArrayList implements IComponentList {
     public instancesByConstructor: Record<string, any> = {};
     
-    constructor(){
+    constructor() {
         super();
     }
     
     protected addToHash(object: any): void{
-        if( this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined ){
+        if( this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined ) {
             this.instancesByConstructor[ object.constructor ] = [];
         }
         this.instancesByConstructor[ object.constructor ].push( object );
@@ -20,11 +20,11 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList{
     
     protected removeItemFromHash(hash: Record<string, any>, object: any): void{
         let objects = hash[ object.constructor ];
-        if( objects === null || objects === undefined ||  objects.length < 1 ){
+        if( objects === null || objects === undefined ||  objects.length < 1 ) {
             return;
         }
-        for(let i = 0; i < objects.length; i++ ){
-            if( objects[i] == object ){
+        for(let i = 0; i < objects.length; i++ ) {
+            if( objects[i] == object ) {
                 //remove the item from the array
                 switch (i) {
                     case 0:
@@ -44,7 +44,7 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList{
         }
     }
 
-    public addItem(object: Record<string, any>, hash?: Record<string, any>, key?: string): number{
+    public addItem(object: Record<string, any>, hash?: Record<string, any>, key?: string): number {
         const index: number = super.addItem(object,hash,key);
         //populate hash
         this.addToHash(object);
@@ -62,7 +62,7 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList{
         super.removeItemAt(index);
     }
 
-    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number{
+    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number {
         const returnValue: number = super.insert(object,index,suppressChangeEvent,hash,key,replaceIndex);
         this.addToHash(object);
         return returnValue;

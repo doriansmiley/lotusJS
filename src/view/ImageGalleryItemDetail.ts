@@ -8,13 +8,13 @@ import {LotusHTMLElement} from "../context/LotusHTMLElement";
 
 export type asset = { objectName: string; createdDate: Date; url: string };
 
-export class ImageGalleryItemDetail extends AbstractComponent{
+export class ImageGalleryItemDetail extends AbstractComponent {
     private _asset: asset;
     private _nameLabel: HTMLElement;
     private _dateCreatedLabel: HTMLElement;
     private _urlLabel: HTMLElement;
     
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -58,13 +58,13 @@ export class ImageGalleryItemDetail extends AbstractComponent{
 
     protected render(): void{
         if (this.asset && this.ready) {
-            if(this.nameLabel){
+            if(this.nameLabel) {
                 this.nameLabel.innerHTML = this.asset.objectName;
             }
-            if(this.dateCreatedLabel){
+            if(this.dateCreatedLabel) {
                 this.dateCreatedLabel.innerHTML = this.asset.createdDate.toDateString();
             }
-            if(this.urlLabel){
+            if(this.urlLabel) {
                 this.urlLabel.innerHTML = this.asset.url;
             }
         }

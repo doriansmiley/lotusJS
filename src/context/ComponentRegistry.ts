@@ -1,12 +1,14 @@
-export interface IDefinition {
+export interface TagDefinition {
     created?: Function;
     inserted?: Function;
     removed?: Function;
     attributeChanged?: (attrName: string, oldValue: any, newValue: any) => void;
-    prototype?: any;
+    base: HTMLElement;
+    tagName: string;
+    tagFunction: Function;
 }
 
-export function register(name: string, definition: IDefinition) {
+export function register(tagDef: TagDefinition) {
     // Object.assign(Object.create(HTMLButtonElement.prototype), {'one': 1, 'a': 'a'})
     /*
     * {
