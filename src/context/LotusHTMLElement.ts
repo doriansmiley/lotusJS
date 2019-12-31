@@ -1,4 +1,4 @@
-import {IComponent} from "../view/IComponent";
+import {IComponent} from '../view/IComponent';
 /**
  * Created by dsmiley on 7/26/17.
  */

@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 9/26/17.
  */
-import {AbstractThumbnailView} from "./AbstractThumbnailView";
-import {SkinPart} from "./SkinPart";
-import {FileEvent} from "../control/events/FileEvent";
+import {AbstractThumbnailView} from './AbstractThumbnailView';
+import {SkinPart} from './SkinPart';
+import {FileEvent} from '../control/events/FileEvent';
 import * as Lavender from 'lavenderjs/lib';
 
 export class File extends Lavender.Subject {

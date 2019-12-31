@@ -2,8 +2,8 @@
  * Created by dsmiley on 10/10/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {InputModel} from "./InputModel";
-import {Validator} from "./validation/Validator";
+import {InputModel} from './InputModel';
+import {Validator} from './validation/Validator';
 
 export class InputCollectionModel extends Lavender.Subject {
     public static TYPE_INPUT = 0;
@@ -65,7 +65,7 @@ export class InputCollectionModel extends Lavender.Subject {
 
     set isValid(value: boolean) {
         this._isValid = value;
-        this.notify(value, "isValid");
+        this.notify(value, 'isValid');
     }
 
     get type(): number {

@@ -1,11 +1,11 @@
 /**
  * Created by dsmiley on 8/24/17.
  */
-import {AbstractThumbnailView} from "./AbstractThumbnailView";
-import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {SkinPart} from "./SkinPart";
-import {ImageGalleryItemDetail, asset} from "./ImageGalleryItemDetail";
-import {ComponentEvent} from "../control/events/ComponentEvent";
+import {AbstractThumbnailView} from './AbstractThumbnailView';
+import {LotusHTMLElement} from '../context/LotusHTMLElement';
+import {SkinPart} from './SkinPart';
+import {ImageGalleryItemDetail, asset} from './ImageGalleryItemDetail';
+import {ComponentEvent} from '../control/events/ComponentEvent';
 
 export class ImageGalleryView extends AbstractThumbnailView {
     private _itemDetail: LotusHTMLElement;

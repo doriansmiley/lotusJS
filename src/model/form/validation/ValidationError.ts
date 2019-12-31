@@ -2,7 +2,7 @@
  * Created by dsmiley on 10/10/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {InputModel} from "../InputModel";
+import {InputModel} from '../InputModel';
 export class ValidationError extends Lavender.Subject {
 
     private _property: string;
@@ -22,7 +22,7 @@ export class ValidationError extends Lavender.Subject {
 
     set property(value: string) {
         this._property = value;
-        this.notify(value, "property");
+        this.notify(value, 'property');
     }
 
     get errorCode(): string {
@@ -31,7 +31,7 @@ export class ValidationError extends Lavender.Subject {
 
     set errorCode(value: string) {
         this._errorCode = value;
-        this.notify(value, "errorCode");
+        this.notify(value, 'errorCode');
     }
 
     get errorMessage(): string {
@@ -40,7 +40,7 @@ export class ValidationError extends Lavender.Subject {
 
     set errorMessage(value: string) {
         this._errorMessage = value;
-        this.notify(value, "errorMessage");
+        this.notify(value, 'errorMessage');
     }
 
     public destroy(): void{

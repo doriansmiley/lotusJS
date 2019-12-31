@@ -1,11 +1,11 @@
 /**
  * Created by dsmiley on 9/26/17.
  */
-import {AbstractCollectionView} from "./AbstractCollectionView";
-import {File} from "./FileView";
-import {SkinPart} from "./SkinPart";
-import {FileEvent} from "../control/events/FileEvent";
-import {AbstractItemView} from "./AbstractItemView";
+import {AbstractCollectionView} from './AbstractCollectionView';
+import {File} from './FileView';
+import {SkinPart} from './SkinPart';
+import {FileEvent} from '../control/events/FileEvent';
+import {AbstractItemView} from './AbstractItemView';
 
 export class FileCollectionView extends AbstractCollectionView {
 
@@ -84,10 +84,10 @@ export class FileCollectionView extends AbstractCollectionView {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'fileInput':
-                this.fileInput.addEventListener("change", this.onFileInputChange.bind(this));
+                this.fileInput.addEventListener('change', this.onFileInputChange.bind(this));
                 break;
             case 'selectBtn':
-                this.selectBtn.addEventListener("click", this.onFileBtnClick.bind(this));
+                this.selectBtn.addEventListener('click', this.onFileBtnClick.bind(this));
                 break;
         }
     }
@@ -113,11 +113,11 @@ export class FileCollectionView extends AbstractCollectionView {
     public destroy(): void{
         super.destroy();
         if (this.fileInput) {
-            this.fileInput.removeEventListener("change", this.onFileInputChange);
+            this.fileInput.removeEventListener('change', this.onFileInputChange);
             this.fileInput = null;
         }
         if (this.selectBtn) {
-            this.selectBtn.removeEventListener("click", this.onFileBtnClick);
+            this.selectBtn.removeEventListener('click', this.onFileBtnClick);
             this.selectBtn = null;
         }
     }

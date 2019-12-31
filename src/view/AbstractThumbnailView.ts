@@ -2,9 +2,9 @@
  * Created by dsmiley on 8/23/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {AbstractItemView} from "./AbstractItemView";
-import {SkinPart} from "./SkinPart";
-import {ItemViewEvent} from "../control/events/ItemViewEvent";
+import {AbstractItemView} from './AbstractItemView';
+import {SkinPart} from './SkinPart';
+import {ItemViewEvent} from '../control/events/ItemViewEvent';
 
 export class AbstractThumbnailView extends AbstractItemView {
     private _thumbWidth: string;

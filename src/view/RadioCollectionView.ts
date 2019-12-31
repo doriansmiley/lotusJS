@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
-import {SkinPart} from "./SkinPart";
-import {InputCollectionModel} from "../model/form/InputCollectionModel";
+import {AbstractInputCollectionView} from './AbstractInputCollectionView';
+import {SkinPart} from './SkinPart';
+import {InputCollectionModel} from '../model/form/InputCollectionModel';
 
 export class RadioCollectionView extends AbstractInputCollectionView {
 

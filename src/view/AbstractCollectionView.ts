@@ -2,11 +2,11 @@
  * Created by dsmiley on 8/4/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {AbstractComponent} from "./AbstractComponent";
-import {AbstractItemView} from "./AbstractItemView";
-import {SkinPart} from "./SkinPart";
-import {ItemViewEvent} from "..";
-import {LotusHTMLElement} from "..";
+import {AbstractComponent} from './AbstractComponent';
+import {AbstractItemView} from './AbstractItemView';
+import {SkinPart} from './SkinPart';
+import {ItemViewEvent} from '..';
+import {LotusHTMLElement} from '..';
 
 export class AbstractCollectionView extends AbstractComponent {
     private _collectionContainer: HTMLElement;

@@ -1,10 +1,10 @@
-import {ContextInterface} from "./ContextInterface";
-import {ComponentListInterface} from "./ComponentListInterface";
+import {ContextInterface} from './ContextInterface';
+import {ComponentListInterface} from './ComponentListInterface';
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag, TagDefinition, LifecycleHooks} from "./xtag";
-import {ComponentMapInterface} from "./ComponentMapInterface";
-import {ComponentList} from "./ComponentList";
-import {LotusHTMLElement} from "./LotusHTMLElement";
+import {IXtag, TagDefinition, LifecycleHooks} from './xtag';
+import {ComponentMapInterface} from './ComponentMapInterface';
+import {ComponentList} from './ComponentList';
+import {LotusHTMLElement} from './LotusHTMLElement';
 
 declare let xtag: IXtag;
 

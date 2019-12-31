@@ -1,7 +1,7 @@
 import * as Lavender from 'lavenderjs/lib';
-import {ComponentMapInterface} from "./ComponentMapInterface";
-import {ContextInterface} from "./ContextInterface";
-import {ComponentMap} from "./ComponentMap";
+import {ComponentMapInterface} from './ComponentMapInterface';
+import {ContextInterface} from './ContextInterface';
+import {ComponentMap} from './ComponentMap';
 
 /**
  * Created by dsmiley on 7/24/17.

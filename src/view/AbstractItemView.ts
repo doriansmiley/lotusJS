@@ -1,4 +1,4 @@
-import {AbstractComponent} from "./AbstractComponent";
+import {AbstractComponent} from './AbstractComponent';
 
 /**
  * Created by dsmiley on 8/4/17.

@@ -1,6 +1,6 @@
-import {Validator} from "./Validator";
+import {Validator} from './Validator';
 import * as Lavender from 'lavenderjs/lib';
-import {InputCollectionModel} from "../InputCollectionModel";
+import {InputCollectionModel} from '../InputCollectionModel';
 /**
  * Created by dsmiley on 10/10/17.
  */
@@ -24,7 +24,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
 
     set errors(value: Lavender.ArrayList) {
         this._errors = value;
-        this.notify(value, "errors");
+        this.notify(value, 'errors');
     }
 
     get warnings(): Lavender.ArrayList {
@@ -33,7 +33,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
 
     set warnings(value: Lavender.ArrayList) {
         this._warnings = value;
-        this.notify(value, "warnings");
+        this.notify(value, 'warnings');
     }
 
     get source(): InputCollectionModel {
@@ -45,7 +45,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
         if (this.source !== null && this.source !== undefined) {
             this.init();//set up initial state
         }
-        this.notify(value, "source");
+        this.notify(value, 'source');
     }
 
     get isValid(): boolean {
@@ -54,7 +54,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
 
     set isValid(value: boolean) {
         this._isValid = value;
-        this.notify(value, "isValid");
+        this.notify(value, 'isValid');
     }
 
     get hasWarnings(): boolean {
@@ -63,7 +63,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
 
     set hasWarnings(value: boolean) {
         this._hasWarnings = value;
-        this.notify(value, "hasWarnings");
+        this.notify(value, 'hasWarnings');
     }
 
     get id(): string {
@@ -72,7 +72,7 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
 
     set id(value: string) {
         this._id = value;
-        this.notify(value, "id");
+        this.notify(value, 'id');
     }
 
     protected getValidationResult(): boolean {

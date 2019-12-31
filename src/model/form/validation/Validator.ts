@@ -1,5 +1,5 @@
 import * as Lavender from 'lavenderjs/lib';
-import {InputCollectionModel} from "../InputCollectionModel";
+import {InputCollectionModel} from '../InputCollectionModel';
 /**
  * Created by dsmiley on 10/10/17.
  */

@@ -1,8 +1,8 @@
-import {ContextInterface} from "./ContextInterface";
-import {ComponentListInterface} from "./ComponentListInterface";
+import {ContextInterface} from './ContextInterface';
+import {ComponentListInterface} from './ComponentListInterface';
 import * as Lavender from 'lavenderjs/lib';
-import {IXtag} from "./xtag";
-import {LotusHTMLElement} from "./LotusHTMLElement";
+import {IXtag} from './xtag';
+import {LotusHTMLElement} from './LotusHTMLElement';
 
 /**
  * Created by dsmiley on 7/26/17.

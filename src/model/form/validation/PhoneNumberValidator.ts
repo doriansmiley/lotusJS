@@ -1,7 +1,7 @@
-import {TextInputValidator} from "./TextInputValidator";
+import {TextInputValidator} from './TextInputValidator';
 import * as Lavender from 'lavenderjs/lib';
-import {InputModel} from "../InputModel";
-import {ValidationError} from "./ValidationError";
+import {InputModel} from '../InputModel';
+import {ValidationError} from './ValidationError';
 /**
  * Created by dsmiley on 10/10/17.
  */

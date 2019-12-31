@@ -1,6 +1,6 @@
-import {AbstractComponent} from "./AbstractComponent";
-import {SkinPart} from "./SkinPart";
-import {ComponentEvent} from "../control/events/ComponentEvent";
+import {AbstractComponent} from './AbstractComponent';
+import {SkinPart} from './SkinPart';
+import {ComponentEvent} from '../control/events/ComponentEvent';
 /**
  * Created by dsmiley on 7/26/17.
  */

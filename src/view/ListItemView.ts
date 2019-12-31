@@ -1,9 +1,9 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractSelectableFormInput} from "./AbstractSelectableFormInput";
-import {SkinPart} from "./SkinPart";
-import {InputModel} from "../model/form/InputModel";
+import {AbstractSelectableFormInput} from './AbstractSelectableFormInput';
+import {SkinPart} from './SkinPart';
+import {InputModel} from '../model/form/InputModel';
 
 export class ListItemView extends AbstractSelectableFormInput {
 

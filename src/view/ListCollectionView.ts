@@ -1,11 +1,11 @@
 /**
  * Created by dsmiley on 9/22/17.
  */
-import {AbstractInputCollectionView} from "./AbstractInputCollectionView";
-import {AbstractItemView} from "./AbstractItemView";
-import {ListItemView} from "./ListItemView";
-import {InputCollectionModel} from "../model/form/InputCollectionModel";
-import {SkinPart} from "./SkinPart";
+import {AbstractInputCollectionView} from './AbstractInputCollectionView';
+import {AbstractItemView} from './AbstractItemView';
+import {ListItemView} from './ListItemView';
+import {InputCollectionModel} from '../model/form/InputCollectionModel';
+import {SkinPart} from './SkinPart';
 
 export class ListCollectionView extends AbstractInputCollectionView {
 

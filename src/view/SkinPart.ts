@@ -2,7 +2,7 @@
  * Created by dsmiley on 8/1/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {AbstractComponent} from "./AbstractComponent";
+import {AbstractComponent} from './AbstractComponent';
 
 export class SkinPart extends Lavender.Subject {
 

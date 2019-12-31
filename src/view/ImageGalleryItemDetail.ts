@@ -2,9 +2,9 @@
  * Created by dsmiley on 8/24/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {SkinPart} from "./SkinPart";
-import {AbstractComponent} from "./AbstractComponent";
-import {LotusHTMLElement} from "../context/LotusHTMLElement";
+import {SkinPart} from './SkinPart';
+import {AbstractComponent} from './AbstractComponent';
+import {LotusHTMLElement} from '../context/LotusHTMLElement';
 
 export type asset = { objectName: string; createdDate: Date; url: string };
 

@@ -1,8 +1,8 @@
-import {AbstractValidator} from "./AbstractValidator";
+import {AbstractValidator} from './AbstractValidator';
 import * as Lavender from 'lavenderjs/lib';
-import {InputModel} from "../InputModel";
-import {ValidationError} from "./ValidationError";
-import {InputCollectionModel} from "../InputCollectionModel";
+import {InputModel} from '../InputModel';
+import {ValidationError} from './ValidationError';
+import {InputCollectionModel} from '../InputCollectionModel';
 /**
  * Created by dsmiley on 10/10/17.
  */

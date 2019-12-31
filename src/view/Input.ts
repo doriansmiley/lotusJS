@@ -1,10 +1,10 @@
 /**
  * Created by dsmiley on 9/21/17.
  */
-import {AbstractItemView} from "./AbstractItemView";
-import {SkinPart} from "./SkinPart";
-import {InputEvent} from "../control/events/InputEvent";
-import {InputModel} from "../model/form/InputModel";
+import {AbstractItemView} from './AbstractItemView';
+import {SkinPart} from './SkinPart';
+import {InputEvent} from '../control/events/InputEvent';
+import {InputModel} from '../model/form/InputModel';
 
 export class Input extends AbstractItemView {
     private _inputSkinPart: HTMLInputElement;
@@ -100,8 +100,8 @@ export class Input extends AbstractItemView {
                 if (this.model) {
                     this.inputSkinPart.value = this.model['value'];
                     //trigger change event to update bidings and trigger validation
-                    const evt = document.createEvent("HTMLEvents");
-                    evt.initEvent("change", false, true);
+                    const evt = document.createEvent('HTMLEvents');
+                    evt.initEvent('change', false, true);
                     this.inputSkinPart.dispatchEvent(evt);
                 }
                 break;

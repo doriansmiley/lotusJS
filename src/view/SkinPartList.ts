@@ -2,7 +2,7 @@
  * Created by dsmiley on 8/1/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {SkinPart} from "./SkinPart";
+import {SkinPart} from './SkinPart';
 
 export class SkinPartList extends Lavender.ArrayList {
     public skinPartsByLabel: Record<string, any> = {};

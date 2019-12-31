@@ -1,9 +1,9 @@
-import {IComponent} from "./IComponent";
+import {IComponent} from './IComponent';
 import * as Lavender from 'lavenderjs/lib';
-import {ContextInterface} from "..";
-import {SkinPartList} from "./SkinPartList";
-import {LotusHTMLElement} from "..";
-import {ComponentEvent} from "..";
+import {ContextInterface} from '..';
+import {SkinPartList} from './SkinPartList';
+import {LotusHTMLElement} from '..';
+import {ComponentEvent} from '..';
 
 /**
  * Created by dsmiley on 7/26/17.

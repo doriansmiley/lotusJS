@@ -2,8 +2,8 @@
  * Created by dsmiley on 8/23/17.
  */
 import * as Lavender from 'lavenderjs/lib';
-import {SkinPart} from "./SkinPart";
-import {AbstractCollectionView} from "./AbstractCollectionView";
+import {SkinPart} from './SkinPart';
+import {AbstractCollectionView} from './AbstractCollectionView';
 
 export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     private _navBtnEnabledClass: string;

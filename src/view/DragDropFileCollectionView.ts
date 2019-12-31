@@ -1,11 +1,11 @@
 /**
  * Created by dsmiley on 9/27/17.
  */
-import {FileCollectionView} from "./FileCollectionView";
-import {File} from "./FileView";
-import {SkinPart} from "./SkinPart";
-import {FileEvent} from "../control/events/FileEvent";
-import {AbstractItemView} from "./AbstractItemView";
+import {FileCollectionView} from './FileCollectionView';
+import {File} from './FileView';
+import {SkinPart} from './SkinPart';
+import {FileEvent} from '../control/events/FileEvent';
+import {AbstractItemView} from './AbstractItemView';
 
 export class DragDropFileCollectionView extends FileCollectionView {
 
@@ -43,12 +43,12 @@ export class DragDropFileCollectionView extends FileCollectionView {
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'dropTarget':
-                this.dropTarget.addEventListener("drop", this.onDrop.bind(this), false);
-                window.addEventListener("drop", this.onPreventDrop.bind(this), false);
-                window.addEventListener("dragover", this.onPreventDrop.bind(this), false);
-                this.dropTarget.addEventListener("dragover", this.onDragOver.bind(this), false);
-                this.dropTarget.addEventListener("dragenter", this.onDragOver.bind(this), false);
-                this.dropTarget.addEventListener("dragleave", this.onDragLeave.bind(this), false);
+                this.dropTarget.addEventListener('drop', this.onDrop.bind(this), false);
+                window.addEventListener('drop', this.onPreventDrop.bind(this), false);
+                window.addEventListener('dragover', this.onPreventDrop.bind(this), false);
+                this.dropTarget.addEventListener('dragover', this.onDragOver.bind(this), false);
+                this.dropTarget.addEventListener('dragenter', this.onDragOver.bind(this), false);
+                this.dropTarget.addEventListener('dragleave', this.onDragLeave.bind(this), false);
                 break;
         }
     }
@@ -95,12 +95,12 @@ export class DragDropFileCollectionView extends FileCollectionView {
     public destroy(): void{
         super.destroy();
         if (this.dropTarget) {
-            this.dropTarget.removeEventListener("drop", this.onDrop);
-            this.dropTarget.removeEventListener("dragover", this.onDragOver);
-            this.dropTarget.removeEventListener("dragenter", this.onDragOver);
-            this.dropTarget.removeEventListener("dragleave", this.onDragLeave);
-            window.removeEventListener("drop", this.onPreventDrop, false);
-            window.removeEventListener("dragover", this.onPreventDrop, false);
+            this.dropTarget.removeEventListener('drop', this.onDrop);
+            this.dropTarget.removeEventListener('dragover', this.onDragOver);
+            this.dropTarget.removeEventListener('dragenter', this.onDragOver);
+            this.dropTarget.removeEventListener('dragleave', this.onDragLeave);
+            window.removeEventListener('drop', this.onPreventDrop, false);
+            window.removeEventListener('dragover', this.onPreventDrop, false);
             this.dropTarget = null;
         }
         this.onDrop = null;

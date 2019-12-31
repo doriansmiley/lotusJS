@@ -1,13 +1,13 @@
 /**
  * Created by dsmiley on 10/9/17.
  */
-import {AbstractCollectionView} from "./AbstractCollectionView";
-import {AbstractItemView} from "./AbstractItemView";
-import {LotusHTMLElement} from "../context/LotusHTMLElement";
-import {SkinPart} from "./SkinPart";
-import {InputCollectionModel} from "../model/form/InputCollectionModel";
+import {AbstractCollectionView} from './AbstractCollectionView';
+import {AbstractItemView} from './AbstractItemView';
+import {LotusHTMLElement} from '../context/LotusHTMLElement';
+import {SkinPart} from './SkinPart';
+import {InputCollectionModel} from '../model/form/InputCollectionModel';
 import * as Lavender from 'lavenderjs/lib';
-import {ValidationError} from "../model/form/validation/ValidationError";
+import {ValidationError} from '../model/form/validation/ValidationError';
 
 export class FormCollectionView extends AbstractCollectionView {
 
