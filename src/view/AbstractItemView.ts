@@ -4,23 +4,23 @@ import {AbstractComponent} from "./AbstractComponent";
  */
 export abstract class AbstractItemView extends AbstractComponent{
 
-    private _model:Object;
+    private _model: Record<string, any>;
 
     constructor(){
         super();
     }
 
-    get model():Object {
+    get model(): Record<string, any> {
         return this._model;
     }
 
-    set model(val:Object) {
+    set model(val: Record<string, any>) {
         this._model = val;
         this.onModelChange(val);
         this.notify(val, 'model');
     }
 
-    public setElementDisplay(element:HTMLElement, display:string):void{
+    public setElementDisplay(element: HTMLElement, display: string): void{
         //at some points in the items lifecycle element could be null, se we require this check
         if( element !== null && element !== undefined ){
             element.style.display = display;
@@ -28,16 +28,16 @@ export abstract class AbstractItemView extends AbstractComponent{
     }
 
     //stub for override
-    public onModelChange(value:Object):void{
+    public onModelChange(value: Record<string, any>): void{
 
     }
 
     //stub for override
-    public resetState():void{
+    public resetState(): void{
 
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         if(this.model && this.model['destroy']){
             this.model['destroy']();

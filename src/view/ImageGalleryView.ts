@@ -8,28 +8,28 @@ import {ImageGalleryItemDetail, asset} from "./ImageGalleryItemDetail";
 import {ComponentEvent} from "../control/events/ComponentEvent";
 
 export class ImageGalleryView extends AbstractThumbnailView{
-    private _itemDetail:LotusHTMLElement;
+    private _itemDetail: LotusHTMLElement;
     
     constructor(){
         super();
     }
 
-    get itemDetail():LotusHTMLElement {
+    get itemDetail(): LotusHTMLElement {
         return this._itemDetail;
     }
 
-    set itemDetail(value:LotusHTMLElement) {
+    set itemDetail(value: LotusHTMLElement) {
         this._itemDetail = value;
         this.notify(value, 'itemDetail');
     }
 
-    public defineSkinParts():void{
+    public defineSkinParts(): void{
         super.defineSkinParts();
         //set up skin parts
         this.skinParts.addItem(new SkinPart('itemDetail', this, 'itemDetail'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element );
         switch(part){
             //optional container for displaying collection elements
@@ -44,20 +44,20 @@ export class ImageGalleryView extends AbstractThumbnailView{
         }
     }
 
-    public onItemDetailReady(event):void{
+    public onItemDetailReady(event): void{
         if(this.model){
             (this.itemDetail.lotusComponentInstance as ImageGalleryItemDetail).asset = this.model as asset;
         }
     }
 
-    public onModelChange(value):void{
+    public onModelChange(value): void{
         super.onModelChange(value);
         if(this.itemDetail){
             (this.itemDetail.lotusComponentInstance as ImageGalleryItemDetail).asset = value as asset;
         }
     }
 
-    public onDragStart(event:Event):void{
+    public onDragStart(event: Event): void{
         if( event['dataTransfer'] !== null && event['dataTransfer'] !== undefined ){
             event['dataTransfer'].effectAllowed = 'all';
             try{
@@ -75,7 +75,7 @@ export class ImageGalleryView extends AbstractThumbnailView{
         }
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         if(this.itemDetail){
             (this.itemDetail.lotusComponentInstance as ImageGalleryItemDetail).removeEventListener(ComponentEvent.READY, this, 'onItemDetailReady');

@@ -14,80 +14,80 @@ export class File extends Lavender.Subject{
     public static ERROR = 'error';
     public static ABORT = 'abort';
 
-    private _percentLoaded:number;
-    private _state:string;
-    private _thumbnail:string;
-    private _type:string;
-    private _name:string;
-    private _fileObj:any;
-    private _size:number;
-    private _id:number = Math.random();
+    private _percentLoaded: number;
+    private _state: string;
+    private _thumbnail: string;
+    private _type: string;
+    private _name: string;
+    private _fileObj: any;
+    private _size: number;
+    private _id: number = Math.random();
 
-    public id:number = Math.random();
+    public id: number = Math.random();
 
     constructor(){
         super();
     }
 
-    get size():number {
+    get size(): number {
         return this._size;
     }
 
-    set size(value:number) {
+    set size(value: number) {
         this._size = value;
         this.notify(value, 'size');
     }
 
-    get fileObj():any {
+    get fileObj(): any {
         return this._fileObj;
     }
 
-    set fileObj(value:any) {
+    set fileObj(value: any) {
         this._fileObj = value;
         this.notify(value, 'fileObj');
     }
 
-    get percentLoaded():number {
+    get percentLoaded(): number {
         return this._percentLoaded;
     }
 
-    set percentLoaded(value:number) {
+    set percentLoaded(value: number) {
         this._percentLoaded = value;
         this.notify(value, 'percentLoaded');
     }
 
-    get state():string {
+    get state(): string {
         return this._state;
     }
 
-    set state(value:string) {
+    set state(value: string) {
         this._state = value;
         this.notify(value, 'state');
     }
 
-    get thumbnail():string {
+    get thumbnail(): string {
         return this._thumbnail;
     }
 
-    set thumbnail(value:string) {
+    set thumbnail(value: string) {
         this._thumbnail = value;
         this.notify(value, 'thumbnail');
     }
 
-    get type():string {
+    get type(): string {
         return this._type;
     }
 
-    set type(value:string) {
+    set type(value: string) {
         this._type = value;
         this.notify(value, 'type');
     }
 
-    get name():string {
+    get name(): string {
         return this._name;
     }
 
-    set name(value:string) {
+    set name(value: string) {
         this._name = value;
         this.notify(value, 'name');
     }
@@ -100,126 +100,126 @@ export class FileView extends AbstractThumbnailView{
         super();
     }
 
-    private _fileLabel:HTMLLabelElement;
-    private _fileTypeLabel:HTMLLabelElement;
-    private _progressBar:HTMLElement;
-    private _statusIndicator:HTMLElement;
-    private _loadIndicator:HTMLElement;
-    private _errorIndicator:HTMLElement;
-    private _progressIndicator:HTMLElement;
-    private _pendingIndicator:HTMLElement;
-    private _abortIndicator:HTMLElement;
-    private _cancelBtn:HTMLButtonElement;
-    private _clearBtn:HTMLButtonElement;
-    private _cancelBtnDisplay:string;//css style for active button state
-    private _clearBtnDisplay:string;//css style for active button state
+    private _fileLabel: HTMLLabelElement;
+    private _fileTypeLabel: HTMLLabelElement;
+    private _progressBar: HTMLElement;
+    private _statusIndicator: HTMLElement;
+    private _loadIndicator: HTMLElement;
+    private _errorIndicator: HTMLElement;
+    private _progressIndicator: HTMLElement;
+    private _pendingIndicator: HTMLElement;
+    private _abortIndicator: HTMLElement;
+    private _cancelBtn: HTMLButtonElement;
+    private _clearBtn: HTMLButtonElement;
+    private _cancelBtnDisplay: string;//css style for active button state
+    private _clearBtnDisplay: string;//css style for active button state
 
 
-    get fileLabel():HTMLLabelElement {
+    get fileLabel(): HTMLLabelElement {
         return this._fileLabel;
     }
 
-    set fileLabel(value:HTMLLabelElement) {
+    set fileLabel(value: HTMLLabelElement) {
         this._fileLabel = value;
     }
 
-    get fileTypeLabel():HTMLLabelElement {
+    get fileTypeLabel(): HTMLLabelElement {
         return this._fileTypeLabel;
     }
 
-    set fileTypeLabel(value:HTMLLabelElement) {
+    set fileTypeLabel(value: HTMLLabelElement) {
         this._fileTypeLabel = value;
     }
 
-    get progressBar():HTMLElement {
+    get progressBar(): HTMLElement {
         return this._progressBar;
     }
 
-    set progressBar(value:HTMLElement) {
+    set progressBar(value: HTMLElement) {
         this._progressBar = value;
     }
 
-    get statusIndicator():HTMLElement {
+    get statusIndicator(): HTMLElement {
         return this._statusIndicator;
     }
 
-    set statusIndicator(value:HTMLElement) {
+    set statusIndicator(value: HTMLElement) {
         this._statusIndicator = value;
     }
 
-    get loadIndicator():HTMLElement {
+    get loadIndicator(): HTMLElement {
         return this._loadIndicator;
     }
 
-    set loadIndicator(value:HTMLElement) {
+    set loadIndicator(value: HTMLElement) {
         this._loadIndicator = value;
     }
 
-    get errorIndicator():HTMLElement {
+    get errorIndicator(): HTMLElement {
         return this._errorIndicator;
     }
 
-    set errorIndicator(value:HTMLElement) {
+    set errorIndicator(value: HTMLElement) {
         this._errorIndicator = value;
     }
 
-    get progressIndicator():HTMLElement {
+    get progressIndicator(): HTMLElement {
         return this._progressIndicator;
     }
 
-    set progressIndicator(value:HTMLElement) {
+    set progressIndicator(value: HTMLElement) {
         this._progressIndicator = value;
     }
 
-    get pendingIndicator():HTMLElement {
+    get pendingIndicator(): HTMLElement {
         return this._pendingIndicator;
     }
 
-    set pendingIndicator(value:HTMLElement) {
+    set pendingIndicator(value: HTMLElement) {
         this._pendingIndicator = value;
     }
 
-    get abortIndicator():HTMLElement {
+    get abortIndicator(): HTMLElement {
         return this._abortIndicator;
     }
 
-    set abortIndicator(value:HTMLElement) {
+    set abortIndicator(value: HTMLElement) {
         this._abortIndicator = value;
     }
 
-    get cancelBtn():HTMLButtonElement {
+    get cancelBtn(): HTMLButtonElement {
         return this._cancelBtn;
     }
 
-    set cancelBtn(value:HTMLButtonElement) {
+    set cancelBtn(value: HTMLButtonElement) {
         this._cancelBtn = value;
     }
 
-    get clearBtn():HTMLButtonElement {
+    get clearBtn(): HTMLButtonElement {
         return this._clearBtn;
     }
 
-    set clearBtn(value:HTMLButtonElement) {
+    set clearBtn(value: HTMLButtonElement) {
         this._clearBtn = value;
     }
 
-    get cancelBtnDisplay():string {
+    get cancelBtnDisplay(): string {
         return this._cancelBtnDisplay;
     }
 
-    set cancelBtnDisplay(value:string) {
+    set cancelBtnDisplay(value: string) {
         this._cancelBtnDisplay = value;
     }
 
-    get clearBtnDisplay():string {
+    get clearBtnDisplay(): string {
         return this._clearBtnDisplay;
     }
 
-    set clearBtnDisplay(value:string) {
+    set clearBtnDisplay(value: string) {
         this._clearBtnDisplay = value;
     }
 
-    protected setUpBindings():void{
+    protected setUpBindings(): void{
         if( this.fileLabel !== null && this.fileLabel !== undefined ){
             this.fileLabel.innerHTML = (this.model as File).name;
         }
@@ -235,7 +235,7 @@ export class FileView extends AbstractThumbnailView{
         this.binder.bind((this.model as File), 'percentLoaded', this, 'onPercentChange');
     }
 
-    protected setStatusIndicator(node:HTMLElement):void{
+    protected setStatusIndicator(node: HTMLElement): void{
         if( this.statusIndicator !== null && this.statusIndicator !== undefined ){
             //remove child nodes
             while (this.statusIndicator.firstChild) {
@@ -245,23 +245,23 @@ export class FileView extends AbstractThumbnailView{
         }
     }
 
-    protected onPercentChange(value:number):void{
+    protected onPercentChange(value: number): void{
         if( this.progressBar !== null && this.progressBar !== undefined ){
             //get the max width
-            let maxWidth:number = ( this.progressBar.style.hasOwnProperty('maxWidth') && this.progressBar.style.maxWidth.length > 0 ) ? parseInt(this.progressBar.style.maxWidth) : null;
+            const maxWidth: number = ( this.progressBar.style.hasOwnProperty('maxWidth') && this.progressBar.style.maxWidth.length > 0 ) ? parseInt(this.progressBar.style.maxWidth) : null;
             //set width based on % value of parent width
-            let parentWidth = parseFloat(window.getComputedStyle(this.progressBar.parentNode as HTMLElement).width);
-            let newWidth:number = ( value/1 ) * parentWidth;
+            const parentWidth = parseFloat(window.getComputedStyle(this.progressBar.parentNode as HTMLElement).width);
+            const newWidth: number = ( value/1 ) * parentWidth;
             this.progressBar.style.width = ( maxWidth !== null && newWidth > maxWidth ) ? maxWidth + 'px' : newWidth + 'px';
         }
     }
 
-    public init():void{
+    public init(): void{
         super.init();
         this.setUpBindings();
     }
 
-    public onStateChange(value:string):void{
+    public onStateChange(value: string): void{
         this.setElementDisplay(this.cancelBtn, this.cancelBtnDisplay);//reset display state so button is visible
         this.setElementDisplay(this.clearBtn, 'none');//hide the clear button during upload
         switch( value ){
@@ -299,7 +299,7 @@ export class FileView extends AbstractThumbnailView{
         }
     }
 
-    public defineSkinParts():void{
+    public defineSkinParts(): void{
         super.defineSkinParts();
         //set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
         //Choosing another name would require it be wrapped in a itemTemplate skin part
@@ -317,7 +317,7 @@ export class FileView extends AbstractThumbnailView{
         this.skinParts.addItem(new SkinPart('fileLabel', this, 'fileLabel'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch( part ){
             case 'cancelBtn':
@@ -331,15 +331,15 @@ export class FileView extends AbstractThumbnailView{
         }
     }
 
-    public onClearBtnClick(event:Event):void{
+    public onClearBtnClick(event: Event): void{
         this.dispatch(new FileEvent(FileEvent.REMOVE_FILE_FROM_COLLECTION, {file:this.model}));
     }
 
-    public onCancelBtnClick(event:Event):void{
+    public onCancelBtnClick(event: Event): void{
         this.dispatch(new FileEvent(FileEvent.ABORT_FILE_UPLOAD, {file:this.model}));
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         if( this.clearBtn !== null && this.clearBtn !== undefined ){
             this.clearBtn.removeEventListener('click', this.onClearBtnClick);

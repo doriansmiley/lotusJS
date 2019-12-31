@@ -12,7 +12,7 @@ export class SelectableInputValidator extends AbstractValidator{
         super();
     }
 
-    protected setUpBindings():void{
+    protected setUpBindings(): void{
         this.binder.bind(this, 'isValid', this.source, 'isValid');
         (this.source as InputCollectionModel).isValid = this.isValid;
         for(let i=0;i<this.source.collection.length;i++){
@@ -22,12 +22,12 @@ export class SelectableInputValidator extends AbstractValidator{
     }
 
     //iterate over model objects and ensure all required objects have some text
-    protected getValidationErrors():Lavender.ArrayList{
-        let returnList = new Lavender.ArrayList();
+    protected getValidationErrors(): Lavender.ArrayList{
+        const returnList = new Lavender.ArrayList();
         //if the model requires a selection ensure there is one
         if(this.source.selectionRequired){
-            let itemSelected:boolean = false;
-            let groupName:string;
+            let itemSelected = false;
+            let groupName: string;
             for(let i=0;i<this.source.collection.length;i++){
                 groupName = this.source.collection.getItemAt(i).name;//group name is the same for all items
                 if(this.source.collection.getItemAt(i).selected){

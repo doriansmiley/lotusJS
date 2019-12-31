@@ -6,62 +6,62 @@ import {SkinPart} from "./SkinPart";
 import {ItemViewEvent} from "../control/events/ItemViewEvent";
 import {InputModel} from "../model/form/InputModel";
 
-export class RadioItemView extends AbstractSelectableFormInput{
+export class RadioItemView extends AbstractSelectableFormInput {
 
-    private _radio:HTMLInputElement;
-    private _label:HTMLLabelElement;
+    private _radio: HTMLInputElement;
+    private _label: HTMLLabelElement;
 
-    constructor(){
+    constructor() {
         super();
     }
 
-    get radio():HTMLInputElement {
+    get radio(): HTMLInputElement {
         return this._radio;
     }
 
-    set radio(value:HTMLInputElement) {
+    set radio(value: HTMLInputElement) {
         this._radio = value;
     }
 
-    get label():HTMLLabelElement {
+    get label(): HTMLLabelElement {
         return this._label;
     }
 
-    set label(value:HTMLLabelElement) {
+    set label(value: HTMLLabelElement) {
         this._label = value;
     }
 
-    public onClick(event:Event):void{
+    public onClick(event: Event): void {
         this.selected = this.radio.checked;
     }
 
-    protected refreshView(selected:boolean):void{
-        if(this.radio){
+    protected refreshView(selected: boolean): void {
+        if (this.radio) {
             this.radio.checked = selected;
         }
     }
 
-    public addEventListeners():void{
+    public addEventListeners(): void {
         super.addEventListeners();
         this.radio.addEventListener('click', this.onClick.bind(this));
     }
 
-    public removeEventListeners():void{
+    public removeEventListeners(): void {
         super.removeEventListeners();
-        if(this.radio){
+        if (this.radio) {
             this.radio.removeEventListener('click', this.onClick);
         }
     }
-    
-    public defineSkinParts():void{
+
+    public defineSkinParts(): void {
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('radio', this, 'radio'));
         this.skinParts.addItem(new SkinPart('label', this, 'label'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void {
         super.onSkinPartAdded(part, element);
-        switch( part ){
+        switch (part) {
             case 'radio':
                 //set up listitem value and label
                 this.radio.value = (typeof (this.model as InputModel).value == 'object') ? JSON.stringify((this.model as InputModel).value) : (this.model as InputModel).value;
@@ -75,7 +75,7 @@ export class RadioItemView extends AbstractSelectableFormInput{
         }
     }
 
-    public destroy():void{
+    public destroy(): void {
         super.destroy();
         this.removeEventListeners();
         this.radio = null;

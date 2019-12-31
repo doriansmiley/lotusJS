@@ -13,33 +13,33 @@ export class DragDropFileCollectionView extends FileCollectionView{
         super();
     }
 
-    private _dragOverClass:string;
-    private _dropTarget:HTMLElement;
+    private _dragOverClass: string;
+    private _dropTarget: HTMLElement;
 
-    get dragOverClass():string {
+    get dragOverClass(): string {
         return this._dragOverClass;
     }
 
-    set dragOverClass(value:string) {
+    set dragOverClass(value: string) {
         this._dragOverClass = value;
         this.notify(value, 'dragOverClass');
     }
 
-    get dropTarget():HTMLElement {
+    get dropTarget(): HTMLElement {
         return this._dropTarget;
     }
 
-    set dropTarget(value:HTMLElement) {
+    set dropTarget(value: HTMLElement) {
         this._dropTarget = value;
         this.notify(value, 'dropTarget');
     }
 
-    public defineSkinParts():void{
+    public defineSkinParts(): void{
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('dropTarget', this, 'dropTarget'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch(part){
             case 'dropTarget':
@@ -53,18 +53,18 @@ export class DragDropFileCollectionView extends FileCollectionView{
         }
     }
 
-    public onPreventDrop(event:DragEvent):void{
+    public onPreventDrop(event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
     }
 
-    public onDrop(event:DragEvent):void{
+    public onDrop(event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
         if( this.dragOverClass !== null && this.dragOverClass !== undefined ){
             this.dropTarget.classList.remove(this.dragOverClass);
         }
-        let files = ( event.dataTransfer !== null && event.dataTransfer !== undefined ) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
+        const files = ( event.dataTransfer !== null && event.dataTransfer !== undefined ) ? event.dataTransfer.files : event['originalEvent'].dataTransfer.files;
         //note: files.hasOwnProperty('length') does not work
         if (files === null || files === undefined || !files.length) {
             return;
@@ -73,7 +73,7 @@ export class DragDropFileCollectionView extends FileCollectionView{
         }
     }
 
-    public onDragOver(event:DragEvent):void{
+    public onDragOver(event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
         if( this.dragOverClass !== null && this.dragOverClass !== undefined ){
@@ -86,13 +86,13 @@ export class DragDropFileCollectionView extends FileCollectionView{
         }
     }
 
-    public onDragLeave(event:DragEvent):void{
+    public onDragLeave(event: DragEvent): void{
         if( this.dragOverClass !== null && this.dragOverClass !== undefined ){
             this.dropTarget.classList.remove(this.dragOverClass);
         }
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         if( this.dropTarget ){
             this.dropTarget.removeEventListener("drop", this.onDrop);

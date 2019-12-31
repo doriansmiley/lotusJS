@@ -11,54 +11,54 @@ import {AbstractComponent} from "./AbstractComponent";
 
 export class FormItemView extends AbstractItemView{
 
-    protected _input:LotusHTMLElement;
-    protected _list:LotusHTMLElement;
-    protected _radioGroup:LotusHTMLElement;
-    protected _file:LotusHTMLElement;
-    private _activeSkinPart:AbstractItemView;
+    protected _input: LotusHTMLElement;
+    protected _list: LotusHTMLElement;
+    protected _radioGroup: LotusHTMLElement;
+    protected _file: LotusHTMLElement;
+    private _activeSkinPart: AbstractItemView;
 
     //read only!
-    get activeSkinPart():AbstractItemView {
+    get activeSkinPart(): AbstractItemView {
         return this._activeSkinPart;
     }
 
-    get input():LotusHTMLElement {
+    get input(): LotusHTMLElement {
         return this._input;
     }
 
-    set input(value:LotusHTMLElement) {
+    set input(value: LotusHTMLElement) {
         this._input = value;
         this.notify(value, 'input');
     }
 
-    get list():LotusHTMLElement {
+    get list(): LotusHTMLElement {
         return this._list;
     }
 
-    set list(value:LotusHTMLElement) {
+    set list(value: LotusHTMLElement) {
         this._list = value;
         this.notify(value, 'list');
     }
 
-    get radioGroup():LotusHTMLElement {
+    get radioGroup(): LotusHTMLElement {
         return this._radioGroup;
     }
 
-    set radioGroup(value:LotusHTMLElement) {
+    set radioGroup(value: LotusHTMLElement) {
         this._radioGroup = value;
         this.notify(value, 'radioGroup');
     }
 
-    get file():LotusHTMLElement {
+    get file(): LotusHTMLElement {
         return this._file;
     }
 
-    set file(value:LotusHTMLElement) {
+    set file(value: LotusHTMLElement) {
         this._file = value;
         this.notify(value, 'file');
     }
 
-    protected removeSkinPart(element:LotusHTMLElement, parent:HTMLElement){
+    protected removeSkinPart(element: LotusHTMLElement, parent: HTMLElement){
         if(element.lotusComponentInstance.ready){
             element.lotusComponentInstance.destroy();
         }
@@ -76,11 +76,11 @@ export class FormItemView extends AbstractItemView{
         }
     }
 
-    protected setUpSkinParts():void{
+    protected setUpSkinParts(): void{
         if(!this.ready || !this.model){
             return;
         }
-        let skinPartsToRemove:Array<LotusHTMLElement> = [
+        let skinPartsToRemove: Array<LotusHTMLElement> = [
             this.input,
             this.list,
             this.radioGroup,
@@ -117,7 +117,7 @@ export class FormItemView extends AbstractItemView{
         }
     }
 
-    protected setUpSkinPart(part:AbstractItemView):void{
+    protected setUpSkinPart(part: AbstractItemView): void{
         this._activeSkinPart = part;
         if(part.ready){
             this.setComponentModel(this.model as InputCollectionModel, part);
@@ -126,7 +126,7 @@ export class FormItemView extends AbstractItemView{
         }
     }
 
-    protected setComponentModel(value:InputCollectionModel, component:AbstractItemView):void{
+    protected setComponentModel(value: InputCollectionModel, component: AbstractItemView): void{
         if(value){
             switch(value.type){
                 case InputCollectionModel.TYPE_INPUT:
@@ -150,7 +150,7 @@ export class FormItemView extends AbstractItemView{
         }
     }
 
-    public defineSkinParts():void{
+    public defineSkinParts(): void{
         super.defineSkinParts();
         //set up skin parts
         this.skinParts.addItem(new SkinPart('input', this, 'input'));
@@ -159,7 +159,7 @@ export class FormItemView extends AbstractItemView{
         this.skinParts.addItem(new SkinPart('file', this, 'file'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element );
         if(this.input && this.radioGroup && this.file && this.list && this.model ){
             //we have to call this here because only the component map calls onReady, but item views are not mapped to tags, so the map will never call it
@@ -167,17 +167,17 @@ export class FormItemView extends AbstractItemView{
         }
     }
 
-    public onItemDetailReady(event:ComponentEvent):void{
+    public onItemDetailReady(event: ComponentEvent): void{
         this.setComponentModel(this.model as InputCollectionModel, (event.payload['target'] as AbstractItemView));
         (event.payload['target'] as AbstractItemView).removeEventListener(ComponentEvent.READY, this, 'onItemDetailReady');
     }
 
-    public onReady():void{
+    public onReady(): void{
         super.onReady();
         this.setUpSkinParts();
     }
 
-    public onModelChange(value):void{
+    public onModelChange(value): void{
         super.onModelChange(value);
         if(!value){
             return;
@@ -188,7 +188,7 @@ export class FormItemView extends AbstractItemView{
         this.setUpSkinParts();
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         this.activeSkinPart.destroy();
         this._activeSkinPart = null;

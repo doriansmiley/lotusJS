@@ -5,9 +5,9 @@ import * as Lavender from 'lavenderjs/lib';
 import {ComponentMapInterface} from "./ComponentMapInterface";
 
 export interface IContext{
-    config:Object;
-    eventDispatcher:Lavender.IEventDispatcher;
-    componentMap:ComponentMapInterface;
+    config: Record<string, any>;
+    eventDispatcher: Lavender.IEventDispatcher;
+    componentMap: ComponentMapInterface;
 
     startUp();
     mapComponents();

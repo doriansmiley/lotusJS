@@ -4,13 +4,13 @@ import {InputCollectionModel} from "../InputCollectionModel";
  * Created by dsmiley on 10/10/17.
  */
 export interface IValidator{
-    errors:Lavender.ArrayList;
-    warnings:Lavender.ArrayList;
-    source:InputCollectionModel;
-    isValid:boolean;
-    hasWarnings:boolean;
-    validate():boolean;
-    init():void;
-    destroy():void;
-    id:string;
+    errors: Lavender.ArrayList;
+    warnings: Lavender.ArrayList;
+    source: InputCollectionModel;
+    isValid: boolean;
+    hasWarnings: boolean;
+    validate(): boolean;
+    init(): void;
+    destroy(): void;
+    id: string;
 }

@@ -12,7 +12,7 @@ export class TextInputValidator extends AbstractValidator{
         super();
     }
 
-    protected setUpBindings():void{
+    protected setUpBindings(): void{
         this.binder.bind(this, 'isValid', this.source, 'isValid');
         (this.source as InputCollectionModel).isValid = this.isValid;
         for(let i=0;i<this.source.collection.length;i++){
@@ -22,10 +22,10 @@ export class TextInputValidator extends AbstractValidator{
     }
 
     //iterate over model objects and ensure all required objects have some text
-    protected getValidationErrors():Lavender.ArrayList{
-        let returnList = new Lavender.ArrayList();
+    protected getValidationErrors(): Lavender.ArrayList{
+        const returnList = new Lavender.ArrayList();
         for(let i=0;i<this.source.collection.length;i++){
-            let item:InputModel = this.source.collection.getItemAt(i);
+            const item: InputModel = this.source.collection.getItemAt(i);
             if(item.required && (!item.nonFormattedValue || item.nonFormattedValue.length <=0) ){
                 returnList.addItem(new ValidationError('required', 'form.required', item.label + ' is required'))
             }

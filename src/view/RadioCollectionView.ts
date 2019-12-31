@@ -7,46 +7,46 @@ import {InputCollectionModel} from "../model/form/InputCollectionModel";
 
 export class RadioCollectionView extends AbstractInputCollectionView{
 
-    private _legend:HTMLLegendElement;
+    private _legend: HTMLLegendElement;
 
     constructor(){
         super();
     }
 
 
-    get legend():HTMLLegendElement {
+    get legend(): HTMLLegendElement {
         return this._legend;
     }
 
-    set legend(value:HTMLLegendElement) {
+    set legend(value: HTMLLegendElement) {
         this._legend = value;
         this.notify(value, 'legend');
     }
 
-    protected refreshView(value:any):void{
+    protected refreshView(value: any): void{
         if(this.selectedItem){
             this.selectedItem.element['checked'] = true;
         }
     }
 
-    protected addCollectionEventListeners():void{
+    protected addCollectionEventListeners(): void{
         super.addCollectionEventListeners();
         this.setLegend();
     }
 
-    protected setLegend():void{
+    protected setLegend(): void{
         if(this.legend && this.model && this.model.label){
             this.legend.innerHTML = this.model.label;
         }
     }
 
-    public defineSkinParts():void{
+    public defineSkinParts(): void{
         super.defineSkinParts();
         //set up skin parts
         this.skinParts.addItem(new SkinPart('legend', this, 'legend'));
     }
 
-    public onSkinPartAdded(part:string, element:HTMLElement):void{
+    public onSkinPartAdded(part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch( part ){
             case 'label':{
@@ -56,7 +56,7 @@ export class RadioCollectionView extends AbstractInputCollectionView{
         }
     }
 
-    public destroy():void{
+    public destroy(): void{
         super.destroy();
         this.legend = null;
     }

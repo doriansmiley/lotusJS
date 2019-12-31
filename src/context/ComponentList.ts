@@ -5,20 +5,20 @@ import {IComponentList} from './IComponentList';
 import * as Lavender from 'lavenderjs/lib';
 
 export class ComponentList extends Lavender.ArrayList implements IComponentList{
-    public instancesByConstructor:Object = {};
+    public instancesByConstructor: Record<string, any> = {};
     
     constructor(){
         super();
     }
     
-    protected addToHash(object:any):void{
+    protected addToHash(object: any): void{
         if( this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined ){
             this.instancesByConstructor[ object.constructor ] = [];
         }
         this.instancesByConstructor[ object.constructor ].push( object );
     }
     
-    protected removeItemFromHash(hash:Object, object:any):void{
+    protected removeItemFromHash(hash: Record<string, any>, object: any): void{
         let objects = hash[ object.constructor ];
         if( objects === null || objects === undefined ||  objects.length < 1 ){
             return;
@@ -34,8 +34,8 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList{
                         objects.pop();
                         break;
                     default:
-                        let head = objects.slice(0, i);
-                        let tail = objects.slice(i + 1);
+                        const head = objects.slice(0, i);
+                        const tail = objects.slice(i + 1);
                         objects = head.concat(tail);
                         break;
                 }
@@ -44,26 +44,26 @@ export class ComponentList extends Lavender.ArrayList implements IComponentList{
         }
     }
 
-    public addItem(object:Object, hash?:Object, key?:string):number{
-        let index:number = super.addItem(object,hash,key);
+    public addItem(object: Record<string, any>, hash?: Record<string, any>, key?: string): number{
+        const index: number = super.addItem(object,hash,key);
         //populate hash
         this.addToHash(object);
         return index;
     }
 
-    public clear():void{
+    public clear(): void{
         super.clearHash(this.instancesByConstructor);
         super.clear();
     }
 
-    public removeItemAt(index:number):void{
-        let object:Object = this.getItemAt( index );
+    public removeItemAt(index: number): void{
+        const object: Record<string, any> = this.getItemAt( index );
         this.removeItemFromHash(this.instancesByConstructor, object);
         super.removeItemAt(index);
     }
 
-    public insert(object:any, index:number, suppressChangeEvent:boolean=false, hash?:Object, key?:string, replaceIndex:boolean=false ):number{
-        let returnValue:number = super.insert(object,index,suppressChangeEvent,hash,key,replaceIndex);
+    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number{
+        const returnValue: number = super.insert(object,index,suppressChangeEvent,hash,key,replaceIndex);
         this.addToHash(object);
         return returnValue;
     }

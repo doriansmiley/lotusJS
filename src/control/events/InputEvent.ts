@@ -4,13 +4,13 @@
 import * as Lavender from 'lavenderjs/lib';
 
 export class InputEvent extends Lavender.AbstractEvent{
-    constructor(type:string, payload?:Object){
+    constructor(type: string, payload?: Record<string, any>){
         super(type, payload);
     }
 
-    public static CHANGE:string = 'change';
+    public static CHANGE = 'change';
 
-    clone(type:string, payload:Object):Lavender.IEvent{
+    clone(type: string, payload: Record<string, any>): Lavender.IEvent{
         return new InputEvent(this.type, this.payload)
     }
 }

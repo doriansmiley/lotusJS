@@ -5,34 +5,34 @@ import * as Lavender from 'lavenderjs/lib';
 import {SkinPart} from "./SkinPart";
 
 export class SkinPartList extends Lavender.ArrayList{
-    public skinPartsByLabel:Object = {};
+    public skinPartsByLabel: Record<string, any> = {};
     
-    constructor(source?:Array<any>, allowDuplicates:boolean = true){
+    constructor(source?: Array<any>, allowDuplicates = true){
         super(source,allowDuplicates);
     }
     
-    public addItem(object:SkinPart, hash?:Object, key?:string):number{
+    public addItem(object: SkinPart, hash?: Record<string, any>, key?: string): number{
         //ensure the object is valid before proceeding
-        let index = super.addItem(object, hash, key);
+        const index = super.addItem(object, hash, key);
         //populate hash
         this.skinPartsByLabel[ object.label ] = object;
         return index;
     }
 
-    public clear():void{
+    public clear(): void{
         super.clearHash(this.skinPartsByLabel);
         super.clear();
     }
     
-    public removeItemAt(index:number):void{
-        let skinPart:SkinPart = this.getItemAt( index );
+    public removeItemAt(index: number): void{
+        const skinPart: SkinPart = this.getItemAt( index );
         super.removeItemFromHash(this.skinPartsByLabel, skinPart.label);
         super.removeItemAt(index);
     }
 
-    public insert(object:SkinPart, index:number, suppressChangeEvent:boolean=false, hash?:Object, key?:string, replaceIndex:boolean=false ):number{
+    public insert(object: SkinPart, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false ): number{
         //ensure the object is valid before proceeding
-        let returnValue = super.insert(object, index,suppressChangeEvent,hash,key,replaceIndex);
+        const returnValue = super.insert(object, index,suppressChangeEvent,hash,key,replaceIndex);
         //populate hash
         this.skinPartsByLabel[ object.label ] = object;
         return returnValue;
