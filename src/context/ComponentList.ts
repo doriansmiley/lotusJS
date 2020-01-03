@@ -7,18 +7,18 @@ import * as Lavender from 'lavenderjs/lib';
 export class ComponentList extends Lavender.ArrayList implements ComponentListInterface {
     public instancesByConstructor: Record<string, any> = {};
     
-    constructor() {
+    constructor () {
         super();
     }
     
-    protected addToHash(object: any): void{
+    protected addToHash (object: any): void{
         if (this.instancesByConstructor[ object.constructor ] === null || this.instancesByConstructor[ object.constructor ] === undefined) {
             this.instancesByConstructor[ object.constructor ] = [];
         }
         this.instancesByConstructor[ object.constructor ].push(object);
     }
     
-    protected removeItemFromHash(hash: Record<string, any>, object: any): void{
+    protected removeItemFromHash (hash: Record<string, any>, object: any): void{
         let objects = hash[ object.constructor ];
         if (objects === null || objects === undefined ||  objects.length < 1) {
             return;
@@ -44,25 +44,25 @@ export class ComponentList extends Lavender.ArrayList implements ComponentListIn
         }
     }
 
-    public addItem(object: Record<string, any>, hash?: Record<string, any>, key?: string): number {
+    public addItem (object: Record<string, any>, hash?: Record<string, any>, key?: string): number {
         const index: number = super.addItem(object,hash,key);
         // populate hash
         this.addToHash(object);
         return index;
     }
 
-    public clear(): void{
+    public clear (): void{
         super.clearHash(this.instancesByConstructor);
         super.clear();
     }
 
-    public removeItemAt(index: number): void{
+    public removeItemAt (index: number): void{
         const object: Record<string, any> = this.getItemAt(index);
         this.removeItemFromHash(this.instancesByConstructor, object);
         super.removeItemAt(index);
     }
 
-    public insert(object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false): number {
+    public insert (object: any, index: number, suppressChangeEvent=false, hash?: Record<string, any>, key?: string, replaceIndex=false): number {
         const returnValue: number = super.insert(object,index,suppressChangeEvent,hash,key,replaceIndex);
         this.addToHash(object);
         return returnValue;

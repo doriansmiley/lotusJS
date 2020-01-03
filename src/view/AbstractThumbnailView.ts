@@ -15,56 +15,56 @@ export class AbstractThumbnailView extends AbstractItemView {
     private _thumbnailDisplay: string;
     private _thumbnailSelectedClass: string;
     
-    constructor() {
+    constructor () {
         super();
     }
 
-    get thumbWidth(): string {
+    get thumbWidth (): string {
         return this._thumbWidth;
     }
 
-    set thumbWidth(value: string) {
+    set thumbWidth (value: string) {
         this._thumbWidth = value;
         this.notify(value, 'thumbWidth');
     }
 
-    get thumbHeight(): string {
+    get thumbHeight (): string {
         return this._thumbHeight;
     }
 
-    set thumbHeight(value: string) {
+    set thumbHeight (value: string) {
         this._thumbHeight = value;
         this.notify(value, 'thumbHeight');
     }
 
-    get thumbnail(): HTMLImageElement {
+    get thumbnail (): HTMLImageElement {
         return this._thumbnail;
     }
 
-    set thumbnail(value: HTMLImageElement) {
+    set thumbnail (value: HTMLImageElement) {
         this._thumbnail = value;
         this.notify(value, 'thumbnail');
     }
 
-    get thumbnailContainer(): HTMLElement {
+    get thumbnailContainer (): HTMLElement {
         return this._thumbnailContainer;
     }
 
-    set thumbnailContainer(value: HTMLElement) {
+    set thumbnailContainer (value: HTMLElement) {
         this._thumbnailContainer = value;
         this.notify(value, 'thumbnailContainer');
     }
 
-    get allowDrag(): boolean {
+    get allowDrag (): boolean {
         return this._allowDrag;
     }
 
-    set allowDrag(value: boolean) {
+    set allowDrag (value: boolean) {
         this._allowDrag = value;
         this.notify(value, 'allowDrag');
     }
 
-    protected sizeImage(): void{
+    protected sizeImage (): void{
         if (this.thumbnail === null ||  this.thumbnail === undefined) {
             return;
         }
@@ -80,26 +80,26 @@ export class AbstractThumbnailView extends AbstractItemView {
         this.thumbnail.style.maxHeight = `${containerSize.height}px`;
     }
 
-    protected onThumbClick(event: Event): void{
+    protected onThumbClick (event: Event): void{
         this.resetState();
     }
 
-    protected onDragStart(event: Event): void{
+    protected onDragStart (event: Event): void{
         // stub for override
     }
 
-    protected getImageURL(model?: Record<string, any>): string {
+    protected getImageURL (model?: Record<string, any>): string {
         if (model) {
             return model['thumbUrl'];
         }
         return this.model['thumbUrl'];
     }
 
-    protected getDefaultSize(): Lavender.widthHeightObject {
+    protected getDefaultSize (): Lavender.widthHeightObject {
         return {width:parseInt(this.thumbnail.getAttribute('width')), height:parseInt(this.thumbnail.getAttribute('height'))} as Lavender.widthHeightObject;
     }
 
-    protected getContainerSize(): Lavender.widthHeightObject {
+    protected getContainerSize (): Lavender.widthHeightObject {
         let returnObj = (this.thumbnailContainer !== null && this.thumbnailContainer !== undefined) ? {width:parseInt(window.getComputedStyle(this.thumbnailContainer).width), height:parseInt(window.getComputedStyle(this.thumbnailContainer).height)} : {width:NaN, height:NaN};
         // if the container has a defined width and height set in the tempalte use that instead of our defaults
         if (!isNaN(parseInt(this.thumbWidth)) && !isNaN(parseInt(this.thumbWidth))) {
@@ -108,7 +108,7 @@ export class AbstractThumbnailView extends AbstractItemView {
         return returnObj;
     }
 
-    protected onImageLoad(event: Event): void{
+    protected onImageLoad (event: Event): void{
         if (!this.thumbnail) {
             return;
         }
@@ -117,16 +117,16 @@ export class AbstractThumbnailView extends AbstractItemView {
         this.sizeImage();
     }
 
-    protected setThumbnailSrc(src: string): void{
+    protected setThumbnailSrc (src: string): void{
         if (!this.thumbnail) {
-            return
+            return;
         }
         this.thumbnail.onload = this.onImageLoad.bind(this);
         this.setElementDisplay(this.thumbnail, 'none');
         this.thumbnail['src'] = src;
     }
 
-    public addEventListeners(): void{
+    public addEventListeners (): void{
         super.addEventListeners();
         if (this.thumbnail === null ||  this.thumbnail === undefined) {
             return;
@@ -136,7 +136,7 @@ export class AbstractThumbnailView extends AbstractItemView {
         this.thumbnail.addEventListener('dragstart', this.onDragStart.bind(this));
     }
 
-    public removeEventListeners(): void{
+    public removeEventListeners (): void{
         super.removeEventListeners();
         if (this.thumbnail === null ||  this.thumbnail === undefined) {
             return;
@@ -145,20 +145,20 @@ export class AbstractThumbnailView extends AbstractItemView {
         this.thumbnail.removeEventListener('dragstart', this.onDragStart);
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         // set up skin parts
         this.skinParts.addItem(new SkinPart('thumbnail', this, 'thumbnail'));
         this.skinParts.addItem(new SkinPart('thumbnailContainer', this, 'thumbnailContainer'));
     }
 
-    public onModelChange(model: Record<string, any>): void{
+    public onModelChange (model: Record<string, any>): void{
         if (model) {
             this.setThumbnailSrc(this.getImageURL(model));
         }
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'thumbnail':
@@ -173,16 +173,16 @@ export class AbstractThumbnailView extends AbstractItemView {
         }
     }
 
-    public resetState(): void{
+    public resetState (): void{
         this.thumbnailContainer.classList.toggle(this._thumbnailSelectedClass);
         const eventType = (this.thumbnailContainer.classList.contains(this._thumbnailSelectedClass)) ? ItemViewEvent.ITEM_SELECTED : ItemViewEvent.ITEM_DESELECTED;
         // dispatch event to notify view that the layout was selected/or deselected
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
-        this.removeEventListeners()
+        this.removeEventListeners();
         this.thumbnail = null;
         this.thumbnailContainer = null;
         this._thumbnailSelectedClass = null;

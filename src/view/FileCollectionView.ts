@@ -9,34 +9,34 @@ import {AbstractItemView} from './AbstractItemView';
 
 export class FileCollectionView extends AbstractCollectionView {
 
-    constructor() {
+    constructor () {
         super();
     }
 
     private _fileInput: HTMLInputElement;
     private _selectBtn: HTMLButtonElement;
 
-    get fileInput(): HTMLInputElement {
+    get fileInput (): HTMLInputElement {
         return this._fileInput;
     }
 
-    set fileInput(value: HTMLInputElement) {
+    set fileInput (value: HTMLInputElement) {
         this._fileInput = value;
     }
 
-    get selectBtn(): HTMLButtonElement {
+    get selectBtn (): HTMLButtonElement {
         return this._selectBtn;
     }
 
-    set selectBtn(value: HTMLButtonElement) {
+    set selectBtn (value: HTMLButtonElement) {
         this._selectBtn = value;
     }
     
-    protected getUploadEvent(file): FileEvent {
+    protected getUploadEvent (file): FileEvent {
         return new FileEvent(FileEvent.UPLOAD_FILE, {file:file});
     }
     
-    protected uploadFiles(files: FileList): void{
+    protected uploadFiles (files: FileList): void{
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.indexOf('image') < 0) {
                 continue;// skip file types that are not images
@@ -55,24 +55,24 @@ export class FileCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected addViewEventListeners(view: AbstractItemView): void{
+    protected addViewEventListeners (view: AbstractItemView): void{
         super.addViewEventListeners(view);
-        view.addEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile')
-        view.addEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile')
+        view.addEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile');
+        view.addEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile');
     }
 
-    protected removeViewEventListeners(view: AbstractItemView): void{
+    protected removeViewEventListeners (view: AbstractItemView): void{
         super.removeViewEventListeners(view);
-        view.removeEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile')
-        view.removeEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile')
+        view.removeEventListener(FileEvent.REMOVE_FILE_FROM_COLLECTION, this, 'onRemoveAbortFile');
+        view.removeEventListener(FileEvent.ABORT_FILE_UPLOAD, this, 'onRemoveAbortFile');
     }
 
-    public onRemoveAbortFile(event: FileEvent): void{
+    public onRemoveAbortFile (event: FileEvent): void{
         this.dispatch(event);
         this.removeChildViewFromModel(event.payload['file']);
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         // set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
         // Choosing another name would require it be wrapped in a itemTemplate skin part
@@ -80,7 +80,7 @@ export class FileCollectionView extends AbstractCollectionView {
         this.skinParts.addItem(new SkinPart('selectBtn', this, 'selectBtn'));
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'fileInput':
@@ -92,7 +92,7 @@ export class FileCollectionView extends AbstractCollectionView {
         }
     }
     
-    public onFileInputChange(event: Event): void{
+    public onFileInputChange (event: Event): void{
         const files = this.fileInput.files;
         if (!files.length) {
             return;
@@ -101,7 +101,7 @@ export class FileCollectionView extends AbstractCollectionView {
         }
     }
 
-    public onFileBtnClick(event: Event): void{
+    public onFileBtnClick (event: Event): void{
         if (this.fileInput) {
             this.fileInput.click();// trigger the open of the file input
         }
@@ -110,7 +110,7 @@ export class FileCollectionView extends AbstractCollectionView {
         } // prevent navigation to "#" or any other link
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
         if (this.fileInput) {
             this.fileInput.removeEventListener('change', this.onFileInputChange);

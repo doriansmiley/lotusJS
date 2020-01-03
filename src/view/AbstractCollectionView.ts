@@ -16,42 +16,42 @@ export class AbstractCollectionView extends AbstractComponent {
     private _itemView: string;// IMPORTANT: this value must be defined on the tag
     private _childViews: Lavender.ArrayList = new Lavender.ArrayList();
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    get collectionContainer() {
+    get collectionContainer () {
         return this._collectionContainer;
     }
 
-    set collectionContainer(value) {
+    set collectionContainer (value) {
         this._collectionContainer = value;
         this.notify(value, 'collectionContainer');
     }
 
-    get itemTemplate() {
+    get itemTemplate () {
         return this._itemTemplate;
     }
 
-    set itemTemplate(value) {
+    set itemTemplate (value) {
         this._itemTemplate = value;
         this.notify(value, 'itemTemplate');
     }
 
-    get selectedItem() {
+    get selectedItem () {
         return this._selectedItem;
     }
 
-    set selectedItem(value) {
+    set selectedItem (value) {
         this._selectedItem = value;
         this.notify(value, 'selectedItem');
     }
 
-    get collection(): Lavender.IList {
+    get collection (): Lavender.IList {
         return this._collection;
     }
 
-    set collection(value) {
+    set collection (value) {
         this.removeCollectionEventListeners();// must occur first
         this._collection = value;
         if (value) {
@@ -64,20 +64,20 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    get childViews(): Lavender.ArrayList {
+    get childViews (): Lavender.ArrayList {
         return this._childViews;
     }
 
-    get itemView(): string {
+    get itemView (): string {
         return this._itemView;
     }
 
-    set itemView(value: string) {
+    set itemView (value: string) {
         this._itemView = value;
         this.notify(value, 'itemView');
     }
 
-    protected destroyChildViews(): void{
+    protected destroyChildViews (): void{
         this.removeAllChildViews();
         if (this.collectionContainer !== null && this.collectionContainer !== undefined) {
             while (this.collectionContainer.firstChild) {
@@ -92,19 +92,19 @@ export class AbstractCollectionView extends AbstractComponent {
         this._childViews = null;
     }
 
-    protected addCollectionEventListeners(): void{
+    protected addCollectionEventListeners (): void{
         if (this.collection !== null && this.collection !== undefined) {
             this.collection.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
         }
     }
 
-    protected removeCollectionEventListeners(): void{
+    protected removeCollectionEventListeners (): void{
         if (this.collection !== null && this.collection !== undefined) {
             this.collection.removeEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'onCollectionChange');
         }
     }
 
-    protected onCollectionChange(event: Lavender.CollectionEvent): void{
+    protected onCollectionChange (event: Lavender.CollectionEvent): void{
         switch (event.payload['type']) {
             case 'add':
                 this.addChildView(event.payload['item']);
@@ -119,22 +119,22 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     // override point
-    protected createChildView(model: Record<string, any>): AbstractItemView {
+    protected createChildView (model: Record<string, any>): AbstractItemView {
         const evalClass = eval(this.itemView);
         return new evalClass();
     }
 
     // override point
-    protected cloneItemTemplate(model: Record<string, any>): LotusHTMLElement {
+    protected cloneItemTemplate (model: Record<string, any>): LotusHTMLElement {
         return this.itemTemplate.cloneNode(true) as LotusHTMLElement;
     }
 
     // override point for objects that require manipulation of the model such as implementation of adapter pattern
-    protected getModel(model: Record<string, any>): Record<string, any> {
+    protected getModel (model: Record<string, any>): Record<string, any> {
         return model;
     }
 
-    protected addChildView(model: Record<string, any>): void{
+    protected addChildView (model: Record<string, any>): void{
         const view: AbstractItemView = this.createChildView(model);
         // clone the view
         const clone: LotusHTMLElement = this.cloneItemTemplate(model);
@@ -155,26 +155,26 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    protected addViewEventListeners(view: AbstractItemView): void{
+    protected addViewEventListeners (view: AbstractItemView): void{
         view.addEventListener(ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
         view.addEventListener(ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
         view.addEventListener(ItemViewEvent.REMOVE_ITEM, this, 'onItemRemove');
     }
 
-    protected removeViewEventListeners(view: AbstractItemView): void{
+    protected removeViewEventListeners (view: AbstractItemView): void{
         view.removeEventListener(ItemViewEvent.ITEM_SELECTED, this, 'onItemSelectedDeselect');
         view.removeEventListener(ItemViewEvent.ITEM_DESELECTED, this, 'onItemSelectedDeselect');
         view.removeEventListener(ItemViewEvent.REMOVE_ITEM, this, 'onItemRemove');
     }
 
-    protected onItemSelectedDeselect(event: ItemViewEvent): void{
+    protected onItemSelectedDeselect (event: ItemViewEvent): void{
         if (this.selectedItem !== null && this.selectedItem !== undefined && this.selectedItem != event.payload['item']) {
             this.selectedItem.resetState();
         }
         this.selectedItem = (event.type == ItemViewEvent.ITEM_SELECTED) ? event.payload['item'] : null;
     }
 
-    protected onItemRemove(event: ItemViewEvent): void{
+    protected onItemRemove (event: ItemViewEvent): void{
         const index = this.collection.indexOf(event.payload['item'].model);
         if (index >= 0) {
             this.collection.removeItemAt(index);
@@ -182,13 +182,13 @@ export class AbstractCollectionView extends AbstractComponent {
     }
 
     // IMPORTANT: this is a convience method for manual population only, do not bind it to a collection models collection change event as the add event is also fired
-    protected addAllChildViews(models: Lavender.IList): void{
+    protected addAllChildViews (models: Lavender.IList): void{
         for (let i=0; i < models.length; i++) {
             this.addChildView(models[i]);
         }
     }
 
-    protected removeAllChildViews(): void{
+    protected removeAllChildViews (): void{
         if (!this.childViews) {
             return;
         }
@@ -197,14 +197,14 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    protected removeChildView(view: AbstractItemView): void{
+    protected removeChildView (view: AbstractItemView): void{
         this.removeViewEventListeners(view);
         this.removeElement(view.element);
         view.destroy();
         this.childViews.removeItemAt(this.childViews.indexOf(view));
     }
 
-    protected removeElement(element: HTMLElement): void{
+    protected removeElement (element: HTMLElement): void{
         if (this.collectionContainer !== null && this.collectionContainer !== undefined) {
             this.collectionContainer.removeChild(element);
         } else {
@@ -212,7 +212,7 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    protected removeChildViewFromModel(model: Record<string, any>): void{
+    protected removeChildViewFromModel (model: Record<string, any>): void{
         // get the view associated with the model
         for (let i=0; i < this.childViews.length; i++) {
             if (this.childViews.getItemAt(i).model == model) {
@@ -222,25 +222,25 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    protected initCollection(): void{
+    protected initCollection (): void{
         // assign a default collection if it has not already been set
         if (this.collection === null || this.collection === undefined) {
             this.collection = this.getCollection();
         }
     }
 
-    protected refreshView(value: any): void{
+    protected refreshView (value: any): void{
         // stub for override
     }
 
     // override point
-    protected validateViewsFunctions(): void{
+    protected validateViewsFunctions (): void{
         if (this.itemView === null || this.itemView == undefined) {
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
         }
     }
 
-    public setSelectedItem(model: Record<string, any>): void{
+    public setSelectedItem (model: Record<string, any>): void{
         // since this can be used as a bindable end point make sure recursion does not occur
         if (this.selectedItem && this.selectedItem.model == model) {
             return;
@@ -258,13 +258,13 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    public init(): void{
+    public init (): void{
         super.init();
         this.initCollection();
         this.render();
     }
 
-    public render(): void{
+    public render (): void{
         this.validateViewsFunctions();
         this.removeAllChildViews();
         for (let i=0; i < this.collection.length; i++) {
@@ -272,14 +272,14 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         // set up skin parts
         this.skinParts.addItem(new SkinPart('collectionContainer', this, 'collectionContainer'));
         this.skinParts.addItem(new SkinPart('itemTemplate', this, 'itemTemplate'));
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             // required, defines the layout for child views
@@ -290,11 +290,11 @@ export class AbstractCollectionView extends AbstractComponent {
         }
     }
 
-    public getCollection(): Lavender.IList {
+    public getCollection (): Lavender.IList {
         return new Lavender.ArrayList();
     }
 
-    public destroy(): void{
+    public destroy (): void{
         this.destroyChildViews();
         super.destroy();
         this.collection = null;

@@ -9,15 +9,15 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView {
 
     private _selected: boolean;
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    get selected(): boolean {
+    get selected (): boolean {
         return this._selected;
     }
 
-    set selected(value: boolean) {
+    set selected (value: boolean) {
         this._selected = value;
         this.refreshView(value);
         this.notify(value, 'selected');
@@ -26,17 +26,17 @@ export abstract class AbstractSelectableFormInput extends AbstractItemView {
         this.dispatch(new ItemViewEvent(eventType, {item:this}));
     }
 
-    protected refreshView(selected: boolean): void{
+    protected refreshView (selected: boolean): void{
         // stub for override
     }
 
     // called when anewitemis clickedbythe end user in a collection view
     // this is called to reset the state of the currently selected item
-    public resetState(): void{
+    public resetState (): void{
         this.selected = false;
     }
 
-    public onModelChange(value: Record<string, any>): void{
+    public onModelChange (value: Record<string, any>): void{
         super.onModelChange(value);
         if (value && value instanceof InputModel) {
             // set initial value

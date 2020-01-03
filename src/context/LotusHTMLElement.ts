@@ -5,15 +5,15 @@ import {Component} from '../view/Component';
 export class LotusHTMLElement extends HTMLDivElement {
     public lotusComponentInstance: Component;
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    public createShadowRoot(): Element {
+    public createShadowRoot (): Element {
         return super['createShadowRoot']();
     }
 
-    public getComponentInstance(): Component {
+    public getComponentInstance (): Component {
         return this.lotusComponentInstance;
     }
 }

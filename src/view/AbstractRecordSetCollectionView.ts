@@ -14,72 +14,72 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
     private _lastBtn: HTMLElement;
     private _recordSet: Lavender.RecordSet;
 
-    get recordSet(): Lavender.RecordSet {
+    get recordSet (): Lavender.RecordSet {
         return this._recordSet;
     }
 
-    set recordSet(value: Lavender.RecordSet) {
+    set recordSet (value: Lavender.RecordSet) {
         this.removeCollectionEventListeners();// must occur first
         this._recordSet = value;
         this.addCollectionEventListeners();// must occur after line above
         this.notify(value, 'recordSet');
     }
 
-    get navBtnEnabledClass() {
+    get navBtnEnabledClass () {
         return this._navBtnEnabledClass;
     }
 
-    set navBtnEnabledClass(value) {
+    set navBtnEnabledClass (value) {
         this._navBtnEnabledClass = value;
         this.notify(value, 'navBtnEnabledClass');
     }
 
-    get navBtnDisabledClass() {
+    get navBtnDisabledClass () {
         return this._navBtnDisabledClass;
     }
 
-    set navBtnDisabledClass(value) {
+    set navBtnDisabledClass (value) {
         this._navBtnDisabledClass = value;
         this.notify(value, 'navBtnDisabledClass');
     }
 
-    get nextBtn() {
+    get nextBtn () {
         return this._nextBtn;
     }
 
-    set nextBtn(value) {
+    set nextBtn (value) {
         this._nextBtn = value;
         this.notify(value, 'nextBtn');
     }
 
-    get pervBtn() {
+    get pervBtn () {
         return this._pervBtn;
     }
 
-    set pervBtn(value) {
+    set pervBtn (value) {
         this._pervBtn = value;
         this.notify(value, 'pervBtn');
     }
 
-    get firstBtn() {
+    get firstBtn () {
         return this._firstBtn;
     }
 
-    set firstBtn(value) {
+    set firstBtn (value) {
         this._firstBtn = value;
         this.notify(value, 'firstBtn');
     }
 
-    get lastBtn() {
+    get lastBtn () {
         return this._lastBtn;
     }
 
-    set lastBtn(value) {
+    set lastBtn (value) {
         this._lastBtn = value;
         this.notify(value, 'lastBtn');
     }
 
-    constructor() {
+    constructor () {
         super();
         this.nextBtn = null;
         this.pervBtn = null;
@@ -87,7 +87,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         this.lastBtn = null;
     }
 
-    protected addCollectionEventListeners(): void{
+    protected addCollectionEventListeners (): void{
         // IMPORTANT, do not call super, we don't want to listen for collection change events but instead the events below
         if (this.recordSet !== null && this.recordSet !== undefined) {
             this.recordSet.addEventListener(Lavender.RecordSetEvent.RESULTS_CHANGE, this, 'onResultsChange');
@@ -95,7 +95,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected removeCollectionEventListeners(): void{
+    protected removeCollectionEventListeners (): void{
         // IMPORTANT, do not call super
         // This method can be called as part of a destroy sequence where the collection is nulled out, so we check for NPE
         if (this.recordSet !== null && this.recordSet !== undefined) {
@@ -107,7 +107,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected onClickHandler(event: Event): void{
+    protected onClickHandler (event: Event): void{
         // event.currentTarget always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
         switch ((event.currentTarget as HTMLElement).getAttribute('data-skin-part')) {
             case 'nextBtn':
@@ -143,12 +143,12 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected refreshNavButtonDisplay(button: HTMLElement, type: string): void{
+    protected refreshNavButtonDisplay (button: HTMLElement, type: string): void{
         if (button.classList.contains(this.navBtnDisabledClass)) {
-            button.classList.remove(this.navBtnDisabledClass)
+            button.classList.remove(this.navBtnDisabledClass);
         }
         if (button.classList.contains(this.navBtnEnabledClass)) {
-            button.classList.remove(this.navBtnEnabledClass)
+            button.classList.remove(this.navBtnEnabledClass);
         }
         let classToAdd;
         if (type === 'next') {
@@ -159,22 +159,22 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         button.classList.add(classToAdd);
     }
     
-    protected onResultsChange(event: Lavender.RecordSetEvent): void{
+    protected onResultsChange (event: Lavender.RecordSetEvent): void{
         this.render();
     }
 
-    protected onPageListChange(value: Lavender.IList): void{
+    protected onPageListChange (value: Lavender.IList): void{
         this.render();
     }
 
-    protected initCollection(): void{
+    protected initCollection (): void{
         // assign a default collection if it has not already been set
         if (this.recordSet === null || this.recordSet === undefined) {
             this.recordSet = new Lavender.RecordSet();
         }
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         // set up skin parts
         this.skinParts.addItem(new SkinPart('nextBtn', this, 'nextBtn'));
@@ -183,7 +183,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         this.skinParts.addItem(new SkinPart('lastBtn', this, 'lastBtn'));
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             // optional container for displaying collection elements
@@ -209,7 +209,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         }
     }
 
-    public render(): void{
+    public render (): void{
         // IMPORTANT: do not call super!
         if (this.itemView === null || this.itemView == undefined) {
             throw Error('data-attribute-item-view must be defined on the tag instance and point to a valid constructor');
@@ -239,7 +239,7 @@ export class AbstractRecordSetCollectionView extends AbstractCollectionView {
         this.selectedItem = null;// reset the selected item state
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
         if (this.nextBtn) {
             this.nextBtn.removeEventListener('click', this.onClickHandler);

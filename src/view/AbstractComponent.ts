@@ -28,16 +28,16 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
     removeAllEventListeners: (instance: Record<string, any>) => void;
     dispatch: (event: Lavender.IEvent) => void;
 
-    constructor() {
+    constructor () {
         super();
         Lavender.ObjectUtils.mixin(Lavender.EventDispatcher, AbstractComponent, this);
     }
 
-    get element(): LotusHTMLElement {
+    get element (): LotusHTMLElement {
         return this._element;
     }
 
-    set element(val: LotusHTMLElement) {
+    set element (val: LotusHTMLElement) {
         this._element = val;
         if (this._element !== null && this._element !== undefined) {
             this._element.getComponentInstance = this.getComponentInstance.bind(this);
@@ -45,47 +45,47 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         this.notify(val, 'element');
     }
 
-    get context(): ContextInterface {
+    get context (): ContextInterface {
         return this._context;
     }
 
-    set context(val: ContextInterface) {
+    set context (val: ContextInterface) {
         this._context = val;
         this.notify(val, 'context');
     }
 
-    get ready(): boolean {
+    get ready (): boolean {
         return this._ready;
     }
 
-    set ready(val: boolean) {
+    set ready (val: boolean) {
         this._ready = val;
         this.notify(val, 'ready');
     }
 
-    get id(): number {
+    get id (): number {
         return this._id;
     }
 
-    set id(val: number) {
+    set id (val: number) {
         this._id = val;
         this.notify(val, 'id');
     }
 
-    get skinParts(): SkinPartList {
+    get skinParts (): SkinPartList {
         return this._skinParts;
     }
 
-    set skinParts(val: SkinPartList) {
+    set skinParts (val: SkinPartList) {
         this._skinParts = val;
         this.notify(val, 'skinParts');
     }
 
-    get isValid(): boolean {
+    get isValid (): boolean {
         return this._isValid;
     }
 
-    set isValid(value: boolean) {
+    set isValid (value: boolean) {
         this._isValid = value;
         this.notify(value, 'isValid');
         if (this.isValid && this.validClass) {
@@ -95,17 +95,17 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         }
     }
 
-    public attachValidationClass(classToAdd: string, classToRemove: string): void {
+    public attachValidationClass (classToAdd: string, classToRemove: string): void {
         // stub for override
     }
 
-    public init(): void {
+    public init (): void {
         this.addAttributes();
         this.defineSkinParts();
         this.addSkinParts();
     }
 
-    public addAttributes(): void {
+    public addAttributes (): void {
         for (let i = 0; i < this.element.attributes.length; i++) {
             const attribute = this.element.attributes[i];
             if (attribute.name.indexOf('attribute') >= 0) {
@@ -124,7 +124,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         }
     }
 
-    public getAllPropertyNames(obj: Record<string, any>, iterateSelfBool = true, iteratePrototypeBool = true): Array<string> {
+    public getAllPropertyNames (obj: Record<string, any>, iterateSelfBool = true, iteratePrototypeBool = true): Array<string> {
         const props: Array<string> = [];
 
         do {
@@ -144,7 +144,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         return props;
     }
 
-    public addSkinParts(): void {
+    public addSkinParts (): void {
         if (this.element.getAttribute('data-skin-part') !== null && this.element.getAttribute('data-skin-part') !== undefined) {
             this.addSkinPart(this.element.getAttribute('data-skin-part'), this.element);
         }
@@ -156,7 +156,7 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         }
     }
 
-    public addSkinPart(part: string, element: Element): void {
+    public addSkinPart (part: string, element: Element): void {
         // skip undefined skin parts
         if (this.skinParts.skinPartsByLabel[part] === null || this.skinParts.skinPartsByLabel[part] === undefined) {
             return null;
@@ -167,23 +167,23 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
         this.onSkinPartAdded(part, this.skinParts.skinPartsByLabel[part].element);
     }
 
-    public onReady(): void {
+    public onReady (): void {
         this.ready = true;
         this.dispatch(new ComponentEvent(ComponentEvent.READY, {target: this}));
     }
 
-    public getComponentInstance(): Component {
+    public getComponentInstance (): Component {
         return this;
     }
 
-    public created(element: LotusHTMLElement): void {
+    public created (element: LotusHTMLElement): void {
         console.log('AbstractComponent.created called');
         this.element = element;
         this.init();
         this.onReady();
     }
 
-    public destroy(): void {
+    public destroy (): void {
         this.removeEventListeners();
         this.binder.unbindAll();
         this.binder = null;
@@ -193,31 +193,31 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
 
     // stub methods below
 
-    public defineSkinParts(): void {
+    public defineSkinParts (): void {
         // stub for override
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void {
+    public onSkinPartAdded (part: string, element: HTMLElement): void {
         // stub for override
     }
 
-    public inserted(element: LotusHTMLElement): void {
+    public inserted (element: LotusHTMLElement): void {
         console.log('AbstractComponent.inserted called');
     }
 
-    public removed(element: LotusHTMLElement): void {
+    public removed (element: LotusHTMLElement): void {
         console.log('AbstractComponent.removed called');
     }
 
-    public attributeChanged(element: LotusHTMLElement): void {
+    public attributeChanged (element: LotusHTMLElement): void {
         console.log('AbstractComponent.attributeChanged called');
     }
 
-    public addEventListeners(): void {
+    public addEventListeners (): void {
         // stub for override
     }
 
-    public removeEventListeners(): void {
+    public removeEventListeners (): void {
         // stub for override
     }
 }

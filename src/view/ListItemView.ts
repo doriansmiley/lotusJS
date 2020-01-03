@@ -9,48 +9,48 @@ export class ListItemView extends AbstractSelectableFormInput {
 
     private _option: HTMLOptionElement;
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    get option(): HTMLOptionElement {
+    get option (): HTMLOptionElement {
         return this._option;
     }
 
-    set option(value: HTMLOptionElement) {
+    set option (value: HTMLOptionElement) {
         this._option = value;
     }
 
-    protected refreshView(selected: boolean): void{
+    protected refreshView (selected: boolean): void{
         if (this.option) {
             this.option.selected = selected;
         }
     }
 
-    public onClick(event?: Event): void{
+    public onClick (event?: Event): void{
         this.selected = true;
     }
 
-    public addEventListeners(): void{
+    public addEventListeners (): void{
         super.addEventListeners();
         this.option.addEventListener('click', this.onClick.bind(this));
     }
 
-    public removeEventListeners(): void{
+    public removeEventListeners (): void{
         super.removeEventListeners();
         if (this.option) {
             this.option.removeEventListener('click', this.onClick);
         }
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         // set up skin parts. We use the term itemTemplate as it allows us to include this component as a nested component in a collection view.
         // Choosing another name would require it be wrapped in a itemTemplate skin part
         this.skinParts.addItem(new SkinPart('itemTemplate', this, 'option'));
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'itemTemplate':
@@ -65,7 +65,7 @@ export class ListItemView extends AbstractSelectableFormInput {
         }
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
         this.option = null;
     }

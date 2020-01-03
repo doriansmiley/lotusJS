@@ -2,44 +2,41 @@
  * Created by dsmiley on 9/27/17.
  */
 import {FileCollectionView} from './FileCollectionView';
-import {File} from './FileView';
 import {SkinPart} from './SkinPart';
-import {FileEvent} from '../control/events/FileEvent';
-import {AbstractItemView} from './AbstractItemView';
 
 export class DragDropFileCollectionView extends FileCollectionView {
 
-    constructor() {
+    constructor () {
         super();
     }
 
     private _dragOverClass: string;
     private _dropTarget: HTMLElement;
 
-    get dragOverClass(): string {
+    get dragOverClass (): string {
         return this._dragOverClass;
     }
 
-    set dragOverClass(value: string) {
+    set dragOverClass (value: string) {
         this._dragOverClass = value;
         this.notify(value, 'dragOverClass');
     }
 
-    get dropTarget(): HTMLElement {
+    get dropTarget (): HTMLElement {
         return this._dropTarget;
     }
 
-    set dropTarget(value: HTMLElement) {
+    set dropTarget (value: HTMLElement) {
         this._dropTarget = value;
         this.notify(value, 'dropTarget');
     }
 
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('dropTarget', this, 'dropTarget'));
     }
 
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         super.onSkinPartAdded(part, element);
         switch (part) {
             case 'dropTarget':
@@ -53,12 +50,12 @@ export class DragDropFileCollectionView extends FileCollectionView {
         }
     }
 
-    public onPreventDrop(event: DragEvent): void{
+    public onPreventDrop (event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
     }
 
-    public onDrop(event: DragEvent): void{
+    public onDrop (event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
         if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
@@ -73,7 +70,7 @@ export class DragDropFileCollectionView extends FileCollectionView {
         }
     }
 
-    public onDragOver(event: DragEvent): void{
+    public onDragOver (event: DragEvent): void{
         event.preventDefault();
         event.stopPropagation();
         if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
@@ -86,13 +83,13 @@ export class DragDropFileCollectionView extends FileCollectionView {
         }
     }
 
-    public onDragLeave(event: DragEvent): void{
+    public onDragLeave (event: DragEvent): void{
         if (this.dragOverClass !== null && this.dragOverClass !== undefined) {
             this.dropTarget.classList.remove(this.dragOverClass);
         }
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
         if (this.dropTarget) {
             this.dropTarget.removeEventListener('drop', this.onDrop);

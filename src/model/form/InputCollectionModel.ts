@@ -20,7 +20,7 @@ export class InputCollectionModel extends Lavender.Subject {
     private _errors: Lavender.ArrayList;
     private _label: string;
 
-    constructor(type: number, collection: Lavender.ArrayList, selectionRequired = false, validators: Lavender.ArrayList = new Lavender.ArrayList()) {
+    constructor (type: number, collection: Lavender.ArrayList, selectionRequired = false, validators: Lavender.ArrayList = new Lavender.ArrayList()) {
         super();
         this.type = type;
         this.collection = collection;
@@ -30,70 +30,70 @@ export class InputCollectionModel extends Lavender.Subject {
     }
 
 
-    get label(): string {
+    get label (): string {
         return this._label;
     }
 
-    set label(value: string) {
+    set label (value: string) {
         this._label = value;
         this.notify(value, 'label');
     }
 
-    get errors(): Lavender.ArrayList {
+    get errors (): Lavender.ArrayList {
         return this._errors;
     }
 
-    set errors(value: Lavender.ArrayList) {
+    set errors (value: Lavender.ArrayList) {
         this._errors = value;
         this.notify(value, 'errors');
     }
 
-    get validators(): Lavender.ArrayList {
+    get validators (): Lavender.ArrayList {
         return this._validators;
     }
 
-    set validators(value: Lavender.ArrayList) {
+    set validators (value: Lavender.ArrayList) {
         this._validators = value;
         this.notify(value, 'validators');
         this.setUpBindings();
         this.addEventListeners();
     }
 
-    get isValid(): boolean {
+    get isValid (): boolean {
         return this._isValid;
     }
 
-    set isValid(value: boolean) {
+    set isValid (value: boolean) {
         this._isValid = value;
         this.notify(value, 'isValid');
     }
 
-    get type(): number {
+    get type (): number {
         return this._type;
     }
 
-    set type(value: number) {
+    set type (value: number) {
         this._type = value;
         this.notify(value, 'type');
     }
 
-    get collection(): Lavender.ArrayList {
+    get collection (): Lavender.ArrayList {
         return this._collection;
     }
 
-    set collection(value: Lavender.ArrayList) {
+    set collection (value: Lavender.ArrayList) {
         this._collection = value;
         this.notify(value, 'collection');
     }
 
-    protected addEventListeners(): void{
+    protected addEventListeners (): void{
         if (!this.validators) {
             return;
         }
         this.validators.addEventListener(Lavender.CollectionEvent.COLLECTION_CHANGE, this, 'setUpBindings');
     }
 
-    protected removeEventListeners(): void{
+    protected removeEventListeners (): void{
         if (!this.validators) {
             return;
         }
@@ -102,7 +102,7 @@ export class InputCollectionModel extends Lavender.Subject {
         }
     }
 
-    public setUpBindings(): void{
+    public setUpBindings (): void{
         if (!this.binder || !this.validators) {
             return;
         }
@@ -113,7 +113,7 @@ export class InputCollectionModel extends Lavender.Subject {
         this.validate();
     }
 
-    public validate(value?: boolean): Lavender.ArrayList {
+    public validate (value?: boolean): Lavender.ArrayList {
         this.errors = new Lavender.ArrayList();
         for (let i=0; i<this.validators.length; i++) {
             const validator: Validator = (this.validators.getItemAt(i) as Validator);
@@ -126,7 +126,7 @@ export class InputCollectionModel extends Lavender.Subject {
         return this.errors;
     }
 
-    public clear(): void{
+    public clear (): void{
         // reset all form fields by clearing InputModel values
         for (let i=0; i<this.collection.length; i++) {
             const item: InputModel = this.collection.getItemAt(i) as InputModel;
@@ -139,13 +139,13 @@ export class InputCollectionModel extends Lavender.Subject {
                     break;
                 case InputCollectionModel.TYPE_RADIO_GROUP:
                 case InputCollectionModel.TYPE_LIST:
-                    item.selected = false
+                    item.selected = false;
                     break;
             }
         }
     }
 
-    public destroy(): void{
+    public destroy (): void{
         if (this.binder) {
             this.binder.unbindAll();
         }

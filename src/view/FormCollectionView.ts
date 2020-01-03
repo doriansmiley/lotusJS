@@ -2,8 +2,6 @@
  * Created by dsmiley on 10/9/17.
  */
 import {AbstractCollectionView} from './AbstractCollectionView';
-import {AbstractItemView} from './AbstractItemView';
-import {LotusHTMLElement} from '../context/LotusHTMLElement';
 import {SkinPart} from './SkinPart';
 import {InputCollectionModel} from '../model/form/InputCollectionModel';
 import * as Lavender from 'lavenderjs/lib';
@@ -31,95 +29,95 @@ export class FormCollectionView extends AbstractCollectionView {
     protected _clear: HTMLElement;
     protected _back: HTMLElement;
     
-    constructor() {
+    constructor () {
         super();
     }
 
 
-    get submit(): HTMLElement {
+    get submit (): HTMLElement {
         return this._submit;
     }
 
-    set submit(value: HTMLElement) {
+    set submit (value: HTMLElement) {
         this._submit = value;
         this.notify(value, 'submit');
     }
 
-    get clear(): HTMLElement {
+    get clear (): HTMLElement {
         return this._clear;
     }
 
-    set clear(value: HTMLElement) {
+    set clear (value: HTMLElement) {
         this._clear = value;
         this.notify(value, 'clear');
     }
 
-    get back(): HTMLElement {
+    get back (): HTMLElement {
         return this._back;
     }
 
-    set back(value: HTMLElement) {
+    set back (value: HTMLElement) {
         this._back = value;
         this.notify(value, 'back');
     }
 
-    get error(): HTMLElement {
+    get error (): HTMLElement {
         return this._error;
     }
 
-    set error(value: HTMLElement) {
+    set error (value: HTMLElement) {
         this._error = value;
         this.notify(value, 'error');
     }
 
-    get state(): number {
+    get state (): number {
         return this._state;
     }
 
-    set state(value: number) {
+    set state (value: number) {
         // set new state, this must occure first
         this.resolveState(value, this.state);
         this._state = value;
         this.notify(value, 'state');
     }
 
-    get validationWarning(): HTMLElement {
+    get validationWarning (): HTMLElement {
         return this._validationWarning;
     }
 
-    set validationWarning(value: HTMLElement) {
+    set validationWarning (value: HTMLElement) {
         this._validationWarning = value;
         this.notify(value, 'validationWarning');
     }
 
-    get inputState(): HTMLElement {
+    get inputState (): HTMLElement {
         return this._inputState;
     }
 
-    set inputState(value: HTMLElement) {
+    set inputState (value: HTMLElement) {
         this._inputState = value;
         this.notify(value, 'inputState');
     }
 
-    get submitState(): HTMLElement {
+    get submitState (): HTMLElement {
         return this._submitState;
     }
 
-    set submitState(value: HTMLElement) {
+    set submitState (value: HTMLElement) {
         this._submitState = value;
         this.notify(value, 'submitState');
     }
 
-    get errorState(): HTMLElement {
+    get errorState (): HTMLElement {
         return this._errorState;
     }
 
-    set errorState(value: HTMLElement) {
+    set errorState (value: HTMLElement) {
         this._errorState = value;
         this.notify(value, 'errorState');
     }
 
-    protected clearErrors(): void{
+    protected clearErrors (): void{
         if (this.error) {
             while (this.error.firstChild) {
                 this.error.removeChild(this.error.firstChild);
@@ -127,19 +125,19 @@ export class FormCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected addErrors(errors: Lavender.ArrayList): void{
+    protected addErrors (errors: Lavender.ArrayList): void{
         if (this.error) {
             for (let i=0; i<errors.length; i++) {
                 const error: ValidationError = errors.getItemAt(i) as ValidationError;
                 const message: HTMLElement = document.createElement('p');
                 const node: Node = document.createTextNode(error.errorMessage);
                 message.appendChild(node);
-                this.error.appendChild(message)
+                this.error.appendChild(message);
             }
         }
     }
 
-    protected onSubmit(event: Event): void{
+    protected onSubmit (event: Event): void{
         // clear old errors
         this.clearErrors();
         // check that all instances of InputCollectionModel are valid
@@ -169,11 +167,11 @@ export class FormCollectionView extends AbstractCollectionView {
         }
     }
 
-    protected onClear(event: Event): void{
+    protected onClear (event: Event): void{
         this.reset();
     }
 
-    public reset(): void{
+    public reset (): void{
         // clear the form by iterating model and setting appropriate values. We need to a way to clear selection for Lists and radio groups
         for (let i=0; i<this.collection.length; i++) {
             (this.collection.getItemAt(i) as InputCollectionModel).clear();
@@ -181,11 +179,11 @@ export class FormCollectionView extends AbstractCollectionView {
         this.state = FormCollectionView.INPUT;
     }
 
-    protected onBack(event: Event): void{
+    protected onBack (event: Event): void{
         this.state = FormCollectionView.INPUT;
     }
 
-    protected resolveState(state: number, oldState, errors?: Lavender.ArrayList): void{
+    protected resolveState (state: number, oldState, errors?: Lavender.ArrayList): void{
         switch (oldState) {
             case FormCollectionView.INPUT:
                 if (this.inputState && state != FormCollectionView.VALIDATION_ERROR) {
@@ -222,18 +220,18 @@ export class FormCollectionView extends AbstractCollectionView {
         }
     }
 
-    public onError(error: Error): void{
+    public onError (error: Error): void{
         // only the external application can trigger state error which results from a service error
     }
 
-    public onReady(): void{
-        super.onReady()
+    public onReady (): void{
+        super.onReady();
         // set the default state
         this.resolveState(FormCollectionView.INPUT, null);
     }
 
     // define required skin parts
-    public defineSkinParts(): void{
+    public defineSkinParts (): void{
         super.defineSkinParts();
         this.skinParts.addItem(new SkinPart('validationWarning', this, 'validationWarning'));
         this.skinParts.addItem(new SkinPart('inputState', this, 'inputState'));
@@ -246,7 +244,7 @@ export class FormCollectionView extends AbstractCollectionView {
     }
 
     // set up event handlers and bindings
-    public onSkinPartAdded(part: string, element: HTMLElement): void{
+    public onSkinPartAdded (part: string, element: HTMLElement): void{
         // attach event listeners for submit and clear buttons
         super.onSkinPartAdded(part, element);
         switch (part) {
@@ -283,7 +281,7 @@ export class FormCollectionView extends AbstractCollectionView {
         }
     }
 
-    public destroy(): void{
+    public destroy (): void{
         super.destroy();
         // TODO clear all references
     }

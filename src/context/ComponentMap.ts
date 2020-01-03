@@ -16,13 +16,13 @@ export class ComponentMap implements ComponentMapInterface {
     public componentInstances: ComponentListInterface;
     public tagInstanceToRequestId: Record<string, LotusHTMLElement>;
 
-    constructor(context: ContextInterface) {
+    constructor (context: ContextInterface) {
         this.context = context;
         this.componentInstances = new ComponentList();
         this.tagInstanceToRequestId = {};
     }
 
-    public success(result: Lavender.IResult): void {
+    public success (result: Lavender.IResult): void {
         const tagInstance: LotusHTMLElement = this.tagInstanceToRequestId[result.requestId];
         const div: HTMLDivElement = document.createElement('div');
         div.innerHTML = result.resultObj as string;
@@ -38,7 +38,7 @@ export class ComponentMap implements ComponentMapInterface {
         for (let i = 0; i < tagInstance.attributes.length; i++) {
             const attribute = tagInstance.attributes[i];
             if (attribute.name.indexOf('attribute') >= 0) {
-                component.setAttribute(attribute.name, attribute.value)
+                component.setAttribute(attribute.name, attribute.value);
             }
         }
         // pass along the root component node to the view component
@@ -50,21 +50,21 @@ export class ComponentMap implements ComponentMapInterface {
         }
     }
 
-    public fault(fault: Lavender.IFault): void {
+    public fault (fault: Lavender.IFault): void {
         console.log(fault);
         throw new Error('Could not load template. Please check you defined the correct path.');
     }
 
-    public onProgress(progress: number): void {
+    public onProgress (progress: number): void {
         // stub to fulfill interface requirements
     }
 
     // stub for override in LotusJS-MVW
-    protected mapMediators(tagInstance: LotusHTMLElement): void {
+    protected mapMediators (tagInstance: LotusHTMLElement): void {
         // stub for override
     }
 
-    public addComponent(tagInstance: LotusHTMLElement, functionConstructor): void {
+    public addComponent (tagInstance: LotusHTMLElement, functionConstructor): void {
         // fired once at the time a component
         // is initially created or parsed
         if (tagInstance.lotusComponentInstance === null || tagInstance.lotusComponentInstance === undefined) {
@@ -72,7 +72,7 @@ export class ComponentMap implements ComponentMapInterface {
             this.componentInstances.addItem(tagInstance.lotusComponentInstance);
         }
         // trigger mediator assignment if any
-        this.mapMediators(tagInstance)
+        this.mapMediators(tagInstance);
         // if the tag instance defines a scr attribute load the template and set up the shadow DOM
         const src: string = tagInstance.getAttribute('data-template-url');
         if (src !== null && src !== undefined) {
@@ -91,11 +91,11 @@ export class ComponentMap implements ComponentMapInterface {
         this.createComponent(tagInstance);
     }
 
-    public createComponent(tagInstance: LotusHTMLElement): void {
+    public createComponent (tagInstance: LotusHTMLElement): void {
         tagInstance.lotusComponentInstance.created(tagInstance);
     }
 
-    public mapComponent(tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface): void {
+    public mapComponent (tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface): void {
         if (!framework) {
             framework = xtag;
         }

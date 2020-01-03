@@ -4,7 +4,7 @@
 import {AbstractRecordSetCollectionView} from './AbstractRecordSetCollectionView';
 
 export class ImageGalleryCollectionView extends AbstractRecordSetCollectionView {
-    constructor() {
+    constructor () {
         super();
     }
 }

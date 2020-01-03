@@ -14,33 +14,33 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
     private _hasWarnings = false;
     private _id: string;
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    get errors(): Lavender.ArrayList {
+    get errors (): Lavender.ArrayList {
         return this._errors;
     }
 
-    set errors(value: Lavender.ArrayList) {
+    set errors (value: Lavender.ArrayList) {
         this._errors = value;
         this.notify(value, 'errors');
     }
 
-    get warnings(): Lavender.ArrayList {
+    get warnings (): Lavender.ArrayList {
         return this._warnings;
     }
 
-    set warnings(value: Lavender.ArrayList) {
+    set warnings (value: Lavender.ArrayList) {
         this._warnings = value;
         this.notify(value, 'warnings');
     }
 
-    get source(): InputCollectionModel {
+    get source (): InputCollectionModel {
         return this._source;
     }
 
-    set source(value: InputCollectionModel) {
+    set source (value: InputCollectionModel) {
         this._source = value;
         if (this.source !== null && this.source !== undefined) {
             this.init();// set up initial state
@@ -48,64 +48,64 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
         this.notify(value, 'source');
     }
 
-    get isValid(): boolean {
+    get isValid (): boolean {
         return this._isValid;
     }
 
-    set isValid(value: boolean) {
+    set isValid (value: boolean) {
         this._isValid = value;
         this.notify(value, 'isValid');
     }
 
-    get hasWarnings(): boolean {
+    get hasWarnings (): boolean {
         return this._hasWarnings;
     }
 
-    set hasWarnings(value: boolean) {
+    set hasWarnings (value: boolean) {
         this._hasWarnings = value;
         this.notify(value, 'hasWarnings');
     }
 
-    get id(): string {
+    get id (): string {
         return this._id;
     }
 
-    set id(value: string) {
+    set id (value: string) {
         this._id = value;
         this.notify(value, 'id');
     }
 
-    protected getValidationResult(): boolean {
+    protected getValidationResult (): boolean {
         return this.errors.length <= 0;
     }
 
-    protected getValidationWarningsResult(): boolean {
+    protected getValidationWarningsResult (): boolean {
         return this.warnings.length > 0;
     }
 
     // stub for override
-    protected getValidationErrors(): Lavender.ArrayList {
+    protected getValidationErrors (): Lavender.ArrayList {
         return new Lavender.ArrayList();// returns ArrayList of SpiSdk.ValidationError instances
     }
 
     // stub for override
-    protected getValidationWarnings(): Lavender.ArrayList {
+    protected getValidationWarnings (): Lavender.ArrayList {
         return new Lavender.ArrayList();// returns ArrayList of SpiSdk.ValidationError instances
     }
 
-    protected validateOnChange(value: string): void{
+    protected validateOnChange (value: string): void{
         this.validate();
     }
 
-    protected setUpBindings(): void{
+    protected setUpBindings (): void{
         // stub for override
     }
 
-    protected addEventListeners(): void{
+    protected addEventListeners (): void{
         // stub for override
     }
 
-    public validate(): boolean {
+    public validate (): boolean {
         this.errors = this.getValidationErrors();// get all errors and store
         this.warnings = this.getValidationWarnings();
         this.isValid = this.getValidationResult();
@@ -113,13 +113,13 @@ export class AbstractValidator extends Lavender.Subject implements Validator {
         return this.isValid;// returns true or false, to obtain specific errors use this.errors
     }
 
-    public init(): void {
+    public init (): void {
         this.addEventListeners();
         this.setUpBindings();
         this.validate();
     }
 
-    public destroy(): void {
+    public destroy (): void {
         this.binder.unbindAll();
         this.binder = null;
         this.source = null;

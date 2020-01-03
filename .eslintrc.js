@@ -20,10 +20,13 @@ module.exports = {
         "indent": ["error", 4, {"SwitchCase": 1}],
         "lines-between-class-members": "off",
         "space-before-blocks": "error",
+        "no-unused-vars": ["error", { "args": "none" }],
         "keyword-spacing": "error",
         "space-in-parens": ["error", "never"],
         "quotes": ["error", "single", {"allowTemplateLiterals": true}],
         "prefer-template": "error",
+        "semi": "error",
+        "space-before-function-paren": ["error", "always"],
         "spaced-comment": ["error", "always", {
             "line": {
                 "markers": ["/"],
