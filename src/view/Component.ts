@@ -10,7 +10,4 @@ export interface Component extends Lavender.IEventDispatcher{
     inserted(element: HTMLElement): void;
     removed(element: HTMLElement): void;
     attributeChanged(element: HTMLElement): void;
-    removeEventListeners(): void;
-    addEventListeners(): void;
-    onSkinPartAdded (part: string, element: Element): void;
 }

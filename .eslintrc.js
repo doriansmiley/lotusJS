@@ -21,6 +21,7 @@ module.exports = {
         "lines-between-class-members": "off",
         "space-before-blocks": "error",
         "no-unused-vars": ["error", { "args": "none" }],
+        "no-param-reassign": "error",
         "keyword-spacing": "error",
         "space-in-parens": ["error", "never"],
         "quotes": ["error", "single", {"allowTemplateLiterals": true}],

@@ -138,7 +138,9 @@ export abstract class AbstractComponent extends Lavender.Subject implements Comp
             if (!iteratePrototypeBool) {
                 break;
             }
+            // eslint-disable-next-line no-param-reassign
             iterateSelfBool = true;
+            // eslint-disable-next-line no-param-reassign
         } while (obj = Object.getPrototypeOf(obj));
 
         return props;

@@ -43,11 +43,8 @@ export class InputModel extends Lavender.Subject {
 
     set value (value: string) {
         this._nonFormattedValue = value;
-        if (this.format) {
-            value = this.format(value);
-        }
-        this._value = value;
-        this.notify(value, 'value');
+        this._value = (this.format) ? this.format(value) : value;
+        this.notify(this._value, 'value');
     }
 
     get name (): string {

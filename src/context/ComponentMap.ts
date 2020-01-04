@@ -95,10 +95,7 @@ export class ComponentMap implements ComponentMapInterface {
         tagInstance.lotusComponentInstance.created(tagInstance);
     }
 
-    public mapComponent (tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface): void {
-        if (!framework) {
-            framework = xtag;
-        }
+    public mapComponent (tagName: string, prototype: HTMLElement, functionConstructor: Function, framework: XtagInterface = xtag): void {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const componentMap: ComponentMapInterface = this;
         const lifecycle: LifecycleHooks = {
