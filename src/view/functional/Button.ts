@@ -12,17 +12,50 @@ export interface ButtonComponent extends Component {
     onClick: (event: Event) => void;
 };
 
+// example of a factory method to get the prototype for the object
+// TODO implement a base method in abstract and combine results
+// don't want to have to recreate this massive structure everywhere
+// maybe a decorator @extends(getTemplate) where getTemplate passed to
+// @extends is imported from AbstractComponent
+export function getTemplate (): ButtonComponent {
+    return {
+        // placeholders for mixins and interfaces, required for the compiler
+        handlersByEventName: {},
+        addEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
+        canListen: (eventType: string, instance: Record<string, any>, handler: string) => null,
+        removeEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
+        removeAllEventListeners: (instance: Record<string, any>) => null,
+        dispatch: (event: IEvent) => null,
+        ready: null,
+        id: null,
+        element: null,
+        binder: null,
+        destroy: null,
+        init: null,
+        inserted: null,
+        removed: null,
+        attributeChanged: null,
+        removeEventListeners: null,
+        onSkinPartAdded: null,
+        getAttributeValue: null,
+        onClick: null,
+    };
+};
+
 // TODO as part of testing verify the the supplied bluePrint !== the returned instance by reference equality check
 // also ensure the the supplied element does not equal the returned component.element by reference equality check
 export function Button<T extends ButtonComponent> (
     element: LotusHTMLElement,
-    bluePrint: T = Button.getTemplate() as T): T {
+    bluePrint: T | ButtonComponent = getTemplate()): T {
     // we default bluePrint to Button if you do not want to extend
     // always pass bluePrint down the inheritance chain first! We build the object bottom up.
     // IMPORTANT AbstractComponent will clone the element, so there are no side effects
     const instance: ButtonComponent = AbstractComponent(element, bluePrint);
     const skinPartMap = new Map<string, HTMLElement>();
     // to override methods first store a pointer to the base class method
+    // TODO see if there is a way to use a decorator like @override to perform the reference reset
+    // @override(instance)
+    // onSkinPartAdded = (part: string, element: HTMLElement) => {...};
     const originalOnSkinPartAdded = instance.onSkinPartAdded;
     const originalRemoveEventListeners = instance.removeEventListeners;
     // add overrides, not onSkinPartAdded is required!!
@@ -54,30 +87,4 @@ export function Button<T extends ButtonComponent> (
         }
     };
     return mixin(bluePrint, instance);
-};
-
-// example of a factory method to get the prototype for the object
-Button.getTemplate = (): ButtonComponent => {
-    return {
-        // placeholders for mixins and interfaces, required for the compiler
-        handlersByEventName: {},
-        addEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
-        canListen: (eventType: string, instance: Record<string, any>, handler: string) => null,
-        removeEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
-        removeAllEventListeners: (instance: Record<string, any>) => null,
-        dispatch: (event: IEvent) => null,
-        ready: null,
-        id: null,
-        element: null,
-        binder: null,
-        destroy: null,
-        init: null,
-        inserted: null,
-        removed: null,
-        attributeChanged: null,
-        removeEventListeners: null,
-        onSkinPartAdded: null,
-        getAttributeValue: null,
-        onClick: null,
-    };
 };
