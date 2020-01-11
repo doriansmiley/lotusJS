@@ -1,4 +1,3 @@
-import {ContextInterface} from '../..';
 import {LotusHTMLElement} from '../..';
 import {ComponentEvent} from '../..';
 import {Binder, UuidUtils, EventDispatcher, IEvent, IEventDispatcher} from 'lavenderjs/lib';
@@ -16,7 +15,7 @@ export function addProperty (instance: object, label: string, getter?: () => any
     );
 };
 
-export function mixin (base, sub, params = null): void {
+export function mixin<T> (base, sub, params = null): T {
     // grab enumerable properties of the base object
     const keys = Object.keys(base);
     keys.forEach((prop) => {
@@ -36,32 +35,77 @@ export function mixin (base, sub, params = null): void {
     });
     return sub;
 };
-// TODO add factory method to wrap a component in a web component class and attach lifecycle hooks
 
 // interfaces
-export interface Component extends IEventDispatcher{
+export interface Component extends IEventDispatcher {
     ready: boolean;
+    id: string;
+    element: LotusHTMLElement;
+    binder: Binder;
     destroy(): void;
-    created(): void;
-    inserted(): void;
-    removed(): void;
-    attributeChanged(): void;
-    removeEventListeners(): void;
-    addEventListeners(): void;
-    onSkinPartAdded(part: string, element: Element): void;
-    addAttributes(): void;
-    addSkinParts(): void;
+    init(): void;
+    inserted (): void;
+    removed (): void;
+    attributeChanged (): void;
+    removeEventListeners (): void;
+    onSkinPartAdded (part: string, element: HTMLElement): void;
+    getAttributeValue(key: string): any;
 };
-
+// the use of generics allows us to create a type of static polymorphism
+// TODO: Component state should be mutable and private. Application should be able to call
+//  a set data method on the component to establish or reset intitial state. Further the component
+//  data model is unoque to the component. The application must implement adapters to feed the component data.
+//  After the intial state of the application is parsed into the component model and supplied by the mediator
+//  the component will dispatch state change events in response to user interaction. It's up to application mediators to
+//  transform those events into application behaviors that update applications state.
+//  This sort of flips MVC on its head. The model is now an immutable state store.
+//  The view doesn't directly update in response to changes in the state store. Instead the state store is updated
+//  in response to changes in the component's internal state resulting from user interaction. In response to state store
+//  changes mediators can either re-render components or call a specific method on the component. But at no point does the
+//  component itself respond to changes in the state store. This allows components to be 100% reusable in all applications.
+//  Components encapsulate the undifferentiated heavy lifting of the component behaviors (for example an image gallery or video player)
+//  not the behavior of your application. By keeping the state store immutable the application layer is much easier to test,
+//  and features like undo/redo, application state serialization and hydration, etc become much easier to reason about and test.
+//  But components have their own encapsulated state and that state should be mutable.
 export function AbstractComponent<T extends Component> (
     element: LotusHTMLElement,
-    context: ContextInterface,
-    skinPartMap: Map<string, HTMLElement> = new Map<string, HTMLElement>(),
-    binder: Binder = new Binder(),
-    id: string = UuidUtils.generateUUID(),
-    component: T): Component {
-    // compose object
-    const base: Component = {
+    bluePrint: T): T {
+    // IMPORTANT: component is the execution context, similar to this
+    // it's passed down from the top of the composition chain as a parameter
+    // private properties
+    const attributeMap = new Map<string, any>();
+    // private methods
+    const addAttributes = <T extends Component>(component: T) => {
+        // only get enumerable properties
+        const properties: Array<string> = Object.keys(component);
+        for (let i = 0; i < component.element.attributes.length; i++) {
+            const attribute = component.element.attributes[i];
+            if (attribute.name.indexOf('attribute') >= 0) {
+                const index = attribute.name.indexOf('attribute') + 10;
+                const newProp = attribute.name.substring(index);// remove prefix
+                // convert dashes to camel case
+                const camelCased = newProp.replace(/-([a-z])/g, function (g) {
+                    return g[1].toUpperCase();
+                });
+                if (properties.indexOf(camelCased) >= 0) {
+                    attributeMap.set(component[camelCased], attribute.value);
+                }
+            }
+        }
+    };
+    const addSkinParts = <T extends Component>(component: T) => {
+        if (component.element.getAttribute('data-skin-part') !== null
+            && component.element.getAttribute('data-skin-part') !== undefined) {
+            component.onSkinPartAdded(component.element.getAttribute('data-skin-part'),
+                component.element);
+        }
+        const skinPartsNodeList = component.element.querySelectorAll('[data-skin-part]');
+        for (let i = 0; i < skinPartsNodeList.length; i++) {
+            component.onSkinPartAdded(skinPartsNodeList[i].getAttribute('data-skin-part'),
+                skinPartsNodeList[i] as HTMLElement);
+        }
+    };
+    const instance: Component = {
         // placeholders for mixins and interfaces, required for the compiler
         handlersByEventName: {},
         addEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
@@ -70,50 +114,44 @@ export function AbstractComponent<T extends Component> (
         removeAllEventListeners: (instance: Record<string, any>) => null,
         dispatch: (event: IEvent) => null,
         ready: false,
+        id: null,
+        binder: new Binder(),
+        // we do not want to create side effects in the DOM, so we clone the node ref
+        // it up to the caller to attach the element when ready
+        element: element.cloneNode(true) as LotusHTMLElement,
+        getAttributeValue: (key: string) => {
+            return attributeMap.get(key);
+        },
         // end placeholders
         // instance methods are all defined below
-        addAttributes: () => {
-            // only get enumerable properties
-            const properties: Array<string> = Object.keys(component);
-            for (let i = 0; i < element.attributes.length; i++) {
-                const attribute = element.attributes[i];
-                if (attribute.name.indexOf('attribute') >= 0) {
-                    const index = attribute.name.indexOf('attribute') + 10;
-                    const newProp = attribute.name.substring(index);// remove prefix
-                    // convert dashes to camel case
-                    const camelCased = newProp.replace(/-([a-z])/g, function (g) {
-                        return g[1].toUpperCase();
-                    });
-                    if (properties.indexOf(camelCased) >= 0) {
-                        component[camelCased] = attribute.value;
-                    }
-                }
-            }
+        init:() => {
+            addAttributes(instance);
+            addSkinParts(instance);
+            // we deffer execution of the dispatch until the next render cycle to allow the caller
+            // time to receive the new reference and assign event handlers
+            setTimeout(() => {
+                instance.dispatch(new ComponentEvent(ComponentEvent.READY, {target: instance}));
+            }, 1);
+            // define accessor methods, below are read only properties
+            addProperty(instance,
+                'ready',
+                function () {
+                    // this method is called we are good to go
+                    return true;
+                });
+            addProperty(instance,
+                'id',
+                function () {
+                    return UuidUtils.generateUUID();
+                });
         },
-        addSkinParts: () => {
-            if (element.getAttribute('data-skin-part') !== null && element.getAttribute('data-skin-part') !== undefined) {
-                skinPartMap.set(element.getAttribute('data-skin-part'), element);
-                component.onSkinPartAdded(element.getAttribute('data-skin-part'), element);
-            }
-            const skinPartsNodeList = element.querySelectorAll('[data-skin-part]');
-            for (let i = 0; i < skinPartsNodeList.length; i++) {
-                // iterate over matches
-                // call onSkinPartAdded on the component passing skin part attribute value and the element
-                skinPartMap.set(element.getAttribute('data-skin-part'), element);
-                component.onSkinPartAdded(skinPartsNodeList[i].getAttribute('data-skin-part'), skinPartsNodeList[i]);
-            }
+        destroy: () => {
+            instance.removeEventListeners();
+            instance.element = null;
+            instance.binder.unbindAll();
+            instance.binder = null;
         },
-        created: () => {
-            component.addAttributes();
-            component.addSkinParts();
-            component.dispatch(new ComponentEvent(ComponentEvent.READY, {target: component}));
-        },
-        destroy: (): void => {
-            component.removeEventListeners();
-            skinPartMap.clear();
-            binder.unbindAll();
-        },
-        onSkinPartAdded: (part: string, element: Element) => {
+        onSkinPartAdded: () => {
             // stub for override in child objects
         },
         inserted: () => {
@@ -128,25 +166,14 @@ export function AbstractComponent<T extends Component> (
         removeEventListeners: () => {
             // stub for override in child objects
         },
-        addEventListeners: () => {
-            // stub for override in child objects
-        }
     };
-    // define accessor methods
-    addProperty(base,
-        'ready',
-        function () {
-            // once the keys are defined the component is ready for use
-            return [...skinPartMap.keys()].length > 0;
-        });
-    addProperty(base,
-        'id',
-        function () {
-            return id;
-        });
     // add event dispatcher methods
-    mixin(new EventDispatcher(), base);
-    // add base class methods
-    mixin(base, component);
-    return component;
+    // TODO make a functional event dispatcher
+    mixin(new EventDispatcher(), instance);
+    // we intentionally flip bluePrint and instance here
+    // bluePrint is the prototype of the full inheritance chain
+    // at this stage all it's attributes are null. We want all the base class methods
+    // to be first in then build up as we traverse the inheritance chain
+    // further this prevents side effects as bluePrint is unaffected by this call
+    return mixin(bluePrint, instance);
 };

@@ -37,7 +37,8 @@ export function getRegistry (): ComponentRegistry {
             // Object.create(Object.assign(Object.create(HTMLButtonElement), {'one': 1, 'a': 'a'}))
             // eslint-disable-next-line no-unused-vars
             const lotusFunctionComposite = Object.assign(Object.create(tagDef.base['prototype']), tagDef.tagFunction(tagDef.parameters));
-            // TODO: figure out how to mixin component lifecycle hooks
+            // TODO Create factory to wrap a component in a web component class and attach lifecycle hooks
+            // TODO: https://github.com/hybridsjs/hybrids/blob/master/src/define.js and https://github.com/hybridsjs/hybrids
             // register the component with the browser's customElements ComponentRegistry
             // Load the skin
             // Create shadow root and assign attributes to cloned node
