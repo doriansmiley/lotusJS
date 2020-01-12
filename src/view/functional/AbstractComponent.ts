@@ -1,14 +1,9 @@
 import {Binder, UuidUtils, EventDispatcher, IEventDispatcher, IEvent} from 'lavenderjs/lib';
 // interfaces
-export interface LotusHTMLInterface extends HTMLDivElement {
-    lotusComponentInstance: Component;
-    createShadowRoot (): Element;
-    getComponentInstance (): Component;
-}
 export interface Component extends IEventDispatcher {
     ready: boolean;
     id: string;
-    element: LotusHTMLInterface;
+    element: HTMLElement;
     binder: Binder;
     destroy(): void;
     init(): void;
@@ -21,12 +16,12 @@ export interface Component extends IEventDispatcher {
     skinPartMap: Map<string, Element>;
     addAttributes(): void;
     addSkinParts(): void;
+    render(): HTMLElement;
 };
 // public functions
 export const addProperty = <T>(instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
-    const clone: T = mixin(instance, {});
     Object.defineProperty(
-        clone,
+        instance,
         label,
         {
             get: getter,
@@ -34,7 +29,7 @@ export const addProperty = <T>(instance: T, label: string, getter?: () => any, s
             enumerable: enumerable
         }
     );
-    return clone;
+    return instance;
 };
 export const mixin = <T>(base, sub, params = null): T => {
     // grab enumerable properties of the base object
@@ -80,10 +75,11 @@ export const getTemplate = (): Component => {
         skinPartMap: new Map<string, Element>(),
         addAttributes: null,
         addSkinParts: null,
+        render: null,
     };
 };
 export const createComponent = (): Component => {
-    let clone = getTemplate();
+    const clone = getTemplate();
     clone.addSkinParts = () => {
         if (clone.element.getAttribute('data-skin-part') !== null
             && clone.element.getAttribute('data-skin-part') !== undefined) {
@@ -95,7 +91,7 @@ export const createComponent = (): Component => {
             clone.skinPartMap.set('button', skinPartsNodeList[i]);
             clone.onSkinPartAdded(skinPartsNodeList[i].getAttribute('data-skin-part'));
         }
-    }
+    };
     clone.addAttributes = () => {
         // only get enumerable properties
         const properties: Array<string> = Object.keys(clone);
@@ -113,25 +109,29 @@ export const createComponent = (): Component => {
                 }
             }
         }
-    }
+    };
     clone.destroy = () => {
         clone.removeEventListeners();
         clone.attributeMap.clear();
         clone.skinPartMap.clear();
         clone.binder.unbindAll();
     };
-    // define accessor methods, below are read only properties
-    clone = addProperty(clone,
-        'ready',
-        function () {
-            // this method is called we are good to go
-            return true;
-        });
-    clone = addProperty(clone,
+    clone.render = (): HTMLElement => {
+        // be sure to call removeEventListeners so the old element is garbage collected
+        // if you don't remove event listeners the GC will not collect the element
+        clone.removeEventListeners();
+        clone.element = clone.element.cloneNode(true) as HTMLElement;
+        clone.addAttributes();
+        clone.addSkinParts();
+        clone.ready = true;
+        return clone.element;
+    };
+    addProperty(clone,
         'id',
         function () {
             return UuidUtils.generateUUID();
         });
+    // TODO create functional event dispatch and replace new EventDispatcher()
     mixin(new EventDispatcher(), clone);
     return clone;
 };
