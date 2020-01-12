@@ -17,8 +17,7 @@ export interface Component extends IEventDispatcher {
     skinPartMap: Map<string, Element>;
     addAttributes(): void;
     addSkinParts(): void;
-    render(): HTMLElement;
-    setDataProvide<T>(list: List<T>);
+    render<T>(list?: List<T>): HTMLElement;
 };
 // public functions
 export const addProperty = <T>(instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
@@ -78,7 +77,6 @@ export const getTemplate = (): Component => {
         addAttributes: null,
         addSkinParts: null,
         render: null,
-        setDataProvide: null,
     };
 };
 export const createComponent = (): Component => {
@@ -119,7 +117,7 @@ export const createComponent = (): Component => {
         clone.skinPartMap.clear();
         clone.binder.unbindAll();
     };
-    clone.render = (): HTMLElement => {
+    clone.render = <T>(list?: List<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
         // if you don't remove event listeners the GC will not collect the element
         clone.removeEventListeners();
