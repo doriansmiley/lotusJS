@@ -39,6 +39,7 @@
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "immutable": "^4.0.0-rc.12",
     "js-yaml": "^3.13.1",
     "lavenderjs": "^1.2.0",
     "x-tag": "^1.5.11"

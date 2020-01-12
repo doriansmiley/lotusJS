@@ -1,4 +1,5 @@
 import {Binder, UuidUtils, EventDispatcher, IEventDispatcher, IEvent} from 'lavenderjs/lib';
+import { List } from 'immutable';
 // interfaces
 export interface Component extends IEventDispatcher {
     ready: boolean;
@@ -17,6 +18,7 @@ export interface Component extends IEventDispatcher {
     addAttributes(): void;
     addSkinParts(): void;
     render(): HTMLElement;
+    setDataProvide<T>(list: List<T>);
 };
 // public functions
 export const addProperty = <T>(instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
@@ -76,6 +78,7 @@ export const getTemplate = (): Component => {
         addAttributes: null,
         addSkinParts: null,
         render: null,
+        setDataProvide: null,
     };
 };
 export const createComponent = (): Component => {

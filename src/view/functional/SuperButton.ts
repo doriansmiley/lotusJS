@@ -13,7 +13,7 @@ export const createComponent = (): ButtonComponent => {
     const onSkinPartAdded = clone.onSkinPartAdded;
     const onClick = clone.onClick;
     const removeEventListeners = clone.removeEventListeners;
-    // example of method override
+    // example of method override, maybe look into a decorator like @extend to do this in the future
     clone.onSkinPartAdded = (part: string) => {
         // call super
         onSkinPartAdded(part);
