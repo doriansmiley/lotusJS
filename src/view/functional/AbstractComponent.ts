@@ -52,7 +52,7 @@ export const mixin = <T>(base, sub, params = null): T => {
     });
     return sub;
 };
-export const getTemplate = (): Component => {
+export const getTemplate = <T extends Component>(): T => {
     return {
         // placeholders for mixins and interfaces, required for the compiler
         handlersByEventName: {},
@@ -77,9 +77,9 @@ export const getTemplate = (): Component => {
         addAttributes: null,
         addSkinParts: null,
         render: null,
-    };
+    } as T;
 };
-export const createComponent = (): Component => {
+export const createComponent = <T extends Component>(): T => {
     const clone = getTemplate();
     clone.addSkinParts = () => {
         if (clone.element.getAttribute('data-skin-part') !== null
@@ -120,7 +120,7 @@ export const createComponent = (): Component => {
     clone.render = <T>(list?: List<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
         // if you don't remove event listeners the GC will not collect the element
-        clone.removeEventListeners();
+        clone.destroy();
         clone.element = clone.element.cloneNode(true) as HTMLElement;
         clone.addAttributes();
         clone.addSkinParts();
@@ -134,5 +134,5 @@ export const createComponent = (): Component => {
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
     mixin(new EventDispatcher(), clone);
-    return clone;
+    return clone as T;
 };
