@@ -23,16 +23,21 @@ module.exports = function (config) {
 
         singleRun: true,
 
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'browserify'],
 
         browsers: ['Chrome'],
+
+        preprocessors: {
+            'unit/functional/**/*.js': [ 'browserify' ]
+        },
 
         plugins: [
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-spec-reporter',
-            'karma-jasmine'
+            'karma-jasmine',
+            'karma-browserify'
         ],
 
         junitReporter: {

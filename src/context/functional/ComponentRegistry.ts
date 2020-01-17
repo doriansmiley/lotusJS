@@ -31,8 +31,7 @@ export const register = async (tagDef: TagDefinition): Promise<void> => {
         tagDef.template = template;
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
-    }
-    ;
+    };
     const wrapper = class Wrapper extends HTMLElement {
         constructor () {
             // Always call super first in constructor

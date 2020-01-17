@@ -131,5 +131,5 @@ export const createComponent = (): Component => {
             return UuidUtils.generateUUID();
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
-    return mixin<Component>(new EventDispatcher(), clone);
+    return mixin<Component>(clone, new EventDispatcher());
 };
