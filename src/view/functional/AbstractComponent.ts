@@ -32,25 +32,23 @@ export const addProperty = <T>(instance: T, label: string, getter?: () => any, s
     );
     return instance;
 };
-export const mixin = <T>(base, sub, params = null): T => {
-    // grab enumerable properties of the base object
-    const keys = Object.keys(base);
+export const mixin = <T>(target, sub, params = null): T => {
+    // IMPORTANT: mixin is designed to function like Object.assign, just respects accessors
+    // grab enumerable properties of the target object
+    const keys = Object.keys(sub);
     keys.forEach((prop) => {
-        const baseAccessors = Object.getOwnPropertyDescriptor(base, prop);
-        // if the value of the property is not defined or empty on sub assign the base definition
-        if (!sub.hasOwnProperty(prop) || !sub[prop]) {
-            // check if this property uses accessor methods (Object.assign can't do this!)
-            if (baseAccessors && (baseAccessors.get || baseAccessors.set)) {
-                // yep
-                addProperty(sub, prop, Object.getOwnPropertyDescriptor(base, prop).get,
-                    Object.getOwnPropertyDescriptor(base, prop).set);
-            } else {
-                // nope
-                sub[prop] = base[prop];
-            }
+        const methodDef = Object.getOwnPropertyDescriptor(sub, prop);
+        // check if this property uses accessor methods (Object.assign can't do this!)
+        if (methodDef && (methodDef.get || methodDef.set)) {
+            // yep
+            addProperty(target, prop, Object.getOwnPropertyDescriptor(sub, prop).get,
+                Object.getOwnPropertyDescriptor(sub, prop).set);
+        } else {
+            // nope
+            target[prop] = sub[prop];
         }
     });
-    return sub;
+    return target;
 };
 export const getTemplate = <T extends Component>(): T => {
     return {
@@ -79,7 +77,7 @@ export const getTemplate = <T extends Component>(): T => {
         render: null,
     } as T;
 };
-export const createComponent = <T extends Component>(): T => {
+export const createComponent = (): Component => {
     const clone = getTemplate();
     clone.addSkinParts = () => {
         if (clone.element.getAttribute('data-skin-part') !== null
@@ -133,6 +131,5 @@ export const createComponent = <T extends Component>(): T => {
             return UuidUtils.generateUUID();
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
-    mixin(new EventDispatcher(), clone);
-    return clone as T;
+    return mixin<Component>(new EventDispatcher(), clone);
 };

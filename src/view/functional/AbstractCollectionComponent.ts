@@ -1,5 +1,5 @@
 import {ItemViewEvent} from '../..';
-import {Component} from './AbstractComponent';
+import {Component, mixin} from './AbstractComponent';
 import {createComponent as createAbstractComponent} from './AbstractComponent';
 import { List } from 'immutable';
 
@@ -24,7 +24,7 @@ export interface AbstractCollectionComponent extends Component {
 
 export const createComponent = (): AbstractCollectionComponent => {
     // TODO figure out which of the functions below (if any) should be private
-    const clone: AbstractCollectionComponent =  Object.assign(createAbstractComponent(), {
+    const clone: AbstractCollectionComponent =  mixin(createAbstractComponent(), {
         addChildView: null,
         childViews: List(),
         addViewEventListeners: null,
@@ -42,7 +42,7 @@ export const createComponent = (): AbstractCollectionComponent => {
     const render = clone.render;
     const destroy = clone.destroy;
     clone.createChildView = <T extends AbtractItemView, Z extends object>(model: Z): T => {
-        return createAbstractComponent();
+        return createAbstractComponent() as T;
     };
     clone.cloneItemTemplate = <T extends HTMLElement>(): T => {
         return clone.skinPartMap.get('itemTemplate').cloneNode(true) as T;
@@ -76,16 +76,16 @@ export const createComponent = (): AbstractCollectionComponent => {
         clone.addViewEventListeners(view);
     };
     clone.removeElement = () => {
-
+        // TODO: add code
     };
     clone.removeChildView = () => {
-
+        // TODO: add code
     };
     clone.removeAllChildViews = () => {
-
+        // TODO: add code
     };
     clone.destroyChildViews = () => {
-
+        // TODO: add code
     };
     clone.destroy = (): void => {
         clone.destroyChildViews();

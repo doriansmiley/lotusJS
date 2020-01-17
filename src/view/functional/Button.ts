@@ -1,5 +1,5 @@
 import {ComponentEvent} from '../..';
-import {Component} from './AbstractComponent';
+import {Component, mixin} from './AbstractComponent';
 import {createComponent as createAbstractComponent} from './AbstractComponent';
 
 // export interfaces
@@ -8,7 +8,7 @@ export interface ButtonComponent extends Component {
 };
 
 export const createComponent = (): ButtonComponent => {
-    const clone: ButtonComponent =  Object.assign(createAbstractComponent(), {
+    const clone =  mixin<ButtonComponent>(createAbstractComponent(),{
         onClick: null,
     });
     clone.onSkinPartAdded = (part: string) => {

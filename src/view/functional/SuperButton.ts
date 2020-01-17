@@ -1,12 +1,13 @@
 import {ButtonComponent, createComponent as createButtonComponent} from './Button';
+import {mixin} from './AbstractComponent';
 
 // export interfaces
 export interface SuperButton extends ButtonComponent {
     onMouseOverLabel: (event: Event) => void;
 };
 
-export const createComponent = (): ButtonComponent => {
-    const clone: SuperButton =  Object.assign(createButtonComponent(), {
+export const createComponent = (): SuperButton => {
+    const clone =  mixin<SuperButton>(createButtonComponent(), {
         onMouseOverLabel: null,
     });
     // capture a reference to super.onSkinPartAdded
