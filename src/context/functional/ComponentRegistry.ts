@@ -13,7 +13,7 @@ export interface TagDefinition {
     templateUrl?: string;
 }
 
-export const register = async (tagDef: TagDefinition): Promise<Component> => {
+export const register = async (tagDef: TagDefinition): Promise<void> => {
     if (!customElements) {
         throw new Error('Custom elements is not supported by your browser!');
     }
@@ -32,24 +32,21 @@ export const register = async (tagDef: TagDefinition): Promise<Component> => {
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
-    // create our component
-    const component: Component = tagDef.tagFunction();
-    const clone = document.importNode(tagDef.template.content, true);
-    component.element = clone.querySelector('[data-component-root="root"]');
-    const renderedComponent = component.render();
-    // create wrapper class
     const wrapper = class Wrapper extends HTMLElement {
         constructor () {
             // Always call super first in constructor
             super();
             // Create a shadow root
             const shadow = this.attachShadow({mode: 'open'});
+            // create our component
+            const component: Component = tagDef.tagFunction();
+            const clone = document.importNode(tagDef.template.content, true);
+            component.element = clone.querySelector('[data-component-root="root"]');
+            const renderedComponent = component.render();
             // TODO add lifecycle hooks
             // Attach the created elements to the shadow dom
             shadow.appendChild(renderedComponent);
         }
     };
-    // register the element
     customElements.define(tagDef.tagName, wrapper);
-    return component;
 };
