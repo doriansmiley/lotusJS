@@ -20,6 +20,7 @@ describe('ButtonComponent', function () {
         const renderedComponent = button.render();
         expect(button.skinPartMap.get('button') instanceof HTMLButtonElement).toBe(true);
         expect(renderedComponent instanceof HTMLDivElement).toBe(true);
+        expect(renderedComponent === button.element).toBe(true);
         button.destroy();
         expect(button.skinPartMap.get('button')).toBe(undefined);
     });
