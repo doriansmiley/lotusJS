@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {Component} from '../../view/functional/AbstractComponent';
 
+// interface definitions
 export interface TagDefinition {
     created?: Function;
     inserted?: Function;
@@ -12,8 +13,10 @@ export interface TagDefinition {
     parameters?: any;
     templateUrl?: string;
 }
-
-export const register = async (tagDef: TagDefinition): Promise<void> => {
+// private properties
+const componentsByTagName = new Map<string, Array<Component>>();
+// public function
+export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'open'): Promise<void> => {
     if (!customElements) {
         throw new Error('Custom elements is not supported by your browser!');
     }
@@ -37,11 +40,17 @@ export const register = async (tagDef: TagDefinition): Promise<void> => {
             // Always call super first in constructor
             super();
             // Create a shadow root
-            const shadow = this.attachShadow({mode: 'open'});
+            const shadow = this.attachShadow({mode: mode});
             // create our component
             const component: Component = tagDef.tagFunction();
             const clone = document.importNode(tagDef.template.content, true);
             component.element = clone.querySelector('[data-component-root="root"]');
+            if (!componentsByTagName.get(tagDef.tagName)) {
+                componentsByTagName.set(tagDef.tagName, []);
+            }
+            // store the component instances by tag name so an observer can assign mediators
+            // for a surrounding application
+            componentsByTagName.get(tagDef.tagName).push(component);
             const renderedComponent = component.render();
             // TODO add lifecycle hooks
             // Attach the created elements to the shadow dom
@@ -49,4 +58,14 @@ export const register = async (tagDef: TagDefinition): Promise<void> => {
         }
     };
     customElements.define(tagDef.tagName, wrapper);
+};
+// this function is used by the surrounding application to mediate component instances
+// generally a mediator map of some kind is created that will iterate over all registered
+// tag name, retrieve the component instance for this function, and pass to the registered mediator constructor
+// or function. A mediator map calls a function or constructor for every instance of a tag
+// found in the DOM.. For example map('lotus-button', createButtonMediator). This map function
+// would use getComponents to get all the component instances which it would then iterate over
+// and call createButtonMediator(component). See our example application for a sample
+export const getComponents = (tagName: string): Array<Component> => {
+    return componentsByTagName.get(tagName);
 };
