@@ -1,26 +1,65 @@
-import {Binder, UuidUtils, EventDispatcher, IEventDispatcher, IEvent} from 'lavenderjs/lib';
-import { List } from 'immutable';
+import {Binder, UuidUtils} from 'lavenderjs/lib';
+import {List} from 'immutable';
+
 // interfaces
-export interface Component extends IEventDispatcher {
+export interface ComponentEvent {
+    type: string;
+    payload: object;
+
+    clone (type: string, payload: object): ComponentEvent;
+}
+
+export interface EventDispatcher {
+    handlersByEventName: Map<string, object>;
+
+    addEventListener (event: string, instance: object, handler: string): void;
+
+    canListen (eventType: string, instance: object, handler: string): boolean;
+
+    removeEventListener (event: string, instance: object, handler: string): void;
+
+    removeAllEventListeners (instance: object): void;
+
+    dispatch (event: ComponentEvent): void;
+}
+
+export interface Component extends EventDispatcher {
     ready: boolean;
     id: string;
     element: HTMLElement;
     binder: Binder;
-    destroy(): void;
-    init(): void;
+
+    destroy (): void;
+
+    init (): void;
+
     inserted (): void;
+
     removed (): void;
+
     attributeChanged (): void;
+
     removeEventListeners (): void;
-    onSkinPartAdded(part: string): void;
+
+    onSkinPartAdded (part: string): void;
+
     attributeMap: Map<string, any>;
     skinPartMap: Map<string, Element>;
-    addAttributes(): void;
-    addSkinParts(): void;
-    render<T>(list?: List<T>): HTMLElement;
-};
-// public functions
-export const addProperty = <T>(instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
+
+    addAttributes (): void;
+
+    addSkinParts (): void;
+
+    render<T> (list?: List<T>): HTMLElement;
+}
+
+export interface Listener {
+    readonly handler: string;
+    readonly instance: object;
+}
+
+// const functions
+export const addProperty = <T> (instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
     Object.defineProperty(
         instance,
         label,
@@ -32,7 +71,7 @@ export const addProperty = <T>(instance: T, label: string, getter?: () => any, s
     );
     return instance;
 };
-export const mixin = <T>(target, sub, params = null): T => {
+export const mixin = <T> (target, sub, params = null): T => {
     // IMPORTANT: mixin is designed to function like Object.assign, just respects accessors
     // grab enumerable properties of the target object
     const keys = Object.keys(sub);
@@ -50,15 +89,15 @@ export const mixin = <T>(target, sub, params = null): T => {
     });
     return target;
 };
-export const getTemplate = <T extends Component>(): T => {
+export const getTemplate = <T extends Component> (): T => {
     return {
         // placeholders for mixins and interfaces, required for the compiler
-        handlersByEventName: {},
-        addEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
-        canListen: (eventType: string, instance: Record<string, any>, handler: string) => null,
-        removeEventListener: (event: string, instance: Record<string, any>, handler: string) => null,
-        removeAllEventListeners: (instance: Record<string, any>) => null,
-        dispatch: (event: IEvent) => null,
+        handlersByEventName: new Map<string, object>(),
+        addEventListener: (event: string, instance: object, handler: string) => null,
+        canListen: (event: string, instance: object, handler: string) => null,
+        removeEventListener: (event: string, instance: object, handler: string) => null,
+        removeAllEventListeners: (instance: object) => null,
+        dispatch: (event: ComponentEvent) => null,
         ready: false,
         id: UuidUtils.generateUUID(),
         binder: new Binder(),
@@ -77,8 +116,78 @@ export const getTemplate = <T extends Component>(): T => {
         render: null,
     } as T;
 };
+
 export const createComponent = (): Component => {
     const clone = getTemplate();
+    clone.addEventListener = (event: string, instance: object, handler: string) => {
+        if (clone.handlersByEventName[event] === null || clone.handlersByEventName[event] === undefined) {
+            clone.handlersByEventName[event] = [] as Array<Listener>;
+        }
+        clone.handlersByEventName[event].push({handler, instance});
+    };
+    clone.canListen = (eventType: string, instance: object, handler: string): boolean => {
+        let canListen = false;
+        if (clone.handlersByEventName[eventType] !== null && clone.handlersByEventName[eventType] !== undefined) {
+            for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName[eventType].length; handlerIndex++) {
+                const handlerFunctionName = clone.handlersByEventName[eventType][handlerIndex].handler;
+                const objectInstance = clone.handlersByEventName[eventType][handlerIndex].instance;
+                if (handlerFunctionName == handler && objectInstance == instance) {
+                    canListen = true;
+                    break;
+                }
+            }
+        }
+        return canListen;
+    };
+    clone.removeEventListener = (event: string, instance: object, handler: string) => {
+        if (clone.handlersByEventName[event] === null || clone.handlersByEventName[event] === undefined) {
+            return;
+        }
+        for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName[event].length; handlerIndex++) {
+            if (clone.handlersByEventName[event][handlerIndex].instance == instance && clone.handlersByEventName[event][handlerIndex].handler == handler) {
+                const itemToRemove = clone.handlersByEventName[event][handlerIndex];
+                switch (handlerIndex) {
+                    case 0:
+                        clone.handlersByEventName[event].shift();
+                        break;
+                    case clone.handlersByEventName[event].length - 1:
+                        clone.handlersByEventName[event].pop();
+                        break;
+                    default:
+                        const head = clone.handlersByEventName[event].slice(0, handlerIndex);
+                        const tail = clone.handlersByEventName[event].slice(handlerIndex + 1);
+                        clone.handlersByEventName[event] = head.concat(tail);
+                        break;
+                }
+                // there can be only one item matching event, instance, handler so we return here
+                return itemToRemove;
+            }
+        }
+    };
+    clone.removeAllEventListeners = (instance: object) => {
+        for (const event in clone.handlersByEventName) {
+            clone.handlersByEventName[event].forEach((listener: Listener) => {
+                if (listener.instance == instance) {
+                    clone.removeEventListener(event, instance, listener.handler);
+                }
+            });
+        }
+    };
+    clone.dispatch = (event: ComponentEvent) => {
+        if (clone.handlersByEventName[event.type] === null || clone.handlersByEventName[event.type] === undefined) {
+            return;
+        }
+        // We need to make a copy of event handles before dispatching.
+        // If the handler removes itself from the event queue during dispatching, it triggers removeEventListener, which
+        // changes the array and this messes up the entire dispatch process (some handlers are never called).
+        const dispatchToList = clone.handlersByEventName[event.type].slice();
+        const len = dispatchToList.length;
+        for (let handlerIndex = 0; handlerIndex < len; ++handlerIndex) {
+            const handlerFunctionName = (dispatchToList[handlerIndex] as Listener).handler;
+            const instance = dispatchToList[handlerIndex].instance;
+            instance[handlerFunctionName](event);
+        }
+    };
     clone.addSkinParts = () => {
         if (clone.element.getAttribute('data-skin-part') !== null
             && clone.element.getAttribute('data-skin-part') !== undefined) {
@@ -115,7 +224,7 @@ export const createComponent = (): Component => {
         clone.skinPartMap.clear();
         clone.binder.unbindAll();
     };
-    clone.render = <T>(list?: List<T>): HTMLElement => {
+    clone.render = <T> (list?: List<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
         // if you don't remove event listeners the GC will not collect the element
         clone.destroy();
@@ -131,5 +240,5 @@ export const createComponent = (): Component => {
             return UuidUtils.generateUUID();
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
-    return mixin<Component>(clone, new EventDispatcher());
+    return clone;
 };
