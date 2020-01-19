@@ -1,8 +1,14 @@
-const createComponent = require('../../..//lib/view/functional/Button').createComponent;
+const createComponent = require('../../../lib/view/functional/Button').createComponent;
+const ComponentEvent = require('../../../lib/control/events/ComponentEvent').ComponentEvent;
 
 describe('ButtonComponent', function () {
 
-    it('check createComponent function and values', function () {
+    it('check createComponent function and values', function (done) {
+        const responder = {
+            onEvent: (event) => {
+                done();
+            }
+        }
         const template = document.createElement('div');
         template.innerHTML = '<template id="app">\n' +
             '  <div data-component-root="root">\n' +
@@ -23,5 +29,8 @@ describe('ButtonComponent', function () {
         expect(renderedComponent === button.element).toBe(true);
         button.destroy();
         expect(button.skinPartMap.get('button')).toBe(undefined);
+        console.log('ComponentEvent.CLICK: ' + ComponentEvent.CLICK);
+        button.addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
+        button.onClick({})
     });
 });
