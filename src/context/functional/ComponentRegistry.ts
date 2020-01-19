@@ -3,10 +3,8 @@ import {Component} from '../../view/functional/AbstractComponent';
 
 // interface definitions
 export interface TagDefinition {
-    created?: Function;
     inserted?: Function;
     removed?: Function;
-    attributeChanged?: (attrName: string, oldValue: any, newValue: any) => void;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
@@ -55,6 +53,16 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             // TODO add lifecycle hooks
             // Attach the created elements to the shadow dom
             shadow.appendChild(renderedComponent);
+        }
+
+        connectedCallback () {
+            console.log(`tag ${tagDef.tagName} inserted`);
+            tagDef.inserted();
+        }
+
+        disconnectedCallback () {
+            console.log(`tag ${tagDef.tagName} removed`);
+            tagDef.removed();
         }
     };
     customElements.define(tagDef.tagName, wrapper);
