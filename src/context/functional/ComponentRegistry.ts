@@ -3,8 +3,8 @@ import {Component} from '../../view/functional/AbstractComponent';
 
 // interface definitions
 export interface TagDefinition {
-    inserted?: Function;
-    removed?: Function;
+    inserted?: (component: Component) => void;
+    removed?: (component: Component) => void;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
@@ -34,6 +34,8 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
     const wrapper = class Wrapper extends HTMLElement {
+        public component: Component;
+
         constructor () {
             // Always call super first in constructor
             super();
@@ -53,16 +55,22 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             // TODO add lifecycle hooks
             // Attach the created elements to the shadow dom
             shadow.appendChild(renderedComponent);
+            this.component = component;
         }
 
         connectedCallback () {
             console.log(`tag ${tagDef.tagName} inserted`);
-            tagDef.inserted();
+            tagDef.inserted(this.component);
         }
 
         disconnectedCallback () {
             console.log(`tag ${tagDef.tagName} removed`);
-            tagDef.removed();
+            // remove the component instance
+            const index = componentsByTagName.get(tagDef.tagName).findIndex((instance) => instance === this.component);
+            componentsByTagName.get(tagDef.tagName).splice(index, 1);
+            // destroy the component, this removes event listeners etc
+            this.component.destroy();
+            tagDef.removed(this.component);
         }
     };
     customElements.define(tagDef.tagName, wrapper);
@@ -77,3 +85,4 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
 export const getComponents = (tagName: string): Array<Component> => {
     return componentsByTagName.get(tagName);
 };
+

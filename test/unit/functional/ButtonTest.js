@@ -6,6 +6,8 @@ describe('ButtonComponent', function () {
     it('check createComponent function and values', function (done) {
         const responder = {
             onEvent: (event) => {
+                button.destroy();
+                expect(button.skinPartMap.get('button')).toBe(undefined);
                 done();
             }
         }
@@ -27,8 +29,6 @@ describe('ButtonComponent', function () {
         expect(button.skinPartMap.get('button') instanceof HTMLButtonElement).toBe(true);
         expect(renderedComponent instanceof HTMLDivElement).toBe(true);
         expect(renderedComponent === button.element).toBe(true);
-        button.destroy();
-        expect(button.skinPartMap.get('button')).toBe(undefined);
         console.log('ComponentEvent.CLICK: ' + ComponentEvent.CLICK);
         button.addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
         button.onClick({})

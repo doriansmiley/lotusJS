@@ -16,10 +16,13 @@ describe('ButtonComponent', function () {
             '</template>\n' +
             '\n';
         const tagDef = {
-            created: () => {},
-            inserted: () => {},
-            removed: () => {},
-            attributeChanged: (attrName, oldValue, newValue) => {},
+            inserted: (component) => {
+                expect(component).toBeDefined();
+            },
+            removed: (component) => {
+                component.element = null;
+                expect(getComponents(tagDef.tagName).length).toBe(2);
+            },
             template: template.firstChild,
             tagName: 'lotus-button',
             tagFunction: createComponent
@@ -30,15 +33,18 @@ describe('ButtonComponent', function () {
             }
         };
         register(tagDef);
+        const button2 = document.createElement('lotus-button');
         document.body.append(document.createElement('lotus-button'));
-        document.body.append(document.createElement('lotus-button'));
+        document.body.append(button2);
         document.body.append(document.createElement('lotus-button'));
         const buttons = getComponents(tagDef.tagName);
         const domButtons = document.getElementsByTagName('lotus-button');
-        const domButton = document.getElementsByTagName('lotus-button')[0];
-        buttons[0].addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
         expect(buttons.length).toBe(3);
         expect(domButtons.length).toBe(3);
+        // trigger lifecycle callbacks
+        document.body.removeChild(button2);
+        buttons[0].addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
+        // test event listeners
         buttons[0].skinPartMap.get('button').click();
     });
 });

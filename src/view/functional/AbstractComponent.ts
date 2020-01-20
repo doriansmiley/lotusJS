@@ -10,7 +10,7 @@ export interface ComponentEvent {
 }
 
 export interface EventDispatcher {
-    handlersByEventName: Map<string, object>;
+    handlersByEventName: Map<string, Array<Listener>>;
 
     addEventListener (event: string, instance: object, handler: string): void;
 
@@ -92,7 +92,7 @@ export const mixin = <T> (target, sub, params = null): T => {
 export const getTemplate = <T extends Component> (): T => {
     return {
         // placeholders for mixins and interfaces, required for the compiler
-        handlersByEventName: new Map<string, object>(),
+        handlersByEventName: new Map<string, Array<Listener>>(),
         addEventListener: (event: string, instance: object, handler: string) => null,
         canListen: (event: string, instance: object, handler: string) => null,
         removeEventListener: (event: string, instance: object, handler: string) => null,
@@ -120,17 +120,17 @@ export const getTemplate = <T extends Component> (): T => {
 export const createComponent = (): Component => {
     const clone = getTemplate();
     clone.addEventListener = (event: string, instance: object, handler: string) => {
-        if (clone.handlersByEventName[event] === null || clone.handlersByEventName[event] === undefined) {
-            clone.handlersByEventName[event] = [] as Array<Listener>;
+        if (!clone.handlersByEventName.get(event)) {
+            clone.handlersByEventName.set(event, []);
         }
-        clone.handlersByEventName[event].push({handler, instance});
+        clone.handlersByEventName.get(event).push({handler, instance});
     };
     clone.canListen = (eventType: string, instance: object, handler: string): boolean => {
         let canListen = false;
-        if (clone.handlersByEventName[eventType] !== null && clone.handlersByEventName[eventType] !== undefined) {
-            for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName[eventType].length; handlerIndex++) {
-                const handlerFunctionName = clone.handlersByEventName[eventType][handlerIndex].handler;
-                const objectInstance = clone.handlersByEventName[eventType][handlerIndex].instance;
+        if (clone.handlersByEventName.get(eventType)) {
+            for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName.get(eventType).length; handlerIndex++) {
+                const handlerFunctionName = clone.handlersByEventName.get(eventType)[handlerIndex].handler;
+                const objectInstance = clone.handlersByEventName.get(eventType)[handlerIndex].instance;
                 if (handlerFunctionName == handler && objectInstance == instance) {
                     canListen = true;
                     break;
@@ -140,23 +140,23 @@ export const createComponent = (): Component => {
         return canListen;
     };
     clone.removeEventListener = (event: string, instance: object, handler: string) => {
-        if (clone.handlersByEventName[event] === null || clone.handlersByEventName[event] === undefined) {
+        if (!clone.handlersByEventName.get(event)) {
             return;
         }
-        for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName[event].length; handlerIndex++) {
-            if (clone.handlersByEventName[event][handlerIndex].instance == instance && clone.handlersByEventName[event][handlerIndex].handler == handler) {
-                const itemToRemove = clone.handlersByEventName[event][handlerIndex];
+        for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName.get(event).length; handlerIndex++) {
+            if (clone.handlersByEventName.get(event)[handlerIndex].instance == instance && clone.handlersByEventName.get(event)[handlerIndex].handler == handler) {
+                const itemToRemove = clone.handlersByEventName.get(event)[handlerIndex];
                 switch (handlerIndex) {
                     case 0:
-                        clone.handlersByEventName[event].shift();
+                        clone.handlersByEventName.get(event).shift();
                         break;
-                    case clone.handlersByEventName[event].length - 1:
-                        clone.handlersByEventName[event].pop();
+                    case clone.handlersByEventName.get(event).length - 1:
+                        clone.handlersByEventName.get(event).pop();
                         break;
                     default:
-                        const head = clone.handlersByEventName[event].slice(0, handlerIndex);
-                        const tail = clone.handlersByEventName[event].slice(handlerIndex + 1);
-                        clone.handlersByEventName[event] = head.concat(tail);
+                        const head = clone.handlersByEventName.get(event).slice(0, handlerIndex);
+                        const tail = clone.handlersByEventName.get(event).slice(handlerIndex + 1);
+                        clone.handlersByEventName.set(event, head.concat(tail));
                         break;
                 }
                 // there can be only one item matching event, instance, handler so we return here
@@ -166,7 +166,7 @@ export const createComponent = (): Component => {
     };
     clone.removeAllEventListeners = (instance: object) => {
         for (const event in clone.handlersByEventName) {
-            clone.handlersByEventName[event].forEach((listener: Listener) => {
+            clone.handlersByEventName.get(event).forEach((listener: Listener) => {
                 if (listener.instance == instance) {
                     clone.removeEventListener(event, instance, listener.handler);
                 }
@@ -174,13 +174,13 @@ export const createComponent = (): Component => {
         }
     };
     clone.dispatch = (event: ComponentEvent) => {
-        if (clone.handlersByEventName[event.type] === null || clone.handlersByEventName[event.type] === undefined) {
+        if (clone.handlersByEventName.get(event.type) === null || clone.handlersByEventName.get(event.type) === undefined) {
             return;
         }
         // We need to make a copy of event handles before dispatching.
         // If the handler removes itself from the event queue during dispatching, it triggers removeEventListener, which
         // changes the array and this messes up the entire dispatch process (some handlers are never called).
-        const dispatchToList = clone.handlersByEventName[event.type].slice();
+        const dispatchToList = clone.handlersByEventName.get(event.type).slice();
         const len = dispatchToList.length;
         for (let handlerIndex = 0; handlerIndex < len; ++handlerIndex) {
             const handlerFunctionName = (dispatchToList[handlerIndex] as Listener).handler;
