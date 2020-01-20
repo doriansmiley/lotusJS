@@ -1,5 +1,5 @@
 const createComponent = require('../../../lib/view/functional/Button').createComponent;
-const ComponentEvent = require('../../../lib/control/events/ComponentEvent').ComponentEvent;
+const Events = require('../../../lib/view/functional/AbstractComponent').Events;
 const register = require('../../../lib/context/functional/ComponentRegistry').register;
 const getComponents = require('../../../lib/context/functional/ComponentRegistry').getComponents;
 
@@ -43,7 +43,7 @@ describe('ButtonComponent', function () {
         expect(domButtons.length).toBe(3);
         // trigger lifecycle callbacks
         document.body.removeChild(button2);
-        buttons[0].addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
+        buttons[0].addEventListener(Events.CLICK, responder, 'onEvent');
         // test event listeners
         buttons[0].skinPartMap.get('button').click();
     });

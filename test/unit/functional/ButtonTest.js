@@ -1,5 +1,5 @@
 const createComponent = require('../../../lib/view/functional/Button').createComponent;
-const ComponentEvent = require('../../../lib/control/events/ComponentEvent').ComponentEvent;
+const Events = require('../../../lib/view/functional/AbstractComponent').Events;
 
 describe('ButtonComponent', function () {
 
@@ -29,8 +29,8 @@ describe('ButtonComponent', function () {
         expect(button.skinPartMap.get('button') instanceof HTMLButtonElement).toBe(true);
         expect(renderedComponent instanceof HTMLDivElement).toBe(true);
         expect(renderedComponent === button.element).toBe(true);
-        console.log('ComponentEvent.CLICK: ' + ComponentEvent.CLICK);
-        button.addEventListener(ComponentEvent.CLICK, responder, 'onEvent');
-        button.onClick({})
+        console.log('Events.CLICK: ' + Events.CLICK);
+        button.addEventListener(Events.CLICK, responder, 'onEvent');
+        button.skinPartMap.get('button').click({});
     });
 });

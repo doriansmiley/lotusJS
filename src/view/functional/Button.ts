@@ -1,5 +1,4 @@
-import {ComponentEvent} from '../..';
-import {Component, mixin} from './AbstractComponent';
+import {Component, mixin, Events, getComponentEvent} from './AbstractComponent';
 import {createComponent as createAbstractComponent} from './AbstractComponent';
 
 // export interfaces
@@ -24,7 +23,7 @@ export const createComponent = (): ButtonComponent => {
     clone.onClick = (event) => {
         console.log(`Lotus.ButtonComponent.prototype.onClick: event is ${event}`);
         console.log(`Lotus.ButtonComponent.prototype.onClick: my id is ${clone.id}`);
-        clone.dispatch(new ComponentEvent(ComponentEvent.CLICK, {target: clone, originalEvent: event}));
+        clone.dispatch(getComponentEvent(Events.CLICK, {target: clone, originalEvent: event}));
     };
     clone.removeEventListeners = () => {
         if (clone.skinPartMap.get('button')) {

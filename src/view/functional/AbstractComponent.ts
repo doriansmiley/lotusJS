@@ -6,7 +6,7 @@ export interface ComponentEvent {
     type: string;
     payload: object;
 
-    clone (type: string, payload: object): ComponentEvent;
+    clone (event: ComponentEvent): ComponentEvent;
 }
 
 export interface EventDispatcher {
@@ -57,7 +57,14 @@ export interface Listener {
     readonly handler: string;
     readonly instance: object;
 }
-
+// enums
+export enum Events {
+    CLICK = 'lotusComponentClick',
+    READY = 'lotusComponentReady',
+    ITEM_SELECTED = 'lotusItemViewItemSelected',
+    ITEM_DESELECTED = 'lotusItemViewItemDeselected',
+    REMOVE_ITEM = 'lotusItemViewRemoveItem',
+}
 // const functions
 export const addProperty = <T> (instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
     Object.defineProperty(
@@ -116,7 +123,15 @@ export const getTemplate = <T extends Component> (): T => {
         render: null,
     } as T;
 };
-
+export const getComponentEvent = (type: string, payload: object): ComponentEvent => {
+    return {
+        type,
+        payload,
+        clone: (event) => {
+            return {...event};
+        }
+    };
+};
 export const createComponent = (): Component => {
     const clone = getTemplate();
     clone.addEventListener = (event: string, instance: object, handler: string) => {
