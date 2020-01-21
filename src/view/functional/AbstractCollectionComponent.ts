@@ -1,33 +1,55 @@
-import {ItemViewEvent} from '../..';
-import {Component, mixin} from './AbstractComponent';
-import {createComponent as createAbstractComponent} from './AbstractComponent';
+import {Component, mixin, Events, ComponentEvent, addProperty, createComponent as createAbstractComponent} from './AbstractComponent';
 import { List } from 'immutable';
+import {getComponents} from '../../context/functional/ComponentRegistry';
 
 // export interfaces
-export interface AbtractItemView extends Component {
-    resetState: () => void;
+export interface AbstractItemView extends Component {
+    resetState: (selected: boolean) => void;
+    model: object;
 }
 export interface AbstractCollectionComponent extends Component {
-    addChildView: <T extends AbtractItemView, Z extends object>(model: Z) => void;
-    childViews: List<AbtractItemView>;
-    addViewEventListeners: <T extends AbtractItemView>(view: T) => void;
-    removeViewEventListeners: <T extends AbtractItemView>(view: T) => void;
+    addChildView: <T extends AbstractItemView, Z extends object>(model: Z) => void;
+    childViews: List<AbstractItemView>;
+    addViewEventListeners: () => void;
+    addViewEventListener: <T extends AbstractItemView>(view: T) => void;
+    removeViewEventListener: <T extends AbstractItemView>(view: T) => void;
+    removeViewEventListeners: () => void;
     cloneItemTemplate: <T extends HTMLElement>() => T;
-    createChildView: <T extends AbtractItemView, Z extends object>(model: Z) => T;
-    onItemSelectedDeselect: (event: ItemViewEvent) => void;
-    selectedItem: AbtractItemView;
+    createChildView: <T extends AbstractItemView>(model: object) => T;
+    onItemSelectedDeselect: (event: ComponentEvent) => void;
+    selectedItem: AbstractItemView;
     removeAllChildViews: () => void;
     destroyChildViews: () => void;
     removeElement: () => void;
     removeChildView: () => void;
 };
-
+// export public functions
+export const createItemView = (): AbstractItemView => {
+    const clone: AbstractItemView =  mixin(createAbstractComponent(), {
+        model: null,
+        resetState: (selected: boolean) => {
+            if (selected) {
+                clone.element.classList.add('selected');
+            } else {
+                clone.element.classList.remove('selected');
+            }
+        },
+    });
+    const destroy = clone.destroy;
+    clone.destroy = (): void => {
+        destroy();
+        clone.model = null;
+    };
+    return clone;
+};
 export const createComponent = (): AbstractCollectionComponent => {
     // TODO figure out which of the functions below (if any) should be private
     const clone: AbstractCollectionComponent =  mixin(createAbstractComponent(), {
         addChildView: null,
         childViews: List(),
         addViewEventListeners: null,
+        addViewEventListener: null,
+        removeViewEventListener: null,
         cloneItemTemplate: null,
         createChildView: null,
         onItemSelectedDeselect: null,
@@ -41,69 +63,69 @@ export const createComponent = (): AbstractCollectionComponent => {
     });
     const render = clone.render;
     const destroy = clone.destroy;
-    clone.createChildView = <T extends AbtractItemView, Z extends object>(model: Z): T => {
-        return createAbstractComponent() as T;
-    };
+    const views: Array<AbstractItemView> = [];
+    let selectedItem: AbstractItemView;
     clone.cloneItemTemplate = <T extends HTMLElement>(): T => {
         return clone.skinPartMap.get('itemTemplate').cloneNode(true) as T;
     };
-    clone.onItemSelectedDeselect = (event: ItemViewEvent): void => {
-        if (clone.selectedItem !== null && clone.selectedItem != event.payload['item']) {
-            clone.selectedItem.resetState();
+    clone.onItemSelectedDeselect = (event: ComponentEvent): void => {
+        if (selectedItem && selectedItem != event.payload['item']) {
+            selectedItem.resetState(false);
         }
-        clone.selectedItem = (event.type == ItemViewEvent.ITEM_SELECTED) ? event.payload['item'] : null;
+        selectedItem = (event.type == Events.ITEM_SELECTED) ? event.payload['item'] : null;
+        selectedItem.resetState(true);
     };
-    clone.addViewEventListeners = <T extends AbtractItemView>(view: T): void => {
-        view.addEventListener(ItemViewEvent.ITEM_SELECTED, clone, 'onItemSelectedDeselect');
-        view.addEventListener(ItemViewEvent.ITEM_DESELECTED, clone, 'onItemSelectedDeselect');
-        view.addEventListener(ItemViewEvent.REMOVE_ITEM, clone, 'onItemRemove');
+    clone.addViewEventListeners = <T extends AbstractItemView>(): void => {
+        getComponents(clone.skinPartMap.get('itemTemplate').tagName.toLowerCase()).forEach((view: T) => {
+            // components removed from the DOM are automatically removed rom the results of getComponents
+            // So we store our own ref in views so we can remove them later
+            views.push(view);
+            clone.addViewEventListener(view);
+        });
     };
-    clone.removeViewEventListeners = <T extends AbtractItemView>(view: T): void => {
-        view.removeEventListener(ItemViewEvent.ITEM_SELECTED, clone, 'onItemSelectedDeselect');
-        view.removeEventListener(ItemViewEvent.ITEM_DESELECTED, clone, 'onItemSelectedDeselect');
-        view.removeEventListener(ItemViewEvent.REMOVE_ITEM, clone, 'onItemRemove');
+    clone.addViewEventListener = <T extends AbstractItemView>(view: T): void => {
+        view.addEventListener(Events.ITEM_SELECTED, clone, 'onItemSelectedDeselect');
+        view.addEventListener(Events.ITEM_DESELECTED, clone, 'onItemSelectedDeselect');
+        view.addEventListener(Events.REMOVE_ITEM, clone, 'onItemRemove');
     };
-    clone.addChildView = <T extends AbtractItemView, Z extends object>(model: Z): void => {
-        const view: T = clone.createChildView(model);
-        view.element = clone.cloneItemTemplate();
-        view.render(List([model]));
-        clone.childViews = clone.childViews.push(view);
-        if (clone.skinPartMap.get('collectionContainer')) {
-            clone.skinPartMap.get('collectionContainer').appendChild(view.element);
-        } else {
-            clone.element.appendChild(view.element);
-        }
-        clone.addViewEventListeners(view);
+    clone.removeViewEventListener = <T extends AbstractItemView>(view: T): void => {
+        view.removeEventListener(Events.ITEM_SELECTED, clone, 'onItemSelectedDeselect');
+        view.removeEventListener(Events.ITEM_DESELECTED, clone, 'onItemSelectedDeselect');
+        view.removeEventListener(Events.REMOVE_ITEM, clone, 'onItemRemove');
     };
-    clone.removeElement = () => {
-        // TODO: add code
+    clone.removeViewEventListeners = <T extends AbstractItemView>(): void => {
+        views.forEach((view: T) => {
+            clone.removeViewEventListener(view);
+        });
     };
-    clone.removeChildView = () => {
-        // TODO: add code
+    clone.addChildView = <T extends AbstractItemView>(model: object): void => {
+        // TODO: replace clone.createChildView with a ComponentRegistry method
+        const element = clone.cloneItemTemplate();
+        // components that extend item view pull their model data from this attribute
+        element.setAttribute('data-model', JSON.stringify(model));
+        clone.skinPartMap.get('collectionContainer').appendChild(element);
     };
     clone.removeAllChildViews = () => {
-        // TODO: add code
-    };
-    clone.destroyChildViews = () => {
-        // TODO: add code
+        const node = clone.skinPartMap.get('collectionContainer');
+        while (node.hasChildNodes()) {
+            node.removeChild(node.lastChild);
+        }
     };
     clone.destroy = (): void => {
-        clone.destroyChildViews();
         destroy();
-        this.collection = null;
-        this.itemView = null;
-        this.collectionContainer = null;
-        this.itemTemplate = null;
-        this.selectedItem = null;
+        clone.removeViewEventListeners();
+        clone.removeAllChildViews();
+        views.splice(0, views.length);
     };
     clone.render = <T>(list?: List<T>): HTMLElement => {
         // call super, triggers destroy
-        const element = render(list);
-        clone.removeAllChildViews();
+        render(list);
+        clone.destroy();
         for (let i=0; i < this.collection.length; i++) {
             clone.addChildView(this.collection.getItemAt(i));
         }
-        return element;
+        clone.addViewEventListeners();
+        return clone.element;
     };
     clone.onSkinPartAdded = (part: string) => {
         switch (part) {
@@ -114,11 +136,10 @@ export const createComponent = (): AbstractCollectionComponent => {
 
         }
     };
-    // TODO add the following methods destroyChildViews, removeAllChildViews,
-    //  removeChildView, removeElement, setSelectedItem, destroy
-    //  IMPORTANT: remeber we are not listening or handling any collection mutations
-    //  callers can call render whenever an application collection changes.
-    //  The component can set it's own view state so long as it dispatches and event to notify
-    //  observers so they can sync the application model with the change
+    addProperty(clone,
+        'selectedItem',
+        function () {
+            return selectedItem;
+        });
     return clone;
 };
