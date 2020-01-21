@@ -13,6 +13,7 @@ export interface ImageItem extends AbstractItemView {
     onImageLoad: (event: Event) => void;
     setThumbnailSrc: (src: string) => void;
     removeEventListeners: () => void;
+    model: {src: string};
 }
 export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
@@ -96,9 +97,9 @@ export const createImageView = (allowDrag = true): ImageItem => {
         clone.model = null;
     };
     clone.render = <T> (list?: List<T>): HTMLElement => {
+        // super.render will set clone.model
         render(list);
-        clone.model = list[0];
-        clone.setThumbnailSrc(list[0].src);
+        clone.setThumbnailSrc(clone.model.src);
         return clone.element;
     };
     return clone;
@@ -135,7 +136,11 @@ const imageViewTagDeg = {
 register(galleryTagDef);
 register(imageViewTagDeg);
 * Skins
+* checkout: https://www.w3schools.com/howto/howto_css_image_grid_responsive.asp
 <template id="galleryTemplate">
+    <style>
+        .selected {border: 1px; red;}
+    </style>
     <div data-component-root="root">
         <ul data-skin-part="collectionContainer">
           <li data-skin-part="itemTemplate">

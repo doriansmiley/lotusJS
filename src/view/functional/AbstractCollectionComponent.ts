@@ -36,9 +36,15 @@ export const createItemView = (): AbstractItemView => {
         },
     });
     const destroy = clone.destroy;
+    const render = clone.render;
     clone.destroy = (): void => {
         destroy();
         clone.model = null;
+    };
+    clone.render = <T> (list?: List<T>): HTMLElement => {
+        render(list);
+        clone.model = JSON.parse(clone.element.getAttribute('data-model'));
+        return clone.element;
     };
     return clone;
 };
