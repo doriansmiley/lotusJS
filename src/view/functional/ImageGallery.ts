@@ -1,5 +1,5 @@
-import {Component, mixin, Events, ComponentEvent, addProperty, getComponentEvent} from './AbstractComponent';
-import {createItemView, AbstractItemView} from './AbstractCollectionComponent';
+import {mixin, Events, getComponentEvent} from './AbstractComponent';
+import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
 import { List } from 'immutable';
 import { ResizeUtils } from 'lavenderjs';
 
@@ -13,9 +13,12 @@ export interface ImageItem extends AbstractItemView {
     onImageLoad: (event: Event) => void;
     setThumbnailSrc: (src: string) => void;
     removeEventListeners: () => void;
-};
+}
+export interface ImageGallery extends AbstractCollectionComponent {
+    title?: string;
+}
 // export public functions
-export const createComponent = (allowDrag = true): ImageItem => {
+export const createImageView = (allowDrag = true): ImageItem => {
     // TODO figure out which of the functions below (if any) should be private
     const clone: ImageItem = mixin(createItemView(), {
         width: NaN,
@@ -100,3 +103,50 @@ export const createComponent = (allowDrag = true): ImageItem => {
     };
     return clone;
 };
+export const createComponent = (title?: string): ImageGallery => {
+    const clone: ImageGallery = mixin(createCollectionComponent(), {
+        title
+    });
+    return clone;
+};
+
+/*
+* example usage
+const galleryTagDef = {
+            inserted: (component) => {
+            },
+            removed: (component) => {
+                component.element = null;
+            },
+            template: galleryTemplate.firstChild,
+            tagName: 'lotus-image-gallery',
+            tagFunction: createComponent
+        };
+const imageViewTagDeg = {
+            inserted: (component) => {
+            },
+            removed: (component) => {
+                component.element = null;
+            },
+            template: itemTemplate.firstChild,
+            tagName: 'lotus-image-view',
+            tagFunction: createImageView
+        };
+register(galleryTagDef);
+register(imageViewTagDeg);
+* Skins
+<template id="galleryTemplate">
+    <div data-component-root="root">
+        <ul data-skin-part="collectionContainer">
+          <li data-skin-part="itemTemplate">
+              <lotus-image-view data-skin-part="thumbnail"/>
+          </li>
+        </ul>
+    </div>
+</template>
+<template id="itemTemplate">
+    <div data-component-root="root">
+        <image data-skin-part="thumbnail"/>
+    </div>
+</template>
+* */
