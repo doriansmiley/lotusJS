@@ -44,7 +44,7 @@ export interface Component extends EventDispatcher {
     onSkinPartAdded (part: string): void;
 
     attributeMap: Map<string, any>;
-    skinPartMap: Map<string, Element>;
+    skinPartMap: Map<string, HTMLElement>;
 
     addAttributes (): void;
 
@@ -211,7 +211,7 @@ export const createComponent = (): Component => {
         }
         const skinPartsNodeList = clone.element.querySelectorAll('[data-skin-part]');
         for (let i = 0; i < skinPartsNodeList.length; i++) {
-            clone.skinPartMap.set('button', skinPartsNodeList[i]);
+            clone.skinPartMap.set('button', skinPartsNodeList[i] as HTMLElement);
             clone.onSkinPartAdded(skinPartsNodeList[i].getAttribute('data-skin-part'));
         }
     };
