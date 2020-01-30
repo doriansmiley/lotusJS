@@ -82,9 +82,10 @@ export const createComponent = (): AbstractCollectionComponent => {
         selectedItem.resetState(true);
     };
     clone.addViewEventListeners = <T extends AbstractItemView>(): void => {
-        getComponents(clone.skinPartMap.get('itemTemplate').tagName.toLowerCase()).forEach((view: T) => {
-            // components removed from the DOM are automatically removed rom the results of getComponents
-            // So we store our own ref in views so we can remove them later
+        getComponents(clone.skinPartMap.get('itemTemplate').tagName.toLowerCase(),
+            clone.skinPartMap.get('collectionContainer')).forEach((view: T) => {
+            // components removed from the DOM are automatically removed from the results of getComponents
+            // So we store our own ref in views so we can remove listener functions later
             views.push(view);
             clone.addViewEventListener(view);
         });

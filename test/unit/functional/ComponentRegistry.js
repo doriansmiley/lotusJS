@@ -3,9 +3,9 @@ const Events = require('../../../lib/view/functional/AbstractComponent').Events;
 const register = require('../../../lib/context/functional/ComponentRegistry').register;
 const getComponents = require('../../../lib/context/functional/ComponentRegistry').getComponents;
 
-describe('ButtonComponent', function () {
+describe('ComponentRegistry', function () {
 
-    it('check createComponent function and values', function (done) {
+    it('check register and getComponents functions and values', function (done) {
         const template = document.createElement('div');
         template.innerHTML = '<template id="app">\n' +
             '  <div data-component-root="root">\n' +
@@ -21,6 +21,8 @@ describe('ButtonComponent', function () {
             },
             removed: (component) => {
                 component.element = null;
+                const componentIndex = buttons.findIndex((view) => view === component);
+                buttons.splice(componentIndex,1);
                 expect(getComponents(tagDef.tagName).length).toBe(2);
             },
             template: template.firstChild,

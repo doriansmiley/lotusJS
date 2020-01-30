@@ -81,8 +81,10 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
 // or function. A mediator map calls a function or constructor for every instance of a tag
 // found in the DOM.. For example map('lotus-button', createButtonMediator). This map function
 // would use getComponents to get all the component instances which it would then iterate over
-// and call createButtonMediator(component). See our example application for a sample
-export const getComponents = (tagName: string): Array<Component> => {
-    return componentsByTagName.get(tagName);
+// and call createButtonMediator(component). This function is also called by collection components
+// such as image galleries or data grids. Passing the optional parent param allows collections
+// to get all child component instances to assign event listeners etc.
+export const getComponents = (tagName: string, parent?: HTMLElement): Array<Component> => {
+    return componentsByTagName.get(tagName).filter((component) => (parent) ? parent.contains(component.element) : true);
 };
 
