@@ -103,6 +103,7 @@ export const getTemplate = <T extends Component> (): T => {
         addEventListener: (event: string, instance: object, handler: string) => null,
         canListen: (event: string, instance: object, handler: string) => null,
         removeEventListener: (event: string, instance: object, handler: string) => null,
+        removeEventListeners: () => null,
         removeAllEventListeners: (instance: object) => null,
         dispatch: (event: ComponentEvent) => null,
         ready: false,
@@ -114,8 +115,7 @@ export const getTemplate = <T extends Component> (): T => {
         inserted: null,
         removed: null,
         attributeChanged: null,
-        removeEventListeners: null,
-        onSkinPartAdded: null,
+        onSkinPartAdded: (part: string) => null,
         attributeMap: new Map<string, any>(),
         skinPartMap: new Map<string, Element>(),
         addAttributes: null,
@@ -206,12 +206,12 @@ export const createComponent = (): Component => {
     clone.addSkinParts = () => {
         if (clone.element.getAttribute('data-skin-part') !== null
             && clone.element.getAttribute('data-skin-part') !== undefined) {
-            clone.skinPartMap.set('button', clone.element);
+            clone.skinPartMap.set(clone.element.getAttribute('data-skin-part'), clone.element);
             clone.onSkinPartAdded(clone.element.getAttribute('data-skin-part'),);
         }
         const skinPartsNodeList = clone.element.querySelectorAll('[data-skin-part]');
         for (let i = 0; i < skinPartsNodeList.length; i++) {
-            clone.skinPartMap.set('button', skinPartsNodeList[i] as HTMLElement);
+            clone.skinPartMap.set(skinPartsNodeList[i].getAttribute('data-skin-part'), skinPartsNodeList[i] as HTMLElement);
             clone.onSkinPartAdded(skinPartsNodeList[i].getAttribute('data-skin-part'));
         }
     };
@@ -234,6 +234,9 @@ export const createComponent = (): Component => {
         }
     };
     clone.destroy = (removed = false) => {
+        if (!clone.ready) {
+            return;
+        }
         clone.removeEventListeners();
         clone.attributeMap.clear();
         clone.skinPartMap.clear();

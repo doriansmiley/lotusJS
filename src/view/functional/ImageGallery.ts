@@ -92,6 +92,9 @@ export const createImageView = (allowDrag = true): ImageItem => {
         }
     };
     clone.destroy = () => {
+        if (!clone.ready) {
+            return;
+        }
         destroy();
         clone.removeEventListeners();
         clone.model = null;
@@ -111,47 +114,3 @@ export const createComponent = (title?: string): ImageGallery => {
     return clone;
 };
 
-/*
-* example usage
-const galleryTagDef = {
-            inserted: (component) => {
-            },
-            removed: (component) => {
-                component.element = null;
-            },
-            template: galleryTemplate.firstChild,
-            tagName: 'lotus-image-gallery',
-            tagFunction: createComponent
-        };
-const imageViewTagDeg = {
-            inserted: (component) => {
-            },
-            removed: (component) => {
-                component.element = null;
-            },
-            template: itemTemplate.firstChild,
-            tagName: 'lotus-image-view',
-            tagFunction: createImageView
-        };
-register(galleryTagDef);
-register(imageViewTagDeg);
-* Skins
-* checkout: https://www.w3schools.com/howto/howto_css_image_grid_responsive.asp
-<template id="galleryTemplate">
-    <style>
-        .selected {border: 1px; red;}
-    </style>
-    <div data-component-root="root">
-        <ul data-skin-part="collectionContainer">
-          <li data-skin-part="itemTemplate">
-              <lotus-image-view data-skin-part="thumbnail"/>
-          </li>
-        </ul>
-    </div>
-</template>
-<template id="itemTemplate">
-    <div data-component-root="root">
-        <image data-skin-part="thumbnail"/>
-    </div>
-</template>
-* */

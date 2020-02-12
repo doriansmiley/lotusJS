@@ -50,7 +50,7 @@ export const createItemView = (): AbstractItemView => {
 };
 export const createComponent = (): AbstractCollectionComponent => {
     // TODO figure out which of the functions below (if any) should be private
-    const clone: AbstractCollectionComponent =  mixin(createAbstractComponent(), {
+    const clone =  mixin<AbstractCollectionComponent>(createAbstractComponent(), {
         addChildView: null,
         childViews: List(),
         addViewEventListeners: null,
@@ -119,6 +119,9 @@ export const createComponent = (): AbstractCollectionComponent => {
         }
     };
     clone.destroy = (): void => {
+        if (!clone.ready) {
+            return;
+        }
         destroy();
         clone.removeViewEventListeners();
         clone.removeAllChildViews();
@@ -127,9 +130,9 @@ export const createComponent = (): AbstractCollectionComponent => {
     clone.render = <T>(list?: List<T>): HTMLElement => {
         // call super, triggers destroy
         render(list);
-        for (let i=0; i < this.collection.length; i++) {
-            clone.addChildView(this.collection.getItemAt(i));
-        }
+        list.forEach(<T>(model) => {
+            clone.addChildView(model);
+        });
         clone.addViewEventListeners();
         return clone.element;
     };
