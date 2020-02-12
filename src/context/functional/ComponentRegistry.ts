@@ -69,7 +69,7 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             const index = componentsByTagName.get(tagDef.tagName).findIndex((instance) => instance === this.component);
             componentsByTagName.get(tagDef.tagName).splice(index, 1);
             // destroy the component, this removes event listeners etc
-            this.component.destroy();
+            this.component.destroy(true);
             tagDef.removed(this.component);
         }
     };

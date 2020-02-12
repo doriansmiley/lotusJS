@@ -29,7 +29,7 @@ export interface Component extends EventDispatcher {
     element: HTMLElement;
     binder: Binder;
 
-    destroy (): void;
+    destroy (removed?: boolean): void;
 
     init (): void;
 
@@ -233,12 +233,15 @@ export const createComponent = (): Component => {
             }
         }
     };
-    clone.destroy = () => {
+    clone.destroy = (removed = false) => {
         clone.removeEventListeners();
         clone.attributeMap.clear();
         clone.skinPartMap.clear();
         clone.binder.unbindAll();
-        clone = null;
+        // only make clone eligible for GC if removed from DOM
+        if (removed) {
+            clone = null;
+        }
     };
     clone.render = <T> (list?: List<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
