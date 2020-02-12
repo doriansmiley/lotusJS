@@ -133,7 +133,7 @@ export const getComponentEvent = (type: string, payload: object): ComponentEvent
     };
 };
 export const createComponent = (): Component => {
-    const clone = getTemplate();
+    let clone = getTemplate();
     clone.addEventListener = (event: string, instance: object, handler: string) => {
         if (!clone.handlersByEventName.get(event)) {
             clone.handlersByEventName.set(event, []);
@@ -238,6 +238,7 @@ export const createComponent = (): Component => {
         clone.attributeMap.clear();
         clone.skinPartMap.clear();
         clone.binder.unbindAll();
+        clone = null;
     };
     clone.render = <T> (list?: List<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
