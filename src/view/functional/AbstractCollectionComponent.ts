@@ -127,7 +127,6 @@ export const createComponent = (): AbstractCollectionComponent => {
     clone.render = <T>(list?: List<T>): HTMLElement => {
         // call super, triggers destroy
         render(list);
-        clone.destroy();
         for (let i=0; i < this.collection.length; i++) {
             clone.addChildView(this.collection.getItemAt(i));
         }
