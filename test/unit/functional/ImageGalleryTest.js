@@ -3,7 +3,7 @@ const createImageView = require('../../../lib/view/functional/ImageGallery').cre
 const Events = require('../../../lib/view/functional/AbstractComponent').Events;
 const register = require('../../../lib/context/functional/ComponentRegistry').register;
 const getComponents = require('../../../lib/context/functional/ComponentRegistry').getComponents;
-const { List } = require('immutable');
+const {List} = require('immutable');
 
 describe('ImageGalleryComponent', function () {
 
@@ -13,9 +13,7 @@ describe('ImageGalleryComponent', function () {
         galleryTemplate.innerHTML = '<template id="imageGallery">\n' +
             '  <div data-component-root="root">\n' +
             '    <div data-skin-part="collectionContainer">\n' +
-            '      <div data-skin-part="itemTemplate">' +
-            '          <lotus-image-view/>\n' +
-            '      </div>\n' +
+            '      <lotus-image-view data-skin-part="itemTemplate" />\n' +
             '    </div>\n' +
             '  </div>\n' +
             '</template>\n';
@@ -50,21 +48,21 @@ describe('ImageGalleryComponent', function () {
         register(galleryTagDef);
         const gallery = document.createElement('lotus-image-gallery');
         let list = List([
-            {name:'', src:'/base/unit/assets/0.jpg'},
-            {name:'', src:'/base/unit/assets/2.jpg'},
-            {name:'', src:'/base/unit/assets/3.jpg'},
-            ]);
+            {name: '', src: '/base/unit/assets/0.jpg'},
+            {name: '', src: '/base/unit/assets/2.jpg'},
+            {name: '', src: '/base/unit/assets/3.jpg'},
+        ]);
         document.body.append(gallery);
         console.log(`gallery.component: ${gallery.component}`);
-        let componentInstance = getComponents('lotus-image-gallery', document.body)[0];
-        componentInstance.render(list);
+        gallery.component.element.replaceWith(gallery.component.render(list));
         list = List([
-            {name:'', src:'/base/unit/assets/4.jpg'},
-            {name:'', src:'/base/unit/assets/5.jpg'},
-            {name:'', src:'/base/unit/assets/6.jpg'},
+            {name: '', src: '/base/unit/assets/4.jpg'},
+            {name: '', src: '/base/unit/assets/5.jpg'},
+            {name: '', src: '/base/unit/assets/6.jpg'},
         ]);
         // always use replaceWith when you call render again!!!! render will always create
         // a new element and return it
-        componentInstance.element.replaceWith(componentInstance.render(list));
+        gallery.component.element.replaceWith(gallery.component.render(list));
+        done();
     });
 });

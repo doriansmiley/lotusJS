@@ -39,18 +39,16 @@ export const createItemView = (): AbstractItemView => {
     const render = clone.render;
     clone.destroy = (): void => {
         destroy();
-        clone.model = null;
     };
     clone.render = <T> (list?: List<T>): HTMLElement => {
         render(list);
-        clone.model = JSON.parse(clone.element.getAttribute('data-model'));
         return clone.element;
     };
     return clone;
 };
 export const createComponent = (): AbstractCollectionComponent => {
     // TODO figure out which of the functions below (if any) should be private
-    const clone =  mixin<AbstractCollectionComponent>(createAbstractComponent(), {
+    let clone =  mixin<AbstractCollectionComponent>(createAbstractComponent(), {
         addChildView: null,
         childViews: List(),
         addViewEventListeners: null,
@@ -68,7 +66,6 @@ export const createComponent = (): AbstractCollectionComponent => {
 
     });
     const render = clone.render;
-    const destroy = clone.destroy;
     const views: Array<AbstractItemView> = [];
     let selectedItem: AbstractItemView;
     clone.cloneItemTemplate = <T extends HTMLElement>(): T => {
@@ -108,9 +105,11 @@ export const createComponent = (): AbstractCollectionComponent => {
     clone.addChildView = <T extends AbstractItemView>(model: object): void => {
         // TODO: replace clone.createChildView with a ComponentRegistry method
         const element = clone.cloneItemTemplate();
-        // components that extend item view pull their model data from this attribute
-        element.setAttribute('data-model', JSON.stringify(model));
         clone.skinPartMap.get('collectionContainer').appendChild(element);
+        // IMPORTANT: once the component is added to the DOM the ComponentRegistry
+        // assigns the component attribute
+        // render the component again passing the model
+        element.replaceWith(element['component'].render(List([model])));
     };
     clone.removeAllChildViews = () => {
         const node = clone.skinPartMap.get('collectionContainer');
@@ -118,18 +117,32 @@ export const createComponent = (): AbstractCollectionComponent => {
             node.removeChild(node.lastChild);
         }
     };
-    clone.destroy = (): void => {
+    clone.destroy = (removed = false) => {
         if (!clone.ready) {
             return;
         }
-        destroy();
         clone.removeViewEventListeners();
         clone.removeAllChildViews();
         views.splice(0, views.length);
+        clone.removeEventListeners();
+        const itemTemplate = clone.skinPartMap.get('itemTemplate');
+        clone.attributeMap.clear();
+        clone.skinPartMap.clear();
+        // the item template is removed from the DOM on load so we need to make sure we preserve a reference
+        clone.skinPartMap.set('itemTemplate', itemTemplate);
+        clone.binder.unbindAll();
+        // only make clone eligible for GC if removed from DOM
+        if (removed) {
+            clone = null;
+        }
     };
     clone.render = <T>(list?: List<T>): HTMLElement => {
         // call super, triggers destroy
         render(list);
+        // render can be called by the ComponentRegistry as part of lifecycle
+        if (!list) {
+            return clone.element;
+        }
         list.forEach(<T>(model) => {
             clone.addChildView(model);
         });
@@ -140,7 +153,7 @@ export const createComponent = (): AbstractCollectionComponent => {
         switch (part) {
             // required, defines the layout for child views
             case 'itemTemplate':
-                clone.element.parentNode.removeChild(clone.skinPartMap.get(part));// remove from the view
+                clone.skinPartMap.get(part).remove();// remove from the view
                 break;
 
         }

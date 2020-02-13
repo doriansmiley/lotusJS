@@ -21,7 +21,7 @@ export interface ImageGallery extends AbstractCollectionComponent {
 // export public functions
 export const createImageView = (allowDrag = true): ImageItem => {
     // TODO figure out which of the functions below (if any) should be private
-    const clone: ImageItem = mixin(createItemView(), {
+    const clone = mixin<ImageItem>(createItemView(), {
         width: NaN,
         height: NaN,
         allowDrag,
@@ -95,20 +95,23 @@ export const createImageView = (allowDrag = true): ImageItem => {
         if (!clone.ready) {
             return;
         }
-        destroy();
+        // IMPORTANT child components need to clean up before calling super.destroy!!!
         clone.removeEventListeners();
-        clone.model = null;
+        destroy();
     };
-    clone.render = <T> (list?: List<T>): HTMLElement => {
-        // super.render will set clone.model
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    clone.render = (list?: List<{src: string}>): HTMLElement => {
         render(list);
-        clone.setThumbnailSrc(clone.model.src);
+        if (list && list.size === 1) {
+            clone.setThumbnailSrc(list.get(0).src);
+        }
         return clone.element;
     };
     return clone;
 };
 export const createComponent = (title?: string): ImageGallery => {
-    const clone: ImageGallery = mixin(createCollectionComponent(), {
+    const clone = mixin<ImageGallery>(createCollectionComponent(), {
         title
     });
     return clone;
