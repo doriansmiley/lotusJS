@@ -11,7 +11,7 @@ describe('ImageGalleryComponent', function () {
 
         const galleryTemplate = document.createElement('div');
         galleryTemplate.innerHTML = '<template id="imageGallery">\n' +
-            '  <div data-component-root="root">\n' +
+            '<div data-component-root="root">\n' +
             '    <div data-skin-part="collectionContainer">\n' +
             '      <lotus-image-view data-skin-part="itemTemplate" />\n' +
             '    </div>\n' +
