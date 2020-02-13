@@ -14,6 +14,8 @@ export interface ImageItem extends AbstractItemView {
     setThumbnailSrc: (src: string) => void;
     removeEventListeners: () => void;
     model: {src: string};
+    render<T> (list?: List<T>): HTMLElement;
+    render(list?: List<{src: string}>): HTMLElement;
 }
 export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
@@ -99,8 +101,6 @@ export const createImageView = (allowDrag = true): ImageItem => {
         clone.removeEventListeners();
         destroy();
     };
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     clone.render = (list?: List<{src: string}>): HTMLElement => {
         render(list);
         if (list && list.size === 1) {
