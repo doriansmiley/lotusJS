@@ -18,9 +18,6 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
-    externals: {
-        'lavenderjs/lib': 'Lavender'
-    },
     optimization: {
         minimizer: [new TerserPlugin({
             sourceMap: true,
@@ -42,7 +39,6 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                exclude: /node_modules/,
                 loader: 'awesome-typescript-loader'
             }
         ]
