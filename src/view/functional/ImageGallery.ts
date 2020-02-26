@@ -101,10 +101,13 @@ export const createImageView = (allowDrag = true): ImageItem => {
         clone.removeEventListeners();
         destroy();
     };
-    clone.render = (list?: List<{src: string}>): HTMLElement => {
+    clone.render = (list?: List<{ caption: string; src: string}>): HTMLElement => {
         render(list);
         if (list && list.size === 1) {
             clone.setThumbnailSrc(list.get(0).src);
+            if (clone.skinPartMap.get('caption')) {
+                clone.skinPartMap.get('caption').innerHTML = list.get(0).caption;
+            }
         }
         return clone.element;
     };
