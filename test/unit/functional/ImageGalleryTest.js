@@ -1,8 +1,8 @@
-const createComponent = require('../../../lib/view/functional/ImageGallery').createComponent;
-const createImageView = require('../../../lib/view/functional/ImageGallery').createImageView;
-const Events = require('../../../lib/view/functional/AbstractComponent').Events;
-const register = require('../../../lib/context/functional/ComponentRegistry').register;
-const getComponents = require('../../../lib/context/functional/ComponentRegistry').getComponents;
+const createComponent = require('../../../lib').createImageComponent;
+const createImageView = require('../../../lib').createImageGalleryView;
+const Events = require('../../../lib').Events;
+const register = require('../../../lib').register;
+const getComponents = require('../../../lib').getComponents;
 const {List} = require('immutable');
 
 describe('ImageGalleryComponent', function () {

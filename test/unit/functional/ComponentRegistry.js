@@ -1,7 +1,7 @@
-const createComponent = require('../../../lib/view/functional/Button').createComponent;
-const Events = require('../../../lib/view/functional/AbstractComponent').Events;
-const register = require('../../../lib/context/functional/ComponentRegistry').register;
-const getComponents = require('../../../lib/context/functional/ComponentRegistry').getComponents;
+const createComponent = require('../../../lib').createButtonComponent;
+const Events = require('../../../lib').Events;
+const register = require('../../../lib').register;
+const getComponents = require('../../../lib').getComponents;
 
 describe('ComponentRegistry', function () {
 
