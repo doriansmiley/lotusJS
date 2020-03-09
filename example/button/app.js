@@ -18,7 +18,20 @@ const tagDef = {
     tagName: 'lotus-button',
     tagFunction: Lotus.createButtonComponent
 };
+const tagDef2 = {
+    inserted: (component) => {
+        console.log('example component inserted');
+    },
+    removed: (component) => {
+        console.log('example component removed');
+        component.element = null;
+    },
+    templateUrl: 'templates/button-blue.html',
+    tagName: 'lotus-button-2',
+    tagFunction: Lotus.createButtonComponent
+};
 Lotus.register(tagDef);
+Lotus.register(tagDef2);
 const button = document.getElementById('button');
 const responder = {
     onEvent: (event) => {

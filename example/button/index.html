@@ -16,19 +16,18 @@
 	</p>
 	<lotus-button id="button"></lotus-button>
 </div>
-<!--
 <div class="content-panel">
-	<h3>Dynamically Change Skin</h3>
-	<h5>If your browser does not natively support web component (Safari) you will not see any change. See the xTag polyfill workaround below.</h5>
+	<h3>Lotus Button with External Skin</h3>
 	<p>
-		Changing the appearance of any image control instance is as simple as attaching a different skin using <code class="prettyprint lang-js">data-template-url="templates/button-messages.html"</code>. Below is the
-		exact same custom set of tags with a different skin attached. All using the same set of selectors encapsulated
-		with Shadow DOM. Imagine how many skins could be created without a single change to the component code.
+		Here's an example of a Lotus Button component using an external skin that is loaded at runtime.
+		The tag definition is `app.js` references the `templates/button-blue.html` template file.
+		The <code >lotus-button</code> tag
+		extends the <code >HTMLElement</code>. The component registry adds the component property
+		which we use to mediate the component view. We assign an event listener in <code>window.onload</code>.
 	</p>
-	<x-lotus-button  data-template-url="templates/button-messages.html" data-component-root='[data-skin-part="button"]' data-attribute-type="testButton"></x-lotus-button>
+	<lotus-button-2></lotus-button-2>
 </div>
--->
 </body>
-<script type="module" src="../node_modules/lotusjs-components/lib/lotusJS-UMD.js"></script>
+<script type="module" src="../lotusJS-UMD.js"></script>
 <script type="module" src="app.js"></script>
 </html>

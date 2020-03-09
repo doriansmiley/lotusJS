@@ -22,14 +22,14 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         const response = await axios({
             method: 'GET',
             url: tagDef.templateUrl,
-            responseType: 'document'
+            responseType: 'text'
         });
-        const template: HTMLTemplateElement = document.createElement('template');
-        template.outerHTML = response.data;
+        const div = document.createElement('div');
+        div.innerHTML = response.data;
+        tagDef.template = div.firstChild as HTMLTemplateElement;
         if (!tagDef.template.content) {
             throw (`Failed to create template from\n${response.data}`);
         }
-        tagDef.template = template;
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
@@ -45,6 +45,14 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             const component: Component = tagDef.tagFunction();
             const clone = document.importNode(tagDef.template.content, true);
             component.element = clone.querySelector('[data-component-root="root"]');
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            const styles = [...tagDef.template.content.childNodes].find((child: Node) => {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    return false;
+                }
+                return (child as HTMLElement).tagName.toLowerCase() === 'style';
+            });
             if (!componentsByTagName.get(tagDef.tagName)) {
                 componentsByTagName.set(tagDef.tagName, []);
             }
@@ -54,6 +62,11 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             const renderedComponent = component.render();
             // TODO add lifecycle hooks
             // Attach the created elements to the shadow dom
+            if (styles) {
+                const style = document.createElement('style');
+                style.textContent = styles.textContent;
+                shadow.appendChild(style);
+            }
             shadow.appendChild(renderedComponent);
             this.component = component;
         }
