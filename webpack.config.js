@@ -19,6 +19,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js']
     },
     optimization: {
+        minimize: true,
         minimizer: [new TerserPlugin({
             sourceMap: true,
         })],

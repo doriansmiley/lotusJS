@@ -1,4 +1,3 @@
-import {Binder, UuidUtils} from 'lavenderjs/lib';
 import {List} from 'immutable';
 
 // interfaces
@@ -27,8 +26,6 @@ export interface Component extends EventDispatcher {
     ready: boolean;
     id: string;
     element: HTMLElement;
-    binder: Binder;
-
     destroy (removed?: boolean): void;
 
     init (): void;
@@ -56,6 +53,10 @@ export interface Component extends EventDispatcher {
 export interface Listener {
     readonly handler: string;
     readonly instance: object;
+}
+// utils
+export const random = (): string => {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 // enums
 export enum Events {
@@ -107,8 +108,7 @@ export const getTemplate = <T extends Component> (): T => {
         removeAllEventListeners: (instance: object) => null,
         dispatch: (event: ComponentEvent) => null,
         ready: false,
-        id: UuidUtils.generateUUID(),
-        binder: new Binder(),
+        id: random(),
         element: null,
         destroy: null,
         init: null,
@@ -240,7 +240,6 @@ export const createComponent = (): Component => {
         clone.removeEventListeners();
         clone.attributeMap.clear();
         clone.skinPartMap.clear();
-        clone.binder.unbindAll();
         // only make clone eligible for GC if removed from DOM
         if (removed) {
             clone = null;
@@ -259,7 +258,7 @@ export const createComponent = (): Component => {
     addProperty(clone,
         'id',
         function () {
-            return UuidUtils.generateUUID();
+            return random();
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
     return clone;

@@ -130,7 +130,6 @@ export const createComponent = (): AbstractCollectionComponent => {
         clone.skinPartMap.clear();
         // the item template is removed from the DOM on load so we need to make sure we preserve a reference
         clone.skinPartMap.set('itemTemplate', itemTemplate);
-        clone.binder.unbindAll();
         // only make clone eligible for GC if removed from DOM
         if (removed) {
             clone = null;

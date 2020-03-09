@@ -1,8 +1,11 @@
 import {mixin, Events, getComponentEvent} from './AbstractComponent';
 import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
 import { List } from 'immutable';
-import { ResizeUtils } from 'lavenderjs';
-
+// utils
+export type widthHeightObject = { width: number; height: number };
+export const getScaleToFit = (objSize: widthHeightObject, sizeToFit: widthHeightObject): number => {
+    return Math.min(sizeToFit.width / objSize.width, sizeToFit.height / objSize.height);
+};
 // export interfaces
 export interface ImageItem extends AbstractItemView {
     width: number;
@@ -48,7 +51,7 @@ export const createImageView = (allowDrag = true): ImageItem => {
             width: parseInt(window.getComputedStyle(clone.element).width),
             height: parseInt(window.getComputedStyle(clone.element).height),
         };
-        const scale = ResizeUtils.getScaleToFit(imageSize, containerSize);
+        const scale = getScaleToFit(imageSize, containerSize);
         const width = imageSize.width * scale;
         const height = imageSize.height * scale;
         // console.log("width/height "+width+"/"+height)

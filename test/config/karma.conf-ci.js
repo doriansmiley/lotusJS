@@ -34,11 +34,6 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            '../node_modules/x-tag/lib/webcomponents.js',
-            '../node_modules/x-tag/dist/x-tag-core-with-shadowdom.min.js',
-            '../node_modules/lavenderjs/lib/lavenderJS-UMD.min.js',
-            '../lib/lotusJS-UMD.min.js',
-            '../global/Globals.js',
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             {pattern: 'unit/templates/**', watched: false, included: false, served: true},
             'unit/**/*.js'
