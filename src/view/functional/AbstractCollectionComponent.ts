@@ -1,4 +1,4 @@
-import {Component, mixin, Events, ComponentEvent, addProperty, createComponent as createAbstractComponent} from './AbstractComponent';
+import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
 import { List } from 'immutable';
 import {getComponents} from '../../context/functional/ComponentRegistry';
 
@@ -24,8 +24,8 @@ export interface AbstractCollectionComponent extends Component {
     removeChildView: () => void;
 };
 // export public functions
-export const createItemView = (): AbstractItemView => {
-    const clone: AbstractItemView =  mixin(createAbstractComponent(), {
+export const createItemView = (component: Component): AbstractItemView => {
+    const clone: AbstractItemView =  mixin(component, {
         model: null,
         resetState: (selected: boolean) => {
             if (selected) {
@@ -46,9 +46,9 @@ export const createItemView = (): AbstractItemView => {
     };
     return clone;
 };
-export const createComponent = (): AbstractCollectionComponent => {
+export const createComponent = (component: Component): AbstractCollectionComponent => {
     // TODO figure out which of the functions below (if any) should be private
-    let clone =  mixin<AbstractCollectionComponent>(createAbstractComponent(), {
+    let clone =  mixin<AbstractCollectionComponent>(component, {
         addChildView: null,
         childViews: List(),
         addViewEventListeners: null,

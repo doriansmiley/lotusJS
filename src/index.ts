@@ -8,10 +8,14 @@ export {AbstractCollectionComponent} from './view/functional/AbstractCollectionC
 export {createItemView as createAbstractItemView} from './view/functional/AbstractCollectionComponent';
 export {createComponent as createAbstractComponent} from './view/functional/AbstractCollectionComponent';
 export {ButtonComponent} from './view/functional/Button';
+export {useButton} from './view/functional/Button';
 export {createComponent as createButtonComponent} from './view/functional/Button';
 export {ImageItem} from './view/functional/ImageGallery';
+export {useImageView} from './view/functional/ImageGallery';
 export {ImageGallery} from './view/functional/ImageGallery';
+export {useImageGallery} from './view/functional/ImageGallery';
 export {createImageView as createImageGalleryView} from './view/functional/ImageGallery';
 export {createComponent as createImageComponent} from './view/functional/ImageGallery';
 export {SuperButton} from './view/functional/SuperButton';
+export {useSuperButton} from './view/functional/SuperButton';
 

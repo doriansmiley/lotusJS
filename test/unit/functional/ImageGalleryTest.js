@@ -1,5 +1,5 @@
-const createComponent = require('../../../lib').createImageComponent;
-const createImageView = require('../../../lib').createImageGalleryView;
+const useImageGallery = require('../../../lib').useImageGallery;
+const useImageView = require('../../../lib').useImageView;
 const Events = require('../../../lib').Events;
 const register = require('../../../lib').register;
 const getComponents = require('../../../lib').getComponents;
@@ -7,7 +7,7 @@ const {List} = require('immutable');
 
 describe('ImageGalleryComponent', function () {
 
-    it('check createComponent function and values', function (done) {
+    it('check useImageGallery function and values', function (done) {
 
         const galleryTemplate = document.createElement('div');
         galleryTemplate.innerHTML = '<template id="imageGallery">\n' +
@@ -32,7 +32,7 @@ describe('ImageGalleryComponent', function () {
             },
             template: galleryTemplate.firstChild,
             tagName: 'lotus-image-gallery',
-            tagFunction: createComponent
+            tagFunction: useImageGallery
         };
         const imageViewTagDeg = {
             inserted: (component) => {
@@ -42,7 +42,7 @@ describe('ImageGalleryComponent', function () {
             },
             template: itemTemplate.firstChild,
             tagName: 'lotus-image-view',
-            tagFunction: createImageView
+            tagFunction: useImageView
         };
         register(imageViewTagDeg);
         register(galleryTagDef);

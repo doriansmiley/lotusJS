@@ -1,13 +1,13 @@
-import {Component, mixin, Events, getComponentEvent} from './AbstractComponent';
-import {createComponent as createAbstractComponent} from './AbstractComponent';
+import {Component, mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
+import {compose} from 'ramda';
 
 // export interfaces
 export interface ButtonComponent extends Component {
     onClick: (event: Event) => void;
 };
-
-export const createComponent = (): ButtonComponent => {
-    const clone =  mixin<ButtonComponent>(createAbstractComponent(),{
+// export public functions
+export const createComponent = (component: Component): ButtonComponent => {
+    const clone =  mixin<ButtonComponent>(component,{
         onClick: null,
     });
     clone.onSkinPartAdded = (part: string) => {
@@ -32,3 +32,6 @@ export const createComponent = (): ButtonComponent => {
     };
     return clone;
 };
+// create hook using compose
+// hooks provide prebuilt functions that are useful
+export const useButton: () => ButtonComponent = compose(createComponent, createAbstractComponent);

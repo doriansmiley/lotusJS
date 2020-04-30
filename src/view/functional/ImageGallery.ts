@@ -1,6 +1,8 @@
-import {mixin, Events, getComponentEvent} from './AbstractComponent';
+import {mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
 import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
 import { List } from 'immutable';
+import {compose} from 'ramda';
+
 // utils
 export type widthHeightObject = { width: number; height: number };
 export const getScaleToFit = (objSize: widthHeightObject, sizeToFit: widthHeightObject): number => {
@@ -24,12 +26,12 @@ export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
 }
 // export public functions
-export const createImageView = (allowDrag = true): ImageItem => {
+export const createImageView = (component: AbstractItemView): ImageItem => {
     // TODO figure out which of the functions below (if any) should be private
-    const clone = mixin<ImageItem>(createItemView(), {
+    const clone = mixin<ImageItem>(component, {
         width: NaN,
         height: NaN,
-        allowDrag,
+        allowDrag: true,
         onThumbClick: false,
         onDragStart: false,
         onImageLoad: false,
@@ -116,10 +118,14 @@ export const createImageView = (allowDrag = true): ImageItem => {
     };
     return clone;
 };
-export const createComponent = (title?: string): ImageGallery => {
-    const clone = mixin<ImageGallery>(createCollectionComponent(), {
-        title
+export const createComponent = (component: AbstractCollectionComponent): ImageGallery => {
+    const clone = mixin<ImageGallery>(component, {
+        title: ''
     });
     return clone;
 };
+// create hook using compose
+// hooks provide prebuilt functions that are useful
+export const useImageView: () => ImageItem = compose(createImageView, createItemView, createAbstractComponent);
+export const useImageGallery: () => ImageGallery = compose(createComponent, createCollectionComponent, createAbstractComponent);
 

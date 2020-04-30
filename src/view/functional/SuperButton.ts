@@ -1,13 +1,14 @@
-import {ButtonComponent, createComponent as createButtonComponent} from './Button';
-import {mixin} from './AbstractComponent';
+import {ButtonComponent} from './Button';
+import {mixin, createComponent as createAbstractComponent} from './AbstractComponent';
+import {compose} from 'ramda';
 
 // export interfaces
 export interface SuperButton extends ButtonComponent {
     onMouseOverLabel: (event: Event) => void;
 };
-
-export const createComponent = (): SuperButton => {
-    const clone =  mixin<SuperButton>(createButtonComponent(), {
+// export public functions
+export const createComponent = (component: ButtonComponent): SuperButton => {
+    const clone =  mixin<SuperButton>(component, {
         onMouseOverLabel: null,
     });
     // capture a reference to super.onSkinPartAdded
@@ -47,3 +48,6 @@ export const createComponent = (): SuperButton => {
     };
     return clone;
 };
+// create hook using compose
+// hooks provide prebuilt functions that are useful
+export const useSuperButton: () => SuperButton = compose(createComponent, createAbstractComponent);

@@ -1,4 +1,4 @@
-const buttonView = require('../../../lib').createButtonComponent;
+const useButton = require('../../../lib').useButton;
 const Events = require('../../../lib').Events;
 const register = require('../../../lib').register;
 
@@ -29,7 +29,7 @@ describe('ButtonComponent', function () {
             },
             template: template.firstChild,
             tagName: 'lotus-button-2',
-            tagFunction: buttonView
+            tagFunction: useButton
         };
         register(tagDef);
         // create our component
