@@ -84,6 +84,7 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             // destroy the component, this removes event listeners etc
             this.component.destroy(true);
             tagDef.removed(this.component);
+            tagDef.template = null;
         }
     };
     customElements.define(tagDef.tagName, wrapper);
