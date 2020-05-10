@@ -29,7 +29,7 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'browserify'],
 
 
         // list of files / patterns to load in the browser
@@ -71,6 +71,12 @@ module.exports = function (config) {
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: Object.keys(customLaunchers),
-        singleRun: true
+        singleRun: true,
+        preprocessors: {
+            'unit/functional/**/*.js': [ 'browserify' ]
+        },
+        browserify: {                   // 7
+            debug: true
+        },
     });
 };
