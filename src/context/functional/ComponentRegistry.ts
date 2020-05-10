@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {Component} from '../../view/functional/AbstractComponent';
 
 // interface definitions
@@ -19,16 +18,12 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         throw new Error('Custom elements is not supported by your browser!');
     }
     if (tagDef.templateUrl) {
-        const response = await axios({
-            method: 'GET',
-            url: tagDef.templateUrl,
-            responseType: 'text'
-        });
+        const response = await fetch(tagDef.templateUrl);
         const div = document.createElement('div');
-        div.innerHTML = response.data;
+        div.innerHTML = await response.text();
         tagDef.template = div.firstChild as HTMLTemplateElement;
         if (!tagDef.template.content) {
-            throw (`Failed to create template from\n${response.data}`);
+            throw (`Failed to create template from\n${div.innerHTML}`);
         }
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
