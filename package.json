@@ -1,6 +1,6 @@
 {
   "name": "lotusjs-components",
-  "version": "1.3.18",
+  "version": "2.0.4",
   "description": "LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.",
   "main": "lib/index.js",
   "directories": {
@@ -10,9 +10,11 @@
   },
   "scripts": {
     "clean-dist": "rimraf ./lib/*",
-    "prebuild": "npm run clean-dist",
-    "build": "tsc && webpack",
-    "test": "sh ./scripts/testSauce.sh"
+    "docs": "typedoc --out ./lib/docs --exclude **/node_modules/** --excludeExternals --excludeNotExported --excludePrivate --excludeProtected --target ES6 --ignoreCompilerErrors",
+    "prebuild": "npm run clean-dist && npm run docs",
+    "build": "eslint \"src/**\" --quiet && tsc && webpack",
+    "test": "npm run build && sh ./scripts/testSauce.sh",
+    "test-local": "npm run build && sh ./scripts/typescript.sh"
   },
   "repository": {
     "type": "git",
@@ -37,26 +39,39 @@
   },
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
-    "lavenderjs": "^1.0.16",
-    "x-tag": "^1.5.11"
+    "immutable": "^4.0.0-rc.12",
+    "js-yaml": "^3.13.1",
+    "ramda": "^0.27.0"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^3.1.2",
-    "chai": "^3.5.0",
-    "grunt": "^1.0.1",
+    "@types/lodash": "^4.14.150",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "browserify": "^16.5.1",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "grunt": "^1.1.0",
     "grunt-mocha-test": "^0.13.2",
-    "jasmine": "^2.6.0",
-    "karma": "^1.7.0",
-    "karma-chrome-launcher": "^2.1.1",
-    "karma-firefox-launcher": "^1.0.1",
-    "karma-jasmine": "^1.1.0",
-    "karma-junit-reporter": "^1.2.0",
-    "karma-sauce-launcher": "^1.1.0",
-    "mocha": "^3.3.0",
-    "rimraf": "^2.6.1",
-    "typedoc": "^0.5.0",
+    "jasmine": "^3.5.0",
+    "karma": "^5.0.3",
+    "karma-browserify": "^7.0.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-firefox-launcher": "^1.2.0",
+    "karma-jasmine": "^3.1.1",
+    "karma-junit-reporter": "^2.0.1",
+    "karma-sauce-launcher": "^4.1.4",
+    "karma-spec-reporter": "0.0.32",
+    "mocha": "^7.1.2",
+    "rimraf": "^3.0.0",
+    "terser-webpack-plugin": "^2.3.6",
+    "typedoc": "^0.17.6",
     "typedoc-webpack-plugin": "^1.1.4",
-    "typescript": "^2.2.2",
-    "webpack": "^2.4.1"
+    "typescript": "^3.7.4",
+    "watchify": "^3.11.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.10"
   }
 }

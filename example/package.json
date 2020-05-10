@@ -1,0 +1,31 @@
+{
+  "name": "lotusjs-components-exampls",
+  "version": "2.0.0",
+  "description": "sample web component application for HTML buttons",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://doriansmiley@yahoo.com@github.com/doriansmiley/lotusJS.git"
+  },
+  "keywords": [
+    "HTML5",
+    "web",
+    "components",
+    "button",
+    "LotusJS"
+  ],
+  "author": "Dorian Smiley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/doriansmiley/lotusJS/issues"
+  },
+  "homepage": "https://github.com/doriansmiley/lotusJS#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "lotusjs-components": "^2.0.4"
+  }
+}
