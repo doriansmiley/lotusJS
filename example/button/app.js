@@ -16,7 +16,7 @@ const tagDef = {
     },
     template: template.firstChild,
     tagName: 'lotus-button',
-    tagFunction: Lotus.createButtonComponent
+    tagFunction: Lotus.useButton
 };
 const tagDef2 = {
     inserted: (component) => {
@@ -28,7 +28,7 @@ const tagDef2 = {
     },
     templateUrl: 'templates/button-blue.html',
     tagName: 'lotus-button-2',
-    tagFunction: Lotus.createButtonComponent
+    tagFunction: Lotus.useButton
 };
 Lotus.register(tagDef);
 Lotus.register(tagDef2);
