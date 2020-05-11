@@ -10,7 +10,7 @@
   },
   "scripts": {
     "clean-dist": "rimraf ./lib/*",
-    "docs": "typedoc --out ./lib/docs --exclude **/node_modules/** --excludeExternals --excludeNotExported --excludePrivate --excludeProtected --target ES6 --ignoreCompilerErrors",
+    "docs": "typedoc --out ./lib/docs",
     "prebuild": "npm run clean-dist && npm run docs",
     "build": "eslint \"src/**\" --quiet && tsc && webpack",
     "test": "npm run build && sh ./scripts/testSauce.sh",
