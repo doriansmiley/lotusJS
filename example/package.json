@@ -26,6 +26,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lotusjs-components": "^2.0.4"
+    "lotusjs-components": "^2.0.7"
   }
 }

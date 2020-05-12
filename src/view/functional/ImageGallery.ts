@@ -1,4 +1,4 @@
-import {mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
+import {mixin, createComponent as createAbstractComponent} from './AbstractComponent';
 import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
 import { List } from 'immutable';
 import {compose} from 'ramda';
@@ -70,8 +70,8 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
     };
     clone.resetState = (state: boolean) => {
         resetState(state);
-        const eventType = (state) ? Events.ITEM_SELECTED : Events.ITEM_DESELECTED;
-        clone.dispatch(getComponentEvent(eventType, {item: clone}));
+        console.log(`you clicked: ${clone.skinPartMap.get('caption').innerHTML }`);
+        // TODO: handle overrides
     };
     clone.onImageLoad = (event: Event) => {
         clone.skinPartMap.get('thumbnail').onload = null;

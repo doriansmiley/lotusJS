@@ -11,8 +11,12 @@ your bundles. The UMD used in the example is strictly for demo purposes.
 ### Button
 
 Available at `localhost:${port}/button`.
-This is an example of how to use the `Lotus.Button`. 
+This is an example of how to use the `Lotus.useButton` function. 
 Source code is in the `./button` directory
 
 ### Image Gallery
- TODO
+Available at `localhost:${port}/image-gallery`.
+This is an example of how to use the `Lotus.useImageGallery` function. 
+Source code is in the `./image-gallery` directory. It's really just
+and image list, but it could easily be extended to include infinite scroll, 
+enlargements, etc. It's a work in progress.
