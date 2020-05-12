@@ -75,8 +75,8 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         if (selectedItem && selectedItem != event.payload['item']) {
             selectedItem.resetState(false);
         }
-        selectedItem = (event.type == Events.ITEM_SELECTED) ? event.payload['item'] : null;
-        selectedItem.resetState(true);
+        selectedItem = event.payload['item'];
+        selectedItem.resetState(event.type === Events.ITEM_SELECTED);
     };
     clone.addViewEventListeners = <T extends AbstractItemView>(): void => {
         getComponents(clone.skinPartMap.get('itemTemplate').tagName.toLowerCase(),
