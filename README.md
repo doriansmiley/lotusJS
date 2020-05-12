@@ -111,7 +111,7 @@ export const useButton: () => ButtonComponent = compose(createComponent, createA
 Lotus also has the concept of collection components which render collections of 
 components. To create a collection component compose with `createCollectionComponent` and
 create an item view composed with `createAbstractComponent`. Below is a component that displays 
-a collection of image items.
+a collection of image items.z
 ```
 import {mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
 import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
