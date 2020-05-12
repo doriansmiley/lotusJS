@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - New built in components for lists, radio groups, etc.
 
+## [2.0.7] - 2020-05-11
+
+### Added
+- Image gallery example
+- Examples landing page
+
+### Changed
+- Fixed bug in the collection component and image gallery
+- Doc generation command (location of doc files)
+- npm ignore
+
+### Removed
+- All unused files in lib
+
 ## [2.0.0] - 2020-05-10
 
 ### Added
