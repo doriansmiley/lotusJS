@@ -1,6 +1,6 @@
 import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
 import { List } from 'immutable';
-import {getComponents} from '../../context/functional/ComponentRegistry';
+import {getComponents} from '../..';
 
 // export interfaces
 export interface AbstractItemView extends Component {
