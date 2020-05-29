@@ -5,10 +5,16 @@ template.innerHTML = '<template id="app">\n' +
     '      <label>Hello World with Bootsrap</label>\n' +
     '    </button>\n' +
     '  </div>\n' +
-    '</template>\n'
+    '</template>\n';
+const responder = {
+    onEvent: (event) => {
+        console.log('click');
+    }
+};
 const tagDef = {
     inserted: (component) => {
         console.log('example component inserted');
+        component.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
     },
     removed: (component) => {
         console.log('example component removed');
@@ -21,6 +27,7 @@ const tagDef = {
 const tagDef2 = {
     inserted: (component) => {
         console.log('example component inserted');
+        component.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
     },
     removed: (component) => {
         console.log('example component removed');
@@ -32,10 +39,3 @@ const tagDef2 = {
 };
 Lotus.register(tagDef);
 Lotus.register(tagDef2);
-const button = document.getElementById('button');
-const responder = {
-    onEvent: (event) => {
-        console.log('click');
-    }
-};
-button.component.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
