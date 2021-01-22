@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - New built in components for lists, radio groups, etc.
 
+## [2.1.0] - 2021-1-21
+
+### Added
+
+### Changed
+- Use ES imports for Ramda to reduce bundle size
+
+### Removed
+- Removed ImmutableJS to save on bundle size. It can still be used in facades at the application layer.
+
 ## [2.0.7] - 2020-05-11
 
 ### Added
