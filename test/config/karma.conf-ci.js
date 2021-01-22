@@ -29,13 +29,15 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine', 'browserify'],
+        frameworks: ['jasmine'],
 
 
         // list of files / patterns to load in the browser
         files: [
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             {pattern: 'unit/templates/**', watched: false, included: false, served: true},
+            '../lib/lotusJS-UMD.js',
+            '../node_modules/immutable/dist/immutable.js',
             'unit/**/*.js'
         ],
 
@@ -72,11 +74,5 @@ module.exports = function (config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: Object.keys(customLaunchers),
         singleRun: true,
-        preprocessors: {
-            'unit/functional/**/*.js': [ 'browserify' ]
-        },
-        browserify: {                   // 7
-            debug: true
-        },
     });
 };
