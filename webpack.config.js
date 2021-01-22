@@ -38,7 +38,7 @@ module.exports = {
             excludeExternals:true
         }, './src'),
         new BundleAnalyzerPlugin({
-            analyzerMode: 'static'
+            analyzerMode: 'disabled'
         })
     ],
     module: {
