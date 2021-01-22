@@ -5,6 +5,8 @@ module.exports = function (config) {
         files: [
             {pattern: 'unit/assets/**', watched: false, included: false, served: true},
             {pattern: 'unit/templates/**', watched: false, included: false, served: true},
+            '../lib/lotusJS-UMD.js',
+            '../node_modules/immutable/dist/immutable.js',
             'unit/**/*.js'
         ],
 
@@ -18,13 +20,9 @@ module.exports = function (config) {
 
         singleRun: true,
 
-        frameworks: ['jasmine', 'browserify'],
+        frameworks: ['jasmine'],
 
         browsers: ['Chrome'],
-
-        preprocessors: {
-            'unit/functional/**/*.js': [ 'browserify' ]
-        },
 
         plugins: [
             'karma-junit-reporter',
@@ -32,7 +30,6 @@ module.exports = function (config) {
             'karma-firefox-launcher',
             'karma-spec-reporter',
             'karma-jasmine',
-            'karma-browserify'
         ],
 
         junitReporter: {

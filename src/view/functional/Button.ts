@@ -1,10 +1,10 @@
 import {Component, mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
-import {compose} from 'ramda';
+import compose from 'ramda/es/compose';
 
 // export interfaces
 export interface ButtonComponent extends Component {
     onClick: (event: Event) => void;
-};
+}
 // export public functions
 export const createComponent = (component: Component): ButtonComponent => {
     const clone =  mixin<ButtonComponent>(component,{

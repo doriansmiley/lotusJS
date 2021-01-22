@@ -1,6 +1,5 @@
 import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
-import { List } from 'immutable';
-import {getComponents} from '../../context/functional/ComponentRegistry';
+import {getComponents} from '../..';
 
 // export interfaces
 export interface AbstractItemView extends Component {
@@ -9,7 +8,7 @@ export interface AbstractItemView extends Component {
 }
 export interface AbstractCollectionComponent extends Component {
     addChildView: <T extends AbstractItemView, Z extends object>(model: Z) => void;
-    childViews: List<AbstractItemView>;
+    childViews: Array<AbstractItemView>;
     addViewEventListeners: () => void;
     addViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListener: <T extends AbstractItemView>(view: T) => void;
@@ -22,7 +21,7 @@ export interface AbstractCollectionComponent extends Component {
     destroyChildViews: () => void;
     removeElement: () => void;
     removeChildView: () => void;
-};
+}
 // export public functions
 export const createItemView = (component: Component): AbstractItemView => {
     const clone: AbstractItemView =  mixin(component, {
@@ -40,7 +39,7 @@ export const createItemView = (component: Component): AbstractItemView => {
     clone.destroy = (): void => {
         destroy();
     };
-    clone.render = <T> (list?: List<T>): HTMLElement => {
+    clone.render = <T> (list?: Array<T>): HTMLElement => {
         render(list);
         return clone.element;
     };
@@ -50,7 +49,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
     // TODO figure out which of the functions below (if any) should be private
     let clone =  mixin<AbstractCollectionComponent>(component, {
         addChildView: null,
-        childViews: List(),
+        childViews: [],
         addViewEventListeners: null,
         addViewEventListener: null,
         removeViewEventListener: null,
@@ -109,7 +108,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         // IMPORTANT: once the component is added to the DOM the ComponentRegistry
         // assigns the component attribute
         // render the component again passing the model
-        element.replaceWith(element['component'].render(List([model])));
+        element.replaceWith(element['component'].render([model]));
     };
     clone.removeAllChildViews = () => {
         const node = clone.skinPartMap.get('collectionContainer');
@@ -135,7 +134,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
             clone = null;
         }
     };
-    clone.render = <T>(list?: List<T>): HTMLElement => {
+    clone.render = <T>(list?: Array<T>): HTMLElement => {
         // call super, triggers destroy
         render(list);
         // render can be called by the ComponentRegistry as part of lifecycle

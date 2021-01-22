@@ -1,7 +1,11 @@
-import {mixin, createComponent as createAbstractComponent} from './AbstractComponent';
-import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
-import { List } from 'immutable';
-import {compose} from 'ramda';
+import {createComponent as createAbstractComponent, mixin} from './AbstractComponent';
+import {
+    AbstractCollectionComponent,
+    AbstractItemView,
+    createComponent as createCollectionComponent,
+    createItemView
+} from './AbstractCollectionComponent';
+import compose from 'ramda/es/compose';
 
 // utils
 export type widthHeightObject = { width: number; height: number };
@@ -19,8 +23,8 @@ export interface ImageItem extends AbstractItemView {
     setThumbnailSrc: (src: string) => void;
     removeEventListeners: () => void;
     model: {src: string};
-    render<T> (list?: List<T>): HTMLElement;
-    render(list?: List<{src: string}>): HTMLElement;
+    render<T> (list?: Array<T>): HTMLElement;
+    render(list?: Array<{src: string}>): HTMLElement;
 }
 export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
@@ -62,10 +66,10 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         clone.skinPartMap.get('thumbnail').style.maxWidth = `${containerSize.width}px`;
         clone.skinPartMap.get('thumbnail').style.maxHeight = `${containerSize.height}px`;
     };
-    clone.onThumbClick = (event: Event) => {
+    clone.onThumbClick = () => {
         clone.resetState(clone.element.classList.contains('selected'));
     };
-    clone.onDragStart = (event: Event) => {
+    clone.onDragStart = () => {
         // TODO: attach data attribute
     };
     clone.resetState = (state: boolean) => {
@@ -73,7 +77,7 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         console.log(`you clicked: ${clone.skinPartMap.get('caption').innerHTML }`);
         // TODO: handle overrides
     };
-    clone.onImageLoad = (event: Event) => {
+    clone.onImageLoad = () => {
         clone.skinPartMap.get('thumbnail').onload = null;
         clone.skinPartMap.get('thumbnail').style.visibility = 'visible';
         sizeImage();
@@ -106,12 +110,12 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         clone.removeEventListeners();
         destroy();
     };
-    clone.render = (list?: List<{ caption: string; src: string}>): HTMLElement => {
+    clone.render = (list?: Array<{ caption: string; src: string}>): HTMLElement => {
         render(list);
-        if (list && list.size === 1) {
-            clone.setThumbnailSrc(list.get(0).src);
+        if (list && list.length === 1) {
+            clone.setThumbnailSrc(list[0].src);
             if (clone.skinPartMap.get('caption')) {
-                clone.skinPartMap.get('caption').innerHTML = list.get(0).caption;
+                clone.skinPartMap.get('caption').innerHTML = list[0].caption;
             }
         }
         return clone.element;
@@ -119,10 +123,9 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
     return clone;
 };
 export const createComponent = (component: AbstractCollectionComponent): ImageGallery => {
-    const clone = mixin<ImageGallery>(component, {
+    return mixin<ImageGallery>(component, {
         title: ''
     });
-    return clone;
 };
 // create hook using compose
 // hooks provide prebuilt functions that are useful

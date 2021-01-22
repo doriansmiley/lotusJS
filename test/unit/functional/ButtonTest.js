@@ -1,7 +1,3 @@
-const useButton = require('../../../lib').useButton;
-const Events = require('../../../lib').Events;
-const register = require('../../../lib').register;
-
 describe('ButtonComponent', function () {
 
     it('check createComponent function and values', function (done) {
@@ -29,16 +25,16 @@ describe('ButtonComponent', function () {
             },
             template: template.firstChild,
             tagName: 'lotus-button-2',
-            tagFunction: useButton
+            tagFunction: Lotus.useButton
         };
-        register(tagDef);
+        Lotus.register(tagDef);
         // create our component
         const buttonElement = document.createElement('lotus-button-2');
         document.body.append(buttonElement);
         const button = buttonElement.component;
         expect(button.skinPartMap.get('button') instanceof HTMLButtonElement).toBe(true);
-        console.log('Events.CLICK: ' + Events.CLICK);
-        button.addEventListener(Events.CLICK, responder, 'onEvent');
+        console.log('Lotus.Events.CLICK: ' + Lotus.Events.CLICK);
+        button.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
         button.skinPartMap.get('button').click({});
     });
 });

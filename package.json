@@ -73,6 +73,7 @@
     "typescript": "^3.7.4",
     "watchify": "^3.11.1",
     "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^4.4.0",
     "webpack-cli": "^3.3.10"
   }
 }

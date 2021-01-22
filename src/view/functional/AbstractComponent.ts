@@ -1,5 +1,3 @@
-import {List} from 'immutable';
-
 // interfaces
 export interface ComponentEvent {
     type: string;
@@ -40,14 +38,14 @@ export interface Component extends EventDispatcher {
 
     onSkinPartAdded (part: string): void;
 
-    attributeMap: Map<string, any>;
+    attributeMap: Map<string, unknown>;
     skinPartMap: Map<string, HTMLElement>;
 
     addAttributes (): void;
 
     addSkinParts (): void;
 
-    render<T> (list?: List<T>): HTMLElement;
+    render<T> (list?: Array<T>): HTMLElement;
 }
 
 export interface Listener {
@@ -61,13 +59,12 @@ export const random = (): string => {
 // enums
 export enum Events {
     CLICK = 'lotusComponentClick',
-    READY = 'lotusComponentReady',
     ITEM_SELECTED = 'lotusItemViewItemSelected',
     ITEM_DESELECTED = 'lotusItemViewItemDeselected',
     REMOVE_ITEM = 'lotusItemViewRemoveItem',
 }
 // const functions
-export const addProperty = <T> (instance: T, label: string, getter?: () => any, setter?: (v: any) => void, enumerable = true): T => {
+export const addProperty = <T> (instance: T, label: string, getter?: () => unknown, setter?: (v: unknown) => void, enumerable = true): T => {
     Object.defineProperty(
         instance,
         label,
@@ -79,7 +76,7 @@ export const addProperty = <T> (instance: T, label: string, getter?: () => any, 
     );
     return instance;
 };
-export const mixin = <T> (target, sub, params = null): T => {
+export const mixin = <T> (target, sub): T => {
     // IMPORTANT: mixin is designed to function like Object.assign, just respects accessors
     // grab enumerable properties of the target object
     const keys = Object.keys(sub);
@@ -116,7 +113,7 @@ export const getTemplate = <T extends Component> (): T => {
         removed: null,
         attributeChanged: null,
         onSkinPartAdded: (part: string) => null,
-        attributeMap: new Map<string, any>(),
+        attributeMap: new Map<string, unknown>(),
         skinPartMap: new Map<string, Element>(),
         addAttributes: null,
         addSkinParts: null,
@@ -245,7 +242,7 @@ export const createComponent = (): Component => {
             clone = null;
         }
     };
-    clone.render = <T> (list?: List<T>): HTMLElement => {
+    clone.render = <T> (list?: Array<T>): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
         // if you don't remove event listeners the GC will not collect the element
         clone.destroy();

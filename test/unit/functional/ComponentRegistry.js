@@ -1,11 +1,6 @@
-const useButton = require('../../../lib').useButton;
-const Events = require('../../../lib').Events;
-const register = require('../../../lib').register;
-const getComponents = require('../../../lib').getComponents;
-
 describe('ComponentRegistry', function () {
 
-    it('check register and getComponents functions and values', function (done) {
+    it('check Lotus.register and Lotus.getComponents functions and values', function (done) {
         const template = document.createElement('div');
         template.innerHTML = '<template id="app">\n' +
             '  <div data-component-root="root">\n' +
@@ -23,29 +18,29 @@ describe('ComponentRegistry', function () {
                 component.element = null;
                 const componentIndex = buttons.findIndex((view) => view === component);
                 buttons.splice(componentIndex,1);
-                expect(getComponents(tagDef.tagName).length).toBe(2);
+                expect(Lotus.getComponents(tagDef.tagName).length).toBe(2);
             },
             template: template.firstChild,
             tagName: 'lotus-button',
-            tagFunction: useButton
+            tagFunction: Lotus.useButton
         };
         const responder = {
             onEvent: (event) => {
                 done();
             }
         };
-        register(tagDef);
+        Lotus.register(tagDef);
         const button2 = document.createElement('lotus-button');
         document.body.append(document.createElement('lotus-button'));
         document.body.append(button2);
         document.body.append(document.createElement('lotus-button'));
-        const buttons = getComponents(tagDef.tagName);
+        const buttons = Lotus.getComponents(tagDef.tagName);
         const domButtons = document.getElementsByTagName('lotus-button');
         expect(buttons.length).toBe(3);
         expect(domButtons.length).toBe(3);
         // trigger lifecycle callbacks
         document.body.removeChild(button2);
-        buttons[0].addEventListener(Events.CLICK, responder, 'onEvent');
+        buttons[0].addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
         // test event listeners
         buttons[0].skinPartMap.get('button').click();
     });

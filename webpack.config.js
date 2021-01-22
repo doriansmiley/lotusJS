@@ -1,6 +1,8 @@
 const path = require('path');
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = {
     entry: {
@@ -34,12 +36,16 @@ module.exports = {
             excludePrivate:true,
             includeDeclarations:true,
             excludeExternals:true
-        }, './src')
+        }, './src'),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static'
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
+                exclude: /node_modules/,
                 loader: 'awesome-typescript-loader'
             }
         ]

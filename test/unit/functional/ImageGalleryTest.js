@@ -1,13 +1,6 @@
-const useImageGallery = require('../../../lib').useImageGallery;
-const useImageView = require('../../../lib').useImageView;
-const Events = require('../../../lib').Events;
-const register = require('../../../lib').register;
-const getComponents = require('../../../lib').getComponents;
-const {List} = require('immutable');
-
 describe('ImageGalleryComponent', function () {
 
-    it('check useImageGallery function and values', function (done) {
+    it('check Lotus.useImageGallery function and values', function (done) {
 
         const galleryTemplate = document.createElement('div');
         galleryTemplate.innerHTML = '<template id="imageGallery">\n' +
@@ -32,7 +25,7 @@ describe('ImageGalleryComponent', function () {
             },
             template: galleryTemplate.firstChild,
             tagName: 'lotus-image-gallery',
-            tagFunction: useImageGallery
+            tagFunction: Lotus.useImageGallery
         };
         const imageViewTagDeg = {
             inserted: (component) => {
@@ -42,12 +35,12 @@ describe('ImageGalleryComponent', function () {
             },
             template: itemTemplate.firstChild,
             tagName: 'lotus-image-view',
-            tagFunction: useImageView
+            tagFunction: Lotus.useImageView
         };
-        register(imageViewTagDeg);
-        register(galleryTagDef);
+        Lotus.register(imageViewTagDeg);
+        Lotus.register(galleryTagDef);
         const gallery = document.createElement('lotus-image-gallery');
-        let list = List([
+        let list = Immutable.List([
             {name: '', src: '/base/unit/assets/0.jpg', caption: '<h5>0.jpg</h5>'},
             {name: '', src: '/base/unit/assets/2.jpg', caption: '<h5>2.jpg</h5>'},
             {name: '', src: '/base/unit/assets/3.jpg', caption: '<h5>3.jpg</h5>'},
@@ -55,7 +48,7 @@ describe('ImageGalleryComponent', function () {
         document.body.append(gallery);
         console.log(`gallery.component: ${gallery.component}`);
         gallery.component.element.replaceWith(gallery.component.render(list));
-        list = List([
+        list = Immutable.List([
             {name: '', src: '/base/unit/assets/4.jpg', caption: '<h5>4.jpg</h5>'},
             {name: '', src: '/base/unit/assets/5.jpg', caption: '<h5>5.jpg</h5>'},
             {name: '', src: '/base/unit/assets/6.jpg', caption: '<h5>6.jpg</h5>'},

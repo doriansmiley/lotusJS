@@ -1,11 +1,11 @@
 import {ButtonComponent} from './Button';
 import {mixin, createComponent as createAbstractComponent} from './AbstractComponent';
-import {compose} from 'ramda';
+import compose from 'ramda/es/compose';
 
 // export interfaces
 export interface SuperButton extends ButtonComponent {
     onMouseOverLabel: (event: Event) => void;
-};
+}
 // export public functions
 export const createComponent = (component: ButtonComponent): SuperButton => {
     const clone =  mixin<SuperButton>(component, {
