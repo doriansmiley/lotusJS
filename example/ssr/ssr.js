@@ -1,40 +1,124 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const puppeteer = require('puppeteer');
 
-// In-memory cache of rendered pages. Note: this will be cleared whenever the
-// server process stops. If you need true persistence, use something like
-// Google Cloud Storage (https://firebase.google.com/docs/storage/web/start).
+// https://hackernoon.com/tips-and-tricks-for-web-scraping-with-puppeteer-ed391a63d952
+// Dont download all resources, we just need the HTML
+// Also, this is huge performance/response time boost
+const blockedResourceTypes = [
+    'image',
+    'media',
+    'font',
+    'texttrack',
+    'object',
+    'beacon',
+    'csp_report',
+    'imageset',
+];
+
+const skippedResources = [
+    'quantserve',
+    'adzerk',
+    'doubleclick',
+    'adition',
+    'exelator',
+    'sharethrough',
+    'cdn.api.twitter',
+    'google-analytics',
+    'googletagmanager',
+    'google',
+    'fontawesome',
+    'facebook',
+    'analytics',
+    'optimizely',
+    'clicktale',
+    'mixpanel',
+    'zedo',
+    'clicksor',
+    'tiqcdn',
+];
+
 const RENDER_CACHE = new Map();
 
-async function ssr(url) {
+/**
+ * https://developers.google.com/web/tools/puppeteer/articles/ssr#reuseinstance
+ * @param {string} url URL to prerender.
+ * @param {string} browserWSEndpoint Optional remote debugging URL. If
+ *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
+ *     a new browser instance is launched.
+ */
+async function ssr (url, browserWSEndpoint) {
     if (RENDER_CACHE.has(url)) {
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
 
     const start = Date.now();
-
-    const browser = await puppeteer.launch();
+    const args = puppeteer.defaultArgs();
+    // IMPORTANT: you can't render shadow DOM without this flag
+    // getInnerHTML will be undefined without it
+    args.push('--enable-experimental-web-platform-features');
+    const browser = await puppeteer.launch({
+        args
+    });
     const page = await browser.newPage();
     try {
-        // networkidle0 waits for the network to be idle (no requests for 500ms).
-        // The page's JS has likely produced markup by this point, but wait longer
-        // if your site lazy loads, etc.
-        await page.goto(url, {waitUntil: 'networkidle0'});
-        await page.waitFor(() => document.querySelector('lotus-image-gallery')?.shadowRoot); // ensure #posts exists in the DOM.
-    } catch (err) {
-        console.error(err);
-        throw new Error('page.goto/waitForSelector timed out.');
+        await page.setRequestInterception(true);
+
+
+        page.on('request', request => {
+            const requestUrl = request._url.split('?')[0].split('#')[0];
+            if (
+                blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+                skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+            ) {
+                request.abort();
+            } else {
+                request.continue();
+            }
+        });
+
+        // Inject <base> on page to relative resources load properly.
+        await page.evaluate(url => {
+            const base = document.createElement('base');
+            base.href = url;
+            // Add to top of head, before all other resources.
+            document.head.prepend(base);
+        }, url);
+
+        await page.goto(url, {
+            timeout: 25000,
+            waitUntil: 'networkidle0'
+        });
+
+
+        await page.waitForFunction(() => !!document.querySelector('lotus-image-gallery')?.shadowRoot, {
+            polling: 'mutation',
+        });
+
+        // Remove scripts and html imports. They've already executed.
+        await page.evaluate(() => {
+            const elements = document.querySelectorAll('script, link[rel="import"]');
+            elements.forEach(e => e.remove());
+        });
+
+        const html = await page.$eval('html', (element) => {
+            return document.querySelector('html').getInnerHTML({includeShadowRoots: true});
+        });
+
+        // Close the page we opened here (not the browser).
+        await page.close();
+
+        const ttRenderMs = Date.now() - start;
+        console.info(`Headless rendered page in: ${ttRenderMs}ms`);
+
+        RENDER_CACHE.set(url, html); // cache rendered page.
+
+        return {html, ttRenderMs};
+    }
+    catch (e) {
+        const html = e.toString();
+        console.warn({ message: `URL: ${url} Failed with message: ${html}` });
+        return { html, status: 500 };
     }
 
-    const html = await page.content(); // serialized HTML of page DOM.
-    await browser.close();
-
-    const ttRenderMs = Date.now() - start;
-    console.info(`Headless rendered page in: ${ttRenderMs}ms`);
-
-    RENDER_CACHE.set(url, html); // cache rendered page.
-
-    return {html, ttRenderMs};
-}
+};
 
 module.exports = ssr;

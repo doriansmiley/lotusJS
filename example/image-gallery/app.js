@@ -6,7 +6,7 @@ const imageViewTagDeg = {
     removed: (component) => {
         component.element = null;
     },
-    templateUrl: 'http://localhost:3000/image-gallery/templates/image.html',
+    templateUrl: 'templates/image.html',
     tagName: 'lotus-image-view',
     tagFunction: Lotus.useImageView
 };
@@ -20,7 +20,7 @@ const tagDef = {
         console.log('example component removed');
         component.element = null;
     },
-    templateUrl: 'http://localhost:3000/image-gallery/templates/gallery.html',
+    templateUrl: 'templates/gallery.html',
     tagName: 'lotus-image-gallery',
     tagFunction: Lotus.useImageGallery
 };

@@ -19,7 +19,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/ssp', async (req, res, next) => {
+app.get('/ssr', async (req, res, next) => {
     // TODO replace hard coded value
     const {html, ttRenderMs} = await ssr(`${req.protocol}://${req.get('host')}/image-gallery`);
     // Add Server-Timing! See https://w3c.github.io/server-timing/.
