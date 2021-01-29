@@ -12,6 +12,7 @@ export interface TagDefinition {
 }
 // private properties
 const componentsByTagName = new Map<string, Array<Component>>();
+const tagDefsByTagName = new Map<string, TagDefinition>();
 // public function
 export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'open'): Promise<void> => {
     if (!customElements) {
@@ -28,18 +29,22 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
+    tagDefsByTagName.set(tagDef.tagName, tagDef);
     const wrapper = class Wrapper extends HTMLElement {
         public component: Component;
 
         constructor () {
             // Always call super first in constructor
             super();
+            const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
+            const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
             // Create a shadow root
-            const shadow = this.attachShadow({mode: mode});
+            const shadow = shadowRoot || this.attachShadow({mode: mode});
             // create our component
             const component: Component = tagDef.tagFunction();
+            // TODO if SSR see if we can skip this step for ssr, this takes time to perform
             const clone = document.importNode(tagDef.template.content, true);
-            component.element = clone.querySelector('[data-component-root="root"]');
+            component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]') : clone.querySelector('[data-component-root="root"]');
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const styles = [...tagDef.template.content.childNodes].find((child: Node) => {
@@ -54,10 +59,10 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             // store the component instances by tag name so an observer can assign mediators
             // for a surrounding application
             componentsByTagName.get(tagDef.tagName).push(component);
-            const renderedComponent = component.render();
+            const renderedComponent = component.render([], isSsr);
             // TODO add lifecycle hooks
-            // Attach the created elements to the shadow dom
-            if (styles) {
+            // Attach the created elements to the shadow dom if it hasn't been rendered server side
+            if (!isSsr && styles) {
                 const style = document.createElement('style');
                 style.textContent = styles.textContent;
                 shadow.appendChild(style);
@@ -95,5 +100,9 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
 // to get all child component instances to assign event listeners etc.
 export const getComponents = (tagName: string, parent?: HTMLElement): Array<Component> => {
     return componentsByTagName.get(tagName).filter((component) => (parent) ? parent.contains(component.element) : true);
+};
+
+export const getTagDef = (tagName: string): TagDefinition => {
+    return tagDefsByTagName.get(tagName);
 };
 

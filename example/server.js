@@ -21,7 +21,9 @@ app.use(cors(corsOptions));
 
 app.get('/ssr', async (req, res, next) => {
     // TODO replace hard coded value
-    const {html, ttRenderMs} = await ssr(`${req.protocol}://${req.get('host')}/image-gallery`);
+    console.log(req.query.url);
+    console.log(req.query.selector);
+    const {html, ttRenderMs} = await ssr(req.query.url, undefined, req.query.selector);
     // Add Server-Timing! See https://w3c.github.io/server-timing/.
     res.set('Server-Timing', `Prerender;dur=${ttRenderMs};desc="Headless render time (ms)"`);
     return res.status(200).send(html); // Serve prerendered page as response.

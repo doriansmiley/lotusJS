@@ -36,13 +36,16 @@ const list = [
     {name: '', src: 'http://localhost:3000/image-gallery/assets/4.jpg', caption: '<h5>4.jpg</h5>'},
     {name: '', src: 'http://localhost:3000/image-gallery/assets/5.jpg', caption: '<h5>5.jpg</h5>'},
 ];
+const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
 // wait for the component to initialize
 const interval = setInterval(()=>{
     if (gallery.component) {
         clearInterval(interval);
         // always use replaceWith when you call render again!!!! render will always create
         // a new element and return it
-        gallery.component.element.replaceWith(gallery.component.render(list));
+        // SSR example, navigator.webdriver denote puppeteer agent
+        // if the shadowRoot is present we know the component was rendered server side
+        gallery.component.element.replaceWith(gallery.component.render(list, isSsr));
     }
 }, 100);
 

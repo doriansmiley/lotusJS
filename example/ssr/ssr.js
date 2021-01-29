@@ -45,7 +45,7 @@ const RENDER_CACHE = new Map();
  *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
  *     a new browser instance is launched.
  */
-async function ssr (url, browserWSEndpoint) {
+async function ssr (url, browserWSEndpoint, selector) {
     if (RENDER_CACHE.has(url)) {
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
@@ -89,22 +89,26 @@ async function ssr (url, browserWSEndpoint) {
         });
 
 
-        await page.waitForFunction(() => !!document.querySelector('lotus-image-gallery')?.shadowRoot, {
+        await page.waitForFunction(selector => !!document.querySelector(selector)?.shadowRoot, {
             polling: 'mutation',
-        });
+        }, selector);
 
         // Remove scripts and html imports. They've already executed.
+        /*
         await page.evaluate(() => {
             const elements = document.querySelectorAll('script, link[rel="import"]');
             elements.forEach(e => e.remove());
         });
+        */
 
-        const html = await page.$eval('html', (element) => {
-            return document.querySelector('html').getInnerHTML({includeShadowRoots: true});
-        });
+        let html = await page.$eval('html', (element, tagname) => {
+            return element.getInnerHTML({includeShadowRoots: true});
+        }, selector);
 
         // Close the page we opened here (not the browser).
         await page.close();
+        // TODO figure out why the base element is stripped from serialization
+        html = html.replace('<head>', `<head><base href="${url}"/>`);
 
         const ttRenderMs = Date.now() - start;
         console.info(`Headless rendered page in: ${ttRenderMs}ms`);

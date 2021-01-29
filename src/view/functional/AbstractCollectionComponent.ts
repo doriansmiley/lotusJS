@@ -1,5 +1,5 @@
 import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
-import {getComponents} from '../..';
+import {getComponents, getTagDef} from '../..';
 
 // export interfaces
 export interface AbstractItemView extends Component {
@@ -9,6 +9,7 @@ export interface AbstractItemView extends Component {
 export interface AbstractCollectionComponent extends Component {
     addChildView: <T extends AbstractItemView, Z extends object>(model: Z) => void;
     childViews: Array<AbstractItemView>;
+    hydrateChildViews: () => void;
     addViewEventListeners: () => void;
     addViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListener: <T extends AbstractItemView>(view: T) => void;
@@ -39,8 +40,8 @@ export const createItemView = (component: Component): AbstractItemView => {
     clone.destroy = (): void => {
         destroy();
     };
-    clone.render = <T> (list?: Array<T>): HTMLElement => {
-        render(list);
+    clone.render = <T> (list?: Array<T>, isSsr = false): HTMLElement => {
+        render(list, isSsr);
         return clone.element;
     };
     return clone;
@@ -49,6 +50,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
     // TODO figure out which of the functions below (if any) should be private
     let clone =  mixin<AbstractCollectionComponent>(component, {
         addChildView: null,
+        hydrateChildViews: null,
         childViews: [],
         addViewEventListeners: null,
         addViewEventListener: null,
@@ -102,13 +104,30 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         });
     };
     clone.addChildView = <T extends AbstractItemView>(model: object): void => {
-        // TODO: replace clone.createChildView with a ComponentRegistry method
         const element = clone.cloneItemTemplate();
         clone.skinPartMap.get('collectionContainer').appendChild(element);
         // IMPORTANT: once the component is added to the DOM the ComponentRegistry
         // assigns the component attribute
         // render the component again passing the model
-        element.replaceWith(element['component'].render([model]));
+        const rendered = element['component'].render([model]);
+        rendered.setAttribute('data-item-template', element.tagName.toLowerCase());
+        element.replaceWith(rendered);
+    };
+    clone.hydrateChildViews = () => {
+        // hydrate component instances from the DOM
+        const childViews = clone.skinPartMap.get('collectionContainer')
+            .querySelectorAll('[data-component-root="root"]') || [];
+        childViews.forEach((view) => {
+            const childViewTagName = view.getAttribute('data-item-template');
+            const tagDef = getTagDef(childViewTagName);
+            const component: Component = tagDef.tagFunction();
+            component.element = view;
+            // note we don't need to replace anything, we just need to init the component
+            // TODO we need a hydrate method to call here. This method needs to be coded differently
+            // I think this has to be specific for each component
+            //
+            component.render(undefined, true);
+        });
     };
     clone.removeAllChildViews = () => {
         const node = clone.skinPartMap.get('collectionContainer');
@@ -134,17 +153,24 @@ export const createComponent = (component: Component): AbstractCollectionCompone
             clone = null;
         }
     };
-    clone.render = <T>(list?: Array<T>): HTMLElement => {
+    clone.render = <T>(list?: Array<T>, isSsr = false): HTMLElement => {
         // call super, triggers destroy
-        render(list);
+        render(list, isSsr);
         // render can be called by the ComponentRegistry as part of lifecycle
         if (!list) {
             return clone.element;
         }
-        list.forEach(<T>(model) => {
-            clone.addChildView(model);
-        });
-        clone.addViewEventListeners();
+        // the ssr flag lets us know if the component's collection view was rendered server side
+        // this flag prevents a double render
+        if (!isSsr) {
+            list.forEach(<T>(model) => {
+                clone.addChildView(model);
+            });
+            clone.addViewEventListeners();
+        } else {
+            clone.hydrateChildViews();
+        }
+
         return clone.element;
     };
     clone.onSkinPartAdded = (part: string) => {
