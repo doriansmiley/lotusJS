@@ -5,6 +5,8 @@ export interface TagDefinition {
     inserted?: (component: Component) => void;
     removed?: (component: Component) => void;
     constructed?: (isSsr: boolean) => void;
+    loadData?: () => boolean | Promise<boolean>;
+    hydrated: boolean;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
@@ -31,14 +33,19 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
     tagDefsByTagName.set(tagDef.tagName, tagDef);
+    // check if we are rendering server side
+    const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
+    const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
+    if (!isSsr && tagDef.loadData) {
+        // if we haven't rendered this component and it needs data load the data
+        tagDef.hydrated = await tagDef.loadData();
+    }
     const wrapper = class Wrapper extends HTMLElement {
         public component: Component;
 
         constructor () {
             // Always call super first in constructor
             super();
-            const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
-            const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
             // constructed has to be called before the component is inserted
             if (tagDef.constructed) {
                 tagDef.constructed(isSsr);
