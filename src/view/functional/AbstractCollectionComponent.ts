@@ -1,5 +1,5 @@
 import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
-import {getComponents, getTagDef} from '../..';
+import {getTagDef} from '../..';
 
 // export interfaces
 export interface AbstractItemView extends Component {
@@ -10,7 +10,6 @@ export interface AbstractCollectionComponent extends Component {
     addChildView: <T extends AbstractItemView, Z extends object>(model: Z) => void;
     childViews: Array<AbstractItemView>;
     hydrateChildViews: () => void;
-    addViewEventListeners: () => void;
     addViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListeners: () => void;
@@ -52,7 +51,6 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         addChildView: null,
         hydrateChildViews: null,
         childViews: [],
-        addViewEventListeners: null,
         addViewEventListener: null,
         removeViewEventListener: null,
         cloneItemTemplate: null,
@@ -79,15 +77,6 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         selectedItem = event.payload['item'];
         selectedItem.resetState(event.type === Events.ITEM_SELECTED);
     };
-    clone.addViewEventListeners = <T extends AbstractItemView>(): void => {
-        getComponents(clone.skinPartMap.get('itemTemplate').tagName.toLowerCase(),
-            clone.skinPartMap.get('collectionContainer')).forEach((view: T) => {
-            // components removed from the DOM are automatically removed from the results of getComponents
-            // So we store our own ref in views so we can remove listener functions later
-            views.push(view);
-            clone.addViewEventListener(view);
-        });
-    };
     clone.addViewEventListener = <T extends AbstractItemView>(view: T): void => {
         view.addEventListener(Events.ITEM_SELECTED, clone, 'onItemSelectedDeselect');
         view.addEventListener(Events.ITEM_DESELECTED, clone, 'onItemSelectedDeselect');
@@ -110,6 +99,9 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         // assigns the component attribute
         // render the component again passing the model
         const rendered = element['component'].render([model]);
+        views.push(element['component']);
+        // assign the child view listeners
+        clone.addViewEventListener(element['component']);
         rendered.setAttribute('data-item-template', element.tagName.toLowerCase());
         element.replaceWith(rendered);
     };
@@ -166,7 +158,6 @@ export const createComponent = (component: Component): AbstractCollectionCompone
             list.forEach(<T>(model) => {
                 clone.addChildView(model);
             });
-            clone.addViewEventListeners();
         } else {
             clone.hydrateChildViews();
         }

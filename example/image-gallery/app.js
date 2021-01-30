@@ -1,3 +1,14 @@
+let gallery = undefined;
+// default to false
+let isSsr = false;
+const list = [
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/0.jpg', caption: '<h5>0.jpg</h5>'},
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/6.jpg', caption: '<h5>1.jpg</h5>'},
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/2.jpg', caption: '<h5>2.jpg</h5>'},
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/3.jpg', caption: '<h5>3.jpg</h5>'},
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/4.jpg', caption: '<h5>4.jpg</h5>'},
+    {name: '', src: 'http://localhost:3000/image-gallery/assets/5.jpg', caption: '<h5>5.jpg</h5>'},
+];
 // image view tag def
 const imageViewTagDeg = {
     inserted: (component) => {
@@ -13,8 +24,16 @@ const imageViewTagDeg = {
 Lotus.register(imageViewTagDeg);
 // image gallery tag def
 const tagDef = {
+    constructed: (ssr) => {
+        // the value of ssr is set by the ComponentRegistry and determined voa
+        // !!document.querySelector(tagDef.tagName)?.shadowRoot;
+        isSsr = ssr;
+    },
     inserted: (component) => {
         console.log('example component inserted');
+        // always use replaceWith when you call render again!!!! render will always create
+        // a new element and return it
+        component.element.replaceWith(gallery.component.render(list, isSsr));
     },
     removed: (component) => {
         console.log('example component removed');
@@ -27,25 +46,5 @@ const tagDef = {
 // register gallery
 Lotus.register(tagDef);
 // app setup
-const gallery = document.getElementById('gallery');
-const list = [
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/0.jpg', caption: '<h5>0.jpg</h5>'},
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/6.jpg', caption: '<h5>1.jpg</h5>'},
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/2.jpg', caption: '<h5>2.jpg</h5>'},
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/3.jpg', caption: '<h5>3.jpg</h5>'},
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/4.jpg', caption: '<h5>4.jpg</h5>'},
-    {name: '', src: 'http://localhost:3000/image-gallery/assets/5.jpg', caption: '<h5>5.jpg</h5>'},
-];
-const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
-// wait for the component to initialize
-const interval = setInterval(()=>{
-    if (gallery.component) {
-        clearInterval(interval);
-        // always use replaceWith when you call render again!!!! render will always create
-        // a new element and return it
-        // SSR example, navigator.webdriver denote puppeteer agent
-        // if the shadowRoot is present we know the component was rendered server side
-        gallery.component.element.replaceWith(gallery.component.render(list, isSsr));
-    }
-}, 100);
+gallery = document.getElementById('gallery');
 

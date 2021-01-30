@@ -4,6 +4,7 @@ import {Component} from '../../view/functional/AbstractComponent';
 export interface TagDefinition {
     inserted?: (component: Component) => void;
     removed?: (component: Component) => void;
+    constructed?: (isSsr: boolean) => void;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
@@ -38,6 +39,10 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             super();
             const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
             const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
+            // constructed has to be called before the component is inserted
+            if (tagDef.constructed) {
+                tagDef.constructed(isSsr);
+            }
             // Create a shadow root
             const shadow = shadowRoot || this.attachShadow({mode: mode});
             // create our component
@@ -88,18 +93,6 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         }
     };
     customElements.define(tagDef.tagName, wrapper);
-};
-// this function is used by the surrounding application to mediate component instances
-// generally a mediator map of some kind is created that will iterate over all registered
-// tag name, retrieve the component instance for this function, and pass to the registered mediator constructor
-// or function. A mediator map calls a function or constructor for every instance of a tag
-// found in the DOM.. For example map('lotus-button', createButtonMediator). This map function
-// would use getComponents to get all the component instances which it would then iterate over
-// and call createButtonMediator(component). This function is also called by collection components
-// such as image galleries or data grids. Passing the optional parent param allows collections
-// to get all child component instances to assign event listeners etc.
-export const getComponents = (tagName: string, parent?: HTMLElement): Array<Component> => {
-    return componentsByTagName.get(tagName).filter((component) => (parent) ? parent.contains(component.element) : true);
 };
 
 export const getTagDef = (tagName: string): TagDefinition => {
