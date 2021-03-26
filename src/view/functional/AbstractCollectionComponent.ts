@@ -34,15 +34,6 @@ export const createItemView = (component: Component): AbstractItemView => {
             }
         },
     });
-    const destroy = clone.destroy;
-    const render = clone.render;
-    clone.destroy = (): void => {
-        destroy();
-    };
-    clone.render = <T> (list?: Array<T>, isSsr = false): HTMLElement => {
-        render(list, isSsr);
-        return clone.element;
-    };
     return clone;
 };
 export const createComponent = (component: Component): AbstractCollectionComponent => {

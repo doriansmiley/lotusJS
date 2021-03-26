@@ -7,15 +7,26 @@ Once the server starts you can load the samples below
 **IMPORTANT**: I recommend creating projects in TypeScript and using WebPack to produce 
 your bundles. The UMD used in the example is strictly for demo purposes.
 
-### Button
+# Button
 
 Available at `localhost:${port}/button`.
 This is an example of how to use the `Lotus.useButton` function. 
 Source code is in the `./button` directory
 
-### Image Gallery
+# Image Gallery
 Available at `localhost:${port}/image-gallery`.
 This is an example of how to use the `Lotus.useImageGallery` function. 
 Source code is in the `./image-gallery` directory. It's really just
 and image list, but it could easily be extended to include infinite scroll, 
 enlargements, etc. It's a work in progress.
+
+# Server Side Rendering
+Available at `localhost:${port}/ssr?url={url}`.
+There is an included example of how to do SSR under the [ssr](./ssr) directory. 
+It will render any of the provided examples server side. You can also create new components
+and render them. It's important to note the provided SSR application waits for
+the presence of a `shadowRoot` in the element referenced using the provided `selector`
+param passed in the querystring before returning. The example URL defines the `lotus-image-gallery`
+selector which corresponds to the custom element of the image gallery component.
+Below is an example URL using the image gallery component:
+http://localhost:3000/ssr/?url=http://localhost:3000/image-gallery/&selector=lotus-image-gallery.

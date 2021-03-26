@@ -93,14 +93,6 @@ async function ssr (url, browserWSEndpoint, selector) {
             polling: 'mutation',
         }, selector);
 
-        // Remove scripts and html imports. They've already executed.
-        /*
-        await page.evaluate(() => {
-            const elements = document.querySelectorAll('script, link[rel="import"]');
-            elements.forEach(e => e.remove());
-        });
-        */
-
         let html = await page.$eval('html', (element, tagname) => {
             return element.getInnerHTML({includeShadowRoots: true});
         }, selector);
