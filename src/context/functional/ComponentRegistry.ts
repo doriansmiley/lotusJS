@@ -4,6 +4,9 @@ import {Component} from '../../view/functional/AbstractComponent';
 export interface TagDefinition {
     inserted?: (component: Component) => void;
     removed?: (component: Component) => void;
+    constructed?: (isSsr: boolean) => void;
+    loadData?: () => boolean | Promise<boolean>;
+    hydrated: boolean;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
@@ -12,6 +15,7 @@ export interface TagDefinition {
 }
 // private properties
 const componentsByTagName = new Map<string, Array<Component>>();
+const tagDefsByTagName = new Map<string, TagDefinition>();
 // public function
 export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'open'): Promise<void> => {
     if (!customElements) {
@@ -28,18 +32,31 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
     } else if (!tagDef.template) {
         throw ('templateUrl or template must defined. They can not both be blank.');
     };
+    tagDefsByTagName.set(tagDef.tagName, tagDef);
+    // check if we are rendering server side
+    const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
+    const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
+    if (!isSsr && tagDef.loadData) {
+        // if we haven't rendered this component and it needs data load the data
+        tagDef.hydrated = await tagDef.loadData();
+    }
     const wrapper = class Wrapper extends HTMLElement {
         public component: Component;
 
         constructor () {
             // Always call super first in constructor
             super();
+            // constructed has to be called before the component is inserted
+            if (tagDef.constructed) {
+                tagDef.constructed(isSsr);
+            }
             // Create a shadow root
-            const shadow = this.attachShadow({mode: mode});
+            const shadow = shadowRoot || this.attachShadow({mode: mode});
             // create our component
             const component: Component = tagDef.tagFunction();
+            // TODO if SSR see if we can skip this step for ssr, this takes time to perform
             const clone = document.importNode(tagDef.template.content, true);
-            component.element = clone.querySelector('[data-component-root="root"]');
+            component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]') : clone.querySelector('[data-component-root="root"]');
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const styles = [...tagDef.template.content.childNodes].find((child: Node) => {
@@ -54,10 +71,10 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             // store the component instances by tag name so an observer can assign mediators
             // for a surrounding application
             componentsByTagName.get(tagDef.tagName).push(component);
-            const renderedComponent = component.render();
+            const renderedComponent = component.render([], isSsr);
             // TODO add lifecycle hooks
-            // Attach the created elements to the shadow dom
-            if (styles) {
+            // Attach the created elements to the shadow dom if it hasn't been rendered server side
+            if (!isSsr && styles) {
                 const style = document.createElement('style');
                 style.textContent = styles.textContent;
                 shadow.appendChild(style);
@@ -84,16 +101,8 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
     };
     customElements.define(tagDef.tagName, wrapper);
 };
-// this function is used by the surrounding application to mediate component instances
-// generally a mediator map of some kind is created that will iterate over all registered
-// tag name, retrieve the component instance for this function, and pass to the registered mediator constructor
-// or function. A mediator map calls a function or constructor for every instance of a tag
-// found in the DOM.. For example map('lotus-button', createButtonMediator). This map function
-// would use getComponents to get all the component instances which it would then iterate over
-// and call createButtonMediator(component). This function is also called by collection components
-// such as image galleries or data grids. Passing the optional parent param allows collections
-// to get all child component instances to assign event listeners etc.
-export const getComponents = (tagName: string, parent?: HTMLElement): Array<Component> => {
-    return componentsByTagName.get(tagName).filter((component) => (parent) ? parent.contains(component.element) : true);
+
+export const getTagDef = (tagName: string): TagDefinition => {
+    return tagDefsByTagName.get(tagName);
 };
 

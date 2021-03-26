@@ -244,6 +244,9 @@ export const createComponent = (component: AbstractCollectionComponent): ImageGa
 export const useImageView: () => ImageItem = compose(createImageView, createItemView, createAbstractComponent);
 export const useImageGallery: () => ImageGallery = compose(createComponent, createCollectionComponent, createAbstractComponent);
 ```
+#### Server Side Rendering
+LotusJS supports SSR. Please see our [SSR example](./example/README.md#Server-Side-Rendering).
+
 #### Contributing
 
 * Fork repo

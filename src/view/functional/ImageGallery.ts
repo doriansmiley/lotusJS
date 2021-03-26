@@ -23,8 +23,8 @@ export interface ImageItem extends AbstractItemView {
     setThumbnailSrc: (src: string) => void;
     removeEventListeners: () => void;
     model: {src: string};
-    render<T> (list?: Array<T>): HTMLElement;
-    render(list?: Array<{src: string}>): HTMLElement;
+    render<T> (list?: Array<T>, isSsr?: boolean): HTMLElement;
+    render(list?: Array<{src: string}>, isSsr?: boolean): HTMLElement;
 }
 export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
@@ -85,7 +85,7 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
     clone.setThumbnailSrc = (src: string) => {
         clone.skinPartMap.get('thumbnail').onload = clone.onImageLoad;
         clone.skinPartMap.get('thumbnail').style.visibility = 'hidden';
-        clone.skinPartMap.get('thumbnail')['src'] = src;
+        (clone.skinPartMap.get('thumbnail') as HTMLImageElement).src = src;
     };
     clone.removeEventListeners = () => {
         clone.skinPartMap.get('thumbnail').removeEventListener('click', clone.onThumbClick);
@@ -110,13 +110,16 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         clone.removeEventListeners();
         destroy();
     };
-    clone.render = (list?: Array<{ caption: string; src: string}>): HTMLElement => {
-        render(list);
+    clone.render = (list?: Array<{ caption: string; src: string}>, isSsr = false): HTMLElement => {
+        render(list, isSsr);
         if (list && list.length === 1) {
             clone.setThumbnailSrc(list[0].src);
             if (clone.skinPartMap.get('caption')) {
                 clone.skinPartMap.get('caption').innerHTML = list[0].caption;
             }
+        } else if (isSsr) {
+            // if pre-rendered on the server, pass the url that was generated
+            clone.setThumbnailSrc((clone.skinPartMap.get('thumbnail') as HTMLImageElement).src);
         }
         return clone.element;
     };
