@@ -3,6 +3,7 @@
  */
 export * from './context/functional/ComponentRegistry';
 export * from './view/functional/AbstractComponent';
+export * from './utils/ProxyUtils';
 export {AbstractItemView} from './view/functional/AbstractCollectionComponent';
 export {AbstractCollectionComponent} from './view/functional/AbstractCollectionComponent';
 export {createItemView as createAbstractItemView} from './view/functional/AbstractCollectionComponent';
