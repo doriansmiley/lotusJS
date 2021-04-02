@@ -39,8 +39,6 @@
   },
   "homepage": "https://github.com/doriansmiley/lotusJS#readme",
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
-    "js-yaml": "^3.13.1",
     "ramda": "^0.27.0"
   },
   "devDependencies": {
@@ -56,7 +54,9 @@
     "eslint-plugin-import": "^2.20.2",
     "grunt": "^1.1.0",
     "grunt-mocha-test": "^0.13.2",
+    "immutable": "^4.0.0-rc.12",
     "jasmine": "^3.5.0",
+    "js-yaml": "^3.13.1",
     "karma": "^5.0.3",
     "karma-browserify": "^7.0.0",
     "karma-chrome-launcher": "^3.1.0",
