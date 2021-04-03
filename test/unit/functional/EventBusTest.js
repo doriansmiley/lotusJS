@@ -1,11 +1,8 @@
 describe('Test EventBus Core Features', () => {
-    let subscription;
-    let subscription2;
-    let subscription3;
     let count = 0;
 
-    it('Should register a listener and receive an event', async () => {
-        subscription = Lotus.listen(
+    it('Should register a listener, receive an event, and remove the listeners', async () => {
+        const subscription = Lotus.listen(
             {
                 type: 'testEvent1',
             },
@@ -14,7 +11,8 @@ describe('Test EventBus Core Features', () => {
                 expect(value.payload).toBe('testValue');
             }
         );
-        subscription2 = Lotus.listen(
+
+        const subscription2 = Lotus.listen(
             {
                 type: 'testEvent1',
             },
@@ -31,9 +29,7 @@ describe('Test EventBus Core Features', () => {
 
         expect(count).toBe(2);
         expect(subscription.closed).toBe(false);
-    });
 
-    it('Should remove the listener', async () => {
         subscription.unsubscribe();
 
         await Lotus.emit({
@@ -55,21 +51,19 @@ describe('Test EventBus Core Features', () => {
         expect(subscription2.closed).toBe(true);
     });
 
-    it('Should register a listener and receive a promise', (done) => {
-        subscription3 = Lotus.listen(
+    it('Should register a listener and receive a promise, then remove the listener', async () => {
+        let next = {};
+        const subscription3 = Lotus.listen(
             {
                 type: 'testEventAsync',
             },
             (value) => {
                 count++;
-                expect(count).toBe(4);
-                expect(value.type).toBe('testEventAsync');
-                expect(value.payload).toBe('asyncEvent1');
-                done();
+                next = value;
             }
         );
 
-        Lotus.emit(
+        await Lotus.emit(
             new Promise(resolve => {
                 setTimeout(() => {
                     resolve({
@@ -79,9 +73,11 @@ describe('Test EventBus Core Features', () => {
                 }, 1000);
             })
         );
-    });
 
-    it('Should remove the listener for async event', async () => {
+        expect(count).toBe(4);
+        expect(next.type).toBe('testEventAsync');
+        expect(next.payload).toBe('asyncEvent1');
+
         subscription3.unsubscribe();
 
         await Lotus.emit({

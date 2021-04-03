@@ -10,7 +10,7 @@ describe('ProxyUtilTest', function () {
             message1: "hello",
             message2: "world"
         };
-        const proxy = Lotus.bind(target, ['message1'], notify);
+        const proxy = Lotus.bind(target, ['message1'], notify).proxy;
         expect(proxy.message1).toBe('hello');
         expect(proxy.message2).toBe('world');
         // trigger notify
@@ -33,7 +33,7 @@ describe('ProxyUtilTest', function () {
         let notifyResult = {};
 
         let map = new Map();
-        const proxy = Lotus.bind(map, null, notify);
+        const proxy = Lotus.bind(map, null, notify).proxy;
         proxy.set('test', 1);
         expect(proxy.get('test')).toBe(1);
         expect(notifyResult.target.get('test')).toBe(1);
@@ -46,7 +46,7 @@ describe('ProxyUtilTest', function () {
         let notifyResult = {};
 
         let array = [1,2,3];
-        const arrayProxy = Lotus.bind(array, null, notify);
+        const arrayProxy = Lotus.bind(array, null, notify).proxy;
         arrayProxy[0] = 'I dont want to complex this'
         expect(arrayProxy[0]).toBe('I dont want to complex this');
         expect(notifyResult.prop).toBe('0');
