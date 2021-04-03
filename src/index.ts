@@ -5,6 +5,7 @@ export * from './context/functional/ComponentRegistry';
 export * from './view/functional/AbstractComponent';
 export * from './utils/ProxyUtils';
 export * from './utils/SimpleFsm';
+export * from './utils/EventBus';
 export {AbstractItemView} from './view/functional/AbstractCollectionComponent';
 export {AbstractCollectionComponent} from './view/functional/AbstractCollectionComponent';
 export {createItemView as createAbstractItemView} from './view/functional/AbstractCollectionComponent';
