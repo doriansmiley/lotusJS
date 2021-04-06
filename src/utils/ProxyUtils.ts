@@ -30,7 +30,6 @@ export function bind (obj: { [key: string]: any }, properties: Array<string>, no
             return Reflect.set(target, prop, value, receiver);
         }
     };
-    // TODO implement revokable proxies
     return Proxy.revocable(obj, handler);
 }
 /*

@@ -43,7 +43,7 @@ async function doTransaction (states: Map<string, any>, timeout = 1000, values =
 }
 
 export async function stateMachine (states: State[], timeout = 1000) {
-    // TODO add support to parse JSON
+    // TODO make cancelable
     const transitions = new Map();
     transitions.set('stack', []);
     transitions.set('states', states);
