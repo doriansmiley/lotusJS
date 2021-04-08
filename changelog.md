@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - New built in components for lists, radio groups, etc.
 
+## [3.0.0] - 2021-4-07
+
+### Added
+- [102](https://github.com/doriansmiley/lotusJS/issues/102) App Utils
+- [101](https://github.com/doriansmiley/lotusJS/issues/101) SSR with Puppeteer
+
+### Changed
+
+### Removed
+
 ## [2.1.0] - 2021-1-21
 
 ### Added
