@@ -14,6 +14,9 @@ async function doTransaction (states: Map<string, any>, timeout = 1000, values =
             const state = transitions.get('current');
             if (state && !state.hasOwnProperty('executed')) {
                 try {
+                    // TODO consider returning a new state as part of execute.
+                    //  I'd like to make sure we don't cause side effects either to
+                    //  the original states, or the states array
                     const result = await state.execute(values);
                     state.executed = 1;
                     state.result = result;

@@ -1,7 +1,7 @@
 describe('Test EventBus Core Features', () => {
-    let count = 0;
 
     it('Should register a listener, receive an event, and remove the listeners', async () => {
+        let count = 0;
         const subscription = Lotus.listen(
             {
                 type: 'testEvent1',
@@ -52,6 +52,7 @@ describe('Test EventBus Core Features', () => {
     });
 
     it('Should register a listener and receive a promise, then remove the listener', async () => {
+        let count = 0;
         let next = {};
         const subscription3 = Lotus.listen(
             {
@@ -74,7 +75,7 @@ describe('Test EventBus Core Features', () => {
             })
         );
 
-        expect(count).toBe(4);
+        expect(count).toBe(1);
         expect(next.type).toBe('testEventAsync');
         expect(next.payload).toBe('asyncEvent1');
 
@@ -85,7 +86,7 @@ describe('Test EventBus Core Features', () => {
             payload: 'asyncEvent1',
         });
 
-        expect(count).toBe(4);
+        expect(count).toBe(1);
         expect(subscription3.closed).toBe(true);
     });
 });

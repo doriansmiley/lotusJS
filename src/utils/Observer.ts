@@ -18,12 +18,12 @@ export type Observable = {
     proxy: Target;
 }
 
-export function observe (obj: Target, interval = 50, properties?: Array<string>): Observable {
+export function observe (obj: Target, interval = 0, properties?: Array<string>): Observable {
     const observers: Observer[] = [];
     let closed = false;
     const calls = [];
-    if (interval < 30) {
-        throw new Error('The interval must be greater than 30 milliseconds!');
+    if (interval < 0) {
+        throw new Error('The interval must be greater than or equal to 0 milliseconds!');
     }
     const callback = (prop: string, value: any, obj: { [key: string]: any }) => {
         observers.forEach((observer) => {
