@@ -110,6 +110,7 @@ export const emit = composeP<
     AbstractEventBusEventType,
     AbstractEventBusEventType,
     AbstractEventBusEventType
+    // TODO figure out how we can avoid the use of the singletons subscriberMap and interceptors
     >(emitFactory(subscriberMap), interceptorFactory(interceptors), promiseFactory);
 
 // in the future I think we could have some more interceptors besides trace
