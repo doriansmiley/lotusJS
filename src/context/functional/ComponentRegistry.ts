@@ -29,9 +29,7 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         if (!tagDef.template.content) {
             throw (`Failed to create template from\n${div.innerHTML}`);
         }
-    } else if (!tagDef.template) {
-        throw ('templateUrl or template must defined. They can not both be blank.');
-    };
+    }
     tagDefsByTagName.set(tagDef.tagName, tagDef);
     // check if we are rendering server side
     const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
@@ -54,12 +52,14 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
             const shadow = shadowRoot || this.attachShadow({mode: mode});
             // create our component
             const component: Component = tagDef.tagFunction();
-            // TODO if SSR see if we can skip this step for ssr, this takes time to perform
-            const clone = document.importNode(tagDef.template.content, true);
-            component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]') : clone.querySelector('[data-component-root="root"]');
+            // if a tag def template is supplied import the node, else use the shadow root. This allows for inline elements.
+            const clone = tagDef.template ? document.importNode(tagDef.template.content, true)
+                : document.importNode(this.querySelector('template').content, true);
+            component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]')
+                : clone.querySelector('[data-component-root="root"]');
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
-            const styles = [...tagDef.template.content.childNodes].find((child: Node) => {
+            const styles = [...clone.childNodes].find((child: Node) => {
                 if (child.nodeType === Node.TEXT_NODE) {
                     return false;
                 }
