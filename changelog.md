@@ -4,8 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 - New built in components for lists, radio groups, etc.
+
+## [3.0.1] - 2021-4-19
+
+### Added
+- [106](https://github.com/doriansmiley/lotusJS/issues/106) Support child elements for templates
+- [105](https://github.com/doriansmiley/lotusJS/issues/105) Create a render util function
+- [66](https://github.com/doriansmiley/lotusJS/issues/66) Tests for web components everywhere
+
+### Changed
+
+### Removed
 
 ## [3.0.0] - 2021-4-07
 
