@@ -57,7 +57,6 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
                 : document.importNode(this.querySelector('template').content, true);
             component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]')
                 : clone.querySelector('[data-component-root="root"]');
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const styles = [...clone.childNodes].find((child: Node) => {
                 if (child.nodeType === Node.TEXT_NODE) {

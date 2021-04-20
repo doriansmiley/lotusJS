@@ -1,7 +1,7 @@
 // interfaces
 export interface ComponentEvent {
     type: string;
-    payload: object;
+    payload: unknown;
 
     clone (event: ComponentEvent): ComponentEvent;
 }
@@ -9,13 +9,13 @@ export interface ComponentEvent {
 export interface EventDispatcher {
     handlersByEventName: Map<string, Array<Listener>>;
 
-    addEventListener (event: string, instance: object, handler: string): void;
+    addEventListener (event: string, instance: unknown, handler: string): void;
 
-    canListen (eventType: string, instance: object, handler: string): boolean;
+    canListen (eventType: string, instance: unknown, handler: string): boolean;
 
-    removeEventListener (event: string, instance: object, handler: string): void;
+    removeEventListener (event: string, instance: unknown, handler: string): void;
 
-    removeAllEventListeners (instance: object): void;
+    removeAllEventListeners (instance: unknown): void;
 
     dispatch (event: ComponentEvent): void;
 }
@@ -50,7 +50,7 @@ export interface Component extends EventDispatcher {
 
 export interface Listener {
     readonly handler: string;
-    readonly instance: object;
+    readonly instance: unknown;
 }
 // utils
 export const random = (): string => {
@@ -98,11 +98,11 @@ export const getTemplate = <T extends Component> (): T => {
     return {
         // placeholders for mixins and interfaces, required for the compiler
         handlersByEventName: new Map<string, Array<Listener>>(),
-        addEventListener: (event: string, instance: object, handler: string) => null,
-        canListen: (event: string, instance: object, handler: string) => null,
-        removeEventListener: (event: string, instance: object, handler: string) => null,
+        addEventListener: (event: string, instance: unknown, handler: string) => null,
+        canListen: (event: string, instance: unknown, handler: string) => null,
+        removeEventListener: (event: string, instance: unknown, handler: string) => null,
         removeEventListeners: () => null,
-        removeAllEventListeners: (instance: object) => null,
+        removeAllEventListeners: (instance: unknown) => null,
         dispatch: (event: ComponentEvent) => null,
         ready: false,
         id: random(),
@@ -120,7 +120,7 @@ export const getTemplate = <T extends Component> (): T => {
         render: null,
     } as T;
 };
-export const getComponentEvent = (type: string, payload: object): ComponentEvent => {
+export const getComponentEvent = (type: string, payload: unknown): ComponentEvent => {
     return {
         type,
         payload,
@@ -132,13 +132,13 @@ export const getComponentEvent = (type: string, payload: object): ComponentEvent
 export const createComponent = (): Component => {
     let clone = getTemplate();
     const _id = random();
-    clone.addEventListener = (event: string, instance: object, handler: string) => {
+    clone.addEventListener = (event: string, instance: unknown, handler: string) => {
         if (!clone.handlersByEventName.get(event)) {
             clone.handlersByEventName.set(event, []);
         }
         clone.handlersByEventName.get(event).push({handler, instance});
     };
-    clone.canListen = (eventType: string, instance: object, handler: string): boolean => {
+    clone.canListen = (eventType: string, instance: unknown, handler: string): boolean => {
         let canListen = false;
         if (clone.handlersByEventName.get(eventType)) {
             for (let handlerIndex = 0; handlerIndex < clone.handlersByEventName.get(eventType).length; handlerIndex++) {
@@ -152,7 +152,7 @@ export const createComponent = (): Component => {
         }
         return canListen;
     };
-    clone.removeEventListener = (event: string, instance: object, handler: string) => {
+    clone.removeEventListener = (event: string, instance: unknown, handler: string) => {
         if (!clone.handlersByEventName.get(event)) {
             return;
         }
@@ -177,7 +177,7 @@ export const createComponent = (): Component => {
             }
         }
     };
-    clone.removeAllEventListeners = (instance: object) => {
+    clone.removeAllEventListeners = (instance: unknown) => {
         for (const event in clone.handlersByEventName) {
             clone.handlersByEventName.get(event).forEach((listener: Listener) => {
                 if (listener.instance == instance) {
@@ -198,6 +198,7 @@ export const createComponent = (): Component => {
         for (let handlerIndex = 0; handlerIndex < len; ++handlerIndex) {
             const handlerFunctionName = (dispatchToList[handlerIndex] as Listener).handler;
             const instance = dispatchToList[handlerIndex].instance;
+            // @ts-ignore
             instance[handlerFunctionName](event);
         }
     };

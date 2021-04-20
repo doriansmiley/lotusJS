@@ -21,6 +21,7 @@ module.exports = {
         "lines-between-class-members": "off",
         "space-before-blocks": "error",
         "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["warn"],
         "no-param-reassign": "error",

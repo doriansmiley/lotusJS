@@ -1,5 +1,4 @@
 const path = require('path');
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -23,20 +22,13 @@ module.exports = {
     optimization: {
         minimize: true,
         minimizer: [new TerserPlugin({
-            sourceMap: true,
+            terserOptions:{
+                sourceMap: true,
+            },
         })],
     },
     devtool: 'source-map',
     plugins: [
-        new TypedocWebpackPlugin({
-            name: 'LotusJS',
-            mode: 'file',
-            // theme: './typedoc-theme/',
-            ignoreCompilerErrors: true,
-            excludePrivate:true,
-            includeDeclarations:true,
-            excludeExternals:true
-        }, './src'),
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled'
         })

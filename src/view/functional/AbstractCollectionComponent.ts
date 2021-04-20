@@ -1,20 +1,20 @@
 import {Component, mixin, Events, ComponentEvent, addProperty} from './AbstractComponent';
-import {getTagDef} from '../..';
+import {getTagDef} from '../../index';
 
 // export interfaces
 export interface AbstractItemView extends Component {
     resetState: (selected: boolean) => void;
-    model: object;
+    model: Record<string, unknown>;
 }
 export interface AbstractCollectionComponent extends Component {
-    addChildView: <T extends AbstractItemView, Z extends object>(model: Z) => void;
+    addChildView: <T extends AbstractItemView, Z extends Record<string, unknown>>(model: Z) => void;
     childViews: Array<AbstractItemView>;
     hydrateChildViews: () => void;
     addViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListener: <T extends AbstractItemView>(view: T) => void;
     removeViewEventListeners: () => void;
     cloneItemTemplate: <T extends HTMLElement>() => T;
-    createChildView: <T extends AbstractItemView>(model: object) => T;
+    createChildView: <T extends AbstractItemView>(model: Record<string, unknown>) => T;
     onItemSelectedDeselect: (event: ComponentEvent) => void;
     selectedItem: AbstractItemView;
     removeAllChildViews: () => void;
@@ -65,7 +65,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         if (selectedItem && selectedItem != event.payload['item']) {
             selectedItem.resetState(false);
         }
-        selectedItem = event.payload['item'];
+        selectedItem = event.payload['item'] as AbstractItemView;
         selectedItem.resetState(event.type === Events.ITEM_SELECTED);
     };
     clone.addViewEventListener = <T extends AbstractItemView>(view: T): void => {
@@ -83,7 +83,7 @@ export const createComponent = (component: Component): AbstractCollectionCompone
             clone.removeViewEventListener(view);
         });
     };
-    clone.addChildView = <T extends AbstractItemView>(model: object): void => {
+    clone.addChildView = <T extends AbstractItemView>(model: Record<string, unknown>): void => {
         const element = clone.cloneItemTemplate();
         clone.skinPartMap.get('collectionContainer').appendChild(element);
         // IMPORTANT: once the component is added to the DOM the ComponentRegistry

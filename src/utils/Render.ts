@@ -1,4 +1,4 @@
-import {getTagDef, register, TagDefinition} from '..';
+import {getTagDef, register, TagDefinition} from '../index';
 
 export const render = async (tagDef: TagDefinition, target: HTMLElement, props?: (element: HTMLElement) => void) => {
     if (!getTagDef(tagDef.tagName)) {
