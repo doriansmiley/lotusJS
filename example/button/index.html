@@ -11,10 +11,98 @@
 	<h3>Lotus Button</h3>
 	<p>
 		Here's an example of a Lotus Button component. The <code >lotus-button</code> tag
-		extends the <code >HTMLElement</code>. The component registry adds the component property
-		which we use to mediate the component view. We assign an event listener in to mediate events.
+		extends the <code >HTMLElement</code>. In this example we use the tadDef to define the HTML view as a string.
+		Lotus also provides a render method of you want to render programmatically under utils.
+		We assign an event listener in to mediate events.
 	</p>
 	<lotus-button id="button"></lotus-button>
+</div>
+<div class="content-panel">
+	<h3>Lotus Button Inline</h3>
+	<p>
+		Here's an example of a Lotus Button component rendered using inline HTML. This is perhaps the most common
+		use case as it allows HTML to be defined inline but still seperate from the code.
+	</p>
+	<lotus-button-inline id="button">
+		<template>
+			<style>
+				@font-face {
+					font-family: 'SegoeUI';
+					src: url('css/fonts/segoeui.ttf') format('truetype');
+
+					font-weight: normal;
+					font-style: normal;
+				}
+
+				@font-face {
+					font-family: 'SegoeUI';
+					src: url('css/fonts/segoeuib.ttf') format('truetype');
+
+					font-weight: 500;
+					font-style: normal;
+				}
+
+				@font-face {
+					font-family: 'SegoeUI';
+					src: url('css/fonts/segoeuii.ttf') format('truetype');
+
+					font-weight: normal;
+					font-style: italic;
+				}
+
+
+				button{
+					cursor:pointer;
+					color:#fff;
+					width:190px;
+					height:50px;
+					border-radius:26px;
+					box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
+					border: 1px solid #02fa0f;
+
+					padding:10px;
+					/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bb0d8+0,1e5799+44,1e5799+89,1f6b8e+100 */
+					background: #5df86b; /* Old browsers */
+					background: -moz-linear-gradient(top, #a8d85b 0%, #51991e 44%, #1e9939 89%, #1f8e3b 100%); /* FF3.6-15 */
+					background: -webkit-linear-gradient(top, #a8d85b 0%, #51991e 44%, #1e9939 89%, #1f8e3b 100%); /* Chrome10-25,Safari5.1-6 */
+					background: linear-gradient(to bottom, #a8d85b 0%, #51991e 44%, #1e9939 89%, #1f8e3b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bb0d8', endColorstr='#1f6b8e',GradientType=0 ); /* IE6-9 */
+				}
+
+				button * {
+					cursor:pointer;
+				}
+
+				button:focus {
+					outline: none;
+				}
+
+				button:hover {
+					border:1px solid #f00;
+					/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c67a+1,fc7e1e+49,f9af02+87,ffcc68+100 */
+					background: #f9c67a; /* Old browsers */
+					background: -moz-linear-gradient(top, #f9c67a 1%, #fc7e1e 49%, #f9af02 87%, #ffcc68 100%); /* FF3.6-15 */
+					background: -webkit-linear-gradient(top, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* Chrome10-25,Safari5.1-6 */
+					background: linear-gradient(to bottom, #f9c67a 1%,#fc7e1e 49%,#f9af02 87%,#ffcc68 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c67a', endColorstr='#ffcc68',GradientType=0 ); /* IE6-9 */
+				}
+
+				button:hover label {
+					color:#b71a00;
+					text-shadow: 0px 0px 6px rgba(255, 189, 104, 1);
+				}
+
+				button label {
+					font-family: 'SegoeUI';
+					text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
+					font-size:14px;
+				}
+			</style>
+			<div data-component-root="root">
+				<button data-skin-part="button"><label>testButton inline</label></button>
+			</div>
+		</template>
+	</lotus-button-inline>
 </div>
 <div class="content-panel">
 	<h3>Lotus Button with External Skin</h3>

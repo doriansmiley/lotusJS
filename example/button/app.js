@@ -5,7 +5,7 @@ template.innerHTML = '<template id="app">\n' +
     '      <label>Hello World with Bootsrap</label>\n' +
     '    </button>\n' +
     '  </div>\n' +
-    '</template>\n'
+    '</template>\n';
 const tagDef = {
     inserted: (component) => {
         console.log('example component inserted');
@@ -30,8 +30,20 @@ const tagDef2 = {
     tagName: 'lotus-button-2',
     tagFunction: Lotus.useButton
 };
+const tagDef3 = {
+    inserted: (component) => {
+        console.log('example component inserted');
+    },
+    removed: (component) => {
+        console.log('example component removed');
+        component.element = null;
+    },
+    tagName: 'lotus-button-inline',
+    tagFunction: Lotus.useButton
+};
 Lotus.register(tagDef);
 Lotus.register(tagDef2);
+Lotus.register(tagDef3);
 const button = document.getElementById('button');
 const responder = {
     onEvent: (event) => {

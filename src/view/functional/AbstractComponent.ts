@@ -131,6 +131,7 @@ export const getComponentEvent = (type: string, payload: object): ComponentEvent
 };
 export const createComponent = (): Component => {
     let clone = getTemplate();
+    const _id = random();
     clone.addEventListener = (event: string, instance: object, handler: string) => {
         if (!clone.handlersByEventName.get(event)) {
             clone.handlersByEventName.set(event, []);
@@ -257,7 +258,7 @@ export const createComponent = (): Component => {
     addProperty(clone,
         'id',
         function () {
-            return random();
+            return _id;
         });
     // TODO create functional event dispatch and replace new EventDispatcher()
     return clone;
