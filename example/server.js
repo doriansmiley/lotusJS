@@ -29,6 +29,23 @@ app.get('/ssr', async (req, res, next) => {
     return res.status(200).send(html); // Serve prerendered page as response.
 });
 
+app.get('/sample', async (req, res, next) => {
+    // TODO replace hard coded value
+    console.log(req.query.url);
+    console.log(req.query.selector);
+    await new Promise((resolve) => {
+        setTimeout(() => resolve(), 1000);
+    });
+    return res.status(200).send([
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/0.jpg', caption: '<h5>0.jpg</h5>'},
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/6.jpg', caption: '<h5>1.jpg</h5>'},
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/2.jpg', caption: '<h5>2.jpg</h5>'},
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/3.jpg', caption: '<h5>3.jpg</h5>'},
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/4.jpg', caption: '<h5>4.jpg</h5>'},
+        {name: '', src: 'http://localhost:3000/image-gallery/assets/5.jpg', caption: '<h5>5.jpg</h5>'},
+    ]);
+});
+
 app.use('/', express.static(path.join(__dirname,'.')));
 
 const server = app.listen(port, () => console.log(`Static server listening on port ${port}!`));
