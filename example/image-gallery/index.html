@@ -11,8 +11,7 @@
 	<h3>Lotus Image Gallery</h3>
 	<p>
 		Here's an example of a Lotus Image Gallery component. It's a collection component
-		composed of image items which are also registered components. We use <a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>
-		to simulate some latency for loading data. This helps evaluate the difference between the client side and
+		composed of image items which are also registered components. We use a timeout in the request to localhost to simulate backend latency. This helps evaluate the difference between the client side and
 		<a href="http://localhost:3000/ssr/?url=http://localhost:3000/image-gallery/&selector=lotus-image-gallery">server side version</a>.
 	</p>
 	<lotus-image-gallery id="gallery"></lotus-image-gallery>
