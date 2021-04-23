@@ -31,4 +31,9 @@ app.get('/ssr', async (req, res, next) => {
 
 app.use('/', express.static(path.join(__dirname,'.')));
 
-app.listen(port, () => console.log(`Static server listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Static server listening on port ${port}!`));
+
+process.on('SIGINT',function () {
+    console.log('Closing server');
+    server.close();
+});
