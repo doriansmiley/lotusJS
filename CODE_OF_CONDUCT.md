@@ -2,8 +2,7 @@
 
 ## Our Pledge
 
-We as members, contributors, and leaders pledge to make participation in our
-community innovate and find novel solutions to problems. We don't care
+We as members, contributors, and leaders pledge to innovate and find novel solutions to problems. We don't care
 who you like to have sex with, what you look like, where you come from, or any immuntable charecteristc you poccess. We value you
 for all your flaws, all your strengths, and your contributions to the community.
 We pledge to foster an environment where trust can florish, and innovation can thrive.
