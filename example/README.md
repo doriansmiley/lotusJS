@@ -28,5 +28,15 @@ and render them. It's important to note the provided SSR application waits for
 the presence of a `shadowRoot` in the element referenced using the provided `selector`
 param passed in the querystring before returning. The example URL defines the `lotus-image-gallery`
 selector which corresponds to the custom element of the image gallery component.
-Below is an example URL using the image gallery component:
-http://localhost:3000/ssr/?url=http://localhost:3000/image-gallery/&selector=lotus-image-gallery.
+
+The example implements server side data loading. LotusJS components
+implement an optional `loadData` function. The registry will call this method
+when rendering server side. The sample SSR application supports passing a `data` and
+`publish` function. The data loader sample simply calls an API endpoint,
+but you could easily code a function to query a database etc. The `publish`
+function saves the output as a local file, but you could easily publish to S3.
+
+**IMPORTANT:** The SSR function is just a sample not a framework!
+If you want a framework for SSR I recommend Next.js. Lotus is a designed to be
+a lightweight alternative to full featured frameworks. 
+We expect developers to create a lot of their own code. Please keep this in mind.

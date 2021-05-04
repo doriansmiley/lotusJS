@@ -47,7 +47,7 @@ const timeout = process.env.TIMEOUT || 5000;
  *     a new browser instance is launched.
  * @param {function} data Optional data loader
  */
-async function ssr (url, browserWSEndpoint, selector, data = null) {
+async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
     if (RENDER_CACHE.has(url)) {
         console.info(`Headless rendered page from cache: ${url}`);
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
@@ -117,6 +117,9 @@ async function ssr (url, browserWSEndpoint, selector, data = null) {
 
         RENDER_CACHE.set(url, html); // cache rendered page.
 
+        if (publish) {
+            await publish({filePath: path[0], html});
+        }
         return {html, ttRenderMs};
     }
     catch (e) {
