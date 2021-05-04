@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "lotusjs-components": "file:..",
+    "node-fetch": "^2.6.1",
     "puppeteer": "^9.0.0"
   }
 }

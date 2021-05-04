@@ -37,6 +37,7 @@ const skippedResources = [
 ];
 
 const RENDER_CACHE = new Map();
+const timeout = process.env.TIMEOUT || 5000;
 
 /**
  * https://developers.google.com/web/tools/puppeteer/articles/ssr#reuseinstance
@@ -44,9 +45,11 @@ const RENDER_CACHE = new Map();
  * @param {string} browserWSEndpoint Optional remote debugging URL. If
  *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
  *     a new browser instance is launched.
+ * @param {function} data Optional data loader
  */
-async function ssr (url, browserWSEndpoint, selector) {
+async function ssr (url, browserWSEndpoint, selector, data = null) {
     if (RENDER_CACHE.has(url)) {
+        console.info(`Headless rendered page from cache: ${url}`);
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
 
@@ -74,7 +77,13 @@ async function ssr (url, browserWSEndpoint, selector) {
                 request.continue();
             }
         });
-
+        // pipe console log from browser to node process
+        page.on('console', consoleObj => console.info(consoleObj.text()));
+        if (data) {
+            console.info('calling exposeFunction passing supplied data function');
+            await page.exposeFunction('data', data);
+        }
+        console.info('calling evaluate');
         // Inject <base> on page to relative resources load properly.
         await page.evaluate(url => {
             const base = document.createElement('base');
@@ -82,21 +91,22 @@ async function ssr (url, browserWSEndpoint, selector) {
             // Add to top of head, before all other resources.
             document.head.prepend(base);
         }, url);
-
+        console.info(`calling goto waiting for networkidle0: ${url}`);
         await page.goto(url, {
-            timeout: 25000,
-            waitUntil: 'networkidle0'
+            timeout: timeout,
+            waitUntil: 'domcontentloaded'
         });
 
-
+        console.info(`waiting for shadowRoot on selector: ${selector}`);
         await page.waitForFunction(selector => !!document.querySelector(selector)?.shadowRoot, {
-            polling: 'mutation',
+            polling: 500,
+            timeout: timeout,
         }, selector);
-
+        console.info('found selector, eval HTML');
         let html = await page.$eval('html', (element, tagname) => {
             return element.getInnerHTML({includeShadowRoots: true});
         }, selector);
-
+        console.info('got HTML');
         // Close the page we opened here (not the browser).
         await page.close();
         // TODO figure out why the base element is stripped from serialization
