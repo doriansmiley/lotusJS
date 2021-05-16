@@ -1,5 +1,9 @@
 const puppeteer = require('puppeteer');
-
+const debug = require('debug');
+const logger = {
+    info: debug('lotus-ssr:log'),
+    error: debug('lotus-ssr:error'),
+}
 // https://hackernoon.com/tips-and-tricks-for-web-scraping-with-puppeteer-ed391a63d952
 // Dont download all resources, we just need the HTML
 // Also, this is huge performance/response time boost
@@ -49,7 +53,7 @@ const timeout = process.env.TIMEOUT || 5000;
  */
 async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
     if (RENDER_CACHE.has(url)) {
-        console.info(`Headless rendered page from cache: ${url}`);
+        logger.info(`Headless rendered page from cache: ${url}`);
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
 
@@ -78,12 +82,12 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
             }
         });
         // pipe console log from browser to node process
-        page.on('console', consoleObj => console.info(consoleObj.text()));
+        page.on('console', consoleObj => logger.info(consoleObj.text()));
         if (data) {
-            console.info('calling exposeFunction passing supplied data function');
+            logger.info('calling exposeFunction passing supplied data function');
             await page.exposeFunction('data', data);
         }
-        console.info('calling evaluate');
+        logger.info('calling evaluate');
         // Inject <base> on page to relative resources load properly.
         await page.evaluate(url => {
             const base = document.createElement('base');
@@ -91,29 +95,29 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
             // Add to top of head, before all other resources.
             document.head.prepend(base);
         }, url);
-        console.info(`calling goto waiting for networkidle0: ${url}`);
+        logger.info(`calling goto waiting for networkidle0: ${url}`);
         await page.goto(url, {
             timeout: timeout,
             waitUntil: 'domcontentloaded'
         });
 
-        console.info(`waiting for shadowRoot on selector: ${selector}`);
+        logger.info(`waiting for shadowRoot on selector: ${selector}`);
         await page.waitForFunction(selector => !!document.querySelector(selector)?.shadowRoot, {
             polling: 500,
             timeout: timeout,
         }, selector);
-        console.info('found selector, eval HTML');
+        logger.info('found selector, eval HTML');
         let html = await page.$eval('html', (element, tagname) => {
             return element.getInnerHTML({includeShadowRoots: true});
         }, selector);
-        console.info('got HTML');
+        logger.info('got HTML');
         // Close the page we opened here (not the browser).
         await page.close();
         // TODO figure out why the base element is stripped from serialization
         html = html.replace('<head>', `<head><base href="${url}"/>`);
 
         const ttRenderMs = Date.now() - start;
-        console.info(`Headless rendered page in: ${ttRenderMs}ms`);
+        logger.info(`Headless rendered page in: ${ttRenderMs}ms`);
 
         RENDER_CACHE.set(url, html); // cache rendered page.
 
@@ -124,7 +128,7 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
     }
     catch (e) {
         const html = e.toString();
-        console.warn({ message: `URL: ${url} Failed with message: ${html}` });
+        logger.warn({ message: `URL: ${url} Failed with message: ${html}` });
         return { html, status: 500 };
     }
 

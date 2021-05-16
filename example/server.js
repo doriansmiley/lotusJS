@@ -5,6 +5,11 @@ const cors = require('cors');
 const port = process.argv[2] || 3000;
 const dockerPort = process.argv[3] || 3005;
 const ssr = require('./ssr/ssr');
+const debug = require('debug');
+const logger = {
+    info: debug('lotus-ssr:log'),
+    error: debug('lotus-ssr:error'),
+}
 
 const corsOptions = {
     origin: [
@@ -26,7 +31,7 @@ app.get('/ssr', async (req, res, next) => {
 
     if (path) {
         const libPath = path[0].substr(0,path[0].length-1);
-        console.info(libPath);
+        logger.info(libPath);
         // if there is a path try to load a SSR data loading function. We assume it will be found
         // at path
         try {
@@ -34,7 +39,7 @@ app.get('/ssr', async (req, res, next) => {
             data = serverFunctions.data;
             publish = serverFunctions.publish;
         } catch (e) {
-            console.info('no server function found');
+            logger.info('no server function found');
         }
     }
 
@@ -67,9 +72,9 @@ app.get('/sample', async (req, res, next) => {
 
 app.use('/', express.static(path.join(__dirname,'.')));
 
-const server = app.listen(port, () => console.info(`Static server listening on port ${port}!`));
+const server = app.listen(port, () => logger.info(`Static server listening on port ${port}!`));
 
 process.on('SIGINT',function () {
-    console.info('Closing ssr-cluster');
+    logger.info('Closing ssr-cluster');
     server.close();
 });
