@@ -23,6 +23,7 @@ app.get('/ssr', async (req, res, next) => {
     let publish;
     // extract the path https://regex101.com/r/bVnMRC/1/
     const path = req.query.url.match(/(?<=(http\:\/\/|https\:\/\/)[a-zA-Z.:\-0-9]+)\/[a-zA-Z.:\-0-9\/]+/);
+
     if (path) {
         const libPath = path[0].substr(0,path[0].length-1);
         console.info(libPath);
@@ -36,13 +37,7 @@ app.get('/ssr', async (req, res, next) => {
             console.info('no server function found');
         }
     }
-    // TODO add a publish function as another parameter that can save the output.
-    //  I would hash req.query.url as the filename. This would allow saving to Fly.io
-    //  edge (or S3) and serving from there pre-rendered with the data.
-    //  I would save the file in the root of the supplied path. That way all the paths
-    //  in the HTML still resolve. See what type of caching fly.io supports for static files.
-    //  I think the publish feature should replace the in memory cache since CDN proxies
-    //  should support caching the outputted file
+
     const {html, ttRenderMs} = await ssr({
         url: req.query.url,
         browserWSEndpoint: undefined,

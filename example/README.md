@@ -37,6 +37,6 @@ but you could easily code a function to query a database etc. The `publish`
 function saves the output as a local file, but you could easily publish to S3.
 
 **IMPORTANT:** The SSR function is just a sample not a framework!
-If you want a framework for SSR I recommend Next.js. Lotus is a designed to be
-a lightweight alternative to full featured frameworks. 
+If you want a framework for SSR and static websites I recommend Next.js or Gatsby.
+Lotus is a designed to bea lightweight alternative to full featured frameworks. 
 We expect developers to create a lot of their own code. Please keep this in mind.
