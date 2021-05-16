@@ -1,5 +1,25 @@
 {
-  "extends": [
-    "config:base"
+  "extends": ["config:base", "group:monorepos"],
+  "includePaths": ["package.json"],
+  "schedule": ["every weekend"],
+  "semanticCommits": true,
+  "rangeStrategy": "bump",
+  "rebaseLabel": "rebase",
+  "rebaseWhen": "auto",
+  "requiredStatusChecks": [],
+  "packageRules": [
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["eslint"],
+      "groupName": "eslint"
+    }
   ]
 }
