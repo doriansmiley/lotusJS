@@ -1,12 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const express = require('express');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 const app = express();
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require('cors');
 const port = process.argv[2] || 3001;
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const ssr = require('./ssr');
 
 const corsOptions = {
@@ -15,7 +11,6 @@ const corsOptions = {
     ],
     credentials: true
 };
-
 
 app.use(cors(corsOptions));
 
