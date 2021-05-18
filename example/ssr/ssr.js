@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const debug = require('debug');
+const minify = require('html-minifier-terser').minify;
 const logger = {
     info: debug('lotus-ssr:log'),
     error: debug('lotus-ssr:error'),
@@ -114,7 +115,18 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
         // Close the page we opened here (not the browser).
         await page.close();
         // TODO figure out why the base element is stripped from serialization
-        html = html.replace('<head>', `<head><base href="${url}"/>`);
+        html = minify(html.replace('<head>', `<head><base href="${url}"/>`),{
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            decodeEntities: true,
+            keepClosingSlash: true,
+            minifyCSS: true,
+            minifyJS: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+        });
 
         const ttRenderMs = Date.now() - start;
         logger.info(`Headless rendered page in: ${ttRenderMs}ms`);
