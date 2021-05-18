@@ -47,25 +47,20 @@ const timeout = process.env.TIMEOUT || 5000;
 /**
  * https://developers.google.com/web/tools/puppeteer/articles/ssr#reuseinstance
  * @param {string} url URL to prerender.
- * @param {string} browserWSEndpoint Optional remote debugging URL. If
- *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
- *     a new browser instance is launched.
+ * @param {string} remote debugging URL. Puppeteer's reconnects to the browser instance.
  * @param {function} data Optional data loader
  */
-async function ssr ({url, browserWSEndpoint, selector, data, publish, path} ) {
+async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clearCache} ) {
+    if (clearCache) {
+        RENDER_CACHE.clear();
+    }
     if (RENDER_CACHE.has(url)) {
         logger.info(`Headless rendered page from cache: ${url}`);
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
 
     const start = Date.now();
-    const args = puppeteer.defaultArgs();
-    // IMPORTANT: you can't render shadow DOM without this flag
-    // getInnerHTML will be undefined without it
-    args.push('--enable-experimental-web-platform-features');
-    const browser = await puppeteer.launch({
-        args
-    });
+    const browser = await puppeteer.connect({browserWSEndpoint});
     const page = await browser.newPage();
     try {
         await page.setRequestInterception(true);
