@@ -135,7 +135,7 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clea
     }
     catch (e) {
         const html = e.toString();
-        logger.warn({ message: `URL: ${url} Failed with message: ${html}` });
+        logger.error({ message: `URL: ${url} Failed with message: ${html}` });
         return { html, status: 500 };
     }
 

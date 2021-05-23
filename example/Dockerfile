@@ -2,6 +2,8 @@ FROM node:16-slim
 
 MAINTAINER Dorian Smiley, dsmiley@codestrap.me
 
+WORKDIR /usr/app
+
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
 # installs, work.
@@ -26,26 +28,33 @@ RUN apt-get update \
 #     browser.launch({executablePath: 'google-chrome-stable'})
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 COPY package.json .
-COPY package-lock.json .
+# COPY package-lock.json .
 COPY server.js .
-COPY ssr.js .
+COPY index.html .
+COPY ./button ./button
+COPY ./css ./css
+COPY ./image-gallery ./image-gallery
+COPY ./ssr ./ssr
+# the example app uses a local file ref for the lotus lib to help enable testing and development
+# we need to replace it in Docker container since the ref will break
+RUN sed -i 's/file:../3.0.1/' package.json
 
 # Install puppeteer so it's available in the container.
-RUN npm ci \
+RUN npm install \
     # Add user so we don't need --no-sandbox.
     # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /usr/app/node_modules
 
 # Run everything after as non-privileged user.
 USER pptruser
 
-ENV PORT=3005
+ENV PORT=3000
 ENV DISPLAY=1.0
+ENV DEBUG='lotus-ssr:*'
 
-EXPOSE 3005
+EXPOSE 3000
 
-ENTRYPOINT google-chrome-stable && xvfb-run --auto-servernum npm run start
-# CMD ["google-chrome-stable"]
+CMD ["google-chrome-stable"]
