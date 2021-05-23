@@ -15,7 +15,7 @@
 		Lotus also provides a render method of you want to render programmatically under utils.
 		We assign an event listener in to mediate events.
 	</p>
-	<lotus-button id="button"></lotus-button>
+	<lotus-button></lotus-button>
 </div>
 <div class="content-panel">
 	<h3>Lotus Button Inline</h3>
@@ -111,8 +111,9 @@
 		The tag definition in <code >app.js</code> references the <code >templates/button-blue.html</code> template file.
 		The file is static and will only be loaded once no matter how many instances of the tag you have.
 		The <code >lotus-button</code> tag
-		extends the <code >HTMLElement</code>. The component registry adds the component property
+		extends <code >HTMLElement</code>. The component registry adds the component property
 		which we use to mediate the component view. We assign an event listener in to mediate events.
+		assign and event handler to mediate the component's click event.
 	</p>
 	<lotus-button-2></lotus-button-2>
 </div>

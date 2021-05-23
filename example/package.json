@@ -4,7 +4,12 @@
   "description": "sample web component application for HTML buttons",
   "main": "index.js",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "build": "docker build -t lotus-examples .",
+    "start": "node server",
+    "stop": "docker stop lotus-examples",
+    "remove": "docker rm lotus-examples",
+    "docker": "docker run -p 3000:3000 -i --init --rm --cap-add=SYS_ADMIN --name lotus-examples lotus-examples node -e \"`cat server.js`\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +35,6 @@
     "html-minifier-terser": "^5.1.1",
     "lotusjs-components": "file:..",
     "node-fetch": "^2.6.1",
-    "puppeteer": "^9.0.0"
+    "puppeteer": "^9.1.1"
   }
 }
