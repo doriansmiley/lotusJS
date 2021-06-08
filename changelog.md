@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 - New built in components for lists, radio groups, etc.
 
+## [3.1.0] - 2021-6-07
+
+### Added
+- [134](https://github.com/doriansmiley/lotusJS/issues/134) Error hydrating HTML from Docker container
+- [133](https://github.com/doriansmiley/lotusJS/issues/133) Error when rendering from Docker
+- [120](https://github.com/doriansmiley/lotusJS/issues/120) Create publisher sample
+- [110](https://github.com/doriansmiley/lotusJS/issues/110) Implement Renovate Bot
+
+### Changed
+
+### Removed
+
 ## [3.0.1] - 2021-4-19
 
 ### Added
