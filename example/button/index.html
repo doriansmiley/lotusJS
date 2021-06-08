@@ -120,58 +120,60 @@
 </body>
 <script type="module" src="../node_modules/lotusjs-components/lib/lotusJS-UMD.js"></script>
 <script type="module">
-	const template = document.createElement('div');
-	template.innerHTML = '<template id="app">\n' +
-			'  <div data-component-root="root">\n' +
-			'    <button data-skin-part="button">\n' +
-			'      <label>Hello World with Bootsrap</label>\n' +
-			'    </button>\n' +
-			'  </div>\n' +
-			'</template>\n';
-	const tagDef = {
-		inserted: (component) => {
-			console.log('example component inserted');
-		},
-		removed: (component) => {
-			console.log('example component removed');
-			component.element = null;
-		},
-		template: template.firstChild,
-		tagName: 'lotus-button',
-		tagFunction: Lotus.useButton
-	};
-	const tagDef2 = {
-		inserted: (component) => {
-			console.log('example component inserted');
-		},
-		removed: (component) => {
-			console.log('example component removed');
-			component.element = null;
-		},
-		templateUrl: 'templates/button-blue.html',
-		tagName: 'lotus-button-2',
-		tagFunction: Lotus.useButton
-	};
-	const tagDef3 = {
-		inserted: (component) => {
-			console.log('example component inserted');
-		},
-		removed: (component) => {
-			console.log('example component removed');
-			component.element = null;
-		},
-		tagName: 'lotus-button-inline',
-		tagFunction: Lotus.useButton
-	};
-	Lotus.register(tagDef);
-	Lotus.register(tagDef2);
-	Lotus.register(tagDef3);
-	const button = document.getElementById('button');
-	const responder = {
-		onEvent: (event) => {
-			console.log('click');
-		}
-	};
-	button.component.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
+	window.onload = async () => {
+		const template = document.createElement('div');
+		template.innerHTML = '<template id="app">\n' +
+				'  <div data-component-root="root">\n' +
+				'    <button data-skin-part="button">\n' +
+				'      <label>Hello World with Bootsrap</label>\n' +
+				'    </button>\n' +
+				'  </div>\n' +
+				'</template>\n';
+		const tagDef = {
+			inserted: (component) => {
+				console.log('example component inserted');
+			},
+			removed: (component) => {
+				console.log('example component removed');
+				component.element = null;
+			},
+			template: template.firstChild,
+			tagName: 'lotus-button',
+			tagFunction: Lotus.useButton
+		};
+		const tagDef2 = {
+			inserted: (component) => {
+				console.log('example component inserted');
+			},
+			removed: (component) => {
+				console.log('example component removed');
+				component.element = null;
+			},
+			templateUrl: 'templates/button-blue.html',
+			tagName: 'lotus-button-2',
+			tagFunction: Lotus.useButton
+		};
+		const tagDef3 = {
+			inserted: (component) => {
+				console.log('example component inserted');
+			},
+			removed: (component) => {
+				console.log('example component removed');
+				component.element = null;
+			},
+			tagName: 'lotus-button-inline',
+			tagFunction: Lotus.useButton
+		};
+		await Lotus.register(tagDef);
+		await Lotus.register(tagDef2);
+		await Lotus.register(tagDef3);
+		const button = document.getElementById('button');
+		const responder = {
+			onEvent: (event) => {
+				console.log('click');
+			}
+		};
+		button.component.addEventListener(Lotus.Events.CLICK, responder, 'onEvent');
+	}
 </script>
 </html>

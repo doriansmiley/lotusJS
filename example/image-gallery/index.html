@@ -19,62 +19,64 @@
 </body>
 <script type="module" src="../node_modules/lotusjs-components/lib/lotusJS-UMD.js"></script>
 <script type="module">
-	// default to false
-	let isSsr = false;
-	// placeholder array for data
-	let list = [];
-	// image view tag def
-	const imageViewTagDeg = {
-		inserted: (component) => {
-			console.log('image inserted');
-		},
-		removed: (component) => {
-			component.element = null;
-		},
-		templateUrl: 'templates/image.html',
-		tagName: 'lotus-image-view',
-		tagFunction: Lotus.useImageView
-	};
-	Lotus.register(imageViewTagDeg);
-	// image gallery tag def
-	const tagDef = {
-		constructed: (ssr) => {
-			// the value of ssr is set by the ComponentRegistry and determined voa
-			// !!document.querySelector(tagDef.tagName)?.shadowRoot;
-			isSsr = ssr;
-		},
-		hydrated: false,
-		loadData: async () => {
-			// loadData will be called by the component registry
-			// window.data is a special method that is populated by our SSR sample
-			// you could define any global you like using page.exposeFunction
-			// This lets the server load data from databases, redis, wherever node can
-			// otherwise load the data from our mock API
-			console.log('app.js loading data');
-			const result = (window.data) ? await window.data() : await fetch('http://localhost:3000/sample');
-			console.log(`app.js got data: ${result}`);
-			const parsedResult = (typeof result === 'string') ? JSON.parse(result) : await result.json();
-			list = Object.keys(parsedResult)
-					.filter((attr) => attr !== 'id')
-					.map((each) => parsedResult[each]);
-			console.log(`app.js list: ${list}`);
-			return true;
-		},
-		inserted: async (component) => {
-			console.log('example component inserted');
-			// always use replaceWith when you call render again!!!! render will always create
-			// a new element and return it
-			component.element.replaceWith(component.render(list, isSsr));
-		},
-		removed: (component) => {
-			console.log('example component removed');
-			component.element = null;
-		},
-		templateUrl: 'templates/gallery.html',
-		tagName: 'lotus-image-gallery',
-		tagFunction: Lotus.useImageGallery
-	};
-	// register gallery
-	Lotus.register(tagDef);
+	window.onload = async () => {
+		// default to false
+		let isSsr = false;
+		// placeholder array for data
+		let list = [];
+		// image view tag def
+		const imageViewTagDeg = {
+			inserted: (component) => {
+				console.log('image inserted');
+			},
+			removed: (component) => {
+				component.element = null;
+			},
+			templateUrl: 'templates/image.html',
+			tagName: 'lotus-image-view',
+			tagFunction: Lotus.useImageView
+		};
+		await Lotus.register(imageViewTagDeg);
+		// image gallery tag def
+		const tagDef = {
+			constructed: (ssr) => {
+				// the value of ssr is set by the ComponentRegistry and determined voa
+				// !!document.querySelector(tagDef.tagName)?.shadowRoot;
+				isSsr = ssr;
+			},
+			hydrated: false,
+			loadData: async () => {
+				// loadData will be called by the component registry
+				// window.data is a special method that is populated by our SSR sample
+				// you could define any global you like using page.exposeFunction
+				// This lets the server load data from databases, redis, wherever node can
+				// otherwise load the data from our mock API
+				console.log('app.js loading data');
+				const result = (window.data) ? await window.data() : await fetch('http://localhost:3000/sample');
+				console.log(`app.js got data: ${result}`);
+				const parsedResult = (typeof result === 'string') ? JSON.parse(result) : await result.json();
+				list = Object.keys(parsedResult)
+						.filter((attr) => attr !== 'id')
+						.map((each) => parsedResult[each]);
+				console.log(`app.js list: ${list}`);
+				return true;
+			},
+			inserted: async (component) => {
+				console.log('example component inserted');
+				// always use replaceWith when you call render again!!!! render will always create
+				// a new element and return it
+				component.element.replaceWith(component.render(list, isSsr));
+			},
+			removed: (component) => {
+				console.log('example component removed');
+				component.element = null;
+			},
+			templateUrl: 'templates/gallery.html',
+			tagName: 'lotus-image-gallery',
+			tagFunction: Lotus.useImageGallery
+		};
+		// register gallery
+		await Lotus.register(tagDef);
+	}
 </script>
 </html>
