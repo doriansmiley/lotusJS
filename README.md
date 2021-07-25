@@ -15,7 +15,7 @@ Lotus is opinionated about two things:
 
 # Getting Stated
 
-`npm install lotusjs-components`
+`npm install lotusjs-components` or use [the online editor](https://stackblitz.com/edit/node-kg7djp)
 
 #### Using Built in Components
 Example below creates an instance of the button component using the tag name `lotus-button`.
