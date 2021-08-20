@@ -67,7 +67,7 @@
     "normalize-url": "^4.5.1",
     "rimraf": "3.0.2",
     "terser-webpack-plugin": "5.1.3",
-    "typedoc": "0.20.36",
+    "typedoc": "0.21.6",
     "typescript": "4.2.4",
     "watchify": "4.0.0",
     "webpack": "5.38.1",
