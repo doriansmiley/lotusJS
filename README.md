@@ -20,7 +20,7 @@ Lotus is opinionated about two things:
 #### Using Built in Components
 Example below creates an instance of the button component using the tag name `lotus-button`.
 You can use any tag name you like.
-```
+```html
 <div>
 	<lotus-button></lotus-button>
 </div>
@@ -51,7 +51,8 @@ Lotus.register(tagDef);
 </script>
 ```
 You can also supply a remote location for the component's skin. For example:
-```
+
+```js
 const tagDef = {
     inserted: (component) => {
         console.log('example component inserted');
@@ -70,7 +71,8 @@ In this example the HTML file containing the `<template>` will be loaded from `t
 
 #### Creating a component
 All components extend the base function by composing with `createAbstractComponent`
-```
+
+```js
 import {Component, mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
 import {compose} from 'ramda';
 
@@ -113,7 +115,8 @@ Lotus also has the concept of collection components which render collections of
 components. To create a collection component compose with `createCollectionComponent` and
 create an item view composed with `createAbstractComponent`. Below is a component that displays 
 a collection of image items.z
-```
+
+```js
 import {mixin, Events, getComponentEvent, createComponent as createAbstractComponent} from './AbstractComponent';
 import {createItemView, AbstractItemView, AbstractCollectionComponent, createComponent as createCollectionComponent} from './AbstractCollectionComponent';
 import { List } from 'immutable';
