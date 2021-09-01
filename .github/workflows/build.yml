@@ -14,6 +14,7 @@ on:
         - 'webpack.config.js'
         - '.github/**/*.js'
   workflow_dispatch:
+  push:
 jobs:
   build:
     runs-on: ubuntu-latest
