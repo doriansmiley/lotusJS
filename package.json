@@ -52,7 +52,7 @@
     "eslint-plugin-import": "2.25.2",
     "grunt": "1.4.1",
     "grunt-mocha-test": "0.13.3",
-    "immutable": "4.0.0-rc.14",
+    "immutable": "4.0.0",
     "jasmine": "3.9.0",
     "js-yaml": "4.1.0",
     "karma": "6.3.4",
