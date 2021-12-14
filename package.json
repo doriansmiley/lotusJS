@@ -1,18 +1,19 @@
 {
   "name": "lotusjs-components",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "description": "LoutsJS is a framework based on x-tag and lavenderJS for developing HTML5 applications using web components.",
   "main": "lib/index.js",
   "directories": {
     "example": "example",
     "lib": "lib",
+    "esm": "esm",
     "test": "test"
   },
   "scripts": {
     "clean-dist": "rimraf ./lib/*",
     "docs": "typedoc",
     "prebuild": "npm run clean-dist && npm run docs",
-    "build": "eslint \"src/**\" --quiet && tsc && webpack",
+    "build": "eslint \"src/**\" --quiet && tsc && webpack && npx snowpack build",
     "test": "npm run build && sh ./scripts/testSauce.sh",
     "test-local": "npm run build && sh ./scripts/typescript.sh"
   },
