@@ -12,6 +12,7 @@
 .DS_Store
 **/node_modules
 /lib
+/esm
 /docs
 
 example/image-gallery/5d1a1293b965cba3ac1c58697622e3a8.html

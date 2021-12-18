@@ -1,0 +1,7 @@
+{
+  "name": "lotus-ionic-example",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

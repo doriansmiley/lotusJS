@@ -1,0 +1,103 @@
+<template>
+    <style>
+		@font-face {
+		  font-family: 'SegoeUI';
+		  src: url('../../css/fonts/segoeui.ttf') format('truetype');
+
+		  font-weight: normal;
+		  font-style: normal;
+		}
+
+		@font-face {
+		  font-family: 'SegoeUI';
+		  src: url('../../css/fonts/segoeuib.ttf') format('truetype');
+
+		  font-weight: 500;
+		  font-style: normal;
+		}
+
+		@font-face {
+		  font-family: 'SegoeUI';
+		  src: url('../../css/fonts/segoeuii.ttf') format('truetype');
+
+		  font-weight: normal;
+		  font-style: italic;
+		}
+		
+     .container {
+			min-width:100px;
+			width:240px;
+            height:50px;
+            border: none;
+			border-radius:30px;
+			margin:0px;
+            padding: 2px;
+			background:#ffbf6c;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			flex-direction: row;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items:center;
+			align-items:center;
+			-webkit-flex-wrap:nowrap;
+        }
+		
+		.number {
+			color:#630e00;
+			font-weight:bold;
+			padding-left:8px;
+			font-size:14px;
+			font-family:'SegoeUI';
+		}
+		
+        button {
+			font-family:'SegoeUI',Arial,Helvetica;
+			cursor:pointer;
+            width:100px;
+            height:40px;
+			margin-left:10px;
+			border-radius:29px;
+			border:1px solid #666;
+			color:#333;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eaeaea+1,b7b7b7+99 */
+			background: #eaeaea; /* Old browsers */
+			background: -moz-linear-gradient(top, #eaeaea 1%, #b7b7b7 99%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #eaeaea 1%,#b7b7b7 99%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #eaeaea 1%,#b7b7b7 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#b7b7b7',GradientType=0 ); /* IE6-9 */
+			box-shadow:none;
+		}
+		
+		 button:focus {
+			outline: none;
+		 }
+		 
+		 button:hover {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ededed+0,d3d3d3+100 */
+background: #ededed; /* Old browsers */
+background: -moz-linear-gradient(top, #ededed 0%, #d3d3d3 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ededed 0%,#d3d3d3 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ededed 0%,#d3d3d3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-9 */		}
+		
+		button * {
+			cursor:pointer;
+		}
+					
+        label {
+			font-family:'SegoeUI';
+			font-size:14px;
+            color: #000;
+			text-shadow: 0px 1px 0px #fff !important;
+			font-weight:bold;
+        }
+    </style>
+    <div class="container" data-component-root="root">
+        <div class="number">(123)-456-7890</div>
+        <button data-skin-part="button"><label>Call Now</label></button>
+    </div>
+
+</template>
