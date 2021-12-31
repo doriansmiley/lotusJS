@@ -4,18 +4,18 @@ import {Component} from '../../view/functional/AbstractComponent';
 export interface TagDefinition {
     inserted?: (component: Component) => void;
     removed?: (component: Component) => void;
-    constructed?: (isSsr: boolean) => void;
-    loadData?: () => boolean | Promise<boolean>;
-    hydrated: boolean;
+    constructed?: () => void;
+    loadData?: () => unknown[] | Promise<unknown[]>;
     template?: HTMLTemplateElement;
     tagName: string;
     tagFunction: () => Component;
-    parameters?: any;
+    parameters?: unknown;
     templateUrl?: string;
 }
 // private properties
 const componentsByTagName = new Map<string, Array<Component>>();
 const tagDefsByTagName = new Map<string, TagDefinition>();
+
 // public function
 export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'open'): Promise<void> => {
     if (!customElements) {
@@ -31,55 +31,76 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
         }
     }
     tagDefsByTagName.set(tagDef.tagName, tagDef);
-    // check if we are rendering server side
-    const shadowRoot = document.querySelector(tagDef.tagName)?.shadowRoot;
-    const isSsr = !!document.querySelector(tagDef.tagName)?.shadowRoot;
-    if (!isSsr && tagDef.loadData) {
-        // if we haven't rendered this component and it needs data load the data
-        tagDef.hydrated = await tagDef.loadData();
+    // the SSR engine should expose a data function in the document head
+    // which should contain the deserialized data
+    // placing the serialized data in the head ensures is parsed before we get here
+    // this data should be populated with a nodejs data loading function
+    // see our SSR demo for a sample implementation
+    // if data has not been retrieved with a node data loader call the loadData method
+    if (!globalThis[`data-${tagDef.tagName}`]) {
+        if (window[`data-${tagDef.tagName}`]) {
+            console.log('using data loaded from the server');
+            globalThis[`data-${tagDef.tagName}`] = window[`data-${tagDef.tagName}`]();
+        }
+        else if (tagDef.loadData) {
+            console.log('loading data with the tags data loader function');
+            globalThis[`data-${tagDef.tagName}`] = await tagDef.loadData();
+        }
     }
+
     const wrapper = class Wrapper extends HTMLElement {
         public component: Component;
+        private hydrate = true;
 
         constructor () {
             // Always call super first in constructor
             super();
-            // constructed has to be called before the component is inserted
-            if (tagDef.constructed) {
-                tagDef.constructed(isSsr);
-            }
-            // Create a shadow root
-            const shadow = shadowRoot || this.attachShadow({mode: mode});
+            // Create a shadow root if we have not rendered one already server side
+            const shadowRoot = this.shadowRoot || this.attachShadow({mode: mode});
             // create our component
-            const component: Component = tagDef.tagFunction();
-            // if a tag def template is supplied import the node, else use the shadow root. This allows for inline elements.
-            const clone = tagDef.template ? document.importNode(tagDef.template.content, true)
-                : document.importNode(this.querySelector('template').content, true);
-            component.element = isSsr ? shadowRoot.querySelector('[data-component-root="root"]')
-                : clone.querySelector('[data-component-root="root"]');
-            // @ts-ignore
-            const styles = [...clone.childNodes].find((child: Node) => {
-                if (child.nodeType === Node.TEXT_NODE) {
-                    return false;
-                }
-                return (child as HTMLElement).tagName.toLowerCase() === 'style';
-            });
+            this.component = tagDef.tagFunction();
             if (!componentsByTagName.get(tagDef.tagName)) {
                 componentsByTagName.set(tagDef.tagName, []);
             }
             // store the component instances by tag name so an observer can assign mediators
             // for a surrounding application
-            componentsByTagName.get(tagDef.tagName).push(component);
-            const renderedComponent = component.render([], isSsr);
-            // TODO add lifecycle hooks
-            // Attach the created elements to the shadow dom if it hasn't been rendered server side
-            if (!isSsr && styles) {
-                const style = document.createElement('style');
-                style.textContent = styles.textContent;
-                shadow.appendChild(style);
+            componentsByTagName.get(tagDef.tagName).push(this.component);
+            // we are not rendering child view currently with a custom element. This is a bug
+            // doe some reason when I clone a custom element in addChildView the custom element is dropped
+            // so we have to check hydrate && shadowRoot or item views will through an error as shadowRoot is undefined
+            this.component.element = shadowRoot.querySelector('[data-component-root="root"]');
+            if (!this.component.element) {
+                // we have not rendered this component on the server
+                this.hydrate = false;
+                // if a tag def template is supplied import the node, else use the shadow root.
+                // This allows for inline elements.
+                const clone = tagDef.template ? document.importNode(tagDef.template.content, true)
+                    : document.importNode(this.querySelector('template').content, true);
+                const styles = Array.from(clone.childNodes).find((child: Node) => {
+                    if (child.nodeType === Node.TEXT_NODE) {
+                        return false;
+                    }
+                    return (child as HTMLElement).tagName.toLowerCase() === 'style';
+                });
+                // Attach the created elements to the shadow dom if it hasn't been rendered server side
+                if (styles) {
+                    const style = document.createElement('style');
+                    style.textContent = styles.textContent;
+                    shadowRoot.appendChild(style);
+                }
+                // set the element for the component to the newly created clone
+                this.component.element = clone.querySelector('[data-component-root="root"]');
+                // on the initial page load hydrate is true if the component was pre-rendered server side
+                const renderedComponent = this.component.render(globalThis[`data-${tagDef.tagName}`], this.hydrate);
+                shadowRoot.appendChild(renderedComponent);
+            } else {
+                // do not replace the component element, use what's already in the document
+                this.component.render(globalThis[`data-${tagDef.tagName}`], this.hydrate);
             }
-            shadow.appendChild(renderedComponent);
-            this.component = component;
+            // constructed has to be called before the component is inserted
+            if (tagDef.constructed) {
+                tagDef.constructed();
+            }
         }
 
         connectedCallback () {

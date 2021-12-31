@@ -59,6 +59,7 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clea
         return {html: RENDER_CACHE.get(url), ttRenderMs: 0};
     }
 
+    let loadedData = '';
     const start = Date.now();
     const browser = await puppeteer.connect({browserWSEndpoint});
     const page = await browser.newPage();
@@ -80,8 +81,12 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clea
         // pipe console log from browser to node process
         page.on('console', consoleObj => logger.info(consoleObj.text()));
         if (data) {
-            logger.info('calling exposeFunction passing supplied data function');
-            await page.exposeFunction('data', data);
+            logger.info('calling data function to load data');
+            const result = await data();
+            loadedData = `globalThis["data-${selector}"]=${result};`;
+            // globalThis values are undefined when executing in puppeteer
+            // so we expose the results through a function
+            await page.exposeFunction(`data-${selector}`, result);
         }
         logger.info('calling evaluate');
         // Inject <base> on page to relative resources load properly.
@@ -110,7 +115,7 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clea
         // Close the page we opened here (not the browser).
         await page.close();
         // TODO figure out why the base element is stripped from serialization
-        html = minify(html.replace('<head>', `<head><base href="${url}"/>`),{
+        html = minify(html.replace('<head>', `<head><script>${loadedData}</script><base href="${url}"/>`),{
             collapseWhitespace: true,
             conservativeCollapse: true,
             decodeEntities: true,
