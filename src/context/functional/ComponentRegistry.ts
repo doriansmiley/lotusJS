@@ -37,15 +37,13 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
     // this data should be populated with a nodejs data loading function
     // see our SSR demo for a sample implementation
     // if data has not been retrieved with a node data loader call the loadData method
-    if (!globalThis[`data-${tagDef.tagName}`]) {
-        if (window[`data-${tagDef.tagName}`]) {
-            console.log('using data loaded from the server');
-            globalThis[`data-${tagDef.tagName}`] = window[`data-${tagDef.tagName}`]();
-        }
-        else if (tagDef.loadData) {
-            console.log('loading data with the tags data loader function');
-            globalThis[`data-${tagDef.tagName}`] = await tagDef.loadData();
-        }
+    if (globalThis[`data-${tagDef.tagName}`] && typeof globalThis[`data-${tagDef.tagName}`] === 'function') {
+        console.log('using data loaded from the server');
+        globalThis[`data-${tagDef.tagName}`] = window[`data-${tagDef.tagName}`]();
+    }
+    else if (!globalThis[`data-${tagDef.tagName}`] && tagDef.loadData) {
+        console.log('loading data with the tags data loader function');
+        globalThis[`data-${tagDef.tagName}`] = await tagDef.loadData();
     }
 
     const wrapper = class Wrapper extends HTMLElement {
@@ -97,7 +95,7 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
                 // do not replace the component element, use what's already in the document
                 this.component.render(globalThis[`data-${tagDef.tagName}`], this.hydrate);
             }
-            // constructed has to be called before the component is inserted
+            console.log(`constructed component: ${tagDef.tagName}`);
             if (tagDef.constructed) {
                 tagDef.constructed();
             }
