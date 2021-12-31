@@ -45,7 +45,7 @@ export interface Component extends EventDispatcher {
 
     addSkinParts (): void;
 
-    render<T> (list?: Array<T>, isSsr?: boolean): HTMLElement;
+    render<T> (list?: Array<T>, hydrate?: boolean): HTMLElement;
 }
 
 export interface Listener {
@@ -244,10 +244,10 @@ export const createComponent = (): Component => {
             clone = null;
         }
     };
-    clone.render = <T> (list?: Array<T>, isSsr = false): HTMLElement => {
+    clone.render = <T> (list?: Array<T>, hydrate = false): HTMLElement => {
         // be sure to call removeEventListeners so the old element is garbage collected
         // if you don't remove event listeners the GC will not collect the element
-        if (!isSsr) {
+        if (!hydrate) {
             clone.destroy();
             clone.element = clone.element.cloneNode(true) as HTMLElement;
         }

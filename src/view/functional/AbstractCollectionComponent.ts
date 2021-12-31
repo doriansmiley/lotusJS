@@ -94,13 +94,17 @@ export const createComponent = (component: Component): AbstractCollectionCompone
         // assign the child view listeners
         clone.addViewEventListener(element['component']);
         rendered.setAttribute('data-item-template', element.tagName.toLowerCase());
+        // TODO figure out how to not replace element with rendered
+        // it's removing the shadow root and custom element
+        // This prevents the SSR functions from preventing a double render on the item view
+        // element.shadowRoot.querySelector('[data-component-root="root"]').replaceWith(rendered);
         element.replaceWith(rendered);
     };
     clone.hydrateChildViews = () => {
         // hydrate component instances from the DOM
         const childViews = clone.skinPartMap.get('collectionContainer')
             .querySelectorAll('[data-component-root="root"]') || [];
-        childViews.forEach((view) => {
+        childViews?.forEach((view) => {
             const childViewTagName = view.getAttribute('data-item-template');
             const tagDef = getTagDef(childViewTagName);
             const component: Component = tagDef.tagFunction();
@@ -136,17 +140,14 @@ export const createComponent = (component: Component): AbstractCollectionCompone
             clone = null;
         }
     };
-    clone.render = <T>(list?: Array<T>, isSsr = false): HTMLElement => {
+    clone.render = <T>(list?: Array<T>, hydrate = false): HTMLElement => {
         // call super, triggers destroy
-        render(list, isSsr);
-        // render can be called by the ComponentRegistry as part of lifecycle
-        if (!list) {
-            return clone.element;
-        }
+        render(list, hydrate);
+
         // the ssr flag lets us know if the component's collection view was rendered server side
         // this flag prevents a double render
-        if (!isSsr) {
-            list.forEach(<T>(model) => {
+        if (!hydrate) {
+            list?.forEach(<T>(model) => {
                 clone.addChildView(model);
             });
         } else {
