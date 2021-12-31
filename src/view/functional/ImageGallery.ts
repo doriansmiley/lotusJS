@@ -20,11 +20,11 @@ export interface ImageItem extends AbstractItemView {
     onThumbClick: (event: Event) => void;
     onDragStart: (event: Event) => void;
     onImageLoad: (event: Event) => void;
-    setThumbnailSrc: (src: string) => void;
+    setThumbnailSrc: (src: string, hydrate?: boolean) => void;
     removeEventListeners: () => void;
     model: {src: string};
-    render<T> (list?: Array<T>, isSsr?: boolean): HTMLElement;
-    render(list?: Array<{src: string}>, isSsr?: boolean): HTMLElement;
+    render<T> (list?: Array<T>, hydrate?: boolean): HTMLElement;
+    render(list?: Array<{src: string}>, hydrate?: boolean): HTMLElement;
 }
 export interface ImageGallery extends AbstractCollectionComponent {
     title?: string;
@@ -82,10 +82,14 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         clone.skinPartMap.get('thumbnail').style.visibility = 'visible';
         sizeImage();
     };
-    clone.setThumbnailSrc = (src: string) => {
-        clone.skinPartMap.get('thumbnail').onload = clone.onImageLoad;
-        clone.skinPartMap.get('thumbnail').style.visibility = 'hidden';
-        (clone.skinPartMap.get('thumbnail') as HTMLImageElement).src = src;
+    clone.setThumbnailSrc = (src: string, hydrate= false) => {
+        if (!hydrate) {
+            clone.skinPartMap.get('thumbnail').onload = clone.onImageLoad;
+            clone.skinPartMap.get('thumbnail').style.visibility = 'hidden';
+            (clone.skinPartMap.get('thumbnail') as HTMLImageElement).src = src;
+        } else {
+            clone.skinPartMap.get('thumbnail').style.visibility = 'visible';
+        }
     };
     clone.removeEventListeners = () => {
         clone.skinPartMap.get('thumbnail').removeEventListener('click', clone.onThumbClick);
@@ -110,16 +114,16 @@ export const createImageView = (component: AbstractItemView): ImageItem => {
         clone.removeEventListeners();
         destroy();
     };
-    clone.render = (list?: Array<{ caption: string; src: string}>, isSsr = false): HTMLElement => {
-        render(list, isSsr);
-        if (list && list.length === 1) {
+    clone.render = (list?: Array<{ caption: string; src: string}>, hydrate = false): HTMLElement => {
+        render(list, hydrate);
+        if (hydrate) {
+            // if pre-rendered on the server, pass the url that was generated
+            clone.setThumbnailSrc((clone.skinPartMap.get('thumbnail') as HTMLImageElement).src, true);
+        } else if (list && list.length === 1) {
             clone.setThumbnailSrc(list[0].src);
             if (clone.skinPartMap.get('caption')) {
                 clone.skinPartMap.get('caption').innerHTML = list[0].caption;
             }
-        } else if (isSsr) {
-            // if pre-rendered on the server, pass the url that was generated
-            clone.setThumbnailSrc((clone.skinPartMap.get('thumbnail') as HTMLImageElement).src);
         }
         return clone.element;
     };

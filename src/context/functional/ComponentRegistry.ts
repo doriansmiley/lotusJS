@@ -39,7 +39,7 @@ export const register = async (tagDef: TagDefinition, mode: ShadowRootMode = 'op
     // if data has not been retrieved with a node data loader call the loadData method
     if (globalThis[`data-${tagDef.tagName}`] && typeof globalThis[`data-${tagDef.tagName}`] === 'function') {
         console.log('using data loaded from the server');
-        globalThis[`data-${tagDef.tagName}`] = window[`data-${tagDef.tagName}`]();
+        globalThis[`data-${tagDef.tagName}`] = JSON.parse(await globalThis[`data-${tagDef.tagName}`]());
     }
     else if (!globalThis[`data-${tagDef.tagName}`] && tagDef.loadData) {
         console.log('loading data with the tags data loader function');

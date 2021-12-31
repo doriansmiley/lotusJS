@@ -86,7 +86,7 @@ async function ssr ({url, browserWSEndpoint, selector, data, publish, path, clea
             loadedData = `globalThis["data-${selector}"]=${result};`;
             // globalThis values are undefined when executing in puppeteer
             // so we expose the results through a function
-            await page.exposeFunction(`data-${selector}`, result);
+            await page.exposeFunction(`data-${selector}`, () => result);
         }
         logger.info('calling evaluate');
         // Inject <base> on page to relative resources load properly.
