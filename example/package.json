@@ -31,7 +31,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "debug": "^2.6.9",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "html-minifier-terser": "^5.1.1",
     "lotusjs-components": "file:..",
     "node-fetch": "^2.6.1",
